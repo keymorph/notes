@@ -1,2 +1,2 @@
 # notetakingapp
-Quick and easy note taking tool
+Quick and easy note taking tool 
