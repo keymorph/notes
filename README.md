@@ -1,6 +1,6 @@
 # :yellow_heart: FourScript
 ## *Four* students, learning Java*Script*.
-### Follow us at @FourScript, on all social media sites.
+### Follow us at ***@FourScript***, on all social media sites.
 #### Reach out to us at: contact@fourscript.com
 
 **FOUNDING MEMBERS:**
@@ -12,7 +12,7 @@
 <hr>
 
 # :speech_balloon: Project Information
-> **Name:**"Note Taking Application"  
+> **Name:** "Note Taking Application"  
 > **Description:** Simple tool for taking notes.  
 > **Languages:** HTML, CSS, Javascript, MySQL, Express, Node, React  
 > **Start Date:** 08/13/2021  
