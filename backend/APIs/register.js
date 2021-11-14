@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 var mysql = require("mysql"); // import mysql module
 const connection = require("../connection");
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res  ) => {
   const { email, password } = req.body;
 
   /*  Email and password validation */
@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
       if (exists.length != 0) {
         return res
           .status(409)
-          .json({ error: "That account doesn't exist. Enter a different email." }); // 409 = conflict error code
+          .json({ error: "An account with this email already exists." }); // 409 = conflict error code
       } else {
         bcrypt
           .hash(password, 10)
@@ -51,6 +51,7 @@ router.post("/register", async (req, res) => {
               }
             );
             return res.status(201).json({ message: "User created." });
+          
           })
           .catch((error) => {
             return res.status(500).json({ error: error });
