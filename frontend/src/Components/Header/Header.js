@@ -17,7 +17,7 @@ function Header() {
     <div className="contents">
       <div id="link">
         
-       <a href="">< img src={linkImage}/> </a>
+       <a href="#Social TAG">< img src={linkImage}/> </a>
       </div>
 
       <div id="donate">
@@ -27,8 +27,7 @@ function Header() {
       </div>
 
       <div id="help"> 
-        <img src={helpImage}/>
-        <a href=""></a>
+        <a href="#Help Link"><img src={helpImage}/></a>
       </div>
     </div>
 
