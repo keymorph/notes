@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 var mysql = require("mysql");
-const connection = require("../connection");
+const connection = require("../../connection");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-router.post("/login", async (req, res) => {
+router.get("/login", async (req, res) => {
     const { email, password } = req.body;
 
     /*  Email and password validation */

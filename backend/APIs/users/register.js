@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 var mysql = require("mysql"); // import mysql module
-const connection = require("../connection");
+const connection = require("../../connection");
 
-router.post("/register", async (req, res  ) => {
+router.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
   /*  Email and password validation */
@@ -12,10 +12,12 @@ router.post("/register", async (req, res  ) => {
   if (!email || !password) {
     return res.status(400).json({ error: "Empty field in form input." });
   }
+
   // Check for valid email
   if (email.length < 5 || email.length > 50 || !email.includes("@")) {
     return res.status(400).json({ error: "Invalid email address." });
   }
+  
   // Check for valid password
   if (password.length < 6 || password.length > 40) {
     return res
