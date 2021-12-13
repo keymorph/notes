@@ -7,9 +7,9 @@
 # :speech_balloon: Project Information
 > **Name:** "Note Keeping Application"  
 > **Description:** Simple note-taking web application.  
-> **Languages:** HTML, CSS, Javascript, MySQL, Express, Node, React  
+> **Languages:** HTML, CSS, JavaScript, MySQL, Express, React, Node
 > **Start Date:** 08/13/2021  
-> **End Date:**  
+> **End Date:** --  
 > **Links:** https://www.notes.fourscript.com/  
 
 :busts_in_silhouette: **CONTRIBUTING FOURSCRIPTERS:**
