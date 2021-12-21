@@ -18,7 +18,7 @@ function LoginBox() {
       password: password
     };
 
-    axios.post(
+    axios.get(
       "http://localhost:5000/api/login",
       data,
     ).then((res) => {
