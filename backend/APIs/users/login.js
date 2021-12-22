@@ -34,7 +34,7 @@ router.get("/login", async (req, res) => {
             exists = await results;
             console.log(exists)
             if (exists.length == 0) {
-                return res.status(401).json({ error: "This JotFox accout doesn't exist. Try a different Email." });
+                return res.status(401).json({ error: "This JotFox account doesn't exist. Try a different Email." });
             } else {
                 console.log(exists[0].password)
                 const validPassword = await bcrypt.compare(password, exists[0].password);
@@ -51,5 +51,9 @@ router.get("/login", async (req, res) => {
         }
     );
 });
+
+// Make a put request that sends a mysql command to the database to update the user's email
+
+
 
 module.exports = router;

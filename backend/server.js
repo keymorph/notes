@@ -22,7 +22,7 @@ const cors = require("cors");
 dotenv.config();
 
 // Start server on port 5000 locally
-app.listen(5000, () => console.log("Listening to port 5000..."));
+app.listen(8000, () => console.log("Listening to port 8000..."));
 
 // Connect to The MySQL database
 connection.connect((err) => {
