@@ -3,15 +3,15 @@ const app = express();  // Create an instance of the express module
 const bodyParser = require('body-parser'); // Processes JSON to string
 
 // User APIs
-const register = require("./APIs/users/register");
-const login = require("./APIs/users/login");
-const deleteUser = require("./APIs/users/deleteUser");
+const register = require("./api/users/register");
+const login = require("./api/users/login");
+const deleteUser = require("./api/users/deleteUser");
 
 // Note APIs
-const createNote = require("./APIs/notes/createNote");
-const editNote = require("./APIs/notes/editNote");
-const deleteNote = require("./APIs/notes/deleteNote");
-const showNotes = require("./APIs/notes/showNotes");
+const createNote = require("./api/notes/createNote");
+const editNote = require("./api/notes/editNote");
+const deleteNote = require("./api/notes/deleteNote");
+const showNotes = require("./api/notes/showNotes");
 
 const connection = require("./connection") // Connect to Mysql Server (on GCP VM)
 const dotenv = require('dotenv'); // JWT Signature

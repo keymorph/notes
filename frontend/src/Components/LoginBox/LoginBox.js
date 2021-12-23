@@ -17,15 +17,9 @@ function LoginBox() {
       email: email,
       password: password
     };
-<<<<<<< HEAD
     console.log(data)
     axios.get(
       "http://localhost:8000/api/login",
-=======
-
-    axios.get(
-      "http://localhost:5000/api/login",
->>>>>>> 33a9569933147e272db2ee8b84f75eb25aeec2f9
       data,
     ).then((res) => {
       console.log("Entered Res")
