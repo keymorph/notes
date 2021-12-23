@@ -19,7 +19,7 @@ function RegisterBox() {
     };
     console.log(data)
     axios.post(
-      "http://localhost:5000/api/register",
+      "http://localhost:8000/api/register",
       data,
     ).then((res) => {
       console.log("Entered Res")
@@ -37,8 +37,7 @@ function RegisterBox() {
         <img src={userImage} alt="JotFox Image" />
       </div>
 
-      <h4>Welcome to</h4>
-      <h3>JotFox</h3>
+      <h4>REGISTER</h4>
 
       <form onSubmit={userRegister}>
         <label htmlFor="Email" className="Email">

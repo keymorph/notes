@@ -1,8 +1,20 @@
 import React, {useState} from "react";
 import './style.css';
 import editIcon from "../../images/edit-icon.svg"
+import axios from "axios";
 
 function Note () {
+    const getNotes = async (event) => {
+        axios.get(
+          "http://localhost:5000/api/showNotes"
+        ).then((res) => {
+          console.log(res)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+      
+
     const [hover, setHover] = useState(false)
 
     return(

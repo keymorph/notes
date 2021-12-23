@@ -1,28 +1,26 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import NoteTimeline from "../../Components/Note/NoteTimeline";
 import Note from "../../Components/Note/Note";
+import axios from 'axios';
 
-function Dashboard () {
-    
-      
-  
-    useEffect(()=>{
-        axios.get(
-            "http://localhost:5000/api/showNotes"
-          ).then((res) => {
-              console.log(res)
-          }).catch((error) => {
-            console.log(error);
-          }); 
-    }, [])
-      
-    
-    
-    return(
-        <div>
-            
-            <Note/>
-        </div>
-    )
+export default function Dashboard() {
+  const [notes, getNotes] = useState('');
+
+  const url = 'http://localhost:5000/';
+
+  useEffect(() => {
+    getAllNotes();
+  }, []);
+
+  const getAllNotes = () => {
+    axios.get(`${url}showNotes`)
+    .then((response) => {
+      const allNotes = response.data.notes.allNotes;
+      getNotes(allNotes);
+    })
+    .catch(error => console.error(`Error: ${error}`));
+  }
+  return(
+    <NoteTimeline notes={notes}/>
+  )
 }
-
-export default Dashboard;
