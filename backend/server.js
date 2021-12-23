@@ -33,9 +33,9 @@ connection.connect((err) => {
     console.log("MySql Connected...");
 })
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
