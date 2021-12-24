@@ -2,18 +2,13 @@ const express = require('express'); // import express module
 const app = express();  // Create an instance of the express module
 const bodyParser = require('body-parser'); // Processes JSON to string
 
-// User APIs
-const register = require("./api/users/register");
-const login = require("./api/users/login");
-const deleteUser = require("./api/users/deleteUser");
-
 // Note APIs
-const createNote = require("./api/notes/createNote");
-const editNote = require("./api/notes/editNote");
-const deleteNote = require("./api/notes/deleteNote");
-const showNotes = require("./api/notes/showNotes");
+const note = require('./api/routes/note')
 
-const connection = require("./connection") // Connect to Mysql Server (on GCP VM)
+// User APIs
+const user = require('./api/routes/user')
+
+const connection = require("./api/models/connection") // Connect to Mysql Server (on GCP VM)
 const dotenv = require('dotenv'); // JWT Signature
 const cors = require("cors");
 
@@ -41,12 +36,8 @@ app.use(
 );
 app.use(cors());
 
-app.use('/api/', register);
-app.use('/api/', login);
-app.use('/api/', deleteUser);
-app.use('/api/', createNote);
-app.use('/api/', editNote);
-app.use('/api/', deleteNote);
-app.use('/api/', showNotes);
+
+app.use('/api/', user);
+app.use('/api/', note);
 
 module.exports = {connection}

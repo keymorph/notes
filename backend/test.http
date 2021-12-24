@@ -1,1 +1,90 @@
-POST http://localhost:8000/api/register
+@baseurl = http://localhost:8000/api
+@token = eyJhbGciOiJIUzI1NiJ9.NjM.3Uz90rOTx2dxycgp9t8p34mNYq_SHyzOIiU5pgDlr9Y
+###
+// **** USER APIs
+// -----USER-------- Register (Create)
+POST {{baseurl}}/user HTTP/1.1
+content-type: application/json
+
+{
+    "email": "dec@23.com",
+    "password" : "password"
+}
+
+###
+
+// -----USER-------- Login (Read)
+GET {{baseurl}}/user HTTP/1.1
+content-type: application/json
+
+{
+    "email": "dec@23.com",
+    "password" : "password"
+}
+
+###
+
+// -----USER-------- Edit Account (Update)
+
+###
+
+// -----USER-------- Delete (Delete)
+DELETE {{baseurl}}/user HTTP/1.1
+content-type: application/json
+auth-token: {{token}}
+
+{
+
+}
+
+###
+
+// **** NOTE APIs
+// -----NOTE-------- Create (Create)
+POST {{baseurl}}/note HTTP/1.1
+content-type: application/json
+auth-token: {{token}}
+
+{
+    "title" : "Note Title #18",
+    "description" : "Description is here.",
+    "category" : "Testing",
+    "tags" : "FourScript, JotFox"
+}
+
+###
+
+// -----NOTE-------- Show (Read)
+GET {{baseurl}}/note HTTP/1.1
+content-type: application/json
+auth-token: {{token}}
+
+{
+
+}
+
+###
+
+// -----NOTE-------- Edit (Update)
+PUT {{baseurl}}/note HTTP/1.1
+content-type: application/json
+auth-token: {{token}}
+
+{
+    "noteID" : 18,
+    "title" : "EDITED title",
+    "description" : "EDITED description",
+    "category" : "EDITED",
+    "tags" : "Bing, Bang, Boom"
+}
+
+###
+
+// -----NOTE-------- Delete (Delete)
+DELETE {{baseurl}}/note HTTP/1.1
+content-type: application/json
+auth-token: {{token}}
+
+{
+    "noteID" : 18
+}

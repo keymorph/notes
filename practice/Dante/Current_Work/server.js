@@ -9,5 +9,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true})) 
 
 app.post("/test", (req, res)=> {
-    res.send("yo")
+
+    res.send(req.body.name)
 })
