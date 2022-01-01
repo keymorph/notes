@@ -1,19 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../middleware/verifyToken");
-const connection = require("../models/connection");
-const noteControllers = require("../controllers/noteControllers");
+import express from 'express'
+const router = express.Router()
+import authenticateToken from '../middleware/authenticateToken.js'
+import noteController from '../controllers/noteController.js'
 
-// Create a note
-router.post("/note", verifyToken, noteControllers.create);
+router.post('/note', authenticateToken, noteController.create)
 
-// Show all of the user's notes
-router.get("/note", verifyToken, noteControllers.show);
+router.get('/note', authenticateToken, noteController.show)
 
-// Update a note
-router.put("/note", verifyToken, noteControllers.edit);
+router.put('/note', authenticateToken, noteController.edit)
 
-// Delete a note
-router.delete("/note", verifyToken, noteControllers.delete);
+router.delete('/note', authenticateToken, noteController.remove)
 
-module.exports = router;
+export default router

@@ -1,43 +1,35 @@
-const express = require('express'); // import express module
-const app = express();  // Create an instance of the express module
-const bodyParser = require('body-parser'); // Processes JSON to string
+import express from 'express'
+const app = express()
+import cors from 'cors'
+import bodyParser from 'body-parser'
 
-// Note APIs
-const note = require('./api/routes/note')
+import dotenv from 'dotenv'
+dotenv.config()
 
-// User APIs
-const user = require('./api/routes/user')
+import database from './api/models/database.js'
+import user from './api/routes/user.js'
+import note from './api/routes/note.js'
 
-const connection = require("./api/models/connection") // Connect to Mysql Server (on GCP VM)
-const dotenv = require('dotenv'); // JWT Signature
-const cors = require("cors");
+console.log('---------')
 
-// Read the .env file for the enviromental variables
-// Allows server-wise access
-dotenv.config();
+const port = 3000
+const host = 'localhost'
+app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`))
 
-// Start server on port 5000 locally
-app.listen(8000, () => console.log("Listening to port 8000..."));
-
-// Connect to The MySQL database
-connection.connect((err) => {
+database.connect((err) => {
     if (err) {
         console.log(err)
-        throw err;
+        throw err
     }
-    console.log("MySql Connected...");
+    console.log('✓ MySQL Connected.')
+    console.log('---------')
 })
 
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-app.use(cors());
+app.use(express.urlencoded({ extended: true }))
+app.use(cors())
 
+app.use('/api/', user)
+app.use('/api/', note)
 
-app.use('/api/', user);
-app.use('/api/', note);
-
-module.exports = {connection}
+export default database;

@@ -1,8 +1,9 @@
+import express from 'express'
 import bcrypt from 'bcrypt'
 import connection from '../models/connection.js'
 
 // Search for user email.
-export function findEmail(email, res) {
+const search = (email, res) => {
     let exists = [];
     console.log(`SEARCH: Before Connection.`)
     connection.query(
@@ -27,7 +28,7 @@ export function findEmail(email, res) {
 }
 
 // Create a new user account.
-export async function registerUser(email, password, res) {
+const register = async (email, password, res) => {
     bcrypt.hash(password, 10)
     .then(async (hash) => {
         // enter user into the database
@@ -44,3 +45,6 @@ export async function registerUser(email, password, res) {
         console.log("ERROR?")
     });
 }
+
+export default { search, register }
+console.log(module.exports)

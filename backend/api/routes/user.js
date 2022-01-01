@@ -1,15 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../middleware/verifyToken");
-const userControllers = require("../controllers/userControllers");
+import express from 'express'
+const router = express.Router()
+import authenticateToken from '../middleware/authenticateToken.js'
+import userController from '../controllers/userController.js'
 
-// Create a user
-router.post("/user", userControllers.register);
+router.post('/user', userController.register)
 
-// User login
-router.get("/user", userControllers.login);
+router.get('/user', userController.login)
 
-// Delete a user
-router.delete("/user", verifyToken, userControllers.delete)
+router.delete('/user', authenticateToken, userController.remove)
 
-module.exports = router;
+export default router

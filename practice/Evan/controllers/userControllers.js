@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import connection from '../models/connection.js'
-import { findEmail, registerUser } from '../services/userServices.js'
+import userServices from '../services/userServices.js'
 
 // (CREATE) Create a new user.
 export async function register(req, res) {

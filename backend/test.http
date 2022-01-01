@@ -1,5 +1,5 @@
-@baseurl = http://localhost:8000/api
-@token = eyJhbGciOiJIUzI1NiJ9.NjM.3Uz90rOTx2dxycgp9t8p34mNYq_SHyzOIiU5pgDlr9Y
+@baseurl = http://localhost:3000/api
+@token = eyJhbGciOiJIUzI1NiJ9.NzQ.aR4Fz7XvyUItjry6YO3WBMSq8oImGt1b3fr6qyYnqYs
 ###
 // **** USER APIs
 // -----USER-------- Register (Create)
@@ -7,7 +7,7 @@ POST {{baseurl}}/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "dec@23.com",
+    "email": "dec@31.com",
     "password" : "password"
 }
 
@@ -18,7 +18,7 @@ GET {{baseurl}}/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "dec@23.com",
+    "email": "dec@31.com",
     "password" : "password"
 }
 
@@ -71,7 +71,7 @@ content-type: application/json
 auth-token: {{token}}
 
 {
-    "noteID" : 18,
+    "noteID" : 12,
     "title" : "EDITED title",
     "description" : "EDITED description",
     "category" : "EDITED",
@@ -86,5 +86,5 @@ content-type: application/json
 auth-token: {{token}}
 
 {
-    "noteID" : 18
+    "noteID" : 11
 }
