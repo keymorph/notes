@@ -1,5 +1,5 @@
 import React from "react";
-import Note from "../../Components/Note/Note";
+import Note from "./Note";
 
 export default function NoteTimeline(props) {
 

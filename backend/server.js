@@ -12,7 +12,7 @@ import note from './api/routes/note.js'
 
 console.log('---------')
 
-const port = 3000
+const port = 8000
 const host = 'localhost'
 app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`))
 

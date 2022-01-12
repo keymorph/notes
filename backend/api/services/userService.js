@@ -3,21 +3,25 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const search = async (email, res) => {
-        let exists = []
+    let emailExists = []
+    return new Promise((resolve, reject) => {
+
         database.query(
             `SELECT * FROM users WHERE email = '${email}';`,
             async (err, results) => {
                 if (err) throw err
-                exists = await results
+                emailExists = await results
                 
-                if (exists.length != 0) {
-                    return res.status(409).json({ error: 'An account with this email already exists.' })
+                if (emailExists.length != 0) {
+                    reject(false)
                 } else {
-                    return true;
+                    resolve(true)
                 }
             }
         )
-    }
+
+    })
+}
 
 const register = async (email, password, res) => {
     bcrypt.hash(password, 10)

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './style.css';
-import editIcon from "../../images/edit-icon.svg"
+import editIcon from "../../../images/edit-icon.svg"
 import axios from "axios";
 
 function Note () {

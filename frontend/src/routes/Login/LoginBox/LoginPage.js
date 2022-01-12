@@ -1,8 +1,8 @@
 import React from "react";
 import "./loginPage.css";
-import Header from "../../Components/Header/Header";
-import LoginBox from "../../Components/LoginBox/LoginBox";
-import RegisterBox from "../../Components/RegisterBox/RegisterBox";
+import Header from "../../Header";
+import LoginBox from "../LoginBox/LoginBox";
+import RegisterBox from "../Register/RegisterPage";
 
 function LoginPage() {
     return (

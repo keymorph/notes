@@ -2,11 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import Header from './Components/Header/Header';
-
-import LoginPage from './routes/LoginPage/LoginPage';
+import LoginPage from './routes/Login/LoginBox/LoginPage';
 import Dashboard from './routes/Dashboard/Dashboard';
-import RegisterBox from './Components/RegisterBox/RegisterBox';
+import RegisterBox from './routes/Login/Register/RegisterPage';
 
 function App() {
   return (

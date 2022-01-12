@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import Header from "../Header/Header";
-import userImage from "../../images/user.svg";
+import Header from "../../Header";
+import userImage from "../../../images/user.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function LoginBox() {
+function RegisterBox() {
 	const history = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const userLogin = async (event) => {
+  
+  const userRegister = async (event) => {
     event.preventDefault();
-
+    
     const data = {
       email: email,
       password: password
     };
     console.log(data)
-    axios.get(
-      "http://localhost:8000/api/login",
+    axios.post(
+      "http://localhost:8000/api/user",
       data,
     ).then((res) => {
       console.log("Entered Res")
@@ -27,19 +27,19 @@ function LoginBox() {
     }).catch((error) => {
       console.log("Entered Error")
       console.log(error);
-    });
+    }); 
   };
 
   return (
     <div className="innerBox">
-
+      
       <div id="userImage">
         <img src={userImage} alt="JotFox Image" />
       </div>
 
-      <h4>LOGIN</h4>
+      <h4>REGISTER</h4>
 
-      <form onSubmit={userLogin}>
+      <form onSubmit={userRegister}>
         <label htmlFor="Email" className="Email">
           Email
           <br />
@@ -66,9 +66,9 @@ function LoginBox() {
 
         <button type="submit">Submit</button>
         </form>
-
+    
     </div>
   );
 }
 
-export default LoginBox;
+export default RegisterBox;

@@ -1,45 +1,56 @@
 import React, { useState } from "react";
-import Header from "../Header/Header";
-import userImage from "../../images/user.svg";
+import Header from "../../Header";
+import userImage from "../../../images/user.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function RegisterBox() {
+function LoginBox() {
 	const history = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const userRegister = async (event) => {
+
+  const userLogin = async (event) => {
     event.preventDefault();
-    
+
     const data = {
       email: email,
       password: password
     };
     console.log(data)
-    axios.post(
-      "http://localhost:8000/api/register",
-      data,
-    ).then((res) => {
+    // axios.get(
+    //   "http://localhost:8000/api/user",
+    //   data,
+    //   {headers: {
+    //     'Content-Type': 'application/json'
+    // }
+
+  axios({
+    method: 'GET',
+    headers: { 'content-type': 'application/json' },
+    data: { email: "dec@31.com",
+            password: "password"
+          },
+    url: "http://localhost:8000/api/user",
+  }).then((res) => {
       console.log("Entered Res")
       console.log(res)
     }).catch((error) => {
       console.log("Entered Error")
       console.log(error);
-    }); 
+    });
   };
 
   return (
     <div className="innerBox">
-      
+
       <div id="userImage">
         <img src={userImage} alt="JotFox Image" />
       </div>
 
-      <h4>REGISTER</h4>
+      <h4>LOGIN</h4>
 
-      <form onSubmit={userRegister}>
+      <form onSubmit={userLogin}>
         <label htmlFor="Email" className="Email">
           Email
           <br />
@@ -66,9 +77,9 @@ function RegisterBox() {
 
         <button type="submit">Submit</button>
         </form>
-    
+
     </div>
   );
 }
 
-export default RegisterBox;
+export default LoginBox;

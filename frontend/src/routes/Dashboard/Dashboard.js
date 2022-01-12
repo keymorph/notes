@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import NoteTimeline from "../../Components/Note/NoteTimeline";
-import Note from "../../Components/Note/Note";
+import NoteTimeline from "./Note/NoteTimeline";
+import Note from "./Note/Note";
 import axios from 'axios';
 
 export default function Dashboard() {

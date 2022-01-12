@@ -1,8 +1,8 @@
 import React from "react";
-import logoImage from "../../images/user.svg";
-import linkImage from "../../images/link.svg";
-import moneyImage from "../../images/donate.svg";
-import helpImage from "../../images/help.svg";
+import logoImage from "../images/user.svg";
+import linkImage from "../images/link.svg";
+import moneyImage from "../images/donate.svg";
+import helpImage from "../images/help.svg";
 
 function Header() {
   return (
