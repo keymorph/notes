@@ -13,8 +13,8 @@
 > **Links:** https://www.notes.fourscript.com/  
 
 :busts_in_silhouette: **CONTRIBUTING FOURSCRIPTERS:**
-- [Evan C. Navarro](https://www.linkedin.com/in/evancnavarro/)
 - [Dante Edmonson](https://www.linkedin.com/in/dante-edmonson-38823518a/)
+- [Evan C. Navarro](https://www.linkedin.com/in/evancnavarro/)
 - [Raciel Antela Pardo](https://www.linkedin.com/in/racielap/)
 - [Richard Morand](https://www.linkedin.com/in/richard-m-7a5235208/)
 - [Tevin Rose](https://www.linkedin.com/in/tevinrose/)
