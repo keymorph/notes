@@ -5,8 +5,10 @@ import userController from '../controllers/userController.js'
 
 router.post('/user', userController.register)
 
-router.get('/user', userController.login)
+router.put('/user', userController.login)
 
 router.delete('/user', authenticateToken, userController.remove)
+
+router.post('/token', authenticateToken, (req, res) =>  res.status(200) )
 
 export default router

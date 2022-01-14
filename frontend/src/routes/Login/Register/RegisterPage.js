@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Header from "../../Header";
 import userImage from "../../../images/user.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function RegisterBox() {
+function RegisterPage() {
 	const history = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -17,7 +16,9 @@ function RegisterBox() {
       email: email,
       password: password
     };
+
     console.log(data)
+    
     axios.post(
       "http://localhost:8000/api/user",
       data,
@@ -71,4 +72,4 @@ function RegisterBox() {
   );
 }
 
-export default RegisterBox;
+export default RegisterPage;

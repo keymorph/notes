@@ -41,6 +41,7 @@ const register = async (email, password, res) => {
 
 const login = async (email, password, res) => {
     let exists = []
+    console.log(email)
     database.query(
         `SELECT * FROM users WHERE email = '${email}';`,
         async (err, results) => {

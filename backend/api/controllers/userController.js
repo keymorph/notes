@@ -8,8 +8,6 @@ import userService from '../services/userService.js'
 // 2. I'm going to search the database for that email
 // If that email exists then reject.
 
-
-
 const register = async (req, res) => {
     console.log("----------------- REGISTER USER API")
     const { email, password } = req.body
@@ -27,13 +25,13 @@ const register = async (req, res) => {
     }
 }
 
-const login = (req, res) => {
+const login = async (req, res) => {
     try {
         const { email, password } = req.body
         console.log("CHICKEN?")
         console.log(email)
-        validateInput.email(email, password, res)
-        userService.login(email, password, res)
+        const inputResult = await validateInput.email(email, password, res)
+        const loginResult = await userService.login(email, password, res)
     } catch (error) {
         console.log(error)
     }

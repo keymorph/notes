@@ -6,11 +6,23 @@ import axios from 'axios';
 export default function Dashboard() {
   const [notes, getNotes] = useState('');
 
-  const url = 'http://localhost:5000/';
+  const url = 'http://localhost:5000';
 
   useEffect(() => {
+    verifyJWT();
     getAllNotes();
   }, []);
+
+  const verifyJWT = () => {
+    axios.post(`${url}/token`)
+      .then((result) => {
+        
+      })
+      .catch((err) => {
+        history.push("/login");
+      })
+
+  }
 
   const getAllNotes = () => {
     axios.get(`${url}showNotes`)
