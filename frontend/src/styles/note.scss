@@ -1,0 +1,44 @@
+.NoteCard {
+  width: 170px;
+  background-color: white;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 35px;
+  padding-top: 20px;
+  max-height: 400px;
+  min-height: calc(fit-content + 35px);
+  position: relative;
+  overflow: hidden;
+}
+
+.priority {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  width: 100%;
+  height: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: red;
+}
+
+.noteTitle {
+}
+
+.noteText {
+  font-size: 10px;
+  text-overflow: ellipsis;
+  max-height: 100px;
+  padding-bottom: 35px;
+}
+
+.editNote {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+/* style={{position:"absolute", top:0, left:0, right:0, height:20, width:"100%", backgroundColor:"red",}} */
