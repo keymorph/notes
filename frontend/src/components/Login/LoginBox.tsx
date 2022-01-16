@@ -8,10 +8,21 @@ import {
   Grid,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
+import { useNavigate } from "react-router";
 
 import GradientButton from "../UI/Button";
 
-export default function LoginBox(props: any) {
+interface LoginBoxProps {
+  handleSubmit: (event: any) => void;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+  setRemember: (remember: boolean) => void;
+  remember: boolean;
+}
+
+export default function LoginBox(props: LoginBoxProps) {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -80,7 +91,7 @@ export default function LoginBox(props: any) {
         >
           Sign In
         </GradientButton>
-        <Link href="#" variant="body2" sx={{}}>
+        <Link href="" variant="body2" onClick={() => navigate("/Register")}>
           {"Don't have an account? Create one!"}
         </Link>
       </Box>

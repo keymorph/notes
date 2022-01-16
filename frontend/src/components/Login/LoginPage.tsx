@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useState } from "react";
 
 import { Card, Grid } from "@mui/material";
 import LoginBox from "./LoginBox";
 
 export default function LoginPage() {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,7 +52,7 @@ export default function LoginPage() {
           borderRadius: 5,
           width: "70%",
           maxWidth: "400px",
-          background: "#FFFFFFAA",
+          background: "#FFFFFFBB",
         }}
       >
         <LoginBox
