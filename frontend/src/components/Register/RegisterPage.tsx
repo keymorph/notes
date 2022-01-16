@@ -9,7 +9,7 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const userRegister = async (event) => {
+  const userRegister = async (event: any) => {
     event.preventDefault();
 
     const data = {

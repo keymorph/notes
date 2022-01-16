@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import LoginPage from './routes/Login/LoginPage';
-import RegisterPage from './routes/Register/RegisterPage';
-import Dashboard from './routes/Dashboard/Dashboard';
+import LoginPage from "./components/Login/LoginPage";
+import RegisterPage from "./components/Register/RegisterPage";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 // Login Page
 // Register Page
@@ -17,15 +17,13 @@ import Dashboard from './routes/Dashboard/Dashboard';
 
 // App Dashboard Page
 
-
 function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path='/' element={<Dashboard/>}/>
-        <Route exact path='/login' element={<LoginPage/>}/>
-        <Route exact path='/register' element={<RegisterPage/>}/>
-       
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   );

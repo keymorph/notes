@@ -1,4 +1,4 @@
-{
+  {
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": [
@@ -22,7 +22,7 @@
     "strict": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "allowJs": true,
     "skipLibCheck": true,
