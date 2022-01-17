@@ -8,21 +8,21 @@ import {
   Grid,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
-import { useNavigate } from "react-router";
 
 import GradientButton from "../UI/Button";
 
 interface LoginBoxProps {
   handleSubmit: (event: any) => void;
   setEmail: (email: string) => void;
+  setCurrentBox: (currentBox: string) => void;
   setPassword: (password: string) => void;
   setRemember: (remember: boolean) => void;
+  email: string;
+  password: string;
   remember: boolean;
 }
 
 export default function LoginBox(props: LoginBoxProps) {
-  const navigate = useNavigate();
-
   return (
     <Box
       sx={{
@@ -57,6 +57,7 @@ export default function LoginBox(props: LoginBoxProps) {
           name="email"
           autoComplete="email"
           onChange={(event) => props.setEmail(event.target.value)}
+          defaultValue={props.email}
           autoFocus
         />
         <TextField
@@ -79,7 +80,14 @@ export default function LoginBox(props: LoginBoxProps) {
               props.setRemember((event.target as HTMLInputElement).checked)
             }
           />
-          <Link href="#" variant="body2" sx={{ alignSelf: "center" }}>
+          <Link
+            href="javascript:void (0)"
+            variant="body2"
+            sx={{ alignSelf: "center" }}
+            onClick={() => {
+              props.setCurrentBox("nopass");
+            }}
+          >
             Forgot password?
           </Link>
         </Grid>
@@ -87,11 +95,19 @@ export default function LoginBox(props: LoginBoxProps) {
           type="submit"
           fullWidth
           variant="contained"
+          color={"primary"}
+          disabled={props.email === "" || props.password === ""}
           sx={{ mt: 3, mb: 3 }}
         >
           Sign In
         </GradientButton>
-        <Link href="" variant="body2" onClick={() => navigate("/Register")}>
+        <Link
+          href="javascript:void (0)"
+          variant="body2"
+          onClick={() => {
+            props.setCurrentBox("register");
+          }}
+        >
           {"Don't have an account? Create one!"}
         </Link>
       </Box>
