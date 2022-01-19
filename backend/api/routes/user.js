@@ -9,6 +9,6 @@ router.put('/user', userController.login)
 
 router.delete('/user', authenticateToken, userController.remove)
 
-router.post('/token', authenticateToken, (req, res) =>  res.status(200) )
+router.get('/token', authenticateToken, (req, res) =>  res.send("VALID AUTH TOKEN").status(200) )
 
 export default router
