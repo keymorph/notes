@@ -1,16 +1,7 @@
-import { Avatar, Box, Grid, Link, TextField } from "@mui/material";
+import { Avatar, Box, Button, Grid, Link, TextField } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
-import GradientButton from "../UI/Button";
-
-interface NoPasswordProps {
-  handleSubmit: (event: any) => void;
-  setCurrentBox: (currentBox: string) => void;
-  setEmail: (email: string) => void;
-  email: string;
-}
-
-export default function NoPasswordBox(props: NoPasswordProps) {
+export default function NoPasswordBox(props) {
   return (
     <Box
       sx={{
@@ -45,8 +36,9 @@ export default function NoPasswordBox(props: NoPasswordProps) {
           autoComplete="email"
           onChange={(event) => props.setEmail(event.target.value)}
           defaultValue={props.email}
+          autoFocus
         />
-        <GradientButton
+        <Button
           type="submit"
           fullWidth
           variant="contained"
@@ -55,7 +47,7 @@ export default function NoPasswordBox(props: NoPasswordProps) {
           sx={{ mt: 3, mb: 3 }}
         >
           Send Confirmation Code
-        </GradientButton>
+        </Button>
         <Link
           href="javascript:void (0)"
           variant="body2"

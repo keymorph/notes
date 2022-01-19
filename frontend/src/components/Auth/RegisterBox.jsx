@@ -1,20 +1,9 @@
-import { Avatar, Grid, Link, TextField } from "@mui/material";
+import { Avatar, Button, Grid, Link, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
 
-import GradientButton from "../UI/Button";
-
-interface RegisterBoxProps {
-  handleSubmit: (event: any) => void;
-  setCurrentBox: (currentBox: string) => void;
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-  email: string;
-  password: string;
-}
-
-export default function RegisterBox(props: RegisterBoxProps) {
+export default function RegisterBox(props) {
   const [comfirmPassword, setComfirmPassword] = useState("");
 
   return (
@@ -50,9 +39,10 @@ export default function RegisterBox(props: RegisterBoxProps) {
           label="Email Address"
           name="email"
           autoComplete="email"
-          type={"email"}
+          type="email"
           onChange={(event) => props.setEmail(event.target.value)}
           defaultValue={props.email}
+          autoFocus
         />
         <TextField
           margin="normal"
@@ -76,11 +66,10 @@ export default function RegisterBox(props: RegisterBoxProps) {
           autoComplete="current-password"
           onChange={(event) => setComfirmPassword(event.target.value)}
         />
-        <GradientButton
+        <Button
           type="submit"
           fullWidth
           variant="contained"
-          color={"something that isn't blue lol"}
           disabled={
             props.email === "" ||
             props.password === "" ||
@@ -89,7 +78,7 @@ export default function RegisterBox(props: RegisterBoxProps) {
           sx={{ mt: 3, mb: 3 }}
         >
           Register
-        </GradientButton>
+        </Button>
         <Link
           href="javascript:void (0)"
           variant="body2"
@@ -97,7 +86,7 @@ export default function RegisterBox(props: RegisterBoxProps) {
             props.setCurrentBox("login");
           }}
         >
-          {"Have an account? Login!"}
+          {"Already have an account? Log in!"}
         </Link>
       </Box>
     </Box>

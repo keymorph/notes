@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import NoteTimeline from "./Note/NoteTimeline";
-// import Note from "./Note/Note";
+import Note from "./Note/Note";
 import axios from "axios";
 
 export default function Dashboard() {
@@ -17,9 +16,8 @@ export default function Dashboard() {
   const verifyJWT = () => {
     axios
       .post(`${url}/token`)
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      .then((_result) => {})
-      .catch((_err) => {
+      .then((result) => {})
+      .catch((err) => {
         // history.push("/login");
       });
   };

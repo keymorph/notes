@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../../../styles/note.scss";
 import editIcon from "../../../images/edit-icon.svg";
 import axios from "axios";
 

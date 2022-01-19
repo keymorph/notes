@@ -1,12 +1,12 @@
 import React from "react";
 import Note from "./Note";
 
-export default function NoteTimeline(props: any) {
-  const displayNotes = (props: any) => {
+export default function NoteTimeline(props) {
+  const displayNotes = (props) => {
     const { notes } = props;
 
     if (notes.length > 0) {
-      return notes.map((note: any) => {
+      return notes.map((note) => {
         console.log(note);
         return (
           <div className="note" key={note._noteID}>

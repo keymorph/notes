@@ -7,10 +7,13 @@ import NoPasswordBox from "./NoPasswordBox";
 import LoginBox from "./LoginBox";
 import RegisterBox from "./RegisterBox";
 
+import appTheme from "../UI/Theme";
+import { ThemeProvider } from "@mui/material/styles";
+
 export default function AuthPage() {
   const navigate = useNavigate();
 
-  // Handles the state of which box is displayed
+  // Handles the state of which box is displayed, default is "login". Options are: "login", "register" and "nopass"
   const [currentBox, setCurrentBox] = useState("login");
   // State handling for the box components
   const [email, setEmail] = useState("");
@@ -22,7 +25,7 @@ export default function AuthPage() {
     return null;
   };
 
-  const handleLogin = async (event: any) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     const data = {
@@ -44,7 +47,7 @@ export default function AuthPage() {
       });
   };
 
-  const handleRegister = async (event: any) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
 
     const data = {

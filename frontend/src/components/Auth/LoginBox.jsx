@@ -6,23 +6,12 @@ import {
   TextField,
   Avatar,
   Grid,
+  Button,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
-import GradientButton from "../UI/Button";
 
-interface LoginBoxProps {
-  handleSubmit: (event: any) => void;
-  setEmail: (email: string) => void;
-  setCurrentBox: (currentBox: string) => void;
-  setPassword: (password: string) => void;
-  setRemember: (remember: boolean) => void;
-  email: string;
-  password: string;
-  remember: boolean;
-}
-
-export default function LoginBox(props: LoginBoxProps) {
+export default function LoginBox(props) {
   return (
     <Box
       sx={{
@@ -76,12 +65,10 @@ export default function LoginBox(props: LoginBoxProps) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
             checked={props.remember}
-            onChange={(event) =>
-              props.setRemember((event.target as HTMLInputElement).checked)
-            }
+            onChange={(event) => props.setRemember(event.target.checked)}
           />
           <Link
-            href="javascript:void (0)"
+            href="#"
             variant="body2"
             sx={{ alignSelf: "center" }}
             onClick={() => {
@@ -91,24 +78,23 @@ export default function LoginBox(props: LoginBoxProps) {
             Forgot password?
           </Link>
         </Grid>
-        <GradientButton
+        <Button
           type="submit"
           fullWidth
           variant="contained"
-          color={"primary"}
           disabled={props.email === "" || props.password === ""}
           sx={{ mt: 3, mb: 3 }}
         >
           Sign In
-        </GradientButton>
+        </Button>
         <Link
-          href="javascript:void (0)"
+          href="#"
           variant="body2"
           onClick={() => {
             props.setCurrentBox("register");
           }}
         >
-          {"Don't have an account? Create one!"}
+          {"Don't have an account yet? Create one!"}
         </Link>
       </Box>
     </Box>
