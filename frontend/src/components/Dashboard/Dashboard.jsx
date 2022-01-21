@@ -29,10 +29,10 @@ export default function Dashboard() {
 
     return axios
       .get(`${url}/token`, {
-         headers: {
-           'auth-token': token //the token is a variable which holds the token
-         }
-        })
+        headers: {
+          "auth-token": token, //the token is a variable which holds the token
+        },
+      })
       .then((result) => {
         console.log(result)
         console.log("VALID TOKEN AFTER RESULT")
@@ -41,7 +41,7 @@ export default function Dashboard() {
 
       })
       .catch((err) => {
-        console.log("GO BACK TO LOGIN")
+        console.log("GO BACK TO LOGIN");
         navigate("../auth", { replace: true });
         return false;
         // navigate('/auth');
@@ -67,9 +67,9 @@ export default function Dashboard() {
 
 // remove the token from the local storage and redirect user to login page
   const removeToken = () => {
-    localStorage.removeItem("auth-token")
+    localStorage.removeItem("auth-token");
     navigate("../auth", { replace: true });
-  }
+  };
 
   if (!showPage)
     return null
