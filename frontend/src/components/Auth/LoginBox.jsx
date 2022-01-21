@@ -6,9 +6,10 @@ import {
   TextField,
   Avatar,
   Grid,
-  Button,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
+
+import CustomButton from "../UI/Button";
 
 export default function LoginBox(props) {
   return (
@@ -40,7 +41,6 @@ export default function LoginBox(props) {
           sx={{ borderRadius: 100 }}
           required
           fullWidth
-          id="email"
           label="Email Address"
           name="email"
           autoComplete="email"
@@ -55,7 +55,6 @@ export default function LoginBox(props) {
           name="password"
           label="Password"
           type="password"
-          id="password"
           autoComplete="current-password"
           onChange={(event) => props.setPassword(event.target.value)}
         />
@@ -77,7 +76,8 @@ export default function LoginBox(props) {
             Forgot password?
           </Link>
         </Grid>
-        <Button
+        <CustomButton
+          loading={props.loading}
           type="submit"
           fullWidth
           variant="contained"
@@ -85,7 +85,7 @@ export default function LoginBox(props) {
           sx={{ mt: 3, mb: 3 }}
         >
           Sign In
-        </Button>
+        </CustomButton>
         <Link
           href="#"
           variant="body2"

@@ -1,7 +1,9 @@
-import { Avatar, Button, Grid, Link, TextField } from "@mui/material";
+import { Avatar, Grid, Link, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
+
+import CustomButton from "../UI/Button";
 
 export default function RegisterBox(props) {
   const [comfirmPassword, setComfirmPassword] = useState("");
@@ -35,7 +37,6 @@ export default function RegisterBox(props) {
           sx={{ borderRadius: 100 }}
           required
           fullWidth
-          id="email"
           label="Email Address"
           name="email"
           autoComplete="email"
@@ -51,7 +52,6 @@ export default function RegisterBox(props) {
           name="password"
           label="Password"
           type="password"
-          id="password"
           autoComplete="current-password"
           onChange={(event) => props.setPassword(event.target.value)}
         />
@@ -62,11 +62,11 @@ export default function RegisterBox(props) {
           name="password"
           label="Confirm Password"
           type="password"
-          id="password"
           autoComplete="current-password"
           onChange={(event) => setComfirmPassword(event.target.value)}
         />
-        <Button
+        <CustomButton
+          loading={props.loading}
           type="submit"
           fullWidth
           variant="contained"
@@ -78,9 +78,9 @@ export default function RegisterBox(props) {
           sx={{ mt: 3, mb: 3 }}
         >
           Register
-        </Button>
+        </CustomButton>
         <Link
-          href="javascript:void (0)"
+          href="#"
           variant="body2"
           onClick={() => {
             props.setCurrentBox("login");

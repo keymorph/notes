@@ -1,5 +1,7 @@
-import { Avatar, Box, Button, Grid, Link, TextField } from "@mui/material";
+import { Avatar, Box, Grid, Link, TextField } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
+
+import CustomButton from "../UI/Button";
 
 export default function NoPasswordBox(props) {
   return (
@@ -30,7 +32,6 @@ export default function NoPasswordBox(props) {
           sx={{ borderRadius: 100 }}
           required
           fullWidth
-          id="email"
           label="Email Address"
           name="email"
           autoComplete="email"
@@ -38,7 +39,8 @@ export default function NoPasswordBox(props) {
           defaultValue={props.email}
           autoFocus
         />
-        <Button
+        <CustomButton
+          loading={props.loading}
           type="submit"
           fullWidth
           variant="contained"
@@ -47,9 +49,9 @@ export default function NoPasswordBox(props) {
           sx={{ mt: 3, mb: 3 }}
         >
           Send Confirmation Code
-        </Button>
+        </CustomButton>
         <Link
-          href="javascript:void (0)"
+          href="#"
           variant="body2"
           onClick={() => {
             props.setCurrentBox("register");

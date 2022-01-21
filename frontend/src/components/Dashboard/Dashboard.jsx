@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import NoteTimeline from "./Note/NoteTimeline";
+import NoteTimeline from "./Note/NotesTimeline";
 import Note from "./Note/Note";
 import axios from "axios";
 
@@ -18,29 +18,28 @@ export default function Dashboard() {
   }, []);
 
   const verifyJWT = () => {
+    const token = localStorage.getItem("auth-token");
+    console.log(token);
 
-    const token = localStorage.getItem("auth-token")
-    console.log(token)
-
-//     axios.get('https://example.com/getSomething', {
-//  headers: {
-//    Authorization: 'Bearer ' + token //the token is a variable which holds the token
-//  }
-// })
+    //     axios.get('https://example.com/getSomething', {
+    //  headers: {
+    //    Authorization: 'Bearer ' + token //the token is a variable which holds the token
+    //  }
+    // })
 
     axios
       .get(`${url}/token`, {
-         headers: {
-           'auth-token': token //the token is a variable which holds the token
-         }
-        })
+        headers: {
+          "auth-token": token, //the token is a variable which holds the token
+        },
+      })
       .then((result) => {
-        console.log(result)
-        console.log("VALID TOKEN AFTER RESULT")
-        setShowPage(true)
+        console.log(result);
+        console.log("VALID TOKEN AFTER RESULT");
+        setShowPage(true);
       })
       .catch((err) => {
-        console.log("GO BACK TO LOGIN")
+        console.log("GO BACK TO LOGIN");
         navigate("../auth", { replace: true });
         // navigate('/auth');
       });
@@ -56,23 +55,18 @@ export default function Dashboard() {
   //     .catch((error) => console.error(`Error: ${error}`));
   // };
   const removeToken = () => {
-    localStorage.removeItem("auth-token")
+    localStorage.removeItem("auth-token");
     navigate("../auth", { replace: true });
-  }
+  };
 
   // remove the token from the local storage
   // REFRESH/"PUSH" -> go to /auth
 
-  if (!showPage)
-    return null
-  else 
+  if (!showPage) return null;
+  else
     return (
       <>
-        <button
-          onClick={removeToken}
-        >
-          Logout
-        </button>
+        <button onClick={removeToken}>Logout</button>
         <NoteTimeline notes={notes} />
       </>
     );
