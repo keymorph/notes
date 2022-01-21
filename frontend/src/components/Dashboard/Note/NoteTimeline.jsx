@@ -11,7 +11,7 @@ export default function NoteTimeline(props) {
         return (
           <div className="note" key={note._noteID}>
             <h3 className="note__title">{note.title}</h3>
-            <p className="note__body">{note.content}</p>
+            <p className="note__body">{note.description}</p>
           </div>
         );
       });

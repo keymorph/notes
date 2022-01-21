@@ -1,5 +1,5 @@
 @baseurl = http://localhost:8000/api
-@token = eyJhbGciOiJIUzI1NiJ9.NzY.PL2UIwbcurSIyLej8Gvsa48BdRQj1_hmT0PRG4K7Fx8
+@token = eyJhbGciOiJIUzI1NiJ9.Nzg._9hbk01hK8u1pWII4PUkqVtzxOnoK4rixcA403t_EjE
 ###
 // **** USER APIs
 // -----USER-------- Register (Create)
@@ -46,8 +46,8 @@ content-type: application/json
 auth-token: {{token}}
 
 {
-    "title" : "Note Title #18",
-    "description" : "Description is here.",
+    "title" : "Note Title #4",
+    "description" : "Lorem ipsum ,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg",
     "category" : "Testing",
     "tags" : "FourScript, JotFox"
 }

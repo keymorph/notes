@@ -3,14 +3,14 @@ import linkImage from "../images/link.svg";
 import moneyImage from "../images/donate.svg";
 import helpImage from "../images/help.svg";
 
-function Header() {
+function NavBar() {
   return (
-    <div className="Header">
+    <div className="NavBar">
       <div id="4S_logo">
         <img src={logoImage} alt="FourScript Logo" />
       </div>
 
-      <div id="header-title"> NOTES </div>
+      <div id="navbar-title"> NOTES </div>
 
       <div className="contents">
         <div id="link">
@@ -40,4 +40,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default NavBar;
