@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-
 import { Card, Grid } from "@mui/material";
+
 import NoPasswordBox from "./NoPasswordBox";
 import LoginBox from "./LoginBox";
 import RegisterBox from "./RegisterBox";
 
-import appTheme from "../UI/Theme";
-import { ThemeProvider } from "@mui/material/styles";
+import ThemeContext from "../../store/theme-context";
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -108,58 +107,65 @@ export default function AuthPage() {
   };
 
   return (
-    <Grid
-      container
-      justifyContent={"center"}
-      alignItems={"center"}
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-      }}
-    >
-      <Card
-        sx={{
-          padding: 3,
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
-          borderRadius: 5,
-          width: "70%",
-          maxWidth: "400px",
-          background: "#FFFFFFBB",
-        }}
-      >
-        {currentBox === "login" ? (
-          <LoginBox
-            setCurrentBox={setCurrentBox}
-            handleSubmit={handleLogin}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            setRemember={setRemember}
-            email={email}
-            password={password}
-            remember={remember}
-            loading={loading}
-          />
-        ) : currentBox === "register" ? (
-          <RegisterBox
-            setCurrentBox={setCurrentBox}
-            handleSubmit={handleRegister}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            email={email}
-            password={password}
-            loading={loading}
-          />
-        ) : currentBox === "nopass" ? (
-          <NoPasswordBox
-            setCurrentBox={setCurrentBox}
-            handleSubmit={handleForgotPassword}
-            setEmail={setEmail}
-            email={email}
-            loading={loading}
-          />
-        ) : null}
-      </Card>
-    </Grid>
+    <ThemeContext.Consumer>
+      {(theme) => (
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{
+            height: "100vh",
+            width: "100vw",
+            background:
+              theme === "dark"
+                ? "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"
+                : "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+          }}
+        >
+          <Card
+            sx={{
+              padding: 3,
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
+              borderRadius: 5,
+              width: "70%",
+              maxWidth: "400px",
+              background: theme === "dark" ? "#000000A0" : "#FFFFFFA0",
+            }}
+          >
+            {currentBox === "login" ? (
+              <LoginBox
+                setCurrentBox={setCurrentBox}
+                handleSubmit={handleLogin}
+                setEmail={setEmail}
+                setPassword={setPassword}
+                setRemember={setRemember}
+                email={email}
+                password={password}
+                remember={remember}
+                loading={loading}
+              />
+            ) : currentBox === "register" ? (
+              <RegisterBox
+                setCurrentBox={setCurrentBox}
+                handleSubmit={handleRegister}
+                setEmail={setEmail}
+                setPassword={setPassword}
+                email={email}
+                password={password}
+                loading={loading}
+              />
+            ) : currentBox === "nopass" ? (
+              <NoPasswordBox
+                setCurrentBox={setCurrentBox}
+                handleSubmit={handleForgotPassword}
+                setEmail={setEmail}
+                email={email}
+                loading={loading}
+              />
+            ) : null}
+          </Card>
+        </Grid>
+      )}
+    </ThemeContext.Consumer>
   );
 }

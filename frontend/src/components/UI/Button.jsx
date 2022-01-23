@@ -4,15 +4,10 @@
 import React from "react";
 import { Button, CircularProgress } from "@mui/material";
 
-export default function CustomButton({ children, loading, ...rest }) {
-  console.log(loading);
+export default function CustomButton({ children, loading, disabled, ...rest }) {
   return (
-    <Button {...rest}>
-      {loading ? (
-        <CircularProgress size={20} sx={{ color: "white" }} />
-      ) : (
-        children
-      )}
+    <Button disabled={loading || disabled} {...rest}>
+      {loading ? <CircularProgress size={20} /> : children}
     </Button>
   );
 }

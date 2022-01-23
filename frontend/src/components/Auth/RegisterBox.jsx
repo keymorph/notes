@@ -70,6 +70,7 @@ export default function RegisterBox(props) {
           type="submit"
           fullWidth
           variant="contained"
+          color="secondary"
           disabled={
             props.email === "" ||
             props.password === "" ||
