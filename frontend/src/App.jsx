@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "transition-style";
 
 import AuthPage from "./components/Auth/AuthPage";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -40,20 +39,17 @@ export default function App() {
   return (
     <ThemeContext.Provider value={darkMode ? "dark" : "light"}>
       <ThemeProvider theme={theme}>
-        {/* TODO: Apply a transition everytime the user clicks on the theme toggling button */}
-        <section transition-style="in:circle:bottom-right">
-          <ResponsiveAppBar
-            darkMode={darkMode}
-            handleDarkModeToggle={handleDarkModeToggle}
-          />
-          <Router>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/note" element={<Note />} />
-            </Routes>
-          </Router>
-        </section>
+        <ResponsiveAppBar
+          darkMode={darkMode}
+          handleDarkModeToggle={handleDarkModeToggle}
+        />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/note" element={<Note />} />
+          </Routes>
+        </Router>
       </ThemeProvider>
     </ThemeContext.Provider>
   );

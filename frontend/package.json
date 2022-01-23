@@ -22,7 +22,6 @@
     "react-scripts": "4.0.3",
     "sass": "^1.48.0",
     "styled-components": "^5.3.3",
-    "transition-style": "^0.1.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
