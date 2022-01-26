@@ -11,10 +11,9 @@ import {
   Divider,
 } from "@mui/material";
 import { DeleteIcon, EditIcon, MoreVertIcon } from "@mui/icons-material";
-// import { faEllipsisV } from '@fontawesome/free-solid-svg-icons/faEllipsisV';
-// import { FontAwesomeIcon } from '@fontawesome/react-fontawesome';
 
-function Note() {
+
+function Note(props) {
   const getNotes = async () => {
     axios
       .get("http://localhost:5000/api/showNotes")
@@ -28,41 +27,28 @@ function Note() {
 
   const [hover, setHover] = useState(false);
 
-  const [height, setHeight] = useState(300);
+  const [height, setHeight] = useState("300px");
 
   return (
     <Card
-      sx={{ maxWidth: 225, height: height, maxHeight: 500 }}
-      onClick={() => setHeight(height === 300 ? "auto" : 300)}
+      sx={{ maxWidth: "225px", height: height, minHeight: "300px",  overflowWrap:"break-word"  }}
+      onClick={() => setHeight(height === "300px" ? "auto" : "300px")}
     >
       <Grid container gridColumn={100} xs={{}}>
-        Category
+        { props.category }
         <IconButton aria-label="settings"></IconButton>
       </Grid>
 
       <CardHeader></CardHeader>
       <Grid>
         <Typography variant="subtitle1" title="Title Name">
-          Title Name
+          { props.title }
         </Typography>
       </Grid>
       <Divider variant="middle" />
       <CardContent>
         <Typography variant="body2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+          { props.description }
         </Typography>
       </CardContent>
     </Card>

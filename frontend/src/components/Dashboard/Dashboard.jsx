@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Navbar from "../Navbar";
-import NoteTimeline from "./Note/NotesTimeline";
+import NoteTimeline from "./Note/NoteTimeline";
 import Note from "./Note/Note";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem("auth-token");
 
-  const [notes, getNotes] = useState("");
+  const [noteCollection, setNoteCollection] = useState([]);
   const [showPage, setShowPage] = useState(false);
 
   const url = "http://localhost:8000/api";
@@ -56,8 +56,8 @@ export default function Dashboard() {
       })
       .then((response) => {
         const allNotes = response.data;
-        getNotes(allNotes);
-        console.log(notes);
+        setNoteCollection(allNotes);
+        console.log(noteCollection);
       })
       .catch((error) => console.error(`Error: ${error}`));
   };
@@ -74,7 +74,7 @@ export default function Dashboard() {
       <>
         <Navbar />
         <button onClick={removeToken}>Logout</button>
-        <NoteTimeline notes={notes} />
+        <NoteTimeline noteCollection={noteCollection} />
       </>
     );
 }

@@ -22,8 +22,10 @@ export default function RegisterBox(props) {
           <LockIcon />
         </Avatar>
       </Grid>
+  
       <Box
         component="form"
+        onSubmit={props.handleSubmit}
         noValidate
         sx={{
           display: "flex",
@@ -75,9 +77,10 @@ export default function RegisterBox(props) {
             props.email === "" ||
             props.password === "" ||
             comfirmPassword !== props.password
+          
           }
           sx={{ mt: 3, mb: 3 }}
-        >
+        > 
           Register
         </CustomButton>
         <Link

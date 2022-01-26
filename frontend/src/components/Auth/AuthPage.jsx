@@ -82,10 +82,10 @@ export default function AuthPage() {
       });
   };
 
-  const handleRegister = async (event) => {
+  const handleRegister = (event) => {
     setLoading(true);
     event.preventDefault();
-
+   
     const data = {
       email: email,
       password: password,
@@ -98,6 +98,8 @@ export default function AuthPage() {
       .then((res) => {
         console.log("Entered Res");
         console.log(res);
+        setLoading(false);
+        setCurrentBox("login");
       })
       .catch((error) => {
         setLoading(false);
@@ -150,6 +152,7 @@ export default function AuthPage() {
                 handleSubmit={handleRegister}
                 setEmail={setEmail}
                 setPassword={setPassword}
+                setRemember={setRemember}
                 email={email}
                 password={password}
                 loading={loading}

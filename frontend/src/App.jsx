@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import AuthPage from "./components/Auth/AuthPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Note from "./components/Dashboard/Note/Note";
-import ResponsiveAppBar from "./components/Appbar";
+import Navbar from "./components/Navbar";
 
 import ThemeContext from "./store/theme-context";
 
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <ThemeContext.Provider value={darkMode ? "dark" : "light"}>
       <ThemeProvider theme={theme}>
-        <ResponsiveAppBar
+        <Navbar
           darkMode={darkMode}
           handleDarkModeToggle={handleDarkModeToggle}
         />

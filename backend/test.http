@@ -1,5 +1,5 @@
 @baseurl = http://localhost:8000/api
-@token = eyJhbGciOiJIUzI1NiJ9.Nzg._9hbk01hK8u1pWII4PUkqVtzxOnoK4rixcA403t_EjE
+@token = eyJhbGciOiJIUzI1NiJ9.ODM.6aCKC4ZPNIs-JZB2U6x0CaZ518jwvlwr9OzVZjU8mwY
 ###
 // **** USER APIs
 // -----USER-------- Register (Create)
@@ -7,7 +7,7 @@ POST {{baseurl}}/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "dec@31.com",
+    "email": "jan@25.com",
     "password" : "password"
 }
 
@@ -18,7 +18,7 @@ GET {{baseurl}}/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "jan@11.com",
+    "email": "jan@25.com",
     "password" : "password"
 }
 
@@ -46,8 +46,8 @@ content-type: application/json
 auth-token: {{token}}
 
 {
-    "title" : "Note Title #4",
-    "description" : "Lorem ipsum ,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg",
+    "title" : "Title #4",
+    "description" : "LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg8888888885555555555",
     "category" : "Testing",
     "tags" : "FourScript, JotFox"
 }

@@ -41,7 +41,6 @@ const register = async (email, password, res) => {
 
 const login = async (email, password, res) => {
     let exists = []
-    console.log(email)
     database.query(
         `SELECT * FROM users WHERE email = '${email}';`,
         async (err, results) => {
@@ -49,14 +48,17 @@ const login = async (email, password, res) => {
             exists = await results
 
             if (exists.length == 0) {
+                console.log("Account doesn't exist.")
                 return res.status(401).json({ error: `This JotFox account doesn't exist. Try a different Email.` })
             } else {
                 const validPassword = await bcrypt.compare(password, exists[0].password)
 
                 if (!validPassword) {
+                    console.log("Incorrect password.")
                     return res.status(400).json({ error: 'The email address or password you entered is invalid. Please try again.' })
                 }
 
+                console.log("All good, here's a JWT.")
                 const accessToken = jwt.sign(exists[0].userID, process.env.AUTH_TOKEN_SECRET)
                 res.status(200).json({ accessToken: accessToken })
             }
