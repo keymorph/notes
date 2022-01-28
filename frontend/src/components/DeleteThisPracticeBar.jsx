@@ -1,14 +1,13 @@
-import companyLogo from "../images/user.svg";
-import socialMediaLinks from "../images/link.svg";
-import donateButton from "../images/donate.svg";
-import informationIcon from "../images/help.svg";
-import userProfileImage from "../images/user.svg";
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 
+import companyLogo from "../images/user.svg";
+import socialMediaLinks from "../images/link.svg";
+import donateButton from "../images/donate.svg";
+import informationIcon from "../images/help.svg";
+import userProfileImage from "../images/user.svg";
 import LinkIcon from "@mui/icons-material/Link";
 
 export default function Navbar() {

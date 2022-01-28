@@ -6,11 +6,13 @@ import {
   CardHeader,
   CardContent,
   Typography,
-  Grid,
   IconButton,
   Divider,
+  Box,
+  Grid,
+  Collapse
 } from "@mui/material";
-import { DeleteIcon, EditIcon, MoreVertIcon } from "@mui/icons-material";
+import { DeleteIcon, EditIcon, MoreVert} from "@mui/icons-material";
 
 
 function Note(props) {
@@ -26,32 +28,39 @@ function Note(props) {
   };
 
   const [hover, setHover] = useState(false);
-
-  const [height, setHeight] = useState("300px");
+  const [checked, setChecked] = useState(false);
 
   return (
+    <Collapse in={checked} collapsedSize={250}>
     <Card
-      sx={{ maxWidth: "225px", height: height, minHeight: "300px",  overflowWrap:"break-word"  }}
-      onClick={() => setHeight(height === "300px" ? "auto" : "300px")}
-    >
-      <Grid container gridColumn={100} xs={{}}>
-        { props.category }
-        <IconButton aria-label="settings"></IconButton>
-      </Grid>
+      sx={{ maxWidth: "225px", minHeight: "200", height: "auto", overflowWrap:"break-word", transition: "height 1s linear"}}
+      style={{transition:"height 1s linear"}}
 
-      <CardHeader></CardHeader>
+    >
+      <Box sx={{backgroundColor: 'orange', height: '30px', position: 'relative'}}>
+        {/* { props.category } */}
+        {/* NONE */}
+        <IconButton aria-label="settings" sx={{position:'absolute', right: '0px', padding: '0px'}} onClick={()=>{console.log("CHANGE")}}>
+          <MoreVert sx={{color: 'white'}}/>
+        </IconButton>
+      </Box>
+
       <Grid>
         <Typography variant="subtitle1" title="Title Name">
-          { props.title }
+          {/* { props.title } */}
+          Grocery List
         </Typography>
       </Grid>
       <Divider variant="middle" />
-      <CardContent>
+      <CardContent onClick={() => setChecked( (prevState) => !prevState )} sx={{userSelect:'text'}}>
         <Typography variant="body2">
-          { props.description }
+          {/* { props.description } */}
+          There are words, words, words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,and more words
         </Typography>
       </CardContent>
+      
     </Card>
+    </Collapse>
   );
 }
 
