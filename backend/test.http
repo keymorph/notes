@@ -47,7 +47,7 @@ auth-token: {{token}}
 
 {
     "title" : "Title #4",
-    "description" : "LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg8888888885555555555",
+    "description" : "LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg8888888885555555555LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg888888888LoremSipsumB,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagrdgfrdegertgergerg8888888885555555555",
     "category" : "Testing",
     "tags" : "FourScript, JotFox"
 }

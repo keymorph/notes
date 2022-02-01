@@ -17,7 +17,7 @@ export default function NoteTimeline(props) {
   })
 
   return (
-    <Masonry columns={4} spacing={1.5}>
+    <Masonry columns={6} spacing={1.2}>
       {
         (noteCollection.length > 0) ? NoteComponents : <h3>No notes yet.</h3>
       }
