@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Navbar from "../Navbar";
 import NoteTimeline from "./Note/NoteTimeline";
-import Note from "./Note/Note";
 import axios from "axios";
 
 export default function Dashboard() {
