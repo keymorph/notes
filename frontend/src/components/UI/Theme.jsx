@@ -1,26 +1,98 @@
-import { createTheme } from "@mui/system";
+import {createTheme} from "@mui/material/styles";
 import { styled } from '@mui/material/styles';
 import {Switch} from "@mui/material";
 
-// Testing createTheme
-const appTheme = createTheme({
+export const ThemeDark = createTheme({
+  palette: {
+    mode: 'dark',
+    color: "white",
+  },
+  // Theme Style Overrides
   components: {
-    Button: {
-      primary: {
-        backgroundColor: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-        boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
-        border: 0,
-        borderRadius: 20,
+    MuiLoadingButton: {
+      styleOverrides: {
+        root: {
+          background: "linear-gradient(45deg, #0176D3 30%, #01ABD3 90%)",
+          boxShadow: "0 3px 4px 2px rgba(33, 150, 243, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
+        primary: {
+          background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
+        secondary: {
+          backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+          boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
       },
-      secondary: {
-        backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-        border: 0,
-        borderRadius: 20,
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: "#000000A0",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "#000000A0",
+        },
       },
     },
   },
 });
+
+export const ThemeLight = createTheme({
+  palette: {
+    mode: 'light',
+  },
+  // Theme Style Overrides
+  components: {
+    MuiLoadingButton: {
+      styleOverrides: {
+        root: {
+          background: "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)",
+          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
+        primary: {
+          background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
+        secondary: {
+          background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+          boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+          border: 0,
+          borderRadius: 20,
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: "#FFFFFFAF",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "#FFFFFFAF",
+        },
+      },
+    },
+  },
+});
+
 
 // Custom theme toggle Switch for the navbar
 export const ThemeToggleSwitch = styled(Switch)(({ theme }) => ({

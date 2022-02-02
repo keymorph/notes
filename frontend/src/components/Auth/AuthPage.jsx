@@ -7,8 +7,6 @@ import NoPasswordBox from "./NoPasswordBox";
 import LoginBox from "./LoginBox";
 import RegisterBox from "./RegisterBox";
 
-import ThemeContext from "../../store/theme-context";
-
 export default function AuthPage() {
   const navigate = useNavigate();
 
@@ -22,34 +20,30 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
 
+  // Verifiy if the user has a valid token (JWT)
   useEffect(() => {
-    verifyJWT();
-  }, []);
-
-  const url = "http://localhost:8000/api";
-
-  // Verifiy if the user has a valid token
-  const verifyJWT = () => {
     setLoading(true);
     const token = localStorage.getItem("auth-token");
     console.log(token);
 
     axios
-      .get(`${url}/token`, {
-        headers: {
-          "auth-token": token, //the token is a variable which holds the token
-        },
-      })
-      .then((result) => {
-        console.log(result);
-        console.log("VALID TOKEN == GO TO DASHBOARD INSTEAD");
-        navigate("../", { replace: true });
-      })
-      // No token found, remain on login page
-      .catch(() => {
-        setLoading(false);
-      });
-  };
+        .get(`${url}/token`, {
+          headers: {
+            "auth-token": token, //the token is a variable which holds the token
+          },
+        })
+        .then((result) => {
+          console.log(result);
+          console.log("VALID TOKEN == GO TO DASHBOARD INSTEAD");
+          navigate("../", { replace: true });
+        })
+        // No token found, remain on login page
+        .catch(() => {
+          setLoading(false);
+        });
+  }, []);
+
+  const url = "http://localhost:8000/api";
 
   // TODO: Handle the forgot password functionality
   const handleForgotPassword = () => {
@@ -85,7 +79,7 @@ export default function AuthPage() {
   const handleRegister = (event) => {
     setLoading(true);
     event.preventDefault();
-   
+
     const data = {
       email: email,
       password: password,
@@ -109,8 +103,6 @@ export default function AuthPage() {
   };
 
   return (
-    <ThemeContext.Consumer>
-      {(theme) => (
         <Grid
           container
           justifyContent={"center"}
@@ -118,10 +110,7 @@ export default function AuthPage() {
           sx={{
             height: "100vh",
             width: "100vw",
-            background:
-              theme === "dark"
-                ? "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"
-                : "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+              overflowY: "hidden",
           }}
         >
           <Card
@@ -131,7 +120,6 @@ export default function AuthPage() {
               borderRadius: 5,
               width: "70%",
               maxWidth: "400px",
-              background: theme === "dark" ? "#000000A0" : "#FFFFFFA0",
             }}
           >
             {currentBox === "login" ? (
@@ -168,7 +156,5 @@ export default function AuthPage() {
             ) : null}
           </Card>
         </Grid>
-      )}
-    </ThemeContext.Consumer>
   );
 }
