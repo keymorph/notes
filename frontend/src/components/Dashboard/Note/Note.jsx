@@ -1,36 +1,38 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import editIcon from "../../../images/edit-icon.svg";
 import axios from "axios";
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  IconButton,
-  Divider,
   Box,
-  Grid,
-  Collapse,
-  Menu,
-  MenuItem,
   Button,
+  Card,
   CardActionArea,
   CardActions,
+  CardContent,
+  CardHeader,
+  Chip,
+  Collapse,
+  Divider,
+  IconButton,
+  Grid,
+  Menu,
+  MenuItem,
   TextField,
-  Chip
+  Typography
 } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { DeleteIcon, EditIcon, MoreHoriz} from "@mui/icons-material";
+import { DeleteIcon, EditIcon, MoreHoriz, Square } from "@mui/icons-material";
 import Modal from '@mui/material/Modal';
-import  './style.css'
+import './style.css'
 
+// Turn the Note grey, when the Modal is active.
+import Skeleton from '@mui/material/Skeleton';
 
 
 function Note(props) {
-  
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [scale,setScale] = useState("scale(1, 1)")
+  const [scale, setScale] = useState("scale(1, 1)")
   const [cardHeight, setCardHeight] = useState("auto")
   const [flip, setFlip] = useState("rotate(0deg)")
   const [contentHeight, setContentHeight] = useState("")
@@ -40,14 +42,13 @@ function Note(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => {
-      setModalOpen(false);
-      setCardHeight(contentHeight)
-    };
+    setModalOpen(false);
+  };
 
   // MODAL: Category (Chip)
   const [chipCategory, deleteChip] = useState(false);
   // Delete the category for the note, and update the database.
-  const handleChipDelete = () => { deleteChip(true) }   
+  const handleChipDelete = () => { deleteChip(true) }
 
   // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
   const style = {
@@ -65,22 +66,15 @@ function Note(props) {
   const ref = useRef(null)
 
   useEffect(() => {
-    setContentHeight(ref.current.clientHeight);
-    console.log(contentHeight)
-    setCardHeight("200px")
-  },[])
+    setCardHeight(ref.current.clientHeight);
+  }, [])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
-  const expandButton = () => {
-    setCardHeight(cardHeight != "200px" ? "200px" : contentHeight)
-    setFlip("rotate(0deg)" === flip ? "rotate(180deg)" : "rotate(0deg)")
-  }
-
   const handleEdit = () => {
-  
+
     setAnchorEl(null)
   }
 
@@ -93,63 +87,30 @@ function Note(props) {
     setAnchorEl(null)
   }
 
+  // Define Note style values; height, width, etc.
+  const minHeight = '200px'
+  const maxHeight = '300px'
+  const width = '200px'
+
+  // const { title = "Grocery List" } = props;
+  const { title = "WWWWWWWWWWW" } = props;
+  const { description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed eleifend sem, sit amet porttitor purus. Proin posuere urna vitae est pellentesque iaculis. Vivamus quis sapien erat. Mauris pretium urna at nulla maximus ornare. Nunc quis nibh turpis. Sed vehicula, metus finibus porta aliquam, mi quam ornare nisl, variable kapa frish albas comical" } = props;
+
   return (
-   
-      <Card
-        className="NoteCard"
-        sx={{ maxWidth: "200px", minHeight: "200px",overflowWrap:"break-word", transition: "height 1s linear", margin:"5px",  }}
-        style={{transform: scale, transition: "height 0.1s linear, transform 0.1s linear" , zIndex: 10, height: cardHeight, maxHeight:"600px", paddingTop: "0px !important"}}
-        onMouseOver={() => setScale("scale(1.02,1.02")}
-        onMouseLeave={() => setScale("scale(1, 1)")}
-        ref={ref}
-      >
-
-      
-        <Box sx={{backgroundColor: '#388a82', height: '40px', position:"relative" }}>
-          {/* { props.category } */}
-          {/* NONE */}
-          <Chip label="Category" />
-
-          <IconButton aria-label="settings" sx={{position:'absolute', right: '0px', padding: '0px'}} 
-            onClick={handleClick}
-          >
-            <MoreHoriz sx={{color: 'white'}}/>
-          </IconButton>
-        </Box>
-
-        <Menu 
-          anchorEl={anchorEl}
-          open={open}
-          onClose={() => setAnchorEl(null)}
+    <div style={{ display: "flex", width: "100vwh", height: "100vh" }}>
+      {modalOpen ?
+        <div
+          className="NoteCard"
+          sx={{ width: width, minHeight: minHeight, overflowWrap: "break-word", transition: "height 1s linear", margin: "5px", }}
+          style={{ zIndex: 10, height: "auto", maxHeight: maxHeight, paddingTop: "0px !important" }}
+          ref={ref}
         >
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
-          <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        </Menu>
-
-        <CardActionArea onClick={handleOpen}>
-          <CardContent sx={{userSelect:'text'}}>
-            <Grid>
-              <Typography variant="subtitle1" title="Title Name">
-                {/* { props.title } */}
-                Grocery List
-              </Typography>
-            </Grid>
-
-            <Divider variant="middle" />
-
-            <Typography variant="body2" sx={{fontSize: "12px",}}>
-              {/* { props.description } */}
-              There are words, words, words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,words, words,and more words
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-
-        <IconButton sx={{position:"absolute", right:0, bottom:0, transform: flip, transition:"transform 0.2s linear"}} onClick={expandButton}>
-          <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
-        </IconButton>
-
-        <CardActions>
+          <Skeleton
+            animation="wave"
+            style={{
+              height: "100%", width: width, marginTop: 0, padding: 0, transform: "scale(1)"
+            }}
+          />
           <Modal
             open={modalOpen}
             onClose={handleClose}
@@ -161,13 +122,14 @@ function Note(props) {
               <Typography variant="h5">
                 EDIT NOTE:
               </Typography>
+
               {/* Note Modal: TITLE Field */}
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 <TextField
                   required
                   id="outlined-required"
                   label="Title"
-                  defaultValue="{props.title}"
+                  defaultValue={ title }
                 />
               </Typography>
 
@@ -178,7 +140,7 @@ function Note(props) {
                   label="Description"
                   multiline
                   rows={4}
-                  defaultValue="{props.description}"
+                  defaultValue={ description }
                 />
               </Typography>
 
@@ -192,10 +154,57 @@ function Note(props) {
 
             </Box>
           </Modal>
-        </CardActions>
+        </div>
+        : <Card
+          className="NoteCard"
+          sx={{ width: width, minHeight: minHeight, overflowWrap: "break-word", transition: "height 1s linear", margin: "5px", }}
+          style={{ transform: scale, transition: "height 0.1s linear, transform 0.1s linear", zIndex: 10, height: "auto", maxHeight: maxHeight, paddingTop: "0px !important" }}
+          onMouseOver={() => setScale("scale(1.02,1.02")}
+          onMouseLeave={() => setScale("scale(1, 1)")}
+          ref={ref}
+        >
+          <Box sx={{ backgroundColor: '#388a82', height: '40px', position: "relative" }}>
+            {/* { props.category } */}
+            {/* NONE */}
+            <Chip label="Category" />
 
-    
-      </Card>
+            <IconButton aria-label="settings" sx={{ position: 'absolute', right: '0px', padding: '0px' }}
+              onClick={ handleClick }
+            >
+              <MoreHoriz sx={{ color: 'white' }} />
+            </IconButton>
+          </Box>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={() => setAnchorEl(null)}
+          >
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+            <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          </Menu>
+
+          <CardActionArea onClick={handleOpen}>
+            <CardContent sx={{ userSelect: 'text' }}>
+              <Grid>
+                <Typography variant="subtitle1" title="Title Name">
+                  { title?.length > 11 ? `${title.substring(0, 10)}...` : title }
+                </Typography>
+              </Grid>
+
+              <Divider variant="middle" />
+
+              <Typography variant="body2" sx={{ fontSize: "12px", }}>
+                { description?.length > 345 ? `${description.substring(0, 340)}...` : description }
+              </Typography>
+
+            </CardContent>
+          </CardActionArea>
+
+        </Card>
+      }
+    </div>
 
   );
 }
