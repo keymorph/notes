@@ -1,11 +1,33 @@
-import mysql from 'mysql'
+import { CosmosClient } from "@azure/cosmos";
 
-const database = mysql.createConnection({
-    host: '34.70.215.72',
-    user: 'fourscript', 
-    password: 'dertmern*4s',
-    port: 3306,
-    database: 'jotfox'
-})
+const config = {
+    endpoint: process.env.COSMOSDB_ENDPOINT,
+    key: process.env.COSMOSDB_KEY,
+}
+const client = new CosmosClient(config);
 
-export default database
+// Get database
+const { database } = await client.databases.createIfNotExists({ id: process.env.COSMOSDB_DATABASE})
+  .catch(err => {
+      console.error('Error getting the database:\n', err);
+  });
+
+// Get users container items
+const { usersContainer } = await database.containers.createIfNotExists({ id: process.env.COSMOSDB_USER_CONTAINER })
+    .catch(err => {
+        console.error(err);
+    });
+const users = usersContainer.items;
+
+// Get notes container items for jotfox
+const { notesContainer } = await database.containers.createIfNotExists({ id: process.env.COSMOSDB_NOTES_CONTAINER })
+    .catch(err => {
+        console.error(err);
+    });
+const notes = notesContainer.items;
+
+
+
+export default database;
+export { users };
+export { notes };

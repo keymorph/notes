@@ -103,16 +103,6 @@ export default function AuthPage() {
   };
 
   return (
-        <Grid
-          container
-          justifyContent={"center"}
-          alignItems={"center"}
-          sx={{
-            height: "100vh",
-            width: "100vw",
-              overflowY: "hidden",
-          }}
-        >
           <Card
             sx={{
               padding: 3,
@@ -155,6 +145,5 @@ export default function AuthPage() {
               />
             ) : null}
           </Card>
-        </Grid>
   );
 }

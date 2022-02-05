@@ -19,7 +19,7 @@ const register = async (req, res) => {
         if (searchResult === true) {
             const registerResult = await userService.register(email, password, res)
         }
-        
+
     } catch (error) {
         res.status(400).json({ error })
     }
@@ -32,8 +32,8 @@ const login = async (req, res) => {
         console.log(email)
         const inputResult = await validateInput.email(email, password, res)
         const loginResult = await userService.login(email, password, res)
-    } catch (error) {
-        console.log(error)
+    } catch (err) {
+        console.error(err)
     }
 }
 

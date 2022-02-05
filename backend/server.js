@@ -16,15 +16,6 @@ const port = 8000
 const host = 'localhost'
 app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`))
 
-database.connect((err) => {
-    if (err) {
-        console.log(err)
-        throw err
-    }
-    console.log('✓ MySQL Connected.')
-    console.log('---------')
-})
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
