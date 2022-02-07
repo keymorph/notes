@@ -31,5 +31,3 @@ app.use(cors())
 
 app.use('/api/', user)
 app.use('/api/', note)
-
-export default database;
