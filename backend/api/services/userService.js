@@ -43,7 +43,7 @@ const login = async (email, password, res) => {
     let exists = []
     users.query(
         `SELECT * FROM users WHERE email = '${email}';`
-    ).fetchNext().then(async (results) => {
+    ).fetchNext().then((results) => {
             if (results.length === 0) {
                 console.log("Account doesn't exist.")
                 return res.status(401).json({error: `This JotFox account doesn't exist. Try a different Email.`})

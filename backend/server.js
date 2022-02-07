@@ -1,16 +1,11 @@
-import express from 'express'
-const app = express()
+import './config.js';
 import cors from 'cors'
-import bodyParser from 'body-parser'
+import express from 'express'
 
-import dotenv from 'dotenv'
-dotenv.config()
-
-import database from './api/models/database.js'
-import user from './api/routes/user.js'
 import note from './api/routes/note.js'
+import user from './api/routes/user.js'
 
-console.log('---------')
+const app = express()
 
 const port = 8000
 const host = 'localhost'
@@ -22,5 +17,3 @@ app.use(cors())
 
 app.use('/api/', user)
 app.use('/api/', note)
-
-export default database;
