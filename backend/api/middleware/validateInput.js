@@ -12,7 +12,7 @@ const email = (email, password, res) => {
     }
 
     if (password.length < 6 || password.length > 40) {
-        console.log('Password sizing error.')
+        console.error('Password sizing error.')
         return res
             .status(400)
             .json({ error: 'Password must be between 6 and 40 characters.' })
