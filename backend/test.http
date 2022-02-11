@@ -7,7 +7,7 @@ POST {{baseurl}}/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "jan@25.com",
+    "email": "feb@10.com",
     "password" : "password"
 }
 

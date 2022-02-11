@@ -21,13 +21,13 @@ database.connect((err) => {
         console.log(err)
         throw err
     }
-    console.log('✓ MySQL Connected.')
-    console.log('---------')
+    console.log('✓ MySQL Connected.');
+    console.log('---------');
 })
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-app.use('/api/', user)
-app.use('/api/', note)
+app.use('/api/', user);
+app.use('/api/', note);

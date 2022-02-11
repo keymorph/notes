@@ -25,7 +25,7 @@ import Modal from '@mui/material/Modal';
 import './style.css'
 
 // Turn the Note grey, when the Modal is active.
-import Skeleton from '@mui/material/Skeleton';
+import NoteSkeleton from './NoteSkeleton';
 
 // Trigger the Modal when editing a Note
 import NoteEditModal from './NoteEditModal'
@@ -39,6 +39,8 @@ function Note(props) {
   const [flip, setFlip] = useState('rotate(0deg)');
   const [contentHeight, setContentHeight] = useState('');
   const [checked, setChecked] = useState(false);
+  const [title, setTitle] = useState(props.title)
+  const [description, setDescription] = useState(props.description)
 
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
@@ -70,18 +72,34 @@ function Note(props) {
 
   useEffect(() => {
     setCardHeight(ref.current.clientHeight);
-  }, [])
+  },[])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
-  const handleEdit = () => {
-    setAnchorEl(null);
-  }
+  const url = "http://localhost:8000/api";
+  const token = localStorage.getItem("auth-token");
 
   const handleDelete = () => {
-    setAnchorEl(null);
+    axios
+      .delete(`${url}/note`,
+        {
+          headers: {
+            "auth-token": token,
+          },
+          data: {
+            "noteID": props.noteID,
+          }
+        }
+      )
+      .then((response) => {
+        props.setNoteCollection(props.noteCollection.filter((note, index) => index != props.index));
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`)
+      });
   }
 
   const handleDuplicate = () => {
@@ -93,83 +111,75 @@ function Note(props) {
   const maxHeight = '300px';
   const width = '200px';
 
-  // const { title = "Grocery List" } = props;
-  const { title = 'WWWWWWWWWWW' } = props;
-  const { description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed eleifend sem, sit amet porttitor purus. Proin posuere urna vitae est pellentesque iaculis. Vivamus quis sapien erat. Mauris pretium urna at nulla maximus ornare. Nunc quis nibh turpis. Sed vehicula, metus finibus porta aliquam, mi quam ornare nisl, variable kapa frish albas comical' } = props;
+  // const { title = 'Grocery List' } = props;
+  // const { title = 'WWWWWWWWWWW' } = props;
+  // const { description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed eleifend sem, sit amet porttitor purus. Proin posuere urna vitae est pellentesque iaculis. Vivamus quis sapien erat. Mauris pretium urna at nulla maximus ornare. Nunc quis nibh turpis. Sed vehicula, metus finibus porta aliquam, mi quam ornare nisl, variable kapa frish albas comical' } = props;
 
   return (
     <div style={{ display: 'flex', width: '100vwh', height: '100vh' }}>
-      { modalOpen ?
-        <div
-          className='NoteCard'
-          sx={{ width: width, minHeight: minHeight, overflowWrap: 'break-word', transition: 'height 1s linear', margin: '5px' }}
-          style={{ zIndex: 10, height: 'auto', maxHeight: maxHeight, paddingTop: '0px !important' }}
-          ref={ ref }
-        >
-          <Skeleton
-            animation='wave'
-            style={{
-              height: '100%', width: width, marginTop: 0, padding: 0, transform: 'scale(1)'
-            }}
-          />
-
           <NoteEditModal
-            title={ title }
-            description={ description }
-            modalOpen={ modalOpen }
-            handleClose={ handleClose }
-            handleChipDelete={ handleChipDelete }
+            title={title}
+            setTitle={setTitle}
+            setDescription={setDescription}
+            noteID={props.noteID}
+            description={description}
+            modalOpen={modalOpen}
+            handleClose={handleClose}
+            handleChipDelete={handleChipDelete}
           />
-        </div>
-        : <Card
+    
+         <Card
           className='NoteCard'
           sx={{ width: width, minHeight: minHeight, overflowWrap: 'break-word', transition: 'height 1s linear', margin: '5px', }}
           style={{ transform: scale, transition: 'height 0.1s linear, transform 0.1s linear', zIndex: 10, height: 'auto', maxHeight: maxHeight, paddingTop: '0px !important' }}
           onMouseOver={() => setScale('scale(1.02,1.02')}
           onMouseLeave={() => setScale('scale(1, 1)')}
-          ref={ ref }
+          ref={ref}
         >
-          <Box sx={{ backgroundColor: '#388a82', height: '40px', position: 'relative' }}>
+          <Box style={{ backgroundColor: '#388a82', height: '40px', position: 'relative',  opacity: 1}}>
 
             <Chip label='Category' />
 
-            <IconButton aria-label='settings' sx={{ position: 'absolute', right: '0px', padding: '0px' }}
-              onClick={ handleClick }
+            <IconButton
+              aria-label='settings'
+              sx={{ position: 'absolute', right: '0px', padding: '0px' }}
+              onClick={handleClick}
             >
               <MoreHoriz sx={{ color: 'white' }} />
             </IconButton>
           </Box>
 
           <Menu
-            anchorEl={ anchorEl }
-            open={ open }
+            anchorEl={anchorEl}
+            open={open}
             onClose={() => setAnchorEl(null)}
+            style={{opacity: modalOpen ? 0 : 1}}
           >
-            <MenuItem onClick={ handleOpen }>Edit</MenuItem>
-            <MenuItem onClick={ handleDuplicate }>Duplicate</MenuItem>
-            <MenuItem onClick={ handleDelete }>Delete</MenuItem>
+            <MenuItem onClick={handleOpen}>Edit</MenuItem>
+            <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
 
-          <CardActionArea onClick={ handleOpen } sx={{ height: '100%' }}>
+          <CardActionArea onClick={handleOpen} style={{ height: '100%', opacity: modalOpen ? 0 : 1 }}>
             <CardContent sx={{ userSelect: 'text' }}>
 
               <Grid>
                 <Typography variant='subtitle1' title='Title Name'>
-                  { title?.length > 11 ? `${title.substring(0, 10)}...` : title }
+                  {title?.length > 11 ? `${title.substring(0, 10)}...` : title}
                 </Typography>
               </Grid>
 
               <Divider variant='middle' />
 
               <Typography variant='body2' sx={{ fontSize: '12px', }}>
-                { description?.length > 345 ? `${description.substring(0, 340)}...` : description }
+                {description?.length > 345 ? `${description.substring(0, 340)}...` : description}
               </Typography>
 
             </CardContent>
           </CardActionArea>
 
         </Card>
-      }
+      
     </div>
   );
 }

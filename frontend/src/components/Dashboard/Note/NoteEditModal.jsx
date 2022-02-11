@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from "axios";
 import {
     Box,
     Chip,
@@ -7,9 +8,39 @@ import {
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import './style.css';
+import Note from './Note';
 
 export default function NoteEditModal(props) {
-    const { modalOpen, handleClose, description, title, handleChipDelete } = props;
+    const { modalOpen, handleClose, description, title, handleChipDelete, setTitle, setDescription, noteID } = props;
+
+    const url = "http://localhost:8000/api";
+    const token = localStorage.getItem("auth-token");
+
+    const saveModalData = () => {
+        
+        axios
+            .put(`${url}/note`,
+                {
+                    'noteID': `${noteID}`,
+                    'title': `${title}`,
+                    'description': `${description}`,
+                    'category': `${props.category}`,
+                    'tags': 'saveModalDataSuccess',
+                },
+                
+            {    headers: {
+                    "auth-token": token,
+                }}
+            )
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error(`Error: ${error}`)
+            });
+
+        handleClose();
+    }
 
     // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
     const style = {
@@ -26,13 +57,13 @@ export default function NoteEditModal(props) {
 
     return (
         <Modal
-            open={ modalOpen }
-            onClose={ handleClose }
-            onBackdropClick={ handleClose }
+            open={modalOpen}
+            onClose={saveModalData}
+            onBackdropClick={saveModalData}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
         >
-            <Box sx={ style }>
+            <Box sx={style}>
                 <Typography variant='h5'>
                     EDIT NOTE:
                 </Typography>
@@ -43,9 +74,11 @@ export default function NoteEditModal(props) {
                         required
                         id='outlined-required'
                         label='Title'
-                        defaultValue={ title }
+                        defaultValue={title}
+                        onChange={event => setTitle(event.target.value)}
                     />
                 </Typography>
+
 
                 {/* Note Modal: DESCRIPTION Field */}
                 <Typography id='modal-modal-description' sx={{ mt: 2 }}>
@@ -53,8 +86,9 @@ export default function NoteEditModal(props) {
                         id='outlined-multiline-static'
                         label='Description'
                         multiline
-                        rows={ 4 }
-                        defaultValue={ description }
+                        rows={4}
+                        defaultValue={description}
+                        onChange={event => setDescription(event.target.value)}
                     />
                 </Typography>
 
@@ -62,7 +96,7 @@ export default function NoteEditModal(props) {
                 <Typography>
                     <Chip
                         label='{props.category}'
-                        onDelete={ handleChipDelete }
+                        onDelete={handleChipDelete}
                     />
                 </Typography>
 

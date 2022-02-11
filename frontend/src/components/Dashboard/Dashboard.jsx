@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Navbar from "../Navbar";
+import AppToolbar from "../AppToolbar";
 import NoteTimeline from "./Note/NoteTimeline";
 import axios from "axios";
 
@@ -61,19 +61,18 @@ export default function Dashboard() {
       .catch((error) => console.error(`Error: ${error}`));
   };
 
-  // remove the token from the local storage and redirect user to login page
-  const removeToken = () => {
-    localStorage.removeItem("auth-token");
-    navigate("../auth", { replace: true });
-  };
-
   if (!showPage) return null;
   else
     return (
       <>
-        <Navbar />
-        <button onClick={removeToken}>Logout</button>
-        <NoteTimeline noteCollection={noteCollection} />
+        <AppToolbar
+          noteCollection={noteCollection}
+          setNoteCollection={setNoteCollection}
+        />
+        <NoteTimeline
+          noteCollection={noteCollection}
+          setNoteCollection={setNoteCollection} 
+        />
       </>
     );
 }

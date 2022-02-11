@@ -5,7 +5,12 @@ const create = (req, res) => {
         `INSERT INTO notes (title, description, category, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.body.category}', '${req.body.tags}', '${req.userID}');`, 
         async (err, results) => {
             if (err) throw err
-            return res.status(200).json({ message: req.userID })
+            return res.status(200).json(
+                {
+                    'noteID': `${results.insertId}`,
+                    ...req.body
+                }
+            )
     })
 }
 
@@ -35,14 +40,16 @@ const edit = (req, res) => {
 }
 
 const remove = (req, res) => {
+    console.log("OUTSIDE")
     database.query(
         `DELETE FROM notes WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
         async (err, results) => {
+            console.log("INSIDE")
             if (err) throw err
             if (results.affectedRows == 0) {
                 return res
                     .status(400)
-                    .json({ error : `User deleted, but no notes found to delete.` })
+                    .json({ error : `Note not found.` })
             } 
             return res
                 .status(200)

@@ -3,15 +3,19 @@ import Note from "./Note";
 import { Masonry } from "@mui/lab"
 
 export default function NoteTimeline(props) {
-  const { noteCollection } = props;
-  
-  const NoteComponents = noteCollection.map((note) => {
+  const { noteCollection, setNoteCollection } = props;
+
+  const NoteComponents = noteCollection.map((note, index) => {
     return (
-      <Note 
-        key = { note._noteID }
-        title = { note.title }
-        description = { note.description }
-        category = {note.category}
+      <Note
+        key={note.noteID}
+        index={index}
+        noteID={note.noteID}
+        title={note.title}
+        description={note.description}
+        category={note.category}
+        noteCollection={noteCollection}
+        setNoteCollection={setNoteCollection}
       />
     )
   })

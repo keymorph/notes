@@ -5,7 +5,7 @@ const database = mysql.createConnection({
     user: 'fourscript', 
     password: 'dertmern*4s',
     port: 3306,
-    database: 'jotfox'
+    database: 'jotfox',
 })
 
 export default database
