@@ -12,24 +12,19 @@ const register = async (req, res) => {
     console.log("----------------- REGISTER USER API")
     const { email, password } = req.body
     try {
-        console.log("BEFORE INPUT")
-        const inputResult = await validateInput.email(email, password, res)
-        const searchResult = await userService.search(email, res)
-        console.log("result")
-        if (searchResult === true) {
-            const registerResult = await userService.register(email, password, res)
-        }
+        validateInput.email(email, password); // Will throw an error if the check fails
 
+        userService.search(email, res).then(async () => {;
+            await userService.register(email, password, res)
+        })
     } catch (error) {
-        res.status(400).json({ error })
+        return res.status(400).json({ error: error });
     }
 }
 
 const login = async (req, res) => {
     try {
         const { email, password } = req.body
-        console.log("CHICKEN?")
-        console.log(email)
         const inputResult = await validateInput.email(email, password, res)
         const loginResult = await userService.login(email, password, res)
     } catch (err) {
@@ -37,7 +32,7 @@ const login = async (req, res) => {
     }
 }
 
-const remove = async (req, res) => { userService.remove(req, res) }
+const remove = async (req, res) => { await userService.remove(req, res) }
 
 const userController = { register, login, remove }
 export default userController
