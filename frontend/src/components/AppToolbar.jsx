@@ -14,7 +14,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import NoteCreateModal from './Dashboard/Note/NoteCreateModal'
 
-
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,

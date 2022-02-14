@@ -10,10 +10,8 @@ import {
 } from "@mui/material";
 import { AccountCircle, NoAccounts } from '@mui/icons-material';
 import { useNavigate } from "react-router";
-
 import { ThemeToggleSwitch } from "./UI/Theme";
 import axios from 'axios';
-
 
 const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
   const navigate = useNavigate();
@@ -97,4 +95,5 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
     </AppBar>
   );
 };
+
 export default ResponsiveAppBar;

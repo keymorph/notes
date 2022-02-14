@@ -18,7 +18,7 @@ export default function NoteTimeline(props) {
         setNoteCollection={setNoteCollection}
       />
     )
-  })
+  }).reverse();
 
   return (
     <Masonry columns={6} spacing={1.2}>
