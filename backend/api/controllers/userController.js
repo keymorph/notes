@@ -11,15 +11,15 @@ import userService from '../services/userService.js'
 const register = async (req, res) => {
     console.log("----------------- REGISTER USER API")
     const { email, password } = req.body
-    try {
-        validateInput.email(email, password); // Will throw an error if the check fails
 
-        userService.search(email, res).then(async () => {;
-            await userService.register(email, password, res)
-        })
+    // Ensure the email and password are valid before continuing
+    try {
+        validateInput.email(email, password);
     } catch (error) {
         return res.status(400).json({ error: error });
     }
+
+    return await userService.register(email, password, res);
 }
 
 const login = async (req, res) => {
