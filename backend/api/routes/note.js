@@ -10,7 +10,10 @@ router.post('/note', authenticateToken, category.create, noteController.create)
 
 router.get('/note', authenticateToken, category.get, noteController.show)
 
-router.put('/note', authenticateToken, noteController.edit)
+router.put('/note', authenticateToken, category.create, noteController.edit)
+
+
+
 
 router.delete('/note', authenticateToken, noteController.remove)
 

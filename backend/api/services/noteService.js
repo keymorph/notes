@@ -28,7 +28,7 @@ const show = (req, res) => {
 
 const edit = (req, res) => {
     database.query(
-        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorIDy}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
+        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorID}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
         async (err, results) => {
             if (err) throw err
             if (results.affectedRows == 0) {
