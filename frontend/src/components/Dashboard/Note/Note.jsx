@@ -22,7 +22,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteIcon, EditIcon, MoreHoriz, Square } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
-import './style.css'
+
 
 // Turn the Note grey, when the Modal is active.
 import NoteSkeleton from './NoteSkeleton';
@@ -39,6 +39,7 @@ function Note(props) {
   const [contentHeight, setContentHeight] = useState('');
   const [checked, setChecked] = useState(false);
   const [title, setTitle] = useState(props.title)
+  const[category, setCategory] = useState(props.category)
   const [description, setDescription] = useState(props.description)
 
   // MODAL
@@ -133,6 +134,14 @@ function Note(props) {
   const maxHeight = '300px';
   const width = '200px';
 
+  const categoryExists = () => {
+    if (props.category != (null || undefined || '')) {
+      return true; 
+    } else {
+      return false;
+    }
+  }
+
   return (
     <div style={{ display: 'flex', width: '100vwh', height: '100vh' }}>
       <NoteEditModal
@@ -142,6 +151,7 @@ function Note(props) {
         noteID={props.noteID}
         description={description}
         modalOpen={modalOpen}
+        category={category}
         handleClose={handleClose}
         handleChipDelete={handleChipDelete}
       />
@@ -154,9 +164,9 @@ function Note(props) {
         onMouseLeave={() => setScale('scale(1, 1)')}
         ref={ref}
       >
-        <Box style={{ backgroundColor: '#388a82', height: '40px', position: 'relative', opacity: 1 }}>
+        <Box style={{ backgroundColor: categoryExists() ? '#388a82' : 'grey', height: '40px', position: 'relative', opacity: 1 }}>
 
-          <Chip label='Category' />
+          {categoryExists() ? <Chip label={props.category}/> : null}
 
           <IconButton
             aria-label='settings'
@@ -200,5 +210,25 @@ function Note(props) {
     </div>
   );
 }
+
+/*
+grey - 999999
+red - A26361
+yellow - DEBB97
+green - B4B387
+blue - 7789AB
+*/
+
+// hey the user can have 4 categories
+// categoryID name color userID
+
+
+// search the categories table
+// search for all categories that this users has
+// 1 2 3 4 5
+
+// if 1 then B4B387
+
+
 
 export default Note;

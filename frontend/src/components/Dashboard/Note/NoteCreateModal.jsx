@@ -8,11 +8,10 @@ import {
     Typography
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import './style.css';
+
 import Note from './Note';
 
-export default function NoteCreateModal(props) {
-    const { modalOpen, handleClose } = props;
+export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollection}) {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -37,37 +36,38 @@ export default function NoteCreateModal(props) {
 
     const createNote = () => {
         axios
-        .post(`${url}/note`,
-            {
-                'title': `${title}`,
-                'description': `${description}`,
-                'category': `${category}`,
-                'tags': `${tags}`,
-            },
-            {
-                headers: {
-                    "auth-token": token,
+            .post(`${url}/note`,
+                {
+                    'title': `${title}`,
+                    'description': `${description}`,
+                    'category': `${category}`,
+                    'tags': `${tags}`,
+                },
+                {
+                    headers: {
+                        "auth-token": token,
+                    }
                 }
-            }
-        )
-        .then((response) => {
-            // Close the Modal.
-            handleClose();
+            )
+            .then((response) => {
+                // Close the Modal.
+                handleClose();
 
-            // Empty the modal values.
-            setTitle('');
-            setDescription('');
-            setCategory('');
-            setTags('');
+                // Empty the modal values.
+                setTitle('');
+                setDescription('');
+                setCategory('');
+                setTags('');
 
-            // Reflect the database changes on the front-end
-            // Add the newly created note to the NoteCollection
-            props.setNoteCollection(oldArray => [...oldArray, response.data])
-        })
-        .catch((error) => {
-            console.error(`Error: ${error}`)
-        });
-      };
+                // Reflect the database changes on the front-end
+                // Add the newly created note to the NoteCollection
+                setNoteCollection(oldArray => [...oldArray, response.data])
+            })
+            .catch((error) => {
+                console.error(`Error: ${error}`)
+            });
+    };
+
 
     const fieldsAreEmpty = () => {
         if (title.length === 0) {
@@ -76,6 +76,41 @@ export default function NoteCreateModal(props) {
             return false;
         }
     };
+
+
+/* 
+IMPORTANT ------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+when we create a note:
+
+{
+    "title" : "Grey Note",
+    "description" : "This note should be grey.",
+    "category" : "Homework",
+    "color" : 5,
+    "tags" : "JotFox"
+}
+*/
+
 
     return (
         <Modal
@@ -120,9 +155,9 @@ export default function NoteCreateModal(props) {
                 {/* Note Modal: CATEGORY (Chips) Field */}
                 <Typography>
                     <Chip
-                        label='{props.category}'
-                        // onDelete={handleChipDelete}
-                        // onChange={event => setCategory(event.target.value)}
+                        label='{category}'
+                    // onDelete={handleChipDelete}
+                    // onChange={event => setCategory(event.target.value)}
                     />
                 </Typography>
 

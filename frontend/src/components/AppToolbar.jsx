@@ -57,15 +57,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppToolbar(props) {
-  const { noteCollection, setNoteCollection } = props;
+  const { noteCollection, setNoteCollection, setSearchValue } = props;
 
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
-  const handleClose = () => {
-    setModalOpen(false);
-  };
-
+  const handleClose = () => setModalOpen(false);
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -93,7 +91,9 @@ export default function AppToolbar(props) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(event) => setSearchValue((event.target.value).toLowerCase())}
             />
+            {/* onChange={setSearchValue} */}
           </Search>
           <Button
             variant="outlined"

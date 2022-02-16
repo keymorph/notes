@@ -7,11 +7,9 @@ import {
     Typography
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import './style.css';
 import Note from './Note';
 
-export default function NoteEditModal(props) {
-    const { modalOpen, handleClose, description, title, handleChipDelete, setTitle, setDescription, noteID } = props;
+export default function NoteEditModal({ modalOpen, handleClose, category, tags, description, title, handleChipDelete, setTitle, setDescription, noteID }) {
 
     const url = "http://localhost:8000/api";
     const token = localStorage.getItem("auth-token");
@@ -24,8 +22,8 @@ export default function NoteEditModal(props) {
                     'noteID': `${noteID}`,
                     'title': `${title}`,
                     'description': `${description}`,
-                    'category': `${props.category}`,
-                    'tags': 'saveModalDataSuccess',
+                    'category': `${category}`,
+                    'tags': `${tags}`,
                 },
                 
             {    headers: {

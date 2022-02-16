@@ -2,7 +2,7 @@ import database from '../models/database.js'
 
 const create = (req, res) => {
     database.query(
-        `INSERT INTO notes (title, description, category, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.body.category}', '${req.body.tags}', '${req.userID}');`, 
+        `INSERT INTO notes (title, description, categoryID, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.categoryID}', '${req.body.tags}', '${req.userID}');`, 
         async (err, results) => {
             if (err) throw err
             return res.status(200).json(
@@ -19,13 +19,16 @@ const show = (req, res) => {
         `SELECT * FROM notes WHERE userID = '${req.userID}';`,
         async (err, results) => {
             if (err) throw err
-            return res.status(200).json(results)
+            return (res.status(200).json( {
+                "categories": req.categories,
+                "notes": results
+            }))
     })
 }
 
 const edit = (req, res) => {
     database.query(
-        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', category = '${req.body.category}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
+        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorIDy}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
         async (err, results) => {
             if (err) throw err
             if (results.affectedRows == 0) {

@@ -11,6 +11,9 @@ export default function Dashboard() {
   const [noteCollection, setNoteCollection] = useState([]);
   const [showPage, setShowPage] = useState(false);
 
+ // Search Bar
+ const [searchValue, setSearchValue] = useState('');
+
   const url = "http://localhost:8000/api";
 
   useEffect(() => {
@@ -68,10 +71,12 @@ export default function Dashboard() {
         <AppToolbar
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
+          setSearchValue={setSearchValue}
         />
         <NoteTimeline
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection} 
+          searchValue={searchValue}
         />
       </>
     );

@@ -15,15 +15,20 @@ const authenticateToken = (req, res, next) => {
 
     connection.query(
       `SELECT * FROM users WHERE userID = '${userID}';`,
-      
+
       async (err, results) => {
         if (results.length == 0) {
           return res.status(403).json({ error: 'User not found.' })
         }
 
         req.userID = userID
+        console.log(req.userID)
+
+        // res.locals.userID = userID;
+        // console.log(res.locals.userID)
+
         next()
-    })
+      })
   })
 }
 
