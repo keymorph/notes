@@ -28,5 +28,4 @@ const notesContainerResponse = await databaseResponse.database.containers.create
 // Export containers and database
 export const users = usersContainerResponse.container;
 export const notes = notesContainerResponse.container;
-
 export default databaseResponse.database;

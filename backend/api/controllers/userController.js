@@ -15,21 +15,25 @@ const register = async (req, res) => {
     // Ensure the email and password are valid before continuing
     try {
         validateInput.email(email, password);
-    } catch (error) {
-        return res.status(400).json({ error: error });
+    } catch (err) {
+        console.error(err);
+        return res.status(400).json({ error: err });
     }
 
     return await userService.register(email, password, res);
 }
 
 const login = async (req, res) => {
+    const { email, password } = req.body
+
     try {
-        const { email, password } = req.body
-        const inputResult = await validateInput.email(email, password, res)
-        const loginResult = await userService.login(email, password, res)
+        validateInput.email(email, password, res)
     } catch (err) {
-        console.error(err)
+        console.error(err);
+        return res.status(400).json({ error: err });
     }
+
+    return await userService.login(email, password, res)
 }
 
 const remove = async (req, res) => { await userService.remove(req, res) }
