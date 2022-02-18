@@ -9,6 +9,7 @@ export default function Dashboard() {
   const token = localStorage.getItem("auth-token");
 
   const [noteCollection, setNoteCollection] = useState([]);
+  const [categories,setCategories] = useState([])
   const [showPage, setShowPage] = useState(false);
 
  // Search Bar
@@ -57,8 +58,10 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        const allNotes = response.data;
+        const allNotes = response.data.notes;
+        const allCategories = response.data.categories;
         setNoteCollection(allNotes);
+        setCategories(allCategories)
         console.log(noteCollection);
       })
       .catch((error) => console.error(`Error: ${error}`));
@@ -71,11 +74,15 @@ export default function Dashboard() {
         <AppToolbar
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
+          categories={categories}
+          setCategories={setCategories}
           setSearchValue={setSearchValue}
         />
         <NoteTimeline
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection} 
+          categories={categories}
+          setCategories={setCategories}
           searchValue={searchValue}
         />
       </>

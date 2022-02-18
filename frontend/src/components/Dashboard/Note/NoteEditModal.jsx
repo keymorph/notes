@@ -13,6 +13,7 @@ export default function NoteEditModal({ modalOpen, handleClose, category, tags, 
 
     const url = "http://localhost:8000/api";
     const token = localStorage.getItem("auth-token");
+    const [color, setColor] = useState(1);
 
     const saveModalData = () => {
         
@@ -23,6 +24,7 @@ export default function NoteEditModal({ modalOpen, handleClose, category, tags, 
                     'title': `${title}`,
                     'description': `${description}`,
                     'category': `${category}`,
+                    'color': `${color}`,
                     'tags': `${tags}`,
                 },
                 

@@ -3,7 +3,7 @@ import Note from "./Note";
 import { Masonry } from "@mui/lab"
 import { useEffect } from "react";
 
-export default function NoteTimeline({ noteCollection, setNoteCollection, searchValue }) {
+export default function NoteTimeline({ noteCollection, setNoteCollection, categories, setCategories, searchValue }) {
 
   const NoteComponents = noteCollection
     // Filter the user's note from the given search input.
@@ -36,7 +36,8 @@ export default function NoteTimeline({ noteCollection, setNoteCollection, search
           noteID={note.noteID}
           title={note.title}
           description={note.description}
-          category={note.category}
+          category={categories.filter((category)=>category.categoryID === note.categoryID)[0]?.category}
+          color={note.color}
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
         />

@@ -16,6 +16,7 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('Homework');
+    const [color, setColor] = useState(1);
     const [tags, setTags] = useState('Tag1');
 
     // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
@@ -23,12 +24,15 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
         position: 'absolute',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
+        transform: 'translate(-50%, -50%) scale(.9,.9)',
+        width: 300,
+        height: 350,
         bgcolor: 'background.paper',
-        border: '2px solid #000',
+        border: '5px solid #000',
+        borderRadius:'10px',
         boxShadow: 24,
         p: 4,
+        
     };
 
     const url = "http://localhost:8000/api";
@@ -41,6 +45,7 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
                     'title': `${title}`,
                     'description': `${description}`,
                     'category': `${category}`,
+                    'color': `${color}`,
                     'tags': `${tags}`,
                 },
                 {
@@ -119,15 +124,16 @@ when we create a note:
             onBackdropClick={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
+
         >
             <Box sx={style}>
-                <Typography variant='h5'>
+                <Typography variant='h6'>
                     Create a Note:
                 </Typography>
 
                 {/* Note Modal: TITLE Field */}
                 <Typography
-                    id='modal-modal-title'
+                    id='modal-modal-title' 
                     variant='h6'
                     component='h2'
                 >
@@ -137,6 +143,7 @@ when we create a note:
                         label='Title'
                         defaultValue={title}
                         onChange={event => setTitle(event.target.value)}
+                        sx={{width: '100%'}}
                     />
                 </Typography>
 
@@ -149,13 +156,15 @@ when we create a note:
                         rows={4}
                         defaultValue={description}
                         onChange={event => setDescription(event.target.value)}
+                        sx={{width: '100%'}}
                     />
                 </Typography>
 
                 {/* Note Modal: CATEGORY (Chips) Field */}
                 <Typography>
                     <Chip
-                        label='{category}'
+                        sx={{margin: '10px', position: 'absolute'}}
+                        label='tag'
                     // onDelete={handleChipDelete}
                     // onChange={event => setCategory(event.target.value)}
                     />
@@ -163,9 +172,10 @@ when we create a note:
 
                 <Button
                     variant="contained"
-                    size="large"
+                    size="small"
                     disabled={fieldsAreEmpty()}
                     onClick={createNote}
+                    sx={{border: '1px', position: 'absolute', right: '30px', bottom: '30px' }}
                 >
                     CREATE
                 </Button>
