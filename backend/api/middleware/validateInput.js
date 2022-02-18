@@ -1,4 +1,4 @@
-const email = (email, password) => {
+const user = (email, password) => {
     if (!email || !password) {
         throw { error: 'Empty field in form input.' };
     }
@@ -13,5 +13,5 @@ const email = (email, password) => {
     }
 }
 
-const validateInput = { email }
+const validateInput = { user }
 export default validateInput

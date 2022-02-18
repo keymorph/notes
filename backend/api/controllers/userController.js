@@ -9,12 +9,12 @@ import userService from '../services/userService.js'
 // If that email exists then reject.
 
 const register = async (req, res) => {
-    console.log("----------------- REGISTER USER API")
-    const { email, password } = req.body
+    console.log("-----------------\nREGISTER USER API");
+    const { email, password } = req.body;
 
     // Ensure the email and password are valid before continuing
     try {
-        validateInput.email(email, password);
+        validateInput.user(email, password);
     } catch (err) {
         console.error(err);
         return res.status(400).json({ error: err });
@@ -24,10 +24,10 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
-        validateInput.email(email, password, res)
+        validateInput.user(email, password);
     } catch (err) {
         console.error(err);
         return res.status(400).json({ error: err });
