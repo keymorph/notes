@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Navbar from "../Navbar";
+import AppToolbar from "../AppToolbar";
 import NoteTimeline from "./Note/NoteTimeline";
 import axios from "axios";
 
@@ -9,7 +9,11 @@ export default function Dashboard() {
   const token = localStorage.getItem("auth-token");
 
   const [noteCollection, setNoteCollection] = useState([]);
+  const [categories,setCategories] = useState([])
   const [showPage, setShowPage] = useState(false);
+
+ // Search Bar
+ const [searchValue, setSearchValue] = useState('');
 
   const url = "http://localhost:8000/api";
 
@@ -54,26 +58,33 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        const allNotes = response.data;
+        const allNotes = response.data.notes;
+        const allCategories = response.data.categories;
         setNoteCollection(allNotes);
+        setCategories(allCategories)
         console.log(noteCollection);
       })
       .catch((error) => console.error(`Error: ${error}`));
-  };
-
-  // remove the token from the local storage and redirect user to login page
-  const removeToken = () => {
-    localStorage.removeItem("auth-token");
-    navigate("../auth", { replace: true });
   };
 
   if (!showPage) return null;
   else
     return (
       <>
-        <Navbar />
-        <button onClick={removeToken}>Logout</button>
-        <NoteTimeline noteCollection={noteCollection} />
+        <AppToolbar
+          noteCollection={noteCollection}
+          setNoteCollection={setNoteCollection}
+          categories={categories}
+          setCategories={setCategories}
+          setSearchValue={setSearchValue}
+        />
+        <NoteTimeline
+          noteCollection={noteCollection}
+          setNoteCollection={setNoteCollection} 
+          categories={categories}
+          setCategories={setCategories}
+          searchValue={searchValue}
+        />
       </>
     );
 }

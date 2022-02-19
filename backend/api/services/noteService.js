@@ -1,11 +1,16 @@
 import { notes } from '../models/database.js'
 
 const create = (req, res) => {
-    notes.query(
-        `INSERT INTO notes (title, description, category, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.body.category}', '${req.body.tags}', '${req.userID}');`,
+    database.query(
+        `INSERT INTO notes (title, description, categoryID, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.categoryID}', '${req.body.tags}', '${req.userID}');`, 
         async (err, results) => {
             if (err) throw err
-            return res.status(200).json({ message: req.userID })
+            return res.status(200).json(
+                {
+                    'noteID': `${results.insertId}`,
+                    ...req.body
+                }
+            )
     })
 }
 
@@ -14,13 +19,16 @@ const show = (req, res) => {
         `SELECT * FROM notes WHERE userID = '${req.userID}';`,
         async (err, results) => {
             if (err) throw err
-            return res.status(200).json(results)
+            return (res.status(200).json( {
+                "categories": req.categories,
+                "notes": results
+            }))
     })
 }
 
 const edit = (req, res) => {
-    notes.query(
-        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', category = '${req.body.category}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
+    database.query(
+        `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorID}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
         async (err, results) => {
             if (err) throw err
             if (results.affectedRows === 0) {
@@ -35,15 +43,17 @@ const edit = (req, res) => {
 }
 
 const remove = (req, res) => {
-    notes.query(
+    console.log("OUTSIDE")
+    database.query(
         `DELETE FROM notes WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
         async (err, results) => {
+            console.log("INSIDE")
             if (err) throw err
             if (results.affectedRows === 0) {
                 return res
                     .status(400)
-                    .json({ error : `User deleted, but no notes found to delete.` })
-            }
+                    .json({ error : `Note not found.` })
+            } 
             return res
                 .status(200)
                 .json({ message : `Note #'${req.body.noteID}' deleted.`, ...results })

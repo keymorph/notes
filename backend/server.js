@@ -12,8 +12,8 @@ const host = 'localhost'
 app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`))
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use('/api/', user)
 app.use('/api/', note)

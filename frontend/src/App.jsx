@@ -8,8 +8,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Note from "./components/Dashboard/Note/Note";
 import Navbar from "./components/Navbar";
 
-import {ThemeDark, ThemeLight} from "./components/UI/Theme";
-import {Container, Grid} from "@mui/material";
+import { ThemeDark, ThemeLight } from "./components/UI/Theme";
+import { Container, Grid } from "@mui/material";
 
 export default function App() {
   // Check if the browser reports dark mode preference so that it is set as the default mode
@@ -19,7 +19,7 @@ export default function App() {
   // Set the theme palette based on the dark mode preference
   const theme = useMemo(
     () =>
-        darkMode ? ThemeDark : ThemeLight,
+      darkMode ? ThemeDark : ThemeLight,
     [darkMode]
   );
 
@@ -34,23 +34,23 @@ export default function App() {
   };
 
   return (
-      <ThemeProvider theme={theme}>
-          <Grid container sx={{
-              backgroundColor: "black",
-              background: darkMode ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)" : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)"
-          }}>
-            <Navbar
-              darkMode={darkMode}
-              handleDarkModeToggle={handleDarkModeToggle}
-            />
-            <Router>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/note" element={<Note />} />
-              </Routes>
-            </Router>
+    <ThemeProvider theme={theme}>
+      <Grid container sx={{
+        backgroundColor: "black",
+        background: darkMode ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)" : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)"
+      }}>
+        <Router>
+          <Navbar
+            darkMode={darkMode}
+            handleDarkModeToggle={handleDarkModeToggle}
+          />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/note" element={<Note />} />
+          </Routes>
+        </Router>
       </Grid>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }

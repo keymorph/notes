@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import editIcon from "../../../images/edit-icon.svg";
-import axios from "axios";
+import { useState, useRef, useEffect } from 'react';
+import editIcon from '../../../images/edit-icon.svg';
+import axios from 'axios';
 import {
   Box,
   Button,
@@ -18,37 +18,42 @@ import {
   MenuItem,
   TextField,
   Typography
-} from "@mui/material";
+} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { DeleteIcon, EditIcon, MoreHoriz, Square } from "@mui/icons-material";
+import { DeleteIcon, EditIcon, MoreHoriz, Square } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
-import './style.css'
+
 
 // Turn the Note grey, when the Modal is active.
-import Skeleton from '@mui/material/Skeleton';
+import NoteSkeleton from './NoteSkeleton';
 
+// Trigger the Modal when editing a Note
+import NoteEditModal from './NoteEditModal'
 
 function Note(props) {
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [scale, setScale] = useState("scale(1, 1)")
-  const [cardHeight, setCardHeight] = useState("auto")
-  const [flip, setFlip] = useState("rotate(0deg)")
-  const [contentHeight, setContentHeight] = useState("")
+  const [scale, setScale] = useState('scale(1, 1)');
+  const [cardHeight, setCardHeight] = useState('auto');
+  const [flip, setFlip] = useState('rotate(0deg)');
+  const [contentHeight, setContentHeight] = useState('');
   const [checked, setChecked] = useState(false);
+  const [title, setTitle] = useState(props.title)
+  const[category, setCategory] = useState(props.category)
+  const [description, setDescription] = useState(props.description)
 
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => {
     setModalOpen(false);
+    setAnchorEl(null);
   };
 
   // MODAL: Category (Chip)
   const [chipCategory, deleteChip] = useState(false);
   // Delete the category for the note, and update the database.
-  const handleChipDelete = () => { deleteChip(true) }
+  const handleChipDelete = () => { deleteChip(true); }
 
   // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
   const style = {
@@ -73,140 +78,157 @@ function Note(props) {
     setAnchorEl(event.currentTarget);
   }
 
-  const handleEdit = () => {
-
-    setAnchorEl(null)
-  }
+  const url = "http://localhost:8000/api";
+  const token = localStorage.getItem("auth-token");
 
   const handleDelete = () => {
-
-    setAnchorEl(null)
+    axios
+      .delete(`${url}/note`,
+        {
+          headers: {
+            "auth-token": token,
+          },
+          data: {
+            "noteID": props.noteID,
+          }
+        }
+      )
+      .then((response) => {
+        props.setNoteCollection(props.noteCollection.filter((note, index) => index != props.index));
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`)
+      });
   }
 
   const handleDuplicate = () => {
-    setAnchorEl(null)
+    axios
+      .post(`${url}/note`,
+        {
+          'title': `${props.title}`,
+          'description': `${props.description}`,
+          'category': `${props.category}`,
+          'tags': `${props.tags}`,
+        },
+        {
+          headers: {
+            "auth-token": token,
+          }
+        }
+      )
+      .then((response) => {
+        setAnchorEl(null)
+        
+        // Reflect the database changes on the front-end
+        // Add the newly created note to the NoteCollection
+        props.setNoteCollection(oldArray => [...oldArray, response.data])
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`)
+      });
   }
 
   // Define Note style values; height, width, etc.
-  const minHeight = '200px'
-  const maxHeight = '300px'
-  const width = '200px'
+  const minHeight = '200px';
+  const maxHeight = '300px';
+  const width = '200px';
 
-  // const { title = "Grocery List" } = props;
-  const { title = "WWWWWWWWWWW" } = props;
-  const { description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed eleifend sem, sit amet porttitor purus. Proin posuere urna vitae est pellentesque iaculis. Vivamus quis sapien erat. Mauris pretium urna at nulla maximus ornare. Nunc quis nibh turpis. Sed vehicula, metus finibus porta aliquam, mi quam ornare nisl, variable kapa frish albas comical" } = props;
+  const categoryExists = () => {
+    if (props.category != (null || undefined || '')) {
+      return true; 
+    } else {
+      return false;
+    }
+  }
 
   return (
-    <div style={{ display: "flex", width: "100vwh", height: "100vh" }}>
-      {modalOpen ?
-        <div
-          className="NoteCard"
-          sx={{ width: width, minHeight: minHeight, overflowWrap: "break-word", transition: "height 1s linear", margin: "5px", }}
-          style={{ zIndex: 10, height: "auto", maxHeight: maxHeight, paddingTop: "0px !important" }}
-          ref={ref}
-        >
-          <Skeleton
-            animation="wave"
-            style={{
-              height: "100%", width: width, marginTop: 0, padding: 0, transform: "scale(1)"
-            }}
-          />
-          <Modal
-            open={modalOpen}
-            onClose={handleClose}
-            onBackdropClick={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+    <div style={{ display: 'flex', width: '100vwh', height: '100vh' }}>
+      <NoteEditModal
+        title={title}
+        setTitle={setTitle}
+        setDescription={setDescription}
+        noteID={props.noteID}
+        description={description}
+        modalOpen={modalOpen}
+        category={category}
+        handleClose={handleClose}
+        handleChipDelete={handleChipDelete}
+      />
+
+      <Card
+        className='NoteCard'
+        sx={{ width: width, minHeight: minHeight, overflowWrap: 'break-word', transition: 'height 1s linear', margin: '5px', }}
+        style={{ transform: scale, transition: 'height 0.1s linear, transform 0.1s linear', zIndex: 10, height: 'auto', maxHeight: maxHeight, paddingTop: '0px !important' }}
+        onMouseOver={() => setScale('scale(1.02,1.02')}
+        onMouseLeave={() => setScale('scale(1, 1)')}
+        ref={ref}
+      >
+        <Box style={{ backgroundColor: categoryExists() ? '#388a82' : 'grey', height: '40px', position: 'relative', opacity: 1 }}>
+
+          {categoryExists() ? <Chip label={props.category}/> : null}
+
+          <IconButton
+            aria-label='settings'
+            sx={{ position: 'absolute', right: '0px', padding: '0px' }}
+            onClick={handleClick}
           >
-            <Box sx={style}>
-              <Typography variant="h5">
-                EDIT NOTE:
-              </Typography>
+            <MoreHoriz sx={{ color: 'white' }} />
+          </IconButton>
+        </Box>
 
-              {/* Note Modal: TITLE Field */}
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Title"
-                  defaultValue={ title }
-                />
-              </Typography>
-
-              {/* Note Modal: DESCRIPTION Field */}
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description"
-                  multiline
-                  rows={4}
-                  defaultValue={ description }
-                />
-              </Typography>
-
-              {/* Note Modal: CATEGORY (Chips) Field */}
-              <Typography>
-                <Chip
-                  label="{props.category}"
-                  onDelete={handleChipDelete}
-                />
-              </Typography>
-
-            </Box>
-          </Modal>
-        </div>
-        : <Card
-          className="NoteCard"
-          sx={{ width: width, minHeight: minHeight, overflowWrap: "break-word", transition: "height 1s linear", margin: "5px", }}
-          style={{ transform: scale, transition: "height 0.1s linear, transform 0.1s linear", zIndex: 10, height: "auto", maxHeight: maxHeight, paddingTop: "0px !important" }}
-          onMouseOver={() => setScale("scale(1.02,1.02")}
-          onMouseLeave={() => setScale("scale(1, 1)")}
-          ref={ref}
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={() => setAnchorEl(null)}
+          style={{ opacity: modalOpen ? 0 : 1 }}
         >
-          <Box sx={{ backgroundColor: '#388a82', height: '40px', position: "relative" }}>
-            {/* { props.category } */}
-            {/* NONE */}
-            <Chip label="Category" />
+          <MenuItem onClick={handleOpen}>Edit</MenuItem>
+          <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </Menu>
 
-            <IconButton aria-label="settings" sx={{ position: 'absolute', right: '0px', padding: '0px' }}
-              onClick={ handleClick }
-            >
-              <MoreHoriz sx={{ color: 'white' }} />
-            </IconButton>
-          </Box>
+        <CardActionArea onClick={handleOpen} style={{ height: '100%', opacity: modalOpen ? 0 : 1 }}>
+          <CardContent sx={{ userSelect: 'text' }}>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem onClick={handleEdit}>Edit</MenuItem>
-            <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
-            <MenuItem onClick={handleDelete}>Delete</MenuItem>
-          </Menu>
-
-          <CardActionArea onClick={handleOpen}>
-            <CardContent sx={{ userSelect: 'text' }}>
-              <Grid>
-                <Typography variant="subtitle1" title="Title Name">
-                  { title?.length > 11 ? `${title.substring(0, 10)}...` : title }
-                </Typography>
-              </Grid>
-
-              <Divider variant="middle" />
-
-              <Typography variant="body2" sx={{ fontSize: "12px", }}>
-                { description?.length > 345 ? `${description.substring(0, 340)}...` : description }
+            <Grid>
+              <Typography variant='subtitle1' title='Title Name'>
+                {title?.length > 11 ? `${title.substring(0, 10)}...` : title}
               </Typography>
+            </Grid>
 
-            </CardContent>
-          </CardActionArea>
+            <Divider variant='middle' />
 
-        </Card>
-      }
+            <Typography variant='body2' sx={{ fontSize: '12px', }}>
+              {description?.length > 345 ? `${description.substring(0, 340)}...` : description}
+            </Typography>
+
+          </CardContent>
+        </CardActionArea>
+
+      </Card>
     </div>
-
   );
 }
+
+/*
+grey - 999999
+red - A26361
+yellow - DEBB97
+green - B4B387
+blue - 7789AB
+*/
+
+// hey the user can have 4 categories
+// categoryID name color userID
+
+
+// search the categories table
+// search for all categories that this users has
+// 1 2 3 4 5
+
+// if 1 then B4B387
+
+
 
 export default Note;

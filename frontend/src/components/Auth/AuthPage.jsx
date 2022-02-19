@@ -2,7 +2,6 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { Card, Grid } from "@mui/material";
-
 import NoPasswordBox from "./NoPasswordBox";
 import LoginBox from "./LoginBox";
 import RegisterBox from "./RegisterBox";
@@ -12,7 +11,7 @@ export default function AuthPage() {
 
   // Handles the state of which box is displayed, default is "login". Options are: "login", "register" and "nopass"
   const [currentBox, setCurrentBox] = useState("login");
-
+  
   const [loading, setLoading] = useState(false);
 
   // State handling for the box components
@@ -84,8 +83,6 @@ export default function AuthPage() {
       email: email,
       password: password,
     };
-
-    console.log(data);
 
     axios
       .post("http://localhost:8000/api/user", data)
