@@ -1,6 +1,6 @@
 import { notes, users } from "../models/database.js";
 
-const create = (req, res) => {
+const create = async (req, res) => {
   // Get the user resource object
   const user = users
     .item(req.userID, req.userID)
@@ -22,6 +22,7 @@ const create = (req, res) => {
       });
     }).resource;
 
+  // Definitions for the note to be created
   const noteDef = {
     title: req.body.title,
     content: req.body.content,
@@ -31,46 +32,27 @@ const create = (req, res) => {
   };
 
   const noteItemDef = {
-    id: user.id,
+    id: user.id, // The user ID is the same as the note object ID. This allows for a 1:1 relationship between user and note item
     notes: note?.notes.push(noteDef) || [noteDef], // Push note if note resource exists otherwise create a new note array
-    categories: note?.categories.push(req.body.category) || [req.body.category],
-    tags: note?.tags.push(req.body.tags) || [req.body.tags],
+    categories: note?.categories.push(req.body.category) || [req.body.category], // Push category if note resource exists otherwise create a new category array
+    tags: note?.tags.push(req.body.tags) || [req.body.tags], // Push tags if note resource exists otherwise create a new tags array
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
 
-  // If note item is found, update it with the new note data
-  if (note) {
-    notes
-      .item(req.userID, req.userID)
-      .replace(noteItemDef)
-      .then((r) => {
-        res.status(201).json({
-          message: "Note created successfully",
-          note: r.resource.notes[r.resource.notes.length - 1],
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        return res.status(500).json({
-          message: "Database error while creating note",
-        });
+  notes.items
+    .upsert(noteItemDef)
+    .then(({ resource }) => {
+      res.status(201).json({
+        message: "Note created successfully",
+        note: resource.notes[resource.notes.length - 1],
       });
-  } else {
-    notes.items.create(noteItemDef).then((r) => {
-      res
-        .status(201)
-        .json({
-          message: "Note created successfully",
-          note: r.resource.notes[0],
-        })
-        .catch((err) => {
-          console.error(err);
-          return res.status(500).json({
-            message: "Database error while creating note",
-          });
-        });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({
+        message: "Database error while creating note",
+      });
     });
-  }
   //     `INSERT INTO notes (title, description, categoryID, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.categoryID}', '${req.body.tags}', '${req.userID}');`,
   //     async (err, results) => {
   //         if (err) throw err
