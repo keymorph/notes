@@ -63,28 +63,35 @@ const create = (req, res, next) => {
 
     */
 
-    console.log('CHICKEN')
+    if (req.body.category === '') { 
+        console.log("empty category")
+        req.body.category = null; 
+    }
 
-    console.log("IN CATEGORY")
+    if (req.body.category != null) {
+        console.log("CATEGORY", req.body.category)
+        database.query(
+            `INSERT INTO categories (category, color, userID) VALUES ('${req.body.category}', '${req.body.color}', '${req.userID}');`,
+            async (err, results) => {
+                if (err) throw err;
+                // const userID = res.locals.userID;
+                // console.log("BOOM" + userID)
+                // // next();
+                // console.log(results)
+                // return res.status(200).json(results)
 
-    database.query(
-        `INSERT INTO categories (category, color, userID) VALUES ('${req.body.category}', '${req.body.color}', '${req.userID}');`,
-        async (err, results) => {
-            if (err) throw err;
-            // const userID = res.locals.userID;
-            // console.log("BOOM" + userID)
-            // // next();
-            // console.log(results)
-            // return res.status(200).json(results)
+                // res.locals.categoryID = results.insertId;
+                // console.log(res.locals.categoryID)
 
-            // res.locals.categoryID = results.insertId;
-            // console.log(res.locals.categoryID)
-
-            req.categoryID = results.insertId;
-            console.log(req.categoryID)
-
-            next();
-        })
+                req.categoryID = results.insertId;
+                console.log("CATEGORY ID", req.categoryID)
+                next();
+            }
+        )
+    } else {
+        req.categoryID = 0;
+        next();
+    }
 }
 
 const get = (req, res, next) => {
@@ -95,7 +102,6 @@ const get = (req, res, next) => {
             req.categories = results;
             console.log(req.categories)
             next();
-            // return res.status(200).json(results)
         })
 }
 

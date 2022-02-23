@@ -25,10 +25,15 @@ export default function NoteTimeline({ noteCollection, setNoteCollection, catego
         }
       }
     })
-    // Reverse the note order, to show the newest first.
-    .reverse()
     // Show the desired note components.
     .map((note, index) => {
+      const categoryCheck = () => {
+        if (note.categoryID != 0) {
+          return categories.filter((category) => category.categoryID === note.categoryID)[0]?.category
+        }
+        else { return ''; }
+      }
+
       return (
         <Note
           key={note.noteID}
@@ -36,13 +41,17 @@ export default function NoteTimeline({ noteCollection, setNoteCollection, catego
           noteID={note.noteID}
           title={note.title}
           description={note.description}
-          category={categories.filter((category)=>category.categoryID === note.categoryID)[0]?.category}
-          color={note.color}
+          category={categoryCheck()}
+          color={categories.filter((category) => category.categoryID === note.categoryID)[0]?.color}
+          categories={categories}
+          categoryID={note.categoryID}
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
         />
       )
-    });
+    })
+    // Reverse the note order, to show the newest first.
+    .reverse()
 
   return (
     <Masonry columns={6} spacing={1.2}>
