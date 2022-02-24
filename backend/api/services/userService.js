@@ -2,14 +2,21 @@ import { users } from "../models/database.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const register = async (email, password, res) => {
+const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
   const user = (
     await users.items
       .query(`SELECT * FROM users WHERE users.email = '${email}'`)
       .fetchNext()
+      .catch((err) => {
+        console.log(err.message);
+        res.status(500).send({
+          error: "Internal server error",
+        });
+      })
   )?.resources;
-  if (user.email === email)
+
+  if (user[0].email === email)
     return res.status(409).send("Email already in use.");
 
   bcrypt.hash(password, 10, (err, hash) => {
@@ -28,14 +35,12 @@ const register = async (email, password, res) => {
             .json({ message: "User account created successfully 🥳." });
         })
         .catch((err) => {
-          return res
-            .status(550)
-            .json({
-              message: `Database error while registering user:\n${err}`,
-            });
+          return res.status(550).json({
+            message: `Database error while registering user:\n${err}`,
+          });
         });
     } else {
-      console.error(err);
+      console.error(err.message);
       return res
         .status(500)
         .json({ message: `Error while hashing the password: ${err}` });
@@ -43,7 +48,7 @@ const register = async (email, password, res) => {
   });
 };
 
-const login = async (email, password, res, remember = false) => {
+const loginAccount = async (email, password, res, remember = false) => {
   await users.items
     .query(`SELECT * FROM users WHERE users.email = '${email}'`)
     .fetchNext()
@@ -83,14 +88,14 @@ const login = async (email, password, res, remember = false) => {
       return res.status(200).json({ accessToken: accessToken });
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err.message);
       return res
         .status(500)
         .json({ message: `Database error while logging in user:\n${err}` });
     });
 };
 
-const remove = async (req, res) => {
+const removeAccount = async (req, res) => {
   // TODO: Delete all user's notes by looping through the noteService delete method
   // Below you can see the old method of deleting notes when it was using MySQL
   // users.query(
@@ -109,12 +114,16 @@ const remove = async (req, res) => {
       return res.status(200).json({ message: "User deleted successfully." });
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err.message);
       return res.status(500).json({
         message: `Database error while attempting to delete user:\n${err}`,
       });
     });
 };
 
-const userService = { register, login, remove };
+const userService = {
+  register: registerAccount,
+  login: loginAccount,
+  remove: removeAccount,
+};
 export default userService;

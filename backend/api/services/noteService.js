@@ -1,41 +1,66 @@
-import { notes, users } from "../models/database.js";
+import uniqWith from "lodash/uniqWith.js";
 
-const create = async (req, res) => {
-  // Get the user resource object
-  const user = users
-    .item(req.userID, req.userID)
-    .read()
-    .catch((err) => {
-      console.log(err);
-      return res.status(200).json({
-        message: "Database error while creating note",
-      });
-    }).resource;
+import { notes } from "../models/database.js";
+
+// TODO: Make sure that the front end sends a category object with category name and color like so:
+// {
+//   category_name: "Chicken",
+//   color: "Yellow"
+// }
+const createNote = async (req, res) => {
   // Get the note resource object
   const note = notes
     .item(req.userID, req.userID)
     .read()
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return res.status(200).json({
         message: "Database error while creating note",
       });
     }).resource;
 
-  // Definitions for the note to be created
+  // Note object to be created
   const noteDef = {
     title: req.body.title,
-    content: req.body.content,
     description: req.body.description,
     category: req.body.category,
+    tags: req.body.tags,
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
 
+  let notesObjArr;
+  let categoriesObjArr;
+  let tagsArr;
+  // If the user has a note resource already, add the new note to it. Otherwise, create a new note resource.
+  if (note) {
+    notesObjArr = note.notes.concat(noteDef);
+    // If the category/tags of the note to be created is/are already in the categories/tags array, remove it since it is a duplicate
+    categoriesObjArr = uniqWith(
+      note.categories.concat(req.body.category),
+      (a, b) => a.category_name.toLowerCase() === b.category_name.toLowerCase() // Case insensitive comparison
+    );
+    tagsArr = uniqWith(
+      note.tags.concat(req.body.tags),
+      (a, b) => a.toLowerCase() === b.toLowerCase()
+    );
+  } else {
+    notesObjArr = [noteDef];
+    categoriesObjArr = [req.body.category];
+    tagsArr = [req.body.tags];
+  }
+
+  // Clear any undefined values from the categories/tags arrays in case the user didn't send any tags or categories
+  categoriesObjArr = categoriesObjArr.filter(
+    (category) => category !== undefined
+  );
+  tagsArr = tagsArr.filter((tag) => tag !== undefined);
+
+  // Note Item object with the noteDef object pushed to the notes array
   const noteItemDef = {
-    id: user.id, // The user ID is the same as the note object ID. This allows for a 1:1 relationship between user and note item
-    notes: note?.notes.push(noteDef) || [noteDef], // Push note if note resource exists otherwise create a new note array
-    categories: note?.categories.push(req.body.category) || [req.body.category], // Push category if note resource exists otherwise create a new category array
-    tags: note?.tags.push(req.body.tags) || [req.body.tags], // Push tags if note resource exists otherwise create a new tags array
+    id: req.body.userID, // The user ID is the same as the note object ID allowing for a 1:1 relationship
+    notes: notesObjArr,
+    categories: categoriesObjArr,
+    tags: tagsArr,
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
 
@@ -44,58 +69,83 @@ const create = async (req, res) => {
     .then(({ resource }) => {
       res.status(201).json({
         message: "Note created successfully",
-        note: resource.notes[resource.notes.length - 1],
+        noteObj: resource.notes[resource.notes.length - 1],
+      });
+    })
+    .catch((err) => {
+      console.error(err.message);
+      return res.status(500).json({
+        message: "Database error while creating note",
+      });
+    });
+};
+
+const getNoteItem = (req, res) => {
+  notes
+    .item(req.body.userID, req.body.userID)
+    .read()
+    .then(({ resource }) => {
+      res.status(200).json({
+        message: "Note retrieved successfully",
+        noteObj: resource,
       });
     })
     .catch((err) => {
       console.error(err);
       return res.status(500).json({
-        message: "Database error while creating note",
+        message: "Database error while retrieving note",
       });
     });
-  //     `INSERT INTO notes (title, description, categoryID, tags, userID) VALUES ('${req.body.title}', '${req.body.description}', '${req.categoryID}', '${req.body.tags}', '${req.userID}');`,
-  //     async (err, results) => {
-  //         if (err) throw err
-  //         return res.status(200).json(
-  //             {
-  //                 'noteID': `${results.insertId}`,
-  //                 ...req.body
-  //             }
-  //         )
-  // })
 };
 
-const show = (req, res) => {
-  notes.items.query(
-    `SELECT * FROM notes WHERE userID = '${req.userID}';`,
-    async (err, results) => {
-      if (err) throw err;
-      return res.status(200).json({
-        categories: req.categories,
-        notes: results,
+//   `SELECT * FROM notes WHERE userID = '${req.userID}';`,
+//   async (err, results) => {
+//     if (err) throw err;
+//     return res.status(200).json({
+//       categories: req.categories,
+//       notes: results,
+//     });
+//   }
+// );
+
+const editNote = (req, res) => {
+  notes
+    .item(req.body.userID, req.body.userID)
+    .update({
+      notes: req.body.notes,
+      categories: req.body.categories,
+      tags: req.body.tags,
+    })
+    .then(({ resource }) => {
+      res.status(200).json({
+        message: "Note updated successfully",
+        noteObj: resource,
       });
-    }
-  );
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({
+        message: "Database error while updating note",
+      });
+    });
+
+  //   .query(
+  //   `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorID}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
+  //   async (err, results) => {
+  //     if (err) throw err;
+  //     if (results.affectedRows === 0) {
+  //       return res
+  //         .status(400)
+  //         .json({ error: `Note update unsuccessful; couldn't find note.` });
+  //     }
+  //     return res
+  //       .status(200)
+  //       .json({ message: `Note #'${req.body.noteID}' update.`, ...results });
+  //   }
+  // );
 };
 
-const edit = (req, res) => {
-  notes.items.query(
-    `UPDATE notes SET title = '${req.body.title}', description = '${req.body.description}', categoryID = '${req.body.categorID}', tags = '${req.body.tags}' WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
-    async (err, results) => {
-      if (err) throw err;
-      if (results.affectedRows === 0) {
-        return res
-          .status(400)
-          .json({ error: `Note update unsuccessful; couldn't find note.` });
-      }
-      return res
-        .status(200)
-        .json({ message: `Note #'${req.body.noteID}' update.`, ...results });
-    }
-  );
-};
-
-const remove = (req, res) => {
+const removeNote = (req, res) => {
   console.log("OUTSIDE");
   database.query(
     `DELETE FROM notes WHERE noteID = '${req.body.noteID}' AND userID = '${req.userID}';`,
@@ -112,5 +162,10 @@ const remove = (req, res) => {
   );
 };
 
-const noteService = { create, show, edit, remove };
+const noteService = {
+  create: createNote,
+  show: getNoteItem,
+  edit: editNote,
+  remove: removeNote,
+};
 export default noteService;
