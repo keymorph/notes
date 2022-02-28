@@ -9,11 +9,11 @@ export default function Dashboard() {
   const token = localStorage.getItem("auth-token");
 
   const [noteCollection, setNoteCollection] = useState([]);
-  const [categories,setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
   const [showPage, setShowPage] = useState(false);
 
- // Search Bar
- const [searchValue, setSearchValue] = useState('');
+  // Search Bar
+  const [searchValue, setSearchValue] = useState("");
 
   const url = "http://localhost:8000/api";
 
@@ -23,6 +23,7 @@ export default function Dashboard() {
       if (result) getAllNotes();
       console.log(result);
     }
+
     loadDashboard();
   }, []);
 
@@ -58,10 +59,11 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        const allNotes = response.data.notes;
-        const allCategories = response.data.categories;
-        setNoteCollection(allNotes);
-        setCategories(allCategories)
+        const noteItem = response.noteItem;
+        const notes = noteItem.notes;
+        const categories = noteItem.categories;
+        setNoteCollection(notes);
+        setCategories(categories);
         console.log(noteCollection);
       })
       .catch((error) => console.error(`Error: ${error}`));
@@ -80,7 +82,7 @@ export default function Dashboard() {
         />
         <NoteTimeline
           noteCollection={noteCollection}
-          setNoteCollection={setNoteCollection} 
+          setNoteCollection={setNoteCollection}
           categories={categories}
           setCategories={setCategories}
           searchValue={searchValue}
