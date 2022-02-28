@@ -9,21 +9,25 @@ import {
 import Modal from '@mui/material/Modal';
 import Note from './Note';
 
-export default function NoteEditModal({ modalOpen, handleClose, category, tags, description, title, handleChipDelete, setTitle, setDescription, noteID }) {
+export default function NoteEditModal({ modalOpen, handleClose, categories, category, categoryID, tags, description, title, handleChipDelete, setTitle, setDescription, noteID }) {
 
     const url = "http://localhost:8000/api";
     const token = localStorage.getItem("auth-token");
     const [color, setColor] = useState(1);
 
     const saveModalData = () => {
-        
+        if (categoryID != (null || undefined || '')) {
+            categoryID = 0;
+            console.log("CATEGORY", categoryID)
+        }
+
         axios
             .put(`${url}/note`,
                 {
                     'noteID': `${noteID}`,
                     'title': `${title}`,
                     'description': `${description}`,
-                    'category': `${category}`,
+                    'categoryID': `${categoryID}`,
                     'color': `${color}`,
                     'tags': `${tags}`,
                 },
@@ -79,7 +83,6 @@ export default function NoteEditModal({ modalOpen, handleClose, category, tags, 
                     />
                 </Typography>
 
-
                 {/* Note Modal: DESCRIPTION Field */}
                 <Typography id='modal-modal-description' sx={{ mt: 2 }}>
                     <TextField
@@ -95,11 +98,10 @@ export default function NoteEditModal({ modalOpen, handleClose, category, tags, 
                 {/* Note Modal: CATEGORY (Chips) Field */}
                 <Typography>
                     <Chip
-                        label='{props.category}'
+                        label={category}
                         onDelete={handleChipDelete}
                     />
                 </Typography>
-
             </Box>
         </Modal>
     )

@@ -23,7 +23,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DeleteIcon, EditIcon, MoreHoriz, Square } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
 
-
 // Turn the Note grey, when the Modal is active.
 import NoteSkeleton from './NoteSkeleton';
 
@@ -39,7 +38,7 @@ function Note(props) {
   const [contentHeight, setContentHeight] = useState('');
   const [checked, setChecked] = useState(false);
   const [title, setTitle] = useState(props.title)
-  const[category, setCategory] = useState(props.category)
+  const [category, setCategory] = useState(props.category)
   const [description, setDescription] = useState(props.description)
 
   // MODAL
@@ -94,7 +93,17 @@ function Note(props) {
         }
       )
       .then((response) => {
-        props.setNoteCollection(props.noteCollection.filter((note, index) => index != props.index));
+        console.log(props.index);
+        props.setNoteCollection(props.noteCollection.filter((note, index) => {
+          
+
+          // [1, 2, 3, 4, 5, 6, 7] --->  5
+          // 
+          console.log(index != props.index)
+          return index != props.index
+        }));
+        setAnchorEl(null)
+
         console.log(response);
       })
       .catch((error) => {
@@ -135,10 +144,40 @@ function Note(props) {
   const width = '200px';
 
   const categoryExists = () => {
-    if (props.category != (null || undefined || '')) {
-      return true; 
+    if (props.category != ('')) {
+      return true;
     } else {
       return false;
+    }
+  }
+
+  const categoryColorValue = (colorNumber) => {
+    if (categoryExists()) {
+      switch(colorNumber) {
+        case 0: {
+          // Red
+          return '#999999';
+        }
+        case 1: {
+          // Red
+          return '#A26361';
+        }
+        case 2: {
+          // Yellow
+          return '#DEBB97';
+        }
+        case 3: {
+          // Green
+          return '#B4B387';
+        }
+        case 4: {
+          // Blue
+          return '#7789AB';
+        }
+      }
+    } else {
+      // There is no category, so return Grey
+      return '#999999';
     }
   }
 
@@ -152,6 +191,8 @@ function Note(props) {
         description={description}
         modalOpen={modalOpen}
         category={category}
+        categories={props.categories}
+        categoryID={props.categoryID}
         handleClose={handleClose}
         handleChipDelete={handleChipDelete}
       />
@@ -164,7 +205,7 @@ function Note(props) {
         onMouseLeave={() => setScale('scale(1, 1)')}
         ref={ref}
       >
-        <Box style={{ backgroundColor: categoryExists() ? '#388a82' : 'grey', height: '40px', position: 'relative', opacity: 1 }}>
+        <Box style={{ backgroundColor: categoryColorValue(props.color), height: '40px', position: 'relative', opacity: 1 }}>
 
           {categoryExists() ? <Chip label={props.category}/> : null}
 
@@ -188,7 +229,7 @@ function Note(props) {
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
 
-        <CardActionArea onClick={handleOpen} style={{ height: '100%', opacity: modalOpen ? 0 : 1 }}>
+        <CardActionArea onClick={handleOpen} style={{  height: "100%", opacity: modalOpen ? 0 : 1 }}>
           <CardContent sx={{ userSelect: 'text' }}>
 
             <Grid>
@@ -210,25 +251,5 @@ function Note(props) {
     </div>
   );
 }
-
-/*
-grey - 999999
-red - A26361
-yellow - DEBB97
-green - B4B387
-blue - 7789AB
-*/
-
-// hey the user can have 4 categories
-// categoryID name color userID
-
-
-// search the categories table
-// search for all categories that this users has
-// 1 2 3 4 5
-
-// if 1 then B4B387
-
-
 
 export default Note;

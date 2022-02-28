@@ -79,12 +79,13 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
           >
             {buttonDisabled === true ? <NoAccounts sx={{ color: 'white' }} /> : <AccountCircle sx={{ color: 'white' }} />}
           </IconButton>
+
         </div>
         <Menu
           anchorEl={anchorEl}
           open={open}
           onClose={() => setAnchorEl(null)}
-        >
+        > 
           <MenuItem
             onClick={removeToken}
           >

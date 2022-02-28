@@ -4,6 +4,8 @@ import {
     Box,
     Button,
     Chip,
+    Menu,
+    MenuItem,
     TextField,
     Typography
 } from '@mui/material';
@@ -15,9 +17,11 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('Homework');
+    const [category, setCategory] = useState('');
     const [color, setColor] = useState(1);
     const [tags, setTags] = useState('Tag1');
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
 
     // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
     const style = {
@@ -32,7 +36,6 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
         borderRadius:'10px',
         boxShadow: 24,
         p: 4,
-        
     };
 
     const url = "http://localhost:8000/api";
@@ -45,7 +48,7 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
                     'title': `${title}`,
                     'description': `${description}`,
                     'category': `${category}`,
-                    'color': `${color}`,
+                    'color': `${(category != null) ? color : 0}`,
                     'tags': `${tags}`,
                 },
                 {
@@ -66,13 +69,13 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
 
                 // Reflect the database changes on the front-end
                 // Add the newly created note to the NoteCollection
+
                 setNoteCollection(oldArray => [...oldArray, response.data])
             })
             .catch((error) => {
                 console.error(`Error: ${error}`)
             });
     };
-
 
     const fieldsAreEmpty = () => {
         if (title.length === 0) {
@@ -83,28 +86,15 @@ export default function NoteCreateModal({ modalOpen, handleClose, setNoteCollect
     };
 
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+
+    }
+
 /* 
 IMPORTANT ------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
+
 when we create a note:
 
 {
@@ -162,12 +152,25 @@ when we create a note:
 
                 {/* Note Modal: CATEGORY (Chips) Field */}
                 <Typography>
-                    <Chip
+
+                    {/* <Chip
                         sx={{margin: '10px', position: 'absolute'}}
-                        label='tag'
-                    // onDelete={handleChipDelete}
-                    // onChange={event => setCategory(event.target.value)}
-                    />
+                        label={category}
+                        onChange={event => setCategory(event.target.value)}
+                    /> */}
+
+                    <Menu
+                        anchorEl={anchorEl}
+                        
+                        onClick={handleClick}
+                        > 
+                        <MenuItem>
+                            Category 1
+                        </MenuItem>
+                        <MenuItem>
+                            Category 2
+                        </MenuItem>
+                      </Menu>
                 </Typography>
 
                 <Button
