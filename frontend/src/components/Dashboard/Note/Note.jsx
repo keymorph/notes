@@ -127,12 +127,12 @@ function Note(props) {
           },
         }
       )
-      .then((response) => {
+      .then(({ noteItem }) => {
         setAnchorEl(null);
 
         // Reflect the database changes on the front-end
         // Add the newly created note to the NoteCollection
-        props.setNoteCollection((oldArray) => [...oldArray, response.data]);
+        props.setNoteCollection((oldArray) => [...oldArray, noteItem]);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);

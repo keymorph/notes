@@ -52,6 +52,7 @@ export default function NoteCreateModal({
           category: {
             name: `${categoryName}`,
             color: `${categoryName ? categoryColor : 0}`,
+            note_count: 1, // Number of notes in this category, always 1 when creating a note
           },
           tags: `${tags}`,
         },
