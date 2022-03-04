@@ -103,9 +103,10 @@ const createNote = async (req, res) => {
 //                                { 
 //                                 note 2
 //                               }   
-
 //                               ]
+                        // categories [
 
+                        // ]
 // // {
 //  notes: [
 //   {"title"
