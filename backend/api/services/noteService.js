@@ -141,7 +141,7 @@ const editNote = async (req, res) => {
         // Check if categories have changed
         if (req.body.category.name !== noteToEdit.category) {
           // If the new category already exists in another note, mark it as not new
-          if (note.category !== req.body.category.name) {
+          if (note.category === req.body.category.name) {
             categoryIsNew = false;
           }
           // If the note to be edited is not the only note with the category, mark it as not only note with category
@@ -165,25 +165,30 @@ const editNote = async (req, res) => {
       }
     });
 
-    // Updating the global array of categories and tags
-    // If the category is new, create it
-    if (categoryIsNew) {
-      categoriesObjArr.push(req.body.category);
+    if (req.body.category.name !== noteToEdit.category) {
+      // Updating the global array of categories and tags
+      // If the category is new, create it
+      if (categoryIsNew) {
+        categoriesObjArr.push(req.body.category);
+      }
+      // Remove the category from the categories array if it is the only note with the category
+      if (onlyNoteWithCategory) {
+        categoriesObjArr = categoriesObjArr.filter(
+          (category) => category.name !== noteToEdit.category
+        );
+      }
     }
-    // Remove the category from the categories array if it is the only note with the category
-    if (onlyNoteWithCategory) {
-      categoriesObjArr = categoriesObjArr.filter(
-        (category) => category.name !== req.body.category.name
-      );
+
+    if (req.body.tags !== noteToEdit.tags) {
+      // Add the tags to the tags array
+      tagsToAdd.forEach((tag) => {
+        tagsArr.push(tag);
+      });
+      // Remove the tags from the tags array
+      tagsToRemove.forEach((tag) => {
+        tagsArr = tagsArr.filter((t) => t !== tag);
+      });
     }
-    // Add the tags to the tags array
-    tagsToAdd.forEach((tag) => {
-      tagsArr.push(tag);
-    });
-    // Remove the tags from the tags array
-    tagsToRemove.forEach((tag) => {
-      tagsArr = tagsArr.filter((t) => t !== tag);
-    });
   }
 
   // Update the note with the new data

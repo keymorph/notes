@@ -111,14 +111,14 @@ function Note(props) {
       });
   };
 
-  const handleDuplicate = () => {
+  const handleCreateDuplicate = () => {
     axios
       .post(
         `${url}/note`,
         {
           title: `${props.title}`,
           description: `${props.description}`,
-          category: `${props.category}`,
+          category: `${props.categoryName}`,
           tags: `${props.tags}`,
         },
         {
@@ -240,7 +240,7 @@ function Note(props) {
           style={{ opacity: modalOpen ? 0 : 1 }}
         >
           <MenuItem onClick={handleOpen}>Edit</MenuItem>
-          <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
+          <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
 

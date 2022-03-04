@@ -32,11 +32,10 @@ export default function NoteTimeline({
           noteID={note.noteID}
           title={note.title}
           description={note.description}
-          categoryName={note()}
+          categoryName={note.category}
           color={
-            categories.filter(
-              (category) => category.categoryID === note.categoryID
-            )[0]?.color
+            categories.find((category) => category.name === note.category)
+              ?.color
           }
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
