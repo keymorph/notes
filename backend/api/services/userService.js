@@ -2,11 +2,15 @@ import { users } from "../models/database.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+
+/// asdlfkja;sldkfja;sldkfja;sldkfja;slkdfja;sldkfja;slkdfja;slkdfja;slkdjfa;lskdjfa;lskdf
+
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
-  const user = (
+
+  const {resources: userItem} = (
     await users.items
-      .query(`SELECT * FROM users WHERE users.email = '${email}'`)
+      .query(`SELECT * FROM users WHERE users.email like '${email}'`)
       .fetchNext()
       .catch((err) => {
         console.log(err.message);
@@ -14,9 +18,10 @@ const registerAccount = async (email, password, res) => {
           error: "Internal server error",
         });
       })
-  )?.resources;
+  );
 
-  if (user[0].email === email)
+  // If a user with email exists, then email in use
+  if (userItem.length !== 0)
     return res.status(409).send("Email already in use.");
 
   bcrypt.hash(password, 10, (err, hash) => {
@@ -126,4 +131,5 @@ const userService = {
   login: loginAccount,
   remove: removeAccount,
 };
+
 export default userService;

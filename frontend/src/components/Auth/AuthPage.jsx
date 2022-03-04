@@ -58,7 +58,7 @@ export default function AuthPage() {
       password: password,
     };
 
-    console.log(data);
+    console.log("DATA", data);
 
     axios
       .put("http://localhost:8000/api/user", data)
@@ -75,6 +75,8 @@ export default function AuthPage() {
       });
   };
 
+/// asdlfkja;sldkfja;sldkfja;sldkfja;slkdfja;sldkfja;slkdfja;slkdfja;slkdjfa;lskdjfa;lskdf
+
   const handleRegister = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -83,6 +85,8 @@ export default function AuthPage() {
       email: email,
       password: password,
     };
+
+    console.log("DATA", data);
 
     axios
       .post("http://localhost:8000/api/user", data)

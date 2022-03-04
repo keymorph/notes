@@ -18,6 +18,9 @@ const createNote = async (req, res) => {
       });
     });
 
+
+    //
+
   // Note object to be created
   const noteDef = {
     title: req.body.title,
@@ -88,17 +91,67 @@ const createNote = async (req, res) => {
     });
 };
 
+
+// notesCollection > documents > evansDocument,
+//                               dantesDocument,
+//                               richsDocument ------> 
+//                     notes: [ 
+//                                { 
+//                                  note 1
+//                                }   
+
+//                                { 
+//                                 note 2
+//                               }   
+
+//                               ]
+
+// // {
+//  notes: [
+//   {"title"
+// "description"
+// "category"
+// "tags"
+// "id"
+// "created_at"
+// },
+// {"title"
+// "description"
+// "category"
+// "tags"
+// "id"
+// "created_at"
+// },
+// {"title"
+// "description"
+// "category"
+// "tags"
+// "id"
+// "created_at"
+// }
+// ]
+// }
+//   title: req.body.title,
+//   description: req.body.description,
+//   category: req.body.category.name, // The category the note belongs to
+//   tags: req.body.tags, // The tags the note has
+//   id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
+//   created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
+// };
+
 const getNoteItem = async (req, res) => {
   notes
     .item(req.body.userID, req.body.userID)
     .read()
     .then(({ resource: noteItem }) => {
+      console.log("NOTEITEM", noteItem)
       res.status(200).json({
         message: "Note retrieved successfully",
         noteItem,
       });
     })
     .catch((err) => {
+      console.log("BOOOOOOM")
       console.error(err);
       return res.status(500).json({
         message: "Database error while retrieving note",

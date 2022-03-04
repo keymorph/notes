@@ -21,7 +21,7 @@ const authenticateToken = (req, res, next) => {
         console.log('JWT: ', jwt);
         console.log('User: ', resource);
         console.log('req: ', req);
-        req.userID = jwt.userID;
+        req.body.userID= jwt.userID;
         next();
     }).catch((error) => {
         console.log(error);

@@ -59,12 +59,15 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
+        console.log("RESPONSE", response)
+        console.log("DATA NOTEITEM", response.data.noteItem)
+        console.log("NOTEITEM", response.noteItem)
         const noteItem = response.noteItem;
         const notes = noteItem.notes;
         const categories = noteItem.categories;
         setNoteCollection(notes);
         setCategories(categories);
-        console.log(noteCollection);
+        console.log("NOTECOLLECTION", noteCollection)
       })
       .catch((error) => console.error(`Error: ${error}`));
   };
