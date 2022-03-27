@@ -106,11 +106,16 @@ export default function AuthPage() {
   return (
     <Card
       sx={{
+        top: "50%",
         padding: 3,
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
         borderRadius: 5,
-        width: "70%",
-        maxWidth: "400px",
+        width: "80%",
+        maxWidth: "420px",
+        maxHeight: "360px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: "15vh",
       }}
     >
       {currentBox === "login" ? (

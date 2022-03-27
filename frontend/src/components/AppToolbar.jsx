@@ -7,9 +7,12 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Fade from "@mui/material/Fade";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NoteAdd } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
+import { FilledInput, InputAdornment } from "@mui/material";
 
 import NoteCreateModal from "./Dashboard/Note/NoteCreateModal";
 
@@ -59,6 +62,8 @@ export default function AppToolbar({
   noteCollection,
   setNoteCollection,
   setSearchValue,
+  categories,
+  setCategories,
 }) {
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
@@ -67,54 +72,69 @@ export default function AppToolbar({
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar
-          sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <NoteCreateModal
-            modalOpen={modalOpen}
-            handleClose={handleClose}
-            noteCollection={noteCollection}
-            setNoteCollection={setNoteCollection}
-          />
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2, position: "absolute", left: 25 }}
+      <Fade in>
+        <AppBar position="static">
+          <Toolbar
+            sx={{ width: "100vw", display: "flex", justifyContent: "center" }}
           >
-            <MenuIcon />
-          </IconButton>
+            <NoteCreateModal
+              modalOpen={modalOpen}
+              handleClose={handleClose}
+              noteCollection={noteCollection}
+              setNoteCollection={setNoteCollection}
+              categories={categories}
+              setCategories={setCategories}
+            />
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: "auto" }}
+            >
+              <MenuIcon />
+            </IconButton>
 
-          <Search sx={{ position: "relative", align: "center" }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
+            <OutlinedInput
               placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+              sx={{
+                borderRadius: 20,
+                mr: "auto",
+                width: "20vw",
+                transition: "width 0.5s ease-in-out",
+                "&:hover": {
+                  width: "25vw",
+                  transition: "width 0.3s ease-in-out",
+                },
+              }}
               onChange={(event) =>
                 setSearchValue(event.target.value.toLowerCase())
               }
-            />
-            {/* onChange={setSearchValue} */}
-          </Search>
-          <Button
-            variant="outlined"
-            startIcon={<NoteAdd />}
-            sx={{
-              color: "white",
-              position: "absolute",
-              right: 0,
-              marginRight: 10,
-            }}
-            onClick={handleOpen}
-          >
-            Add Note
-          </Button>
-        </Toolbar>
-      </AppBar>
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              variant="filled"
+            >
+              {/* onChange={setSearchValue} */}
+            </OutlinedInput>
+            <Button
+              variant="outlined"
+              startIcon={<NoteAdd />}
+              sx={{
+                color: "white",
+                position: "absolute",
+                right: 0,
+                marginRight: 10,
+              }}
+              onClick={handleOpen}
+            >
+              Add Note
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Fade>
     </Box>
   );
 }

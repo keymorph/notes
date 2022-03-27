@@ -1,13 +1,23 @@
 import React, { useState } from "react";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import {
   Box,
   Button,
   Chip,
+  Card,
   Menu,
   MenuItem,
   TextField,
   Typography,
+  InputLabel,
+  IconButton,
+  Select,
+  FormControl,
+  FormHelperText,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
@@ -15,6 +25,7 @@ export default function NoteCreateModal({
   modalOpen,
   handleClose,
   setNoteCollection,
+  categories,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -23,6 +34,7 @@ export default function NoteCreateModal({
   const [tags, setTags] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [createMode, setCreateMode] = useState(false);
 
   // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
   const style = {
@@ -90,6 +102,34 @@ export default function NoteCreateModal({
     setAnchorEl(event.currentTarget);
   };
 
+  const getColor = (color) => {
+    switch (color) {
+      case 0: {
+        // Red
+        return "#999999";
+      }
+      case 1: {
+        // Red
+        return "#A26361";
+      }
+      case 2: {
+        // Yellow
+        return "#DEBB97";
+      }
+      case 3: {
+        // Green
+        return "#B4B387";
+      }
+      case 4: {
+        // Blue
+        return "#7789AB";
+      }
+      default: {
+        return "#999999";
+      }
+    }
+  };
+
   /*
     IMPORTANT ------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------------------------
@@ -148,9 +188,95 @@ export default function NoteCreateModal({
                         onChange={event => setCategory(event.target.value)}
                     /> */}
 
-        <Menu anchorEl={anchorEl} onClick={handleClick} open={anchorEl}>
-          <MenuItem>Category 1</MenuItem>
-          <MenuItem>Category 2</MenuItem>
+        <Menu
+          anchorEl={anchorEl}
+          onClose={() => setAnchorEl(null)}
+          open={anchorEl}
+          style={{ margin: 0, padding: 0 }}
+        >
+          <Box style={{ width: "220px", height: "170px" }}>
+            <IconButton
+              aria-label="delete"
+              size="small"
+              style={{ position: "absolute", right: 2, width: 17, height: 17 }}
+              onClick={() => setAnchorEl(null)}
+            >
+              <CloseIcon style={{ width: 17, height: 17 }} />
+            </IconButton>
+            <Box
+              style={{
+                height: "30px",
+                fontSize: 12,
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              Categories
+            </Box>
+            {!createMode ? (
+              <Box
+                style={{
+                  borderTop: "1px solid #cdcdcd",
+                  borderBottom: "1px solid #cdcdcd",
+                  overflow: "auto",
+                  height: "110px",
+                  marginBottom: 2,
+                }}
+              >
+                {categories
+                  .filter((ctg) => ctg.name !== "")
+                  .map((ctg) => (
+                    <CategoryItem
+                      ctg={ctg}
+                      setCategoryName={setCategoryName}
+                      getColor={getColor}
+                      setAnchorEl={setAnchorEl}
+                    />
+                  ))}
+              </Box>
+            ) : 
+              <Box
+                style={{
+                  borderTop: "1px solid #cdcdcd",
+                  borderBottom: "1px solid #cdcdcd",
+                  overflow: "auto",
+                  height: "110px",
+                  marginBottom: 2,
+                }}
+              >
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+                <Box></Box>
+
+              </Box>
+            }
+            <Box
+              style={{
+                height: "30px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                onClick={()=>setCreateMode(true)}
+                style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
+                endIcon={
+                  <AddIcon
+                    style={{
+                      width: 12,
+                      height: 12,
+                      position: "relative",
+                      bottom: 2,
+                    }}
+                  />
+                }
+              >
+                Create Category
+              </Button>
+            </Box>
+          </Box>
         </Menu>
 
         <Button
@@ -167,7 +293,61 @@ export default function NoteCreateModal({
         >
           CREATE
         </Button>
+
+        <Button
+          variant="outlined"
+          style={{}}
+          endIcon={<ArrowDropDownIcon />}
+          onClick={handleClick}
+        >
+          Categories
+        </Button>
       </Box>
     </Modal>
   );
 }
+
+function CategoryItem({ ctg, setCategoryName, getColor, setAnchorEl }) {
+  const [hover, setHover] = useState(false);
+
+  return (
+    <div style={{ position: "relative" }}>
+      <MenuItem value={ctg.name} onClick={() => setCategoryName(ctg.name)}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: 12,
+            width: "100%",
+            opacity: hover ? 1 : 0.7,
+          }}
+          onMouseEnter={() => setHover(true)}
+          onMouseOut={() => setHover(false)}
+        >
+          <Box
+            sx={{
+              width: "10px",
+              height: "10px",
+              backgroundColor: getColor(ctg.color),
+              borderRadius: 0.5,
+              marginRight: 2,
+            }}
+          ></Box>
+          {ctg.name}
+        </Box>
+
+        <EditIcon
+          style={{
+            position: "absolute",
+            right: 5,
+            width: 13,
+            height: 13,
+            opacity: 0.5,
+          }}
+        />
+      </MenuItem>
+    </div>
+  );
+}
+
+// <CategoryItem ctg={ctg} setCategoryName={setCategoryName} getColor={getColor} setAnchorEl={setAnchorEl}>

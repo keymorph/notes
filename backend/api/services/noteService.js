@@ -258,8 +258,14 @@ const removeNote = async (req, res) => {
     (note) => note.id == req.body.noteID
   );
   const noteToDelete = noteItem.notes[noteIdx];
-  let categoriesObjArr = noteItem.categories;
 
+  if (noteToDelete === undefined) {
+    return res.status(200).json({
+      message: "Note not found. It may have already been deleted",
+    });
+  }
+
+  let categoriesObjArr = noteItem.categories;
   // Decrement the category's note count.
   categoriesObjArr.forEach((category) => {
     if (category.name === noteToDelete.category && category.note_count > 0) {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Box, Chip, TextField, Typography } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import Note from "./Note";
 
 export default function NoteEditModal({
   modalOpen,
@@ -23,36 +22,39 @@ export default function NoteEditModal({
   const [editedDescription, setEditedDescription] = useState(description);
 
   const saveModalData = () => {
-    console.log(noteID);
-    axios
-      .put(
-        `${url}/note`,
-        {
-          noteID: noteID,
-          title: `${title}`,
-          description: `${description}`,
-          category: {
-            name: `${categoryName}`,
-            color: `${categoryColor}`,
+    // If no changes made, no request necessary
+    // TODO: Add Category and Tags checks once those are implemented
+    if (editedTitle !== title || editedDescription !== description) {
+      axios
+        .put(
+          `${url}/note`,
+          {
+            noteID: noteID,
+            title: `${title}`,
+            description: `${description}`,
+            category: {
+              name: `${categoryName}`,
+              color: `${categoryColor}`,
+            },
+            tags: tags,
           },
-          tags: tags,
-        },
 
-        {
-          headers: {
-            "auth-token": token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        // Set the newly edited title and description after the request is successful
-        setTitle(editedTitle);
-        setDescription(editedDescription);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+          {
+            headers: {
+              "auth-token": token,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          // Set the newly edited title and description after the request is successful
+          setTitle(editedTitle);
+          setDescription(editedDescription);
+        })
+        .catch((error) => {
+          console.error(`Error: ${error}`);
+        });
+    }
 
     handleClose();
   };
@@ -87,6 +89,7 @@ export default function NoteEditModal({
             id="outlined-required"
             label="Title"
             defaultValue={title}
+            error={editedTitle.trim() === ""}
             onChange={(event) => setEditedTitle(event.target.value)}
           />
         </Typography>

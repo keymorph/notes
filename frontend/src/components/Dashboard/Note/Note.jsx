@@ -3,21 +3,16 @@ import editIcon from "../../../images/edit-icon.svg";
 import axios from "axios";
 import {
   Box,
-  Button,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
-  CardHeader,
   Chip,
-  Collapse,
   Divider,
   IconButton,
   Grid,
   Menu,
   MenuItem,
-  TextField,
   Typography,
+  Grow,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { DeleteIcon, EditIcon, MoreHoriz, Square } from "@mui/icons-material";
@@ -73,7 +68,7 @@ function Note(props) {
 
   useEffect(() => {
     setCardHeight(ref.current.clientHeight);
-  }, []);
+  }, [description, title]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -94,6 +89,7 @@ function Note(props) {
       })
       .then((response) => {
         console.log(props.index);
+        setAnchorEl(null);
         props.setNoteCollection(
           props.noteCollection.filter((note, index) => {
             // [1, 2, 3, 4, 5, 6, 7] --->  5
@@ -101,7 +97,6 @@ function Note(props) {
             return index !== props.index;
           })
         );
-        setAnchorEl(null);
 
         console.log(response);
       })
@@ -195,7 +190,7 @@ function Note(props) {
           return "#7789AB";
         }
         default: {
-          return "#999999"
+          return "#999999";
         }
       }
     } else {
@@ -205,7 +200,7 @@ function Note(props) {
   };
 
   return (
-    <div style={{ display: "flex", width: "100vwh",  }}>
+    <div style={{ display: "flex", width: "100vwh" }}>
       <NoteEditModal
         title={title}
         setTitle={setTitle}
@@ -220,77 +215,90 @@ function Note(props) {
         tags={props.tags}
         handleChipDelete={handleChipDelete}
       />
-
-      <Card
-        
-        className="NoteCard"
-        sx={{
-          width: width,
-          minHeight: minHeight,
-          overflowWrap: "break-word",
-          transition: "height 1s linear",
-          margin: "5px",
-        }}
-        style={{
-          transform: scale,
-          transition: "height 0.1s linear, transform 0.1s linear",
-          zIndex: 10,
-         
-          maxHeight: maxHeight,
-          paddingTop: "0px !important",
-        }}
-        onMouseOver={() => setScale("scale(1.02,1.02")}
-        onMouseLeave={() => setScale("scale(1, 1)")}
-        ref={ref}
-      >
-        <Box
-          onClick={()=>console.log("yo")}
-          style={{
-            backgroundColor: categoryColorValue(props.color),
-            height: "40px",
-            position: "relative",
-            opacity: 1,
+      <Grow in>
+        <Card
+          className="NoteCard"
+          sx={{
+            width: width,
+            minHeight: minHeight,
+            overflowWrap: "break-word",
+            transition: "height 1s linear",
+            margin: "5px",
           }}
-        >
-          {categoryExists() ? <Chip label={props.categoryName} /> : null}
+          style={{
+            transform: scale,
+            transition: "height 0.1s linear, transform 0.1s linear",
+            zIndex: 10,
 
-          <IconButton
-            aria-label="settings"
-            sx={{ position: "absolute", right: "0px", padding: "0px" }}
-            onClick={handleClick}
+            maxHeight: maxHeight,
+            paddingTop: "0px !important",
+          }}
+          onMouseOver={() => setScale("scale(1.02,1.02")}
+          onMouseLeave={() => setScale("scale(1, 1)")}
+          ref={ref}
+        >
+          <Box
+            onClick={() => console.log("yo")}
+            style={{
+              backgroundColor: categoryColorValue(props.color),
+              height: "40px",
+              position: "relative",
+              opacity: 1,
+            }}
           >
-            <MoreHoriz sx={{ color: "white" }} />
-          </IconButton>
-        </Box>
+            {categoryExists() ? (
+              <Chip label={props.categoryName} sx={{ m: 0.5 }} />
+            ) : null}
 
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={() => setAnchorEl(null)}
-          style={{ opacity: modalOpen ? 0 : 1 }}
-        >
-          <MenuItem onClick={handleOpen}>Edit</MenuItem>
-          <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        </Menu>
+            <IconButton
+              aria-label="settings"
+              sx={{ position: "absolute", right: "0px", padding: "0px" }}
+              onClick={handleClick}
+            >
+              <MoreHoriz sx={{ color: "white" }} />
+            </IconButton>
+          </Box>
 
-     
-          <CardContent onClick={handleOpen} sx={{ userSelect: "text",  }}>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={() => setAnchorEl(null)}
+            style={{ opacity: modalOpen ? 0 : 1 }}
+          >
+            <MenuItem onClick={handleOpen}>Edit</MenuItem>
+            <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          </Menu>
+
+          <CardContent
+            onClick={handleOpen}
+            sx={{ userSelect: "text", height: "100%" }}
+          >
             <Grid>
-              <Typography variant="subtitle1" title="Title Name">
+              <Typography
+                style={{ opacity: modalOpen ? 0 : 1 }}
+                onClick={() => console.log(cardHeight)}
+                variant="subtitle1"
+                title="Title Name"
+              >
                 {title?.length > 11 ? `${title.substring(0, 10)}...` : title}
               </Typography>
             </Grid>
 
             <Divider variant="middle" />
 
-            <Typography variant="body2" sx={{ fontSize: "12px" }}>
+            <Typography
+              style={{ opacity: modalOpen ? 0 : 1 }}
+              variant="body2"
+              sx={{ fontSize: "12px" }}
+            >
               {description?.length > 345
                 ? `${description.substring(0, 340)}...`
                 : description}
             </Typography>
           </CardContent>
-      </Card>
+        </Card>
+      </Grow>
     </div>
   );
 }
