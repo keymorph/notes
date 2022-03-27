@@ -44,53 +44,56 @@ export default function AppToolbar({
               categories={categories}
               setCategories={setCategories}
             />
-            <IconButton edge="start" aria-label="open drawer">
+            <IconButton
+              edge="start"
+              aria-label="open drawer"
+              sx={{ mr: "auto" }}
+            >
               <MenuIcon />
             </IconButton>
-
-            <OutlinedInput
-              placeholder="Search…"
-              value={searchValue}
-              sx={{
-                ml: "auto",
-                mr: "auto",
-                borderRadius: 20,
-                height: "2.5em",
-                width: "10%",
-                maxWidth: "400px",
-                minWidth: "125px",
-                transition: "width 0.5s ease-in-out",
-                "&:hover": {
-                  width: "15%",
-                  transition: "width 0.3s ease-in-out",
-                },
-              }}
-              onChange={(event) =>
-                setSearchValue(event.target.value.toLowerCase())
-              }
-              startAdornment={
-                <InputAdornment position="start" sx={{ mr: 3 }}>
-                  <Zoom in={searchValue !== ""}>
-                    <IconButton
-                      onClick={() => setSearchValue("")}
-                      sx={{ position: "absolute", left: 0 }}
-                    >
-                      <CancelIcon />
-                    </IconButton>
-                  </Zoom>
-                  <Zoom in={searchValue === ""}>
-                    <SearchIcon
-                      sx={{ position: "absolute", top: 8, left: 10 }}
-                    />
-                  </Zoom>
-                </InputAdornment>
-              }
-              variant="filled"
-            >
-              {/* onChange={setSearchValue} */}
-            </OutlinedInput>
+            {/* Only display the search bar if there are notes */}
+            {noteCollection.length > 0 && (
+              <OutlinedInput
+                placeholder="Search…"
+                value={searchValue}
+                sx={{
+                  borderRadius: 20,
+                  height: "2.5em",
+                  width: "10%",
+                  maxWidth: "400px",
+                  minWidth: "125px",
+                  transition: "width 0.5s ease-in-out !important",
+                  "&:hover": {
+                    width: "15%",
+                    transition: "width 0.3s ease-in-out !important",
+                  },
+                }}
+                onChange={(event) =>
+                  setSearchValue(event.target.value.toLowerCase())
+                }
+                startAdornment={
+                  <InputAdornment position="start" sx={{ mr: 3 }}>
+                    <Zoom in={searchValue !== ""}>
+                      <IconButton
+                        onClick={() => setSearchValue("")}
+                        sx={{ position: "absolute", left: 0 }}
+                      >
+                        <CancelIcon />
+                      </IconButton>
+                    </Zoom>
+                    <Zoom in={searchValue === ""}>
+                      <SearchIcon
+                        sx={{ position: "absolute", top: 8, left: 10 }}
+                      />
+                    </Zoom>
+                  </InputAdornment>
+                }
+                variant="filled"
+              />
+            )}
             <Button
               variant="outlined"
+              sx={{ ml: "auto" }}
               startIcon={<NoteAdd />}
               onClick={handleOpen}
             >

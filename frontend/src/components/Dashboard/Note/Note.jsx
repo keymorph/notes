@@ -170,7 +170,7 @@ function Note(props) {
     if (categoryExists()) {
       switch (colorNumber) {
         case 0: {
-          // Red
+          // Grey
           return "#999999";
         }
         case 1: {
@@ -238,7 +238,6 @@ function Note(props) {
           ref={ref}
         >
           <Box
-            onClick={() => console.log("yo")}
             style={{
               backgroundColor: categoryColorValue(props.color),
               height: "40px",

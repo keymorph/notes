@@ -1,6 +1,7 @@
 import React from "react";
 import Note from "./Note";
 import { Masonry } from "@mui/lab";
+import { Typography } from "@mui/material";
 
 export default function NoteTimeline({
   noteCollection,
@@ -8,27 +9,25 @@ export default function NoteTimeline({
   categories,
   searchValue,
 }) {
-  console.log(searchValue)
+  console.log(searchValue);
   const NoteComponents = noteCollection
     // Filter the user's note from the given search input.
     .filter((note) => {
       if (searchValue === "") {
         return true;
       } else {
-        return note.title.toLowerCase().includes(searchValue) ||
+        return (
+          note.title.toLowerCase().includes(searchValue) ||
           note.description.toLowerCase().includes(searchValue) ||
           note.tags.includes(searchValue) ||
           // This has to be some form of sorting, based off of the categoryID and the categoryArray
           note.category.toLowerCase().includes(searchValue)
-
-
-        
-       }
+        );
+      }
     })
     // Show the desired note components.
     .map((note, index) => {
       return (
-       
         <Note
           key={note.id}
           index={index}
@@ -44,7 +43,6 @@ export default function NoteTimeline({
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
         />
-        
       );
     })
     // Reverse the note order, to show the newest first.
@@ -52,7 +50,29 @@ export default function NoteTimeline({
 
   return (
     <Masonry columns={6} spacing={1.2}>
-      {noteCollection.length > 0 ? NoteComponents : <h3>No notes yet.</h3>}
+      {noteCollection.length > 0 ? (
+        NoteComponents
+      ) : (
+        // If there are no notes, show a message. translate X
+        <Typography
+          variant={"h3"}
+          color={"primary"}
+          sx={{
+            position: "relative",
+            mx: "auto",
+            top: "10vh",
+            width: "100vw",
+            textAlign: "center",
+            textShadow: "0px 0px 10px rgba(0,0,0,0.5)",
+            fontSize: "1.5rem",
+            "@media (min-width:600px)": {
+              fontSize: "2.0rem",
+            },
+          }}
+        >
+          No notes yet.
+        </Typography>
+      )}
     </Masonry>
   );
 }

@@ -29,8 +29,8 @@ export default function NoteEditModal({
           `${url}/note`,
           {
             noteID: noteID,
-            title: `${title}`,
-            description: `${description}`,
+            title: `${editedTitle}`,
+            description: `${editedDescription}`,
             category: {
               name: `${categoryName}`,
               color: `${categoryColor}`,
