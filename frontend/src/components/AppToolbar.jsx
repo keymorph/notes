@@ -31,6 +31,9 @@ export default function AppToolbar({
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
+  // SEARCH
+  const [searchFocus, setSearchFocus] = useState(false);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Fade in>
@@ -59,18 +62,21 @@ export default function AppToolbar({
                 sx={{
                   borderRadius: 20,
                   height: "2.5em",
-                  width: "10%",
+                  width: searchFocus ? "15%" : "10%",
                   maxWidth: "400px",
                   minWidth: "125px",
+                  mx: 2,
                   transition: "width 0.5s ease-in-out !important",
                   "&:hover": {
                     width: "15%",
-                    transition: "width 0.3s ease-in-out !important",
+                    transition: "width 0.25s ease-in-out !important",
                   },
                 }}
                 onChange={(event) =>
                   setSearchValue(event.target.value.toLowerCase())
                 }
+                onFocus={() => setSearchFocus(true)}
+                onBlur={() => setSearchFocus(false)}
                 startAdornment={
                   <InputAdornment position="start" sx={{ mr: 3 }}>
                     <Zoom in={searchValue !== ""}>

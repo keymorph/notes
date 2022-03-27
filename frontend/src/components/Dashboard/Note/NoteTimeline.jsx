@@ -13,7 +13,7 @@ export default function NoteTimeline({
   const NoteComponents = noteCollection
     // Filter the user's note from the given search input.
     .filter((note) => {
-      if (searchValue === "") {
+      if (searchValue.trim() === "") {
         return true;
       } else {
         return (
@@ -49,7 +49,10 @@ export default function NoteTimeline({
     .reverse();
 
   return (
-    <Masonry columns={6} spacing={1.2}>
+    <Masonry
+      columns={{ xs: 2, sm: 3, md: 4, lg: 6, xl: 8 }}
+      spacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+    >
       {noteCollection.length > 0 ? (
         NoteComponents
       ) : (
