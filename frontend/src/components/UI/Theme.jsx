@@ -10,14 +10,8 @@ export const ThemeDark = createTheme({
     },
   },
 
-  root: {
-    transition: "all 2s ease-in-out",
-  },
-  // Theme Style Overrides
+  // Per Component Theme Style Overrides
   components: {
-    root: {
-      transition: "all 2s ease-in-out",
-    },
     MuiCssBaseline: {
       styleOverrides: {},
     },
@@ -65,7 +59,7 @@ export const ThemeLight = createTheme({
   palette: {
     mode: "light",
   },
-  // Theme Style Overrides
+  // Per Component Theme Style Overrides
   components: {
     MuiLoadingButton: {
       styleOverrides: {
