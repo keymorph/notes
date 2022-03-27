@@ -81,6 +81,7 @@ export default function Dashboard() {
           setNoteCollection={setNoteCollection}
           categories={categories}
           setCategories={setCategories}
+          searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
         <NoteTimeline

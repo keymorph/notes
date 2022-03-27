@@ -9,60 +9,21 @@ import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Fade from "@mui/material/Fade";
+import Zoom from "@mui/material/Zoom";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NoteAdd } from "@mui/icons-material";
+import { Cancel, NoteAdd, Search } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { FilledInput, InputAdornment } from "@mui/material";
 
 import NoteCreateModal from "./Dashboard/Note/NoteCreateModal";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
 
 export default function AppToolbar({
   noteCollection,
   setNoteCollection,
   setSearchValue,
   categories,
+  searchValue,
   setCategories,
 }) {
   // MODAL
@@ -74,9 +35,7 @@ export default function AppToolbar({
     <Box sx={{ flexGrow: 1 }}>
       <Fade in>
         <AppBar position="static">
-          <Toolbar
-            sx={{ width: "100vw", display: "flex", justifyContent: "center" }}
-          >
+          <Toolbar sx={{ display: "flex" }}>
             <NoteCreateModal
               modalOpen={modalOpen}
               handleClose={handleClose}
@@ -85,25 +44,24 @@ export default function AppToolbar({
               categories={categories}
               setCategories={setCategories}
             />
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: "auto" }}
-            >
+            <IconButton edge="start" aria-label="open drawer">
               <MenuIcon />
             </IconButton>
 
             <OutlinedInput
               placeholder="Search…"
+              value={searchValue}
               sx={{
-                borderRadius: 20,
+                ml: "auto",
                 mr: "auto",
-                width: "20vw",
+                borderRadius: 20,
+                height: "2.5em",
+                width: "10%",
+                maxWidth: "400px",
+                minWidth: "125px",
                 transition: "width 0.5s ease-in-out",
                 "&:hover": {
-                  width: "25vw",
+                  width: "15%",
                   transition: "width 0.3s ease-in-out",
                 },
               }}
@@ -111,8 +69,20 @@ export default function AppToolbar({
                 setSearchValue(event.target.value.toLowerCase())
               }
               startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
+                <InputAdornment position="start" sx={{ mr: 3 }}>
+                  <Zoom in={searchValue !== ""}>
+                    <IconButton
+                      onClick={() => setSearchValue("")}
+                      sx={{ position: "absolute", left: 0 }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </Zoom>
+                  <Zoom in={searchValue === ""}>
+                    <SearchIcon
+                      sx={{ position: "absolute", top: 8, left: 10 }}
+                    />
+                  </Zoom>
                 </InputAdornment>
               }
               variant="filled"
@@ -122,12 +92,6 @@ export default function AppToolbar({
             <Button
               variant="outlined"
               startIcon={<NoteAdd />}
-              sx={{
-                color: "white",
-                position: "absolute",
-                right: 0,
-                marginRight: 10,
-              }}
               onClick={handleOpen}
             >
               Add Note

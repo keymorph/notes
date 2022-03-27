@@ -38,7 +38,6 @@ export default function App() {
           background: darkMode
             ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
             : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
-          transition: "background 0.5s ease",
           height: "100vh",
           overflowX: "hidden",
         }}

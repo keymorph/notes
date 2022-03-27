@@ -35,21 +35,8 @@ export default function NoteCreateModal({
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [createMode, setCreateMode] = useState(false);
-
-  // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%) scale(.9,.9)",
-    width: 300,
-    height: 350,
-    bgcolor: "background.paper",
-    border: "5px solid #000",
-    borderRadius: "10px",
-    boxShadow: 24,
-    p: 4,
-  };
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [createdCategory, setCreatedCategory] = useState("");
 
   const url = "http://localhost:8000/api";
   const token = localStorage.getItem("auth-token");
@@ -153,8 +140,24 @@ export default function NoteCreateModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Typography variant="h6">Create a Note:</Typography>
+      <Card
+        sx={{
+          position: "absolute",
+          display: "flex",
+          flexDirection: "column",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(.9,.9)",
+          width: 400,
+          height: 350,
+          borderRadius: "10px",
+          boxShadow: 24,
+          p: 4,
+        }}
+      >
+        <Typography variant="h5" color={"primary"}>
+          Create a Note
+        </Typography>
 
         {/* Note Modal: TITLE Field */}
         <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -164,7 +167,7 @@ export default function NoteCreateModal({
             label="Title"
             defaultValue={title}
             onChange={(event) => setTitle(event.target.value)}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", mt: 2 }}
           />
         </Typography>
 
@@ -177,7 +180,7 @@ export default function NoteCreateModal({
           rows={4}
           defaultValue={description}
           onChange={(event) => setDescription(event.target.value)}
-          sx={{ width: "100%", mt: 2 }}
+          sx={{ width: "100%", mt: 2, mb: 2 }}
         />
 
         {/* Note Modal: CATEGORY (Chips) Field */}
@@ -192,19 +195,18 @@ export default function NoteCreateModal({
           anchorEl={anchorEl}
           onClose={() => setAnchorEl(null)}
           open={anchorEl}
-          style={{ margin: 0, padding: 0 }}
         >
           <Box style={{ width: "220px", height: "170px" }}>
             <IconButton
               aria-label="delete"
               size="small"
-              style={{ position: "absolute", right: 2, width: 17, height: 17 }}
+              sx={{ position: "absolute", right: 2, width: 20, height: 17 }}
               onClick={() => setAnchorEl(null)}
             >
-              <CloseIcon style={{ width: 17, height: 17 }} />
+              <CloseIcon sx={{ width: 17, height: 17 }} />
             </IconButton>
             <Box
-              style={{
+              sx={{
                 height: "30px",
                 fontSize: 12,
                 textAlign: "center",
@@ -234,7 +236,7 @@ export default function NoteCreateModal({
                     />
                   ))}
               </Box>
-            ) : 
+            ) : (
               <Box
                 style={{
                   borderTop: "1px solid #cdcdcd",
@@ -244,13 +246,66 @@ export default function NoteCreateModal({
                   marginBottom: 2,
                 }}
               >
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
-                <Box></Box>
+                <Box
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    marginLeft: 14,
+                    marginBottom: 4,
+                    marginTop: 4,
+                  }}
+                >
+                  Pick Color
+                </Box>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "80%",
+                    marginLeft: 10,
+                  }}
+                >
+                  {[0, 1, 2, 3, 4].map((color) => (
+                    <Box
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        backgroundColor: getColor(color),
+                        borderRadius: 5,
+                        margin: 4,
+                        border:
+                          selectedColor == color
+                            ? "1.5px solid red"
+                            : `1.5px solid ${getColor(color)}`,
+                      }}
+                      onClick={() => setSelectedColor(color)}
+                    />
+                  ))}
+                </Box>
 
+                <Box style={{ height: 20, fontSize: 12 }}>
+                  <TextField
+                    id="standard-basic"
+                    variant="standard"
+                    size="small"
+                    label="Category Name"
+                    style={{
+                      height: "20px !important",
+                      marginLeft: 14,
+                      marginTop: 4,
+                    }}
+                    onChange={(event) => setCreatedCategory(event.target.value)}
+                    sx={{ width: "75%" }}
+                    InputLabelProps={{
+                      style: { fontSize: 10 },
+                    }}
+                    InputProps={{
+                      style: { fontSize: 10 },
+                    }}
+                  />
+                </Box>
               </Box>
-            }
+            )}
             <Box
               style={{
                 height: "30px",
@@ -259,22 +314,39 @@ export default function NoteCreateModal({
                 alignItems: "center",
               }}
             >
-              <Button
-                onClick={()=>setCreateMode(true)}
-                style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
-                endIcon={
-                  <AddIcon
-                    style={{
-                      width: 12,
-                      height: 12,
-                      position: "relative",
-                      bottom: 2,
-                    }}
-                  />
-                }
-              >
-                Create Category
-              </Button>
+              {!createMode ? (
+                <Button
+                  onClick={() => setCreateMode(true)}
+                  style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
+                  endIcon={
+                    <AddIcon
+                      style={{
+                        width: 12,
+                        height: 12,
+                        position: "relative",
+                        bottom: 2,
+                      }}
+                    />
+                  }
+                >
+                  Create Category
+                </Button>
+              ) : (
+                <Box>
+                  <Button
+                    onClick={() => setCreateMode(false)}
+                    style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => setCreateMode(false)}
+                    style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
         </Menu>
@@ -302,7 +374,7 @@ export default function NoteCreateModal({
         >
           Categories
         </Button>
-      </Box>
+      </Card>
     </Modal>
   );
 }

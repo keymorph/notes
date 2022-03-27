@@ -10,8 +10,14 @@ export const ThemeDark = createTheme({
     },
   },
 
+  root: {
+    transition: "all 2s ease-in-out",
+  },
   // Theme Style Overrides
   components: {
+    root: {
+      transition: "all 2s ease-in-out",
+    },
     MuiCssBaseline: {
       styleOverrides: {},
     },
@@ -48,6 +54,7 @@ export const ThemeDark = createTheme({
       styleOverrides: {
         root: {
           background: "#000000A0",
+          borderRadius: 5,
         },
       },
     },
@@ -93,6 +100,7 @@ export const ThemeLight = createTheme({
       styleOverrides: {
         root: {
           background: "#FFFFFFAF",
+          borderRadius: 5,
         },
       },
     },
