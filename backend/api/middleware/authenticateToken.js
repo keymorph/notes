@@ -18,10 +18,8 @@ const authenticateToken = (req, res, next) => {
           console.log('User not found.');
           return res.status(403).json({ error: 'User not found.' });
         }
-        console.log('JWT: ', jwt);
-        console.log('User: ', resource);
-        console.log('req: ', req);
-        req.body.userID= jwt.userID;
+       
+        req.body.userID = jwt.userID;
         next();
     }).catch((error) => {
         console.log(error);

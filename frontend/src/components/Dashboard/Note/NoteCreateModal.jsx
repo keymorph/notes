@@ -20,8 +20,8 @@ export default function NoteCreateModal({
   const [description, setDescription] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [categoryColor, setCategoryColor] = useState(1);
-  const [tags, setTags] = useState("Tag1");
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [tags, setTags] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
@@ -52,9 +52,8 @@ export default function NoteCreateModal({
           category: {
             name: `${categoryName}`,
             color: `${categoryName ? categoryColor : 0}`,
-            note_count: 1, // Number of notes in this category, always 1 when creating a note
           },
-          tags: `${tags}`,
+          tags: tags,
         },
         {
           headers: {
@@ -70,12 +69,13 @@ export default function NoteCreateModal({
         setTitle("");
         setDescription("");
         setCategoryName("");
-        setTags("");
+        setTags([]);
 
         // Reflect the database changes on the front-end
         // Add the newly created note to the NoteCollection
+        console.log(response);
 
-        setNoteCollection((oldArray) => [...oldArray, response.noteItem]);
+        setNoteCollection((oldArray) => [...oldArray, response.data.note]);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);
@@ -129,31 +129,29 @@ export default function NoteCreateModal({
         </Typography>
 
         {/* Note Modal: DESCRIPTION Field */}
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <TextField
-            id="outlined-multiline-static"
-            label="Description"
-            multiline
-            rows={4}
-            defaultValue={description}
-            onChange={(event) => setDescription(event.target.value)}
-            sx={{ width: "100%" }}
-          />
-        </Typography>
+
+        <TextField
+          id="outlined-multiline-static"
+          label="Description"
+          multiline
+          rows={4}
+          defaultValue={description}
+          onChange={(event) => setDescription(event.target.value)}
+          sx={{ width: "100%", mt: 2 }}
+        />
 
         {/* Note Modal: CATEGORY (Chips) Field */}
-        <Typography>
-          {/* <Chip
+
+        {/* <Chip
                         sx={{margin: '10px', position: 'absolute'}}
                         label={category}
                         onChange={event => setCategory(event.target.value)}
                     /> */}
 
-          <Menu anchorEl={anchorEl} onClick={handleClick} open>
-            <MenuItem>Category 1</MenuItem>
-            <MenuItem>Category 2</MenuItem>
-          </Menu>
-        </Typography>
+        <Menu anchorEl={anchorEl} onClick={handleClick} open={anchorEl}>
+          <MenuItem>Category 1</MenuItem>
+          <MenuItem>Category 2</MenuItem>
+        </Menu>
 
         <Button
           variant="contained"

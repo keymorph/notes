@@ -8,30 +8,34 @@ export default function NoteTimeline({
   categories,
   searchValue,
 }) {
+  console.log(searchValue)
   const NoteComponents = noteCollection
     // Filter the user's note from the given search input.
     .filter((note) => {
       if (searchValue === "") {
         return true;
       } else {
-        return !!(
-          note.title.includes(`${searchValue}`) ||
-          note.description.includes(`${searchValue}`) ||
-          note.tags.includes(`${searchValue}`) ||
+        return note.title.toLowerCase().includes(searchValue) ||
+          note.description.toLowerCase().includes(searchValue) ||
+          note.tags.includes(searchValue) ||
           // This has to be some form of sorting, based off of the categoryID and the categoryArray
-          note.category.includes(`${searchValue}`)
-        );
-      }
+          note.category.toLowerCase().includes(searchValue)
+
+
+        
+       }
     })
     // Show the desired note components.
     .map((note, index) => {
       return (
+       
         <Note
-          key={note.noteID}
+          key={note.id}
           index={index}
-          noteID={note.noteID}
+          noteID={note.id}
           title={note.title}
           description={note.description}
+          tags={note.tags}
           categoryName={note.category}
           color={
             categories.find((category) => category.name === note.category)
@@ -40,6 +44,7 @@ export default function NoteTimeline({
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
         />
+        
       );
     })
     // Reverse the note order, to show the newest first.

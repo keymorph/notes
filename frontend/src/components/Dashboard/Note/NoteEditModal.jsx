@@ -19,20 +19,23 @@ export default function NoteEditModal({
   const url = "http://localhost:8000/api";
   const token = localStorage.getItem("auth-token");
   const [categoryColor, setCategoryColor] = useState(1);
+  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedDescription, setEditedDescription] = useState(description);
 
   const saveModalData = () => {
+    console.log(noteID);
     axios
       .put(
         `${url}/note`,
         {
-          noteID: `${noteID}`,
+          noteID: noteID,
           title: `${title}`,
           description: `${description}`,
           category: {
             name: `${categoryName}`,
             color: `${categoryColor}`,
           },
-          tags: `${tags}`,
+          tags: tags,
         },
 
         {
@@ -43,6 +46,9 @@ export default function NoteEditModal({
       )
       .then((response) => {
         console.log(response);
+        // Set the newly edited title and description after the request is successful
+        setTitle(editedTitle);
+        setDescription(editedDescription);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);
@@ -68,7 +74,6 @@ export default function NoteEditModal({
     <Modal
       open={modalOpen}
       onClose={saveModalData}
-      onBackdropClick={saveModalData}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -82,7 +87,7 @@ export default function NoteEditModal({
             id="outlined-required"
             label="Title"
             defaultValue={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => setEditedTitle(event.target.value)}
           />
         </Typography>
 
@@ -94,7 +99,7 @@ export default function NoteEditModal({
             multiline
             rows={4}
             defaultValue={description}
-            onChange={(event) => setDescription(event.target.value)}
+            onChange={(event) => setEditedDescription(event.target.value)}
           />
         </Typography>
 

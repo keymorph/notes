@@ -38,7 +38,7 @@ function Note(props) {
   const [contentHeight, setContentHeight] = useState("");
   const [checked, setChecked] = useState(false);
   const [title, setTitle] = useState(props.title);
-  const [category, setCategory] = useState(props.category);
+  const [categoryName, setCategoryName] = useState(props.categoryName);
   const [description, setDescription] = useState(props.description);
 
   // MODAL
@@ -97,7 +97,6 @@ function Note(props) {
         props.setNoteCollection(
           props.noteCollection.filter((note, index) => {
             // [1, 2, 3, 4, 5, 6, 7] --->  5
-            //
             console.log(index !== props.index);
             return index !== props.index;
           })
@@ -110,16 +109,18 @@ function Note(props) {
         console.error(`Error: ${error}`);
       });
   };
-
-  const handleCreateDuplicate = () => {
-    axios
-      .post(
+  /*
+  .post(
         `${url}/note`,
         {
-          title: `${props.title}`,
-          description: `${props.description}`,
-          category: `${props.categoryName}`,
-          tags: `${props.tags}`,
+          title: `${title}`,
+          description: `${description}`,
+          category: {
+            name: `${categoryName}`,
+            color: `${categoryName ? categoryColor : 0}`,
+            note_count: 1, // Number of notes in this category, always 1 when creating a note
+          },
+          tags: tags,
         },
         {
           headers: {
@@ -127,12 +128,34 @@ function Note(props) {
           },
         }
       )
-      .then(({ noteItem }) => {
+   */
+
+  const handleCreateDuplicate = () => {
+    axios
+      .post(
+        `${url}/note`,
+        {
+          title: props.title,
+          description: props.description,
+          category: {
+            name: props.categoryName,
+            color: props.color,
+            note_count: 1, // Number of notes in this category, always 1 when creating a note
+          },
+          tags: props.tags,
+        },
+        {
+          headers: {
+            "auth-token": token,
+          },
+        }
+      )
+      .then(({ data }) => {
         setAnchorEl(null);
 
         // Reflect the database changes on the front-end
         // Add the newly created note to the NoteCollection
-        props.setNoteCollection((oldArray) => [...oldArray, noteItem]);
+        props.setNoteCollection((oldArray) => [...oldArray, data.note]);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);
@@ -145,7 +168,7 @@ function Note(props) {
   const width = "200px";
 
   const categoryExists = () => {
-    return props.category !== "";
+    return props.categoryName !== "";
   };
 
   const categoryColorValue = (colorNumber) => {
@@ -171,6 +194,9 @@ function Note(props) {
           // Blue
           return "#7789AB";
         }
+        default: {
+          return "#999999"
+        }
       }
     } else {
       // There is no category, so return Grey
@@ -179,7 +205,7 @@ function Note(props) {
   };
 
   return (
-    <div style={{ display: "flex", width: "100vwh", height: "100vh" }}>
+    <div style={{ display: "flex", width: "100vwh",  }}>
       <NoteEditModal
         title={title}
         setTitle={setTitle}
@@ -187,13 +213,16 @@ function Note(props) {
         noteID={props.noteID}
         description={description}
         modalOpen={modalOpen}
-        categoryName={category}
+        categoryName={categoryName}
+        categoryColor={props.color}
         categories={props.categories}
         handleClose={handleClose}
+        tags={props.tags}
         handleChipDelete={handleChipDelete}
       />
 
       <Card
+        
         className="NoteCard"
         sx={{
           width: width,
@@ -206,7 +235,7 @@ function Note(props) {
           transform: scale,
           transition: "height 0.1s linear, transform 0.1s linear",
           zIndex: 10,
-          height: "auto",
+         
           maxHeight: maxHeight,
           paddingTop: "0px !important",
         }}
@@ -215,6 +244,7 @@ function Note(props) {
         ref={ref}
       >
         <Box
+          onClick={()=>console.log("yo")}
           style={{
             backgroundColor: categoryColorValue(props.color),
             height: "40px",
@@ -222,7 +252,7 @@ function Note(props) {
             opacity: 1,
           }}
         >
-          {categoryExists() ? <Chip label={props.category} /> : null}
+          {categoryExists() ? <Chip label={props.categoryName} /> : null}
 
           <IconButton
             aria-label="settings"
@@ -244,11 +274,8 @@ function Note(props) {
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
 
-        <CardActionArea
-          onClick={handleOpen}
-          style={{ height: "100%", opacity: modalOpen ? 0 : 1 }}
-        >
-          <CardContent sx={{ userSelect: "text" }}>
+     
+          <CardContent onClick={handleOpen} sx={{ userSelect: "text",  }}>
             <Grid>
               <Typography variant="subtitle1" title="Title Name">
                 {title?.length > 11 ? `${title.substring(0, 10)}...` : title}
@@ -263,7 +290,6 @@ function Note(props) {
                 : description}
             </Typography>
           </CardContent>
-        </CardActionArea>
       </Card>
     </div>
   );

@@ -59,15 +59,15 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        console.log("RESPONSE", response)
-        console.log("DATA NOTEITEM", response.data.noteItem)
-        console.log("NOTEITEM", response.data.noteItem)
+        console.log("RESPONSE", response);
+        console.log("DATA NOTEITEM", response.data.noteItem);
+        console.log("NOTEITEM", response.data.noteItem);
         const noteItem = response.data.noteItem;
-        const notes = noteItem.data.notes;
-        const categories = noteItem.data.categories;
+        const notes = noteItem.notes;
+        const categories = noteItem.categories;
         setNoteCollection(notes);
         setCategories(categories);
-        console.log("NOTECOLLECTION", noteCollection)
+        console.log("NOTECOLLECTION", noteCollection);
       })
       .catch((error) => console.error(`Error: ${error}`));
   };
