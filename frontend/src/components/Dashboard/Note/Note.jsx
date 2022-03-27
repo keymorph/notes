@@ -272,7 +272,7 @@ function Note(props) {
 
           <CardContent
             onClick={handleOpen}
-            sx={{ userSelect: "text", height: "100%" }}
+            sx={{ userSelect: "text", height: "100%", cursor: "pointer" }}
           >
             <Grid>
               <Typography

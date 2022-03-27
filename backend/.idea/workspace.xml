@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UI/Custom/Button.jsx" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -187,7 +181,7 @@
       <workItem from="1648313772836" duration="2266000" />
       <workItem from="1648332317753" duration="197000" />
       <workItem from="1648351049298" duration="10000" />
-      <workItem from="1648402522218" duration="4518000" />
+      <workItem from="1648402522218" duration="5024000" />
     </task>
     <servers />
   </component>
