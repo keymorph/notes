@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
 
-import CustomButton from "../UI/Button";
+import CustomButton from "../UI/Custom/Button";
 
 export default function RegisterBox(props) {
   const [comfirmPassword, setComfirmPassword] = useState("");
@@ -22,7 +22,7 @@ export default function RegisterBox(props) {
           <LockIcon />
         </Avatar>
       </Grid>
-  
+
       <Box
         component="form"
         onSubmit={props.handleSubmit}
@@ -77,10 +77,9 @@ export default function RegisterBox(props) {
             props.email === "" ||
             props.password === "" ||
             comfirmPassword !== props.password
-          
           }
           sx={{ mt: 3, mb: 3 }}
-        > 
+        >
           Register
         </CustomButton>
         <Link

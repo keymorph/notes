@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Chip, TextField, Typography, Card } from "@mui/material";
-import Modal from "@mui/material/Modal";
+import { Chip, TextField, Typography, Card, Grow, Modal } from "@mui/material";
 
 export default function NoteEditModal({
   modalOpen,
@@ -66,51 +65,55 @@ export default function NoteEditModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Card
-        sx={{
-          position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          borderRadius: "10px",
-          boxShadow: 24,
-          p: 4,
-        }}
-      >
-        <Typography variant="h5" color={"primary"}>
-          Edit Note
-        </Typography>
+      <Grow in={modalOpen}>
+        <Card
+          sx={{
+            position: "fixed",
+            mt: "30vh",
+            mx: "auto",
+            p: 4,
+            left: 0,
+            right: 0,
+            display: "flex",
+            flexDirection: "column",
+            minWidth: "200px",
+            maxWidth: "400px",
+            borderRadius: "10px",
+            boxShadow: 24,
+          }}
+        >
+          <Typography variant="h5" color={"primary"}>
+            Edit Note
+          </Typography>
 
-        {/* Note Modal: TITLE Field */}
+          {/* Note Modal: TITLE Field */}
 
-        <TextField
-          required
-          id="outlined-required"
-          label="Title"
-          defaultValue={title}
-          error={editedTitle.trim() === ""}
-          sx={{ mt: 2, mb: 2 }}
-          onChange={(event) => setEditedTitle(event.target.value)}
-        />
+          <TextField
+            required
+            id="outlined-required"
+            label="Title"
+            defaultValue={title}
+            error={editedTitle.trim() === ""}
+            sx={{ mt: 2, mb: 2 }}
+            onChange={(event) => setEditedTitle(event.target.value)}
+          />
 
-        <TextField
-          id="outlined-multiline-static"
-          label="Description"
-          multiline
-          rows={4}
-          defaultValue={description}
-          sx={{ mb: 2 }}
-          onChange={(event) => setEditedDescription(event.target.value)}
-        />
+          <TextField
+            id="outlined-multiline-static"
+            label="Description"
+            multiline
+            rows={4}
+            defaultValue={description}
+            sx={{ mb: 2 }}
+            onChange={(event) => setEditedDescription(event.target.value)}
+          />
 
-        {/* Note Modal: CATEGORY (Chips) Field */}
-        <Typography>
-          <Chip label={categoryName} onDelete={handleChipDelete} />
-        </Typography>
-      </Card>
+          {/* Note Modal: CATEGORY (Chips) Field */}
+          <Typography>
+            <Chip label={categoryName} onDelete={handleChipDelete} />
+          </Typography>
+        </Card>
+      </Grow>
     </Modal>
   );
 }

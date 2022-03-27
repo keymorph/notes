@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
-import CustomButton from "../UI/Button";
+import CustomButton from "../UI/Custom/Button";
 
 export default function LoginBox(props) {
   return (

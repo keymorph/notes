@@ -276,7 +276,6 @@ function Note(props) {
           >
             <Grid>
               <Typography
-                style={{ opacity: modalOpen ? 0 : 1 }}
                 onClick={() => console.log(cardHeight)}
                 variant="subtitle1"
                 title="Title Name"
@@ -287,11 +286,7 @@ function Note(props) {
 
             <Divider variant="middle" />
 
-            <Typography
-              style={{ opacity: modalOpen ? 0 : 1 }}
-              variant="body2"
-              sx={{ fontSize: "12px" }}
-            >
+            <Typography variant="body2" sx={{ fontSize: "12px" }}>
               {description?.length > 345
                 ? `${description.substring(0, 340)}...`
                 : description}

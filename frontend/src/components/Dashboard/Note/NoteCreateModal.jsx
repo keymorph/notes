@@ -18,6 +18,7 @@ import {
   Select,
   FormControl,
   FormHelperText,
+  Grow,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
@@ -140,241 +141,254 @@ export default function NoteCreateModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Card
-        sx={{
-          position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%) scale(.9,.9)",
-          width: 400,
-          height: 350,
-          borderRadius: "10px",
-          boxShadow: 24,
-          p: 4,
-        }}
-      >
-        <Typography variant="h5" color={"primary"}>
-          Create a Note
-        </Typography>
+      <Grow in={modalOpen}>
+        <Card
+          sx={{
+            position: "fixed",
+            mt: "30vh",
+            mx: "auto",
+            p: 4,
+            left: 0,
+            right: 0,
+            display: "flex",
+            flexDirection: "column",
+            minWidth: "200px",
+            maxWidth: "400px",
+            borderRadius: "10px",
+            boxShadow: 24,
+          }}
+        >
+          <Typography variant="h5" color={"primary"}>
+            Create a Note
+          </Typography>
 
-        {/* Note Modal: TITLE Field */}
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+          {/* Note Modal: TITLE Field */}
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <TextField
+              required
+              id="outlined-required"
+              label="Title"
+              defaultValue={title}
+              onChange={(event) => setTitle(event.target.value)}
+              sx={{ width: "100%", mt: 2 }}
+            />
+          </Typography>
+
+          {/* Note Modal: DESCRIPTION Field */}
+
           <TextField
-            required
-            id="outlined-required"
-            label="Title"
-            defaultValue={title}
-            onChange={(event) => setTitle(event.target.value)}
-            sx={{ width: "100%", mt: 2 }}
+            id="outlined-multiline-static"
+            label="Description"
+            multiline
+            rows={4}
+            defaultValue={description}
+            onChange={(event) => setDescription(event.target.value)}
+            sx={{ width: "100%", mt: 2, mb: 2 }}
           />
-        </Typography>
 
-        {/* Note Modal: DESCRIPTION Field */}
+          {/* Note Modal: CATEGORY (Chips) Field */}
 
-        <TextField
-          id="outlined-multiline-static"
-          label="Description"
-          multiline
-          rows={4}
-          defaultValue={description}
-          onChange={(event) => setDescription(event.target.value)}
-          sx={{ width: "100%", mt: 2, mb: 2 }}
-        />
-
-        {/* Note Modal: CATEGORY (Chips) Field */}
-
-        {/* <Chip
+          {/* <Chip
                         sx={{margin: '10px', position: 'absolute'}}
                         label={category}
                         onChange={event => setCategory(event.target.value)}
                     /> */}
 
-        <Menu
-          anchorEl={anchorEl}
-          onClose={() => setAnchorEl(null)}
-          open={anchorEl}
-        >
-          <Box style={{ width: "220px", height: "170px" }}>
-            <IconButton
-              aria-label="delete"
-              size="small"
-              sx={{ position: "absolute", right: 2, width: 20, height: 17 }}
-              onClick={() => setAnchorEl(null)}
-            >
-              <CloseIcon sx={{ width: 17, height: 17 }} />
-            </IconButton>
-            <Box
-              sx={{
-                height: "30px",
-                fontSize: 12,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              Categories
-            </Box>
-            {!createMode ? (
+          <Menu
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}
+            open={anchorEl}
+          >
+            <Box style={{ width: "220px", height: "170px" }}>
+              <IconButton
+                aria-label="delete"
+                size="small"
+                sx={{ position: "absolute", right: 2, width: 20, height: 17 }}
+                onClick={() => setAnchorEl(null)}
+              >
+                <CloseIcon sx={{ width: 17, height: 17 }} />
+              </IconButton>
               <Box
-                style={{
-                  borderTop: "1px solid #cdcdcd",
-                  borderBottom: "1px solid #cdcdcd",
-                  overflow: "auto",
-                  height: "110px",
-                  marginBottom: 2,
+                sx={{
+                  height: "30px",
+                  fontSize: 12,
+                  textAlign: "center",
+                  fontWeight: "bold",
                 }}
               >
-                {categories
-                  .filter((ctg) => ctg.name !== "")
-                  .map((ctg) => (
-                    <CategoryItem
-                      ctg={ctg}
-                      setCategoryName={setCategoryName}
-                      getColor={getColor}
-                      setAnchorEl={setAnchorEl}
-                    />
-                  ))}
+                Categories
               </Box>
-            ) : (
-              <Box
-                style={{
-                  borderTop: "1px solid #cdcdcd",
-                  borderBottom: "1px solid #cdcdcd",
-                  overflow: "auto",
-                  height: "110px",
-                  marginBottom: 2,
-                }}
-              >
+              {!createMode ? (
                 <Box
                   style={{
-                    fontSize: 10,
-                    fontWeight: 600,
-                    marginLeft: 14,
-                    marginBottom: 4,
-                    marginTop: 4,
+                    borderTop: "1px solid #cdcdcd",
+                    borderBottom: "1px solid #cdcdcd",
+                    overflow: "auto",
+                    height: "110px",
+                    marginBottom: 2,
                   }}
                 >
-                  Pick Color
+                  {categories
+                    .filter((ctg) => ctg.name !== "")
+                    .map((ctg) => (
+                      <CategoryItem
+                        key={ctg.name}
+                        ctg={ctg}
+                        setCategoryName={setCategoryName}
+                        getColor={getColor}
+                        setAnchorEl={setAnchorEl}
+                      />
+                    ))}
                 </Box>
+              ) : (
                 <Box
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "80%",
-                    marginLeft: 10,
+                    borderTop: "1px solid #cdcdcd",
+                    borderBottom: "1px solid #cdcdcd",
+                    overflow: "auto",
+                    height: "110px",
+                    marginBottom: 2,
                   }}
                 >
-                  {[0, 1, 2, 3, 4].map((color) => (
-                    <Box
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: getColor(color),
-                        borderRadius: 5,
-                        margin: 4,
-                        border:
-                          selectedColor == color
-                            ? "1.5px solid red"
-                            : `1.5px solid ${getColor(color)}`,
-                      }}
-                      onClick={() => setSelectedColor(color)}
-                    />
-                  ))}
-                </Box>
-
-                <Box style={{ height: 20, fontSize: 12 }}>
-                  <TextField
-                    id="standard-basic"
-                    variant="standard"
-                    size="small"
-                    label="Category Name"
+                  <Box
                     style={{
-                      height: "20px !important",
+                      fontSize: 10,
+                      fontWeight: 600,
                       marginLeft: 14,
+                      marginBottom: 4,
                       marginTop: 4,
                     }}
-                    onChange={(event) => setCreatedCategory(event.target.value)}
-                    sx={{ width: "75%" }}
-                    InputLabelProps={{
-                      style: { fontSize: 10 },
+                  >
+                    Pick Color
+                  </Box>
+                  <Box
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "80%",
+                      marginLeft: 10,
                     }}
-                    InputProps={{
-                      style: { fontSize: 10 },
-                    }}
-                  />
-                </Box>
-              </Box>
-            )}
-            <Box
-              style={{
-                height: "30px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {!createMode ? (
-                <Button
-                  onClick={() => setCreateMode(true)}
-                  style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
-                  endIcon={
-                    <AddIcon
+                  >
+                    {[0, 1, 2, 3, 4].map((color) => (
+                      <Box
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          backgroundColor: getColor(color),
+                          borderRadius: 5,
+                          margin: 4,
+                          border:
+                            selectedColor === color
+                              ? "1.5px solid red"
+                              : `1.5px solid ${getColor(color)}`,
+                        }}
+                        onClick={() => setSelectedColor(color)}
+                      />
+                    ))}
+                  </Box>
+
+                  <Box style={{ height: 20, fontSize: 12 }}>
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      size="small"
+                      label="Category Name"
                       style={{
-                        width: 12,
-                        height: 12,
-                        position: "relative",
-                        bottom: 2,
+                        height: "20px !important",
+                        marginLeft: 14,
+                        marginTop: 4,
+                      }}
+                      onChange={(event) =>
+                        setCreatedCategory(event.target.value)
+                      }
+                      sx={{ width: "75%" }}
+                      InputLabelProps={{
+                        style: { fontSize: 10 },
+                      }}
+                      InputProps={{
+                        style: { fontSize: 10 },
                       }}
                     />
-                  }
-                >
-                  Create Category
-                </Button>
-              ) : (
-                <Box>
-                  <Button
-                    onClick={() => setCreateMode(false)}
-                    style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={() => setCreateMode(false)}
-                    style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
-                  >
-                    Save
-                  </Button>
+                  </Box>
                 </Box>
               )}
+              <Box
+                style={{
+                  height: "30px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {!createMode ? (
+                  <Button
+                    onClick={() => setCreateMode(true)}
+                    style={{ height: "26px", fontSize: 10, fontWeight: "bold" }}
+                    endIcon={
+                      <AddIcon
+                        style={{
+                          width: 12,
+                          height: 12,
+                          position: "relative",
+                          bottom: 2,
+                        }}
+                      />
+                    }
+                  >
+                    Create Category
+                  </Button>
+                ) : (
+                  <Box>
+                    <Button
+                      onClick={() => setCreateMode(false)}
+                      style={{
+                        height: "26px",
+                        fontSize: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => setCreateMode(false)}
+                      style={{
+                        height: "26px",
+                        fontSize: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                )}
+              </Box>
             </Box>
-          </Box>
-        </Menu>
+          </Menu>
 
-        <Button
-          variant="contained"
-          size="small"
-          disabled={fieldsAreEmpty()}
-          onClick={createNote}
-          sx={{
-            border: "1px",
-            position: "absolute",
-            right: "30px",
-            bottom: "30px",
-          }}
-        >
-          CREATE
-        </Button>
+          <Button
+            variant="outlined"
+            style={{}}
+            endIcon={<ArrowDropDownIcon />}
+            onClick={handleClick}
+          >
+            Categories
+          </Button>
 
-        <Button
-          variant="outlined"
-          style={{}}
-          endIcon={<ArrowDropDownIcon />}
-          onClick={handleClick}
-        >
-          Categories
-        </Button>
-      </Card>
+          <Button
+            variant="contained"
+            size="small"
+            disabled={fieldsAreEmpty()}
+            onClick={createNote}
+            sx={{
+              border: "1px",
+              mt: 2,
+              ml: "auto",
+            }}
+          >
+            CREATE
+          </Button>
+        </Card>
+      </Grow>
     </Modal>
   );
 }
