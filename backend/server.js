@@ -1,29 +1,15 @@
-import express from 'express'
-const app = express()
-import cors from 'cors'
-import bodyParser from 'body-parser'
+import 'dotenv/config';
+import cors from 'cors';
+import express from 'express';
 
-import dotenv from 'dotenv'
-dotenv.config()
+import note from './api/routes/note.js';
+import user from './api/routes/user.js';
 
-import database from './api/models/database.js'
-import user from './api/routes/user.js'
-import note from './api/routes/note.js'
+const app = express();
 
-console.log('---------')
-
-const port = 8000
-const host = 'localhost'
-app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`))
-
-database.connect((err) => {
-    if (err) {
-        console.log(err)
-        throw err
-    }
-    console.log('✓ MySQL Connected.');
-    console.log('---------');
-})
+const port = 8000;
+const host = 'localhost';
+app.listen(port, host, () => console.log(`✓ Back-end server running at 'http://${host}:${port}'`));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

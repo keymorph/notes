@@ -1,5 +1,5 @@
-import validateInput from '../middleware/validateInput.js'
-import userService from '../services/userService.js'
+import validateInput from "../middleware/validateInput.js";
+import userService from "../services/userService.js";
 
 // Hey... Give me a email, and a password
 // Information to Register
@@ -9,35 +9,36 @@ import userService from '../services/userService.js'
 // If that email exists then reject.
 
 const register = async (req, res) => {
-    console.log("----------------- REGISTER USER API")
-    const { email, password } = req.body
-    try {
-        console.log("BEFORE INPUT")
-        const inputResult = await validateInput.email(email, password, res)
-        const searchResult = await userService.search(email, res)
-        console.log("result")
-        if (searchResult === true) {
-            const registerResult = await userService.register(email, password, res)
-        }
-        
-    } catch (error) {
-        res.status(400).json({ error })
-    }
-}
+  console.log("-----------------\nREGISTER USER API");
+  const { email, password } = req.body;
+
+  // Ensure the email and password are valid before continuing
+  try {
+    validateInput.user(email, password);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ error: err });
+  }
+
+  return await userService.register(email, password, res);
+};
 
 const login = async (req, res) => {
-    try {
-        const { email, password } = req.body
-        console.log("CHICKEN?")
-        console.log(email)
-        const inputResult = await validateInput.email(email, password, res)
-        const loginResult = await userService.login(email, password, res)
-    } catch (error) {
-        console.log(error)
-    }
-}
+  const { email, password } = req.body;
 
-const remove = async (req, res) => { userService.remove(req, res) }
+  try {
+    validateInput.user(email, password);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ error: err });
+  }
 
-const userController = { register, login, remove }
-export default userController
+  return await userService.login(email, password, res);
+};
+
+const remove = async (req, res) => {
+  await userService.remove(req, res);
+};
+
+const userController = { register, login, remove };
+export default userController;

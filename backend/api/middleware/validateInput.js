@@ -1,25 +1,17 @@
-const email = (email, password, res) => {
+const user = (email, password) => {
     if (!email || !password) {
-        return res
-            .status(400)
-            .json({ error: 'Empty field in form input.' })
+        throw { error: 'Empty field in form input.' };
     }
 
     if (email.length < 5 || email.length > 50 || !email.includes('@')) {
-        return res
-            .status(400)
-            .json({ error: 'Invalid email address.' })
+        throw { error: 'Invalid email address.' };
     }
 
     if (password.length < 6 || password.length > 40) {
-        console.log('Password sizing error.')
-        return res
-            .status(400)
-            .json({ error: 'Password must be between 6 and 40 characters.' })
+        console.error('Password sizing error.')
+        throw { error: 'Password must be between 6 and 40 characters.' };
     }
-
-    return true;
 }
 
-const validateInput = { email }
+const validateInput = { user }
 export default validateInput

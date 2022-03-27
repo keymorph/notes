@@ -1,18 +1,18 @@
-import express from 'express'
-const router = express.Router()
-import authenticateToken from '../middleware/authenticateToken.js'
-import noteController from '../controllers/noteController.js'
-import category from '../middleware/category.js'
+import express from "express";
+
+const router = express.Router();
+import authenticateToken from "../middleware/authenticateToken.js";
+import noteController from "../controllers/noteController.js";
 
 // router.use(authenticateToken);
 
-router.post('/note', authenticateToken, category.create, noteController.create)
+router.post("/note", authenticateToken, noteController.create);
 
-router.get('/note', authenticateToken, category.get, noteController.show)
+router.get("/note", authenticateToken, noteController.show);
 
-router.put('/note', authenticateToken, category.create, noteController.edit)
+router.put("/note", authenticateToken, noteController.edit);
 
-router.delete('/note', authenticateToken, noteController.remove)
+router.delete("/note", authenticateToken, noteController.remove);
 
 // router.post('/note/category', authenticateToken, categoryController.create)
 
@@ -28,7 +28,6 @@ router.delete('/note', authenticateToken, noteController.remove)
 // The user clicks SUBMIT
 // - create the category, that the user entered AND return the categoryID of the category created.
 // - create note based off of returned categoryID value
-// - 
+// -
 
-
-export default router
+export default router;

@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "jotfox-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,15 +12,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@azure/cosmos": "^3.15.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.12",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "lodash": "^4.17.21",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "prettier": "2.5.1"
   }
 }
