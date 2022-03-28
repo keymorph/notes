@@ -56,7 +56,7 @@ export default function NoteTimeline({
       {noteCollection.length > 0 ? (
         NoteComponents
       ) : (
-        // If there are no notes, show a message. translate X
+        // If there are no notes, show a message.
         <Typography
           variant={"h3"}
           color={"primary"}
