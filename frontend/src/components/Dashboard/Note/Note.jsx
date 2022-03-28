@@ -104,26 +104,6 @@ function Note(props) {
         console.error(`Error: ${error}`);
       });
   };
-  /*
-  .post(
-        `${url}/note`,
-        {
-          title: `${title}`,
-          description: `${description}`,
-          category: {
-            name: `${categoryName}`,
-            color: `${categoryName ? categoryColor : 0}`,
-            note_count: 1, // Number of notes in this category, always 1 when creating a note
-          },
-          tags: tags,
-        },
-        {
-          headers: {
-            "auth-token": token,
-          },
-        }
-      )
-   */
 
   const handleCreateDuplicate = () => {
     axios

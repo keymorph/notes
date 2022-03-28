@@ -48,6 +48,7 @@ export const ThemeDark = createTheme({
       styleOverrides: {
         root: {
           background: "#000000A0",
+          backdropFilter: "blur(8px)",
           borderRadius: 5,
         },
       },
@@ -59,6 +60,7 @@ export const ThemeLight = createTheme({
   palette: {
     mode: "light",
   },
+
   // Per Component Theme Style Overrides
   components: {
     MuiLoadingButton: {
@@ -94,6 +96,7 @@ export const ThemeLight = createTheme({
       styleOverrides: {
         root: {
           background: "#FFFFFFAF",
+          backdropFilter: "blur(8px)",
           borderRadius: 5,
         },
       },
