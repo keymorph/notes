@@ -129,23 +129,23 @@ function Note(props) {
   const categoryColorValue = (colorNumber) => {
     if (categoryExists()) {
       switch (colorNumber) {
-        case 0: {
+        case "0": {
           // Grey
           return "#999999A0";
         }
-        case 1: {
+        case "1": {
           // Red
-          return "#A26361A0";
+          return "#af0500A0";
         }
-        case 2: {
+        case "2": {
           // Yellow
-          return "#DEBB97A0";
+          return "#da6e00A0";
         }
-        case 3: {
+        case "3": {
           // Green
-          return "#B4B387A0";
+          return "#b2b100A0";
         }
-        case 4: {
+        case "4": {
           // Blue
           return "#7789ABA0";
         }
@@ -161,7 +161,7 @@ function Note(props) {
 
   return (
     <Grow in>
-      <Box sx={{ display: "flex", width: "100vwh" }}>
+      <Box sx={{ display: "flex" }}>
         <NoteEditModal
           noteID={props.noteID}
           title={title}
@@ -199,7 +199,6 @@ function Note(props) {
               backgroundColor: categoryColorValue(props.color),
               display: "flex",
               position: "relative",
-              opacity: 1,
             }}
           >
             {categoryExists() ? (

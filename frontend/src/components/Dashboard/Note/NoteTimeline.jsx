@@ -48,34 +48,24 @@ export default function NoteTimeline({
     // Reverse the note order, to show the newest first.
     .reverse();
 
-  return (
+  return noteCollection.length > 0 ? (
     <Masonry
       columns={{ xs: 2, sm: 3, md: 4, lg: 6, xl: 8 }}
       spacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}
     >
-      {noteCollection.length > 0 ? (
-        NoteComponents
-      ) : (
-        // If there are no notes, show a message.
-        <Typography
-          variant={"h3"}
-          color={"primary"}
-          sx={{
-            position: "relative",
-            mx: "auto",
-            top: "10vh",
-            width: "100vw",
-            textAlign: "center",
-            textShadow: "0px 0px 10px rgba(0,0,0,0.5)",
-            fontSize: "1.5rem",
-            "@media (min-width:600px)": {
-              fontSize: "2.0rem",
-            },
-          }}
-        >
-          No notes yet.
-        </Typography>
-      )}
+      {NoteComponents}
     </Masonry>
+  ) : (
+    // If there are no notes, show a message.
+    <Typography
+      variant={"h3"}
+      sx={{
+        mt: "25vh",
+        width: "100vw",
+        textAlign: "center",
+      }}
+    >
+      No notes yet.
+    </Typography>
   );
 }

@@ -58,18 +58,12 @@ export default function Dashboard() {
           "auth-token": token, //the token is a variable which holds the token
         },
       })
-      .then((response) => {
-        console.log("RESPONSE", response);
-        console.log("DATA NOTEITEM", response.data.noteItem);
-        console.log("NOTEITEM", response.data.noteItem);
-        const noteItem = response.data.noteItem;
-        const notes = noteItem.notes;
-        const categories = noteItem.categories;
-        setNoteCollection(notes);
-        setCategories(categories);
-        console.log("NOTECOLLECTION", noteCollection);
+      .then(({ data }) => {
+        setNoteCollection(data.noteItem.notes);
+        setCategories(data.noteItem.categories);
+        console.log("NoteITEM: ", data.noteItem);
       })
-      .catch((error) => console.error(`Error: ${error}`));
+      .catch((error) => console.error(`Error: ${error.message}`));
   };
 
   if (!showPage) return null;
