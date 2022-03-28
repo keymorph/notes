@@ -169,7 +169,7 @@ export default function NoteCreateModal({
               id="outlined-required"
               label="Title"
               defaultValue={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event) => setTitle(event.target.value.trim())}
               sx={{ width: "100%", mt: 2 }}
             />
           </Typography>
@@ -182,7 +182,7 @@ export default function NoteCreateModal({
             multiline
             rows={4}
             defaultValue={description}
-            onChange={(event) => setDescription(event.target.value)}
+            onChange={(event) => setDescription(event.target.value.trim())}
             sx={{ width: "100%", mt: 2, mb: 2 }}
           />
 

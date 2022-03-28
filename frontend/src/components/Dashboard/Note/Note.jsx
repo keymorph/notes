@@ -20,14 +20,12 @@ import Modal from "@mui/material/Modal";
 
 // Turn the Note grey, when the Modal is active.
 import NoteSkeleton from "./NoteSkeleton";
-
 // Trigger the Modal when editing a Note
 import NoteEditModal from "./NoteEditModal";
 
 function Note(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [scale, setScale] = useState("scale(1, 1)");
   const [cardHeight, setCardHeight] = useState("auto");
   const [flip, setFlip] = useState("rotate(0deg)");
   const [contentHeight, setContentHeight] = useState("");
@@ -49,19 +47,6 @@ function Note(props) {
   // Delete the category for the note, and update the database.
   const handleChipDelete = () => {
     deleteChip(true);
-  };
-
-  // Style of the Modal (SHOULD BE CHANGED LATER ON TO FIT MUI-THEME)
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
   };
 
   const ref = useRef(null);
@@ -137,11 +122,6 @@ function Note(props) {
       });
   };
 
-  // Define Note style values; height, width, etc.
-  const minHeight = "200px";
-  const maxHeight = "300px";
-  const width = "200px";
-
   const categoryExists = () => {
     return props.categoryName !== "";
   };
@@ -151,90 +131,87 @@ function Note(props) {
       switch (colorNumber) {
         case 0: {
           // Grey
-          return "#999999";
+          return "#999999A0";
         }
         case 1: {
           // Red
-          return "#A26361";
+          return "#A26361A0";
         }
         case 2: {
           // Yellow
-          return "#DEBB97";
+          return "#DEBB97A0";
         }
         case 3: {
           // Green
-          return "#B4B387";
+          return "#B4B387A0";
         }
         case 4: {
           // Blue
-          return "#7789AB";
+          return "#7789ABA0";
         }
         default: {
-          return "#999999";
+          return "#999999A0";
         }
       }
     } else {
       // There is no category, so return Grey
-      return "#999999";
+      return "#999999A0";
     }
   };
 
   return (
-    <div style={{ display: "flex", width: "100vwh" }}>
-      <NoteEditModal
-        title={title}
-        setTitle={setTitle}
-        setDescription={setDescription}
-        noteID={props.noteID}
-        description={description}
-        modalOpen={modalOpen}
-        categoryName={categoryName}
-        categoryColor={props.color}
-        categories={props.categories}
-        handleClose={handleClose}
-        tags={props.tags}
-        handleChipDelete={handleChipDelete}
-      />
-      <Grow in>
+    <Grow in>
+      <Box sx={{ display: "flex", width: "100vwh" }}>
+        <NoteEditModal
+          noteID={props.noteID}
+          title={title}
+          description={description}
+          categoryName={categoryName}
+          categoryColor={props.color}
+          tags={props.tags}
+          setTitle={setTitle}
+          setDescription={setDescription}
+          setCategoryName={setCategoryName}
+          categories={props.categories}
+          modalOpen={modalOpen}
+          handleClose={handleClose}
+          handleChipDelete={handleChipDelete}
+        />
+
         <Card
           className="NoteCard"
           sx={{
-            width: width,
-            minHeight: minHeight,
+            width: "300px",
+            minHeight: "300px",
+            maxHeight: "400px",
             overflowWrap: "break-word",
-            transition: "height 1s linear",
             margin: "5px",
+            transition: "transform 0.2s ease-in-out !important",
+            "&:hover": {
+              transform: "scale(1.02)",
+              transition: "transform 0.1s ease-in-out !important",
+            },
           }}
-          style={{
-            transform: scale,
-            transition: "height 0.1s linear, transform 0.1s linear",
-            zIndex: 10,
-
-            maxHeight: maxHeight,
-            paddingTop: "0px !important",
-          }}
-          onMouseOver={() => setScale("scale(1.02,1.02")}
-          onMouseLeave={() => setScale("scale(1, 1)")}
           ref={ref}
         >
           <Box
             style={{
               backgroundColor: categoryColorValue(props.color),
-              height: "40px",
+              display: "flex",
               position: "relative",
               opacity: 1,
             }}
           >
             {categoryExists() ? (
-              <Chip label={props.categoryName} sx={{ m: 0.5 }} />
+              <Chip label={props.categoryName} sx={{ m: 0.5, height: "2em" }} />
             ) : null}
 
             <IconButton
               aria-label="settings"
-              sx={{ position: "absolute", right: "0px", padding: "0px" }}
+              sx={{ m: 0.5, ml: "auto", height: "1em" }}
               onClick={handleClick}
             >
-              <MoreHoriz sx={{ color: "white" }} />
+              <MoreHoriz />
             </IconButton>
           </Box>
 
@@ -251,29 +228,25 @@ function Note(props) {
 
           <CardContent
             onClick={handleOpen}
-            sx={{ userSelect: "text", height: "100%", cursor: "pointer" }}
+            sx={{
+              userSelect: "text",
+              height: "100%",
+              cursor: "pointer",
+              py: 0.5,
+              px: 1,
+            }}
           >
-            <Grid>
-              <Typography
-                onClick={() => console.log(cardHeight)}
-                variant="subtitle1"
-                title="Title Name"
-              >
-                {title?.length > 11 ? `${title.substring(0, 10)}...` : title}
-              </Typography>
-            </Grid>
-
-            <Divider variant="middle" />
-
-            <Typography variant="body2" sx={{ fontSize: "12px" }}>
-              {description?.length > 345
-                ? `${description.substring(0, 340)}...`
-                : description}
+            <Typography variant="body1" title="Title Name" noWrap>
+              {title}
             </Typography>
+
+            <Divider />
+
+            <Typography variant="body2">{description}</Typography>
           </CardContent>
         </Card>
-      </Grow>
-    </div>
+      </Box>
+    </Grow>
   );
 }
 

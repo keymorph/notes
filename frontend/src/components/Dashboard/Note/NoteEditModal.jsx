@@ -95,7 +95,7 @@ export default function NoteEditModal({
             defaultValue={title}
             error={editedTitle.trim() === ""}
             sx={{ mt: 2, mb: 2 }}
-            onChange={(event) => setEditedTitle(event.target.value)}
+            onChange={(event) => setEditedTitle(event.target.value.trim())}
           />
 
           <TextField
@@ -105,7 +105,9 @@ export default function NoteEditModal({
             rows={4}
             defaultValue={description}
             sx={{ mb: 2 }}
-            onChange={(event) => setEditedDescription(event.target.value)}
+            onChange={(event) =>
+              setEditedDescription(event.target.value.trim())
+            }
           />
 
           {/* Note Modal: CATEGORY (Chips) Field */}

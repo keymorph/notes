@@ -66,10 +66,10 @@ export default function AppToolbar({
                   maxWidth: "400px",
                   minWidth: "125px",
                   mx: 2,
-                  transition: "width 0.5s ease-in-out !important",
+                  transition: "width 0.5s ease-in-out",
                   "&:hover": {
                     width: "15%",
-                    transition: "width 0.25s ease-in-out !important",
+                    transition: "width 0.25s ease-in-out",
                   },
                 }}
                 onChange={(event) =>
@@ -99,7 +99,7 @@ export default function AppToolbar({
             )}
             <Button
               variant="outlined"
-              sx={{ ml: "auto" }}
+              sx={{ ml: "auto", height: "2.5em" }}
               startIcon={<NoteAdd />}
               onClick={handleOpen}
             >

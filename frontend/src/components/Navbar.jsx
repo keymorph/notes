@@ -6,6 +6,7 @@ import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { ThemeToggleSwitch } from "./UI/Theme";
 import axios from "axios";
+import { Box } from "@mui/system";
 
 const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
             alt="FourScript Logo"
           />
         </Card>
-        <div sx={{ position: "right" }}>
+        <Box sx={{ position: "right" }}>
           <ThemeToggleSwitch
             checked={!darkMode}
             onClick={handleDarkModeToggle}
@@ -72,7 +73,7 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
           >
             {buttonDisabled ? <NoAccounts /> : <AccountCircle />}
           </IconButton>
-        </div>
+        </Box>
         <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
           <MenuItem onClick={removeToken}>Logout</MenuItem>
         </Menu>
