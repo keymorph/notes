@@ -7,10 +7,6 @@
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UI/Theme.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
@@ -96,7 +92,7 @@
     <property name="nodejs_interpreter_path" value="$USER_HOME$/AppData/Local/fnm_multishells/35584_1646804945172/node" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\dev\Projects\notetakingapp\backend\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="com.github.copilot.settings.ApplicationConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -108,7 +104,7 @@
       <recent name="C:\dev\Projects\notetakingapp\frontend\src\components\UI\Custom" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Backend Start">
+  <component name="RunManager" selected="npm.Frontend Start">
     <configuration name="Backend Start" type="js.build_tools.npm" temporary="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -135,8 +131,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Backend Start" />
         <item itemvalue="npm.Frontend Start" />
+        <item itemvalue="npm.Backend Start" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +188,7 @@
       <workItem from="1648437417839" duration="14590000" />
       <workItem from="1648564901808" duration="40000" />
       <workItem from="1648600714639" duration="5530000" />
-      <workItem from="1648607426153" duration="607000" />
+      <workItem from="1648607426153" duration="4463000" />
     </task>
     <servers />
   </component>
