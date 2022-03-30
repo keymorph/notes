@@ -171,6 +171,7 @@ export default function NoteCreateModal({
               defaultValue={title}
               onChange={(event) => setTitle(event.target.value.trim())}
               sx={{ width: "100%", mt: 2 }}
+              autoFocus
             />
           </Typography>
 

@@ -96,6 +96,7 @@ export default function NoteEditModal({
             error={editedTitle.trim() === ""}
             sx={{ mt: 2, mb: 2 }}
             onChange={(event) => setEditedTitle(event.target.value.trim())}
+            autoFocus
           />
 
           <TextField

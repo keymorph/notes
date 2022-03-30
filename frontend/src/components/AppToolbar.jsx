@@ -33,6 +33,12 @@ export default function AppToolbar({
 
   // SEARCH
   const [searchFocus, setSearchFocus] = useState(false);
+  // Clear search value when Escape key is pressed
+  const handleClearOnKeyPress = (event) => {
+    if (event.key === "Escape") {
+      setSearchValue("");
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -75,8 +81,9 @@ export default function AppToolbar({
                 onChange={(event) =>
                   setSearchValue(event.target.value.toLowerCase())
                 }
-                onFocus={() => setSearchFocus(true)}
                 onBlur={() => setSearchFocus(false)}
+                onFocus={() => setSearchFocus(true)}
+                onKeyUp={handleClearOnKeyPress}
                 startAdornment={
                   <InputAdornment position="start" sx={{ mr: 3 }}>
                     <Zoom in={searchValue !== ""}>

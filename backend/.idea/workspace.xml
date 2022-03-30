@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +105,7 @@
       <recent name="C:\dev\Projects\notetakingapp\frontend\src\components\UI\Custom" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Frontend Start">
+  <component name="RunManager" selected="npm.Backend Start">
     <configuration name="Backend Start" type="js.build_tools.npm" temporary="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -132,8 +132,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Frontend Start" />
         <item itemvalue="npm.Backend Start" />
+        <item itemvalue="npm.Frontend Start" />
       </list>
     </recent_temporary>
   </component>
@@ -186,7 +186,9 @@
       <workItem from="1648402522218" duration="5862000" />
       <workItem from="1648408659088" duration="7550000" />
       <workItem from="1648418154219" duration="9000" />
-      <workItem from="1648437417839" duration="14515000" />
+      <workItem from="1648437417839" duration="14590000" />
+      <workItem from="1648564901808" duration="40000" />
+      <workItem from="1648600714639" duration="2258000" />
     </task>
     <servers />
   </component>
