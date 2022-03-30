@@ -12,9 +12,6 @@ export const ThemeDark = createTheme({
 
   // Per Component Theme Style Overrides
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {},
-    },
     MuiLoadingButton: {
       styleOverrides: {
         root: {

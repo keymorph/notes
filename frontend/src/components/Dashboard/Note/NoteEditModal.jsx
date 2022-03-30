@@ -21,8 +21,8 @@ export default function NoteEditModal({
   const [editedDescription, setEditedDescription] = useState(description);
 
   const saveModalData = () => {
-    // If no changes made, no request necessary
     // TODO: Add Category and Tags checks once those are implemented
+    // If no changes made, no request necessary
     if (editedTitle !== title || editedDescription !== description) {
       axios
         .put(
@@ -44,8 +44,7 @@ export default function NoteEditModal({
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           // Set the newly edited title and description after the request is successful
           setTitle(editedTitle);
           setDescription(editedDescription);
