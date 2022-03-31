@@ -7,11 +7,15 @@
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/services/noteService.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/services/noteService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/index.jsx" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +102,7 @@
     <property name="nodejs_interpreter_path" value="$USER_HOME$/AppData/Local/fnm_multishells/35584_1646804945172/node" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\dev\Projects\notetakingapp\backend\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -200,7 +204,7 @@
       <workItem from="1648600714639" duration="5530000" />
       <workItem from="1648607426153" duration="25527000" />
       <workItem from="1648742567245" duration="18000" />
-      <workItem from="1648742615351" duration="4682000" />
+      <workItem from="1648742615351" duration="8890000" />
     </task>
     <servers />
   </component>

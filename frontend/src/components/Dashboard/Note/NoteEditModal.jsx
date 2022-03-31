@@ -20,8 +20,8 @@ export default function NoteEditModal({
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(description);
 
+  // TODO: Add Category and Tags checks once those are implemented
   const saveModalData = () => {
-    // TODO: Add Category and Tags checks once those are implemented
     // If no changes made, no request necessary
     if (editedTitle !== title || editedDescription !== description) {
       axios

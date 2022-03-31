@@ -75,7 +75,10 @@ export default function NoteCreateModal({
         // Add the newly created note to the NoteCollection
         console.log(response);
 
-        setNoteCollection((oldArray) => [...oldArray, response.data.note]);
+        setNoteCollection((oldNoteCollection) => [
+          response.data.note,
+          ...oldNoteCollection,
+        ]);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);

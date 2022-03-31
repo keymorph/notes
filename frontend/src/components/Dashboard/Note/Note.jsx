@@ -225,10 +225,10 @@ export default function Note(props) {
                 transform: "translate(-50%, -50%)",
                 cursor: "move",
                 opacity: "0.5",
-                transition: "opacity 0.25s ease-in-out",
+                transition: "opacity 0.2s ease-in-out",
                 "&:hover": {
                   opacity: "1",
-                  transition: "opacity 0.25s ease-in-out",
+                  transition: "opacity 0.2s ease-in-out",
                 },
               }}
               //  Add listeners and attributes for drag and drop, making this Box the handle bar

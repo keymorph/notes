@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showPage, setShowPage] = useState(false);
+  const [isGettingNotes, setIsGettingNotes] = useState(true);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
@@ -41,7 +42,7 @@ export default function Dashboard() {
         setShowPage(true);
         return true;
       })
-      .catch((err) => {
+      .catch(() => {
         console.log("GO BACK TO LOGIN");
         navigate("../auth", { replace: true });
         return false;
@@ -57,11 +58,18 @@ export default function Dashboard() {
         },
       })
       .then(({ data }) => {
-        setNoteCollection(data.noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-        setCategories(data.noteItem.categories);
+        // Update the state only if the user has a noteItem in the container
+        // Note: new users will not have a noteItem, but it will be created when the user creates their first note
+        if (data.noteItem !== undefined) {
+          setNoteCollection(data.noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
+          setCategories(data.noteItem.categories);
+        }
+        setIsGettingNotes(false);
         console.log("NoteITEM: ", data.noteItem);
       })
-      .catch((error) => console.error(`Error: ${error.message}`));
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
 
   return showPage ? (
@@ -80,6 +88,7 @@ export default function Dashboard() {
         categories={categories}
         setCategories={setCategories}
         searchValue={searchValue}
+        isGettingNotes={isGettingNotes}
       />
     </>
   ) : null;

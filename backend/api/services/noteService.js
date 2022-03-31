@@ -18,8 +18,6 @@ const createNote = async (req, res) => {
       });
     });
 
-  //
-
   // Note object to be created
   const noteDef = {
     title: req.body.title,

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Note from "./Note/Note";
-import { Masonry } from "@mui/lab";
-import { Grid, Typography } from "@mui/material";
+import { Grid, LinearProgress, Typography, Zoom } from "@mui/material";
 import {
   closestCenter,
   DndContext,
@@ -27,6 +25,7 @@ export default function NotesTimeline({
   setNoteCollection,
   categories,
   searchValue,
+  isGettingNotes,
 }) {
   // Filter notes by search value
   const filteredNoteCollection = noteCollection.filter((note) => {
@@ -111,17 +110,25 @@ export default function NotesTimeline({
               />
             </Grid>
           ))}
-          <DragOverlay />
         </Grid>
       </SortableContext>
     </DndContext>
+  ) : isGettingNotes ? (
+    <Zoom in={isGettingNotes}>
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress />
+      </Box>
+    </Zoom>
   ) : (
     // If there are no notes, show a message.
+    // Center the message in the screen
     <Typography
       variant={"h3"}
       sx={{
-        mt: "25vh",
-        width: "100vw",
+        position: "relative",
+        top: "40%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         textAlign: "center",
       }}
     >
