@@ -11,7 +11,6 @@ export default function Dashboard() {
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showPage, setShowPage] = useState(false);
-
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
@@ -46,7 +45,6 @@ export default function Dashboard() {
         console.log("GO BACK TO LOGIN");
         navigate("../auth", { replace: true });
         return false;
-        // navigate('/auth');
       });
   };
 
@@ -66,25 +64,23 @@ export default function Dashboard() {
       .catch((error) => console.error(`Error: ${error.message}`));
   };
 
-  if (!showPage) return null;
-  else
-    return (
-      <>
-        <AppToolbar
-          noteCollection={noteCollection}
-          setNoteCollection={setNoteCollection}
-          categories={categories}
-          setCategories={setCategories}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
-        <NotesTimeline
-          noteCollection={noteCollection}
-          setNoteCollection={setNoteCollection}
-          categories={categories}
-          setCategories={setCategories}
-          searchValue={searchValue}
-        />
-      </>
-    );
+  return showPage ? (
+    <>
+      <AppToolbar
+        noteCollection={noteCollection}
+        setNoteCollection={setNoteCollection}
+        categories={categories}
+        setCategories={setCategories}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
+      <NotesTimeline
+        noteCollection={noteCollection}
+        setNoteCollection={setNoteCollection}
+        categories={categories}
+        setCategories={setCategories}
+        searchValue={searchValue}
+      />
+    </>
+  ) : null;
 }

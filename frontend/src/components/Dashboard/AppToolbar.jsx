@@ -79,11 +79,11 @@ export default function AppToolbar({
                   },
                 }}
                 onChange={(event) =>
-                  setSearchValue(event.target.value.toLowerCase())
+                  setSearchValue(event.target.value.trim().toLowerCase())
                 }
                 onBlur={() => setSearchFocus(false)}
                 onFocus={() => setSearchFocus(true)}
-                onKeyUp={handleClearOnKeyPress}
+                onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press
                 startAdornment={
                   <InputAdornment position="start" sx={{ mr: 3 }}>
                     <Zoom in={searchValue !== ""}>

@@ -8,11 +8,11 @@ import {
   Chip,
   Divider,
   IconButton,
-  Grid,
   Menu,
   MenuItem,
   Typography,
   Grow,
+  Zoom,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
@@ -22,14 +22,11 @@ import {
   MoreHoriz,
   Square,
 } from "@mui/icons-material";
-import Modal from "@mui/material/Modal";
 
 // Turn the Note grey, when the Modal is active.
 import NoteSkeleton from "./NoteSkeleton";
 // Trigger the Modal when editing a Note
 import NoteEditModal from "./NoteEditModal";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 export default function Note(props) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -216,16 +213,23 @@ export default function Note(props) {
             {categoryExists() ? (
               <Chip label={props.categoryName} sx={{ m: 0.5, height: "2em" }} />
             ) : null}
+
             <Box
               aria-label="Drag note handle"
               sx={{
-                display: "inline-block",
+                display: props.searchValue ? "none" : "inline-block", // Hide the handle when searching
                 position: "absolute",
+                px: "4em",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 cursor: "move",
-                px: "4em",
+                opacity: "0.5",
+                transition: "opacity 0.25s ease-in-out",
+                "&:hover": {
+                  opacity: "1",
+                  transition: "opacity 0.25s ease-in-out",
+                },
               }}
               //  Add listeners and attributes for drag and drop, making this Box the handle bar
               {...props.dragHandleListeners}

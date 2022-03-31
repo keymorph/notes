@@ -105,6 +105,7 @@ export default function NotesTimeline({
                   categories.find((category) => category.name === note.category)
                     ?.color
                 }
+                searchValue={searchValue}
                 noteCollection={noteCollection}
                 setNoteCollection={setNoteCollection}
               />

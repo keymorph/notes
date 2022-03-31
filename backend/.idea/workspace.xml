@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +200,7 @@
       <workItem from="1648600714639" duration="5530000" />
       <workItem from="1648607426153" duration="25527000" />
       <workItem from="1648742567245" duration="18000" />
-      <workItem from="1648742615351" duration="267000" />
+      <workItem from="1648742615351" duration="4682000" />
     </task>
     <servers />
   </component>
