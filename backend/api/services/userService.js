@@ -2,23 +2,20 @@ import { users } from "../models/database.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-
 /// asdlfkja;sldkfja;sldkfja;sldkfja;slkdfja;sldkfja;slkdfja;slkdfja;slkdjfa;lskdjfa;lskdf
 
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
 
-  const {resources: userItem} = (
-    await users.items
-      .query(`SELECT * FROM users WHERE users.email like '${email}'`)
-      .fetchNext()
-      .catch((err) => {
-        console.log(err.message);
-        res.status(500).send({
-          error: "Internal server error",
-        });
-      })
-  );
+  const { resources: userItem } = await users.items
+    .query(`SELECT * FROM users WHERE users.email like '${email}'`)
+    .fetchNext()
+    .catch((err) => {
+      console.log(err.message);
+      res.status(500).send({
+        error: "Internal server error",
+      });
+    });
 
   // If a user with email exists, then email in use
   if (userItem.length !== 0)
@@ -88,7 +85,7 @@ const loginAccount = async (email, password, res, remember = false) => {
       const accessToken = jwt.sign(
         { userID: resources[0].id },
         process.env.AUTH_TOKEN_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "3h" }
       );
       return res.status(200).json({ accessToken: accessToken });
     })

@@ -75,8 +75,6 @@ export default function AuthPage() {
       });
   };
 
-  /// asdlfkja;sldkfja;sldkfja;sldkfja;slkdfja;sldkfja;slkdfja;slkdfja;slkdjfa;lskdjfa;lskdf
-
   const handleRegister = (event) => {
     setLoading(true);
     event.preventDefault();

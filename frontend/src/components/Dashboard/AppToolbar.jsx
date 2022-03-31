@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FilledInput, InputAdornment } from "@mui/material";
 
-import NoteCreateModal from "./Dashboard/Note/NoteCreateModal";
+import NoteCreateModal from "./Note/NoteCreateModal";
 
 export default function AppToolbar({
   noteCollection,

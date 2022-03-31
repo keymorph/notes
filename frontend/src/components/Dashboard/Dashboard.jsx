@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import AppToolbar from "../AppToolbar";
-import NoteTimeline from "./Note/NoteTimeline";
+import AppToolbar from "./AppToolbar";
+import NotesTimeline from "./NotesTimeline";
 import axios from "axios";
 
 export default function Dashboard() {
@@ -59,7 +59,7 @@ export default function Dashboard() {
         },
       })
       .then(({ data }) => {
-        setNoteCollection(data.noteItem.notes);
+        setNoteCollection(data.noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
         setCategories(data.noteItem.categories);
         console.log("NoteITEM: ", data.noteItem);
       })
@@ -78,7 +78,7 @@ export default function Dashboard() {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <NoteTimeline
+        <NotesTimeline
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
           categories={categories}

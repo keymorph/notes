@@ -37,7 +37,7 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
           "auth-token": token, //the token is a variable which holds the token
         },
       })
-      .then((result) => {
+      .then(() => {
         setButtonDisabled(false);
       })
       // No token found, remain on login page

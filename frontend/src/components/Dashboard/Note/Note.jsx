@@ -22,8 +22,10 @@ import Modal from "@mui/material/Modal";
 import NoteSkeleton from "./NoteSkeleton";
 // Trigger the Modal when editing a Note
 import NoteEditModal from "./NoteEditModal";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-function Note(props) {
+export default function Note(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [cardHeight, setCardHeight] = useState("auto");
@@ -161,7 +163,11 @@ function Note(props) {
 
   return (
     <Grow in>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
         <NoteEditModal
           noteID={props.noteID}
           title={title}
@@ -186,20 +192,24 @@ function Note(props) {
             maxHeight: "400px",
             overflowWrap: "break-word",
             margin: "5px",
-            transition: "transform 0.2s ease-in-out !important",
-            "&:hover": {
-              transform: "scale(1.02)",
-              transition: "transform 0.1s ease-in-out !important",
-            },
+            // transition: "transform 0.2s ease-in-out",
+            // "&:hover": {
+            //   transform: "scale(1.02)",
+            //   transition: "transform 0.1s ease-in-out",
+            // },
           }}
           ref={ref}
         >
           <Box
-            style={{
+            sx={{
               backgroundColor: categoryColorValue(props.color),
               display: "flex",
               position: "relative",
+              cursor: "move",
             }}
+            //  Add listeners and attributes for drag and drop, making this Box the handle bar
+            {...props.dragHandleListeners}
+            {...props.dragHandleAttributes}
           >
             {categoryExists() ? (
               <Chip label={props.categoryName} sx={{ m: 0.5, height: "2em" }} />
@@ -248,5 +258,3 @@ function Note(props) {
     </Grow>
   );
 }
-
-export default Note;
