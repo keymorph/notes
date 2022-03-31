@@ -15,7 +15,13 @@ import {
   Grow,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { DeleteIcon, EditIcon, MoreHoriz, Square } from "@mui/icons-material";
+import {
+  DeleteIcon,
+  DragHandle,
+  EditIcon,
+  MoreHoriz,
+  Square,
+} from "@mui/icons-material";
 import Modal from "@mui/material/Modal";
 
 // Turn the Note grey, when the Modal is active.
@@ -192,11 +198,11 @@ export default function Note(props) {
             maxHeight: "400px",
             overflowWrap: "break-word",
             margin: "5px",
-            // transition: "transform 0.2s ease-in-out",
-            // "&:hover": {
-            //   transform: "scale(1.02)",
-            //   transition: "transform 0.1s ease-in-out",
-            // },
+            transition: "transform 0.2s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.02)",
+              transition: "transform 0.1s ease-in-out",
+            },
           }}
           ref={ref}
         >
@@ -205,18 +211,30 @@ export default function Note(props) {
               backgroundColor: categoryColorValue(props.color),
               display: "flex",
               position: "relative",
-              cursor: "move",
             }}
-            //  Add listeners and attributes for drag and drop, making this Box the handle bar
-            {...props.dragHandleListeners}
-            {...props.dragHandleAttributes}
           >
             {categoryExists() ? (
               <Chip label={props.categoryName} sx={{ m: 0.5, height: "2em" }} />
             ) : null}
-
+            <Box
+              aria-label="Drag note handle"
+              sx={{
+                display: "inline-block",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                cursor: "move",
+                px: "4em",
+              }}
+              //  Add listeners and attributes for drag and drop, making this Box the handle bar
+              {...props.dragHandleListeners}
+              {...props.dragHandleAttributes}
+            >
+              <DragHandle />
+            </Box>
             <IconButton
-              aria-label="settings"
+              aria-label="Note settings"
               sx={{ m: 0.5, ml: "auto", height: "1em" }}
               onClick={handleClick}
             >

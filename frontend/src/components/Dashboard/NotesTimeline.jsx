@@ -42,12 +42,14 @@ export default function NotesTimeline({
     }
   });
 
+  // activeId used for overlay
   const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
+    useSensor(TouchSensor)
   );
 
   // Sets the active note id when a note is being dragged
@@ -80,11 +82,19 @@ export default function NotesTimeline({
         items={filteredNoteCollection}
         strategy={rectSortingStrategy}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={2} p={2}>
           {filteredNoteCollection.map((note, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={note.id}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2}
+              sx={{ transition: "all 0.5s ease-in-out" }}
+              key={note.id}
+            >
               <SortableNote
-                key={note.id}
                 noteID={note.id}
                 index={index}
                 title={note.title}
@@ -100,6 +110,7 @@ export default function NotesTimeline({
               />
             </Grid>
           ))}
+          <DragOverlay />
         </Grid>
       </SortableContext>
     </DndContext>
