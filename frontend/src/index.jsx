@@ -1,13 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 import "./styles/index.scss";
 import App from "./App";
 
 document.body.style.backgroundColor = "black"; // Prevent white flash on load
 
-ReactDOM.render(
+const root = ReactDOMClient.createRoot(document.getElementById("root"));
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
