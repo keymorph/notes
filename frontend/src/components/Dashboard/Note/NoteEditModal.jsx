@@ -75,6 +75,7 @@ export default function NoteEditModal({
             right: 0,
             display: "flex",
             flexDirection: "column",
+            width: "80%",
             minWidth: "200px",
             maxWidth: "400px",
             borderRadius: "10px",

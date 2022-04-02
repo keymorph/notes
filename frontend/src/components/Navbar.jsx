@@ -30,11 +30,10 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
   const url = "http://localhost:8000/api";
 
   useEffect(() => {
-    const token = localStorage.getItem("auth-token");
     axios
       .get(`${url}/token`, {
         headers: {
-          "auth-token": token, //the token is a variable which holds the token
+          "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },
       })
       .then(() => {
@@ -42,10 +41,10 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
       })
       // No token found, remain on login page
       .catch((error) => {
-        console.error(`Error: ${error}`);
+        console.error(`Error: ${error.message}`);
         setButtonDisabled(true);
       });
-  }, [router]);
+  }, []);
 
   return (
     <AppBar position="static" sx={{ maxHeight: 65 }}>

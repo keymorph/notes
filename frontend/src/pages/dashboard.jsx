@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import axios from "axios";
+import { LinearProgress, Zoom } from "@mui/material";
+import { Box } from "@mui/system";
 
 export default function Dashboard() {
   const router = useRouter();
-  let token;
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -17,45 +18,32 @@ export default function Dashboard() {
 
   const url = "http://localhost:8000/api";
 
+  // Verify JWT token when component mounts
   useEffect(() => {
-    async function loadDashboard() {
-      const result = await verifyJWT();
-      if (result) getAllNotes();
-      console.log(result);
-    }
-
-    token = localStorage.getItem("auth-token");
-    loadDashboard();
-  }, []);
-
-  const verifyJWT = async () => {
-    console.log(token);
-
-    return axios
+    axios
       .get(`${url}/token`, {
         headers: {
-          "auth-token": token, //the token is a variable which holds the token
+          "auth-token": localStorage.getItem("auth-token"), // the token is a variable which holds the token
         },
       })
       .then((result) => {
         console.log(result);
         console.log("VALID TOKEN AFTER RESULT");
         setShowPage(true);
-        return true;
+        getAllNotes();
       })
       .catch(() => {
         console.log("GO BACK TO LOGIN");
         router.replace("/auth");
-        return false;
       });
-  };
+  }, []);
 
+  // Get the note item from the database
   const getAllNotes = () => {
-    console.log("here");
     axios
       .get(`${url}/note`, {
         headers: {
-          "auth-token": token, //the token is a variable which holds the token
+          "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },
       })
       .then(({ data }) => {
@@ -92,5 +80,12 @@ export default function Dashboard() {
         isGettingNotes={isGettingNotes}
       />
     </>
-  ) : null;
+  ) : (
+    // While the user is being authenticated, show a loading indicator
+    <Zoom in>
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress />
+      </Box>
+    </Zoom>
+  );
 }

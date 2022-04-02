@@ -110,29 +110,45 @@ export default function NotesTimeline({
               />
             </Grid>
           ))}
+          {/*  If filtered notes is 0, display not found message */}
+          {filteredNoteCollection.length === 0 && (
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6">No notes found 😭</Typography>
+              </Box>
+            </Grid>
+          )}
         </Grid>
       </SortableContext>
     </DndContext>
   ) : isGettingNotes ? (
-    <Zoom in={isGettingNotes}>
+    // If getting notes, display progress bar
+    <Zoom in>
       <Box sx={{ width: "100%" }}>
         <LinearProgress />
       </Box>
     </Zoom>
   ) : (
-    // If there are no notes, show a message.
-    // Center the message in the screen
-    <Typography
-      variant={"h3"}
-      sx={{
-        position: "relative",
-        top: "40%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        textAlign: "center",
-      }}
-    >
-      No notes yet.
-    </Typography>
+    // If no notes, display no notes message
+    <Zoom in>
+      <Typography
+        variant={"h3"}
+        sx={{
+          position: "relative",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+        }}
+      >
+        No notes yet.
+      </Typography>
+    </Zoom>
   );
 }

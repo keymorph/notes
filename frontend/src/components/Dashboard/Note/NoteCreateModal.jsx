@@ -157,6 +157,7 @@ export default function NoteCreateModal({
             flexDirection: "column",
             minWidth: "200px",
             maxWidth: "400px",
+            width: "80%",
             borderRadius: "10px",
             boxShadow: 24,
           }}

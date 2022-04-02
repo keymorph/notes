@@ -12,7 +12,7 @@ export default function AuthPage() {
   // Handles the state of which box is displayed, default is "login". Options are: "login", "register" and "nopass"
   const [currentBox, setCurrentBox] = useState("login");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // State handling for the box components
   const [email, setEmail] = useState("");
@@ -21,7 +21,6 @@ export default function AuthPage() {
 
   // Verifiy if the user has a valid token (JWT)
   useEffect(() => {
-    setLoading(true);
     const token = localStorage.getItem("auth-token");
     console.log(token);
 
@@ -102,18 +101,18 @@ export default function AuthPage() {
   };
 
   return (
+    // Center Card
     <Card
       sx={{
-        top: "50%",
         padding: 3,
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
         borderRadius: 5,
         width: "80%",
-        maxWidth: "420px",
-        maxHeight: "360px",
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: "15vh",
+        maxWidth: "30rem",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
       }}
     >
       {currentBox === "login" ? (

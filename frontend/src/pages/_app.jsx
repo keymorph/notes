@@ -1,7 +1,7 @@
 /*
   This component contains the shared components that are used on all pages.
 */
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { Container, Fade } from "@mui/material";
 

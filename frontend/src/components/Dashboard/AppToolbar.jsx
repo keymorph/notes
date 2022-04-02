@@ -62,16 +62,19 @@ export default function AppToolbar({
             </IconButton>
             {/* Only display the search bar if there are notes */}
             {noteCollection.length > 0 && (
+              // Center the search bar
               <OutlinedInput
                 placeholder="Search…"
                 value={searchValue}
                 sx={{
+                  position: "absolute",
                   borderRadius: 20,
                   height: "2.5em",
                   width: searchFocus ? "15%" : "10%",
                   maxWidth: "400px",
                   minWidth: "125px",
-                  mx: 2,
+                  left: "50%",
+                  transform: "translateX(-50%)",
                   transition: "width 0.5s ease-in-out",
                   "&:hover": {
                     width: "15%",
@@ -106,7 +109,12 @@ export default function AppToolbar({
             )}
             <Button
               variant="outlined"
-              sx={{ ml: "auto", height: "2.5em" }}
+              sx={{
+                ml: "auto",
+                height: "2.5em",
+                width: "15vw",
+                maxWidth: "10em",
+              }}
               startIcon={<NoteAdd />}
               onClick={handleOpen}
             >
