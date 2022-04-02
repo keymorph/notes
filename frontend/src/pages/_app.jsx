@@ -2,9 +2,8 @@
   This component contains the shared components that are used on all pages.
 */
 import { useEffect, useMemo, useState } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { ThemeProvider } from "@mui/material/styles";
-import { Collapse, Container, Fade, Grow } from "@mui/material";
+import { Container, Fade } from "@mui/material";
 
 import { ThemeDark, ThemeLight } from "../components/Themes/Theme";
 import Navbar from "../components/Navbar";
@@ -22,7 +21,7 @@ export default function App({ Component, pageProps }) {
     } else {
       setDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
     }
-  });
+  }, []);
 
   // Set the theme palette based on the dark mode preference
   const theme = useMemo(() => (darkMode ? ThemeDark : ThemeLight), [darkMode]);
@@ -32,7 +31,6 @@ export default function App({ Component, pageProps }) {
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
     localStorage.setItem("mode", JSON.stringify(!darkMode ? "dark" : "light"));
-    console.log(localStorage.getItem("mode"));
   };
 
   return (
@@ -42,8 +40,8 @@ export default function App({ Component, pageProps }) {
         <title>Jotfox: Note Taking App</title>
       </Head>
       <ThemeProvider theme={theme}>
-        {/* While page loads, dont display content */}
-        {/* This allows */}
+        {/* While the page loads, don't display any content */}
+        {/* This prevents the theme from changing after the page is loaded */}
         <Fade in={darkMode !== null}>
           <Container
             maxWidth={false}
