@@ -275,6 +275,7 @@ export default function NoteCreateModal({
                   >
                     {[0, 1, 2, 3, 4].map((color) => (
                       <Box
+                        key={color}
                         style={{
                           width: "20px",
                           height: "20px",

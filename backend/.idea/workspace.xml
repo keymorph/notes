@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.yarnrc.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/.husky/pre-commit" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/.yarnrc.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.yarn/releases/yarn-1.22.17.cjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.yarnrc" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.yarnrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -213,7 +202,7 @@
       <workItem from="1648742567245" duration="18000" />
       <workItem from="1648742615351" duration="16406000" />
       <workItem from="1648775783739" duration="6400000" />
-      <workItem from="1648851091021" duration="20465000" />
+      <workItem from="1648851091021" duration="21541000" />
     </task>
     <servers />
   </component>
