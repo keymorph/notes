@@ -16,7 +16,7 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta name="description" content="Jotfox Note taking App" />
       </Head>
-      <body style={{ margin: 0, backgroundColor: "black" }}>
+      <body style={{ margin: 0 }}>
         <Main />
         <NextScript />
       </body>

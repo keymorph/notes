@@ -5,34 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../frontend/next.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.eslintignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/AuthPage.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Custom/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Themes/Custom/Button.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Themes/Theme.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/companyLogo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/companyLogo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/donate.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/donate.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/edit-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/edit-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/help.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/help.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/link.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/link.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/images/user.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/user.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/styles/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/images/donate.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/images/edit-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/images/help.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/images/link.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/images/user.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
@@ -102,6 +88,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -227,7 +214,7 @@
       <workItem from="1648742567245" duration="18000" />
       <workItem from="1648742615351" duration="16406000" />
       <workItem from="1648775783739" duration="6400000" />
-      <workItem from="1648851091021" duration="11442000" />
+      <workItem from="1648851091021" duration="16710000" />
     </task>
     <servers />
   </component>
@@ -244,6 +231,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
