@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import editIcon from "../../../images/edit-icon.svg";
+import editIcon from "../../../../public/images/edit-icon.svg";
 import axios from "axios";
 import {
   Box,

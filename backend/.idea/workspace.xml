@@ -5,9 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../frontend/next.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.idea/frontend.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/oldCode.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/AuthPage.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/LoginBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Auth/RegisterBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Custom/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Themes/Custom/Button.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Themes/Theme.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/companyLogo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/companyLogo.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/donate.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/donate.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/edit-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/edit-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/help.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/help.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/link.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/link.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/images/user.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/images/user.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/index.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/styles/index.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
@@ -95,7 +120,7 @@
     <property name="nodejs_interpreter_path" value="$USER_HOME$/AppData/Local/fnm_multishells/35584_1646804945172/node" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\dev\Projects\notetakingapp\backend\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -104,8 +129,11 @@
       <recent name="C:\dev\Projects\notetakingapp\backend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\dev\Projects\notetakingapp\frontend\src\components\Dashboard" />
-      <recent name="C:\dev\Projects\notetakingapp\frontend\src\components\UI\Custom" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\pages" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\components" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\public" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Frontend Start">
@@ -126,7 +154,7 @@
       <package-json value="$PROJECT_DIR$/../frontend/package.json" />
       <command value="run" />
       <scripts>
-        <script value="start" />
+        <script value="dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -197,7 +225,9 @@
       <workItem from="1648600714639" duration="5530000" />
       <workItem from="1648607426153" duration="25527000" />
       <workItem from="1648742567245" duration="18000" />
-      <workItem from="1648742615351" duration="15786000" />
+      <workItem from="1648742615351" duration="16406000" />
+      <workItem from="1648775783739" duration="6400000" />
+      <workItem from="1648851091021" duration="11442000" />
     </task>
     <servers />
   </component>

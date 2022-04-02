@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Card, Grid } from "@mui/material";
-import NoPasswordBox from "./NoPasswordBox";
-import LoginBox from "./LoginBox";
-import RegisterBox from "./RegisterBox";
+import NoPasswordBox from "../components/Auth/NoPasswordBox";
+import LoginBox from "../components/Auth/LoginBox.jsx";
+import RegisterBox from "../components/Auth/RegisterBox";
 
 export default function AuthPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Handles the state of which box is displayed, default is "login". Options are: "login", "register" and "nopass"
   const [currentBox, setCurrentBox] = useState("login");
@@ -34,7 +34,7 @@ export default function AuthPage() {
       .then((result) => {
         console.log(result);
         console.log("VALID TOKEN == GO TO DASHBOARD INSTEAD");
-        navigate("../", { replace: true });
+        router.replace("/");
       })
       // No token found, remain on login page
       .catch(() => {
@@ -66,7 +66,7 @@ export default function AuthPage() {
         console.log("Entered Res");
         console.log(res);
         localStorage.setItem("auth-token", res.data.accessToken);
-        navigate("../", { replace: true });
+        router.replace("/");
       })
       .catch((error) => {
         setLoading(false);

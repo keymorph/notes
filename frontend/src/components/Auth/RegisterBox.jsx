@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
 
-import CustomButton from "../UI/Custom/Button";
+import CustomButton from "../Themes/Custom/Button";
 
 export default function RegisterBox(props) {
   const [comfirmPassword, setComfirmPassword] = useState("");

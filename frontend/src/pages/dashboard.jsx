@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import AppToolbar from "./AppToolbar";
-import NotesTimeline from "./NotesTimeline";
+import { useRouter } from "next/router";
+import AppToolbar from "../components/Dashboard/AppToolbar";
+import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import axios from "axios";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("auth-token");
+  const router = useRouter();
+  let token;
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -24,6 +24,7 @@ export default function Dashboard() {
       console.log(result);
     }
 
+    token = localStorage.getItem("auth-token");
     loadDashboard();
   }, []);
 
@@ -44,7 +45,7 @@ export default function Dashboard() {
       })
       .catch(() => {
         console.log("GO BACK TO LOGIN");
-        navigate("../auth", { replace: true });
+        router.replace("/auth");
         return false;
       });
   };

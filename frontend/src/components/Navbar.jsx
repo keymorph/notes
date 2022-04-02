@@ -3,13 +3,13 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Card, CardMedia, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, NoAccounts } from "@mui/icons-material";
-import { useNavigate } from "react-router";
-import { ThemeToggleSwitch } from "./UI/Theme";
+import { useRouter } from "next/router";
+import { ThemeToggleSwitch } from "./Themes/Theme";
 import axios from "axios";
 import { Box } from "@mui/system";
 
 const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -18,11 +18,11 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // remove the token from the local storage and redirect user to login page
+  // To log the user out, remove the token from the local storage and redirect user to login page
   const removeToken = () => {
     localStorage.removeItem("auth-token");
     setAnchorEl(null);
-    navigate("../auth", { replace: true });
+    router.replace("/auth");
   };
 
   const open = Boolean(anchorEl);
@@ -45,7 +45,7 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
         console.error(`Error: ${error}`);
         setButtonDisabled(true);
       });
-  }, [navigate]);
+  }, [router]);
 
   return (
     <AppBar position="static" sx={{ maxHeight: 65 }}>
