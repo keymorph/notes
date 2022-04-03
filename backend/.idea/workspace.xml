@@ -5,7 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/api/note/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/pages/api/user/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/middleware/authenticate-token.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/middleware/validate-input.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/models/database.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/services/note.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/utils/services/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.yarn/install-state.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Note/NoteEditModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/_document.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/yarn.lock" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +102,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="16.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.26" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../frontend/src/api-utils/routes" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.stylelint" value="true" />
@@ -99,17 +118,19 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\api-utils\routes" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\utils-api" />
       <recent name="C:\dev\Projects\notetakingapp\backend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\api-utils\middleware" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\api-utils\db" />
+      <recent name="C:\dev\Projects\notetakingapp\frontend\src\pages\api\note" />
       <recent name="C:\dev\Projects\notetakingapp\frontend\src\pages" />
       <recent name="C:\dev\Projects\notetakingapp\frontend\src" />
-      <recent name="C:\dev\Projects\notetakingapp\frontend" />
-      <recent name="C:\dev\Projects\notetakingapp\frontend\src\components" />
-      <recent name="C:\dev\Projects\notetakingapp\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Backend Dev">
+  <component name="RunManager" selected="npm.Frontend Dev">
     <configuration type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -139,8 +160,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Backend Dev" />
         <item itemvalue="npm.Frontend Dev" />
+        <item itemvalue="npm.Backend Dev" />
       </list>
     </recent_temporary>
   </component>
@@ -201,7 +222,8 @@
       <workItem from="1648742615351" duration="16406000" />
       <workItem from="1648775783739" duration="6400000" />
       <workItem from="1648851091021" duration="28686000" />
-      <workItem from="1648929029877" duration="20436000" />
+      <workItem from="1648929029877" duration="21312000" />
+      <workItem from="1649004495565" duration="20538000" />
     </task>
     <servers />
   </component>

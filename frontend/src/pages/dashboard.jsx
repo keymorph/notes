@@ -6,7 +6,7 @@ import axios from "axios";
 import { LinearProgress, Zoom } from "@mui/material";
 import { Box } from "@mui/system";
 
-export default function Dashboard() {
+export default function Dashboard({ token }) {
   const router = useRouter();
 
   const [noteCollection, setNoteCollection] = useState([]);
@@ -18,28 +18,31 @@ export default function Dashboard() {
 
   // Verify JWT token when component mounts
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"), // the token is a variable which holds the token
-        },
-      })
-      .then((result) => {
-        console.log(result);
-        console.log("VALID TOKEN AFTER RESULT");
-        setShowPage(true);
-        getAllNotes();
-      })
-      .catch(() => {
-        console.log("GO BACK TO LOGIN");
-        router.replace("/auth");
-      });
+    const verifyToken = () => {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"), // the token is a variable which holds the token
+          },
+        })
+        .then((result) => {
+          console.log(result);
+          console.log("VALID TOKEN AFTER RESULT");
+          setShowPage(true);
+          getAllNotes();
+        })
+        .catch(() => {
+          console.log("GO BACK TO LOGIN");
+          router.replace("/auth");
+        });
+    };
+    verifyToken();
   }, []);
 
   // Get the note item from the database
   const getAllNotes = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },

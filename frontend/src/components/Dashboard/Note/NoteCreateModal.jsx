@@ -42,7 +42,7 @@ export default function NoteCreateModal({
   const createNote = () => {
     axios
       .post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
         {
           title: `${title}`,
           description: `${description}`,

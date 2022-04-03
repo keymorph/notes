@@ -42,7 +42,7 @@ export default function App({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         {/* While the page loads, don't display any content */}
         {/* This prevents the theme from changing after the page is loaded */}
-        <Fade in={darkMode !== null}>
+        {darkMode !== null ? (
           <Container
             maxWidth={false}
             disableGutters
@@ -61,7 +61,7 @@ export default function App({ Component, pageProps }) {
             {/* Each page is rendered in Component */}
             <Component {...pageProps} />
           </Container>
-        </Fade>
+        ) : null}
       </ThemeProvider>
     </>
   );

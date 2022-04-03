@@ -65,7 +65,7 @@ export default function Note(props) {
 
   const handleDelete = () => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`, {
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
         },
@@ -94,7 +94,7 @@ export default function Note(props) {
   const handleCreateDuplicate = () => {
     axios
       .post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
         {
           title: props.title,
           description: props.description,

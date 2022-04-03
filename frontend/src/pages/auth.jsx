@@ -24,7 +24,7 @@ export default function AuthPage() {
     const token = localStorage.getItem("auth-token");
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
         headers: {
           "auth-token": token, //the token is a variable which holds the token
         },
@@ -57,7 +57,7 @@ export default function AuthPage() {
     console.log("DATA", data);
 
     axios
-      .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, data)
+      .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, data)
       .then((res) => {
         console.log("Entered Res");
         console.log(res);
@@ -83,7 +83,7 @@ export default function AuthPage() {
     console.log("DATA", data);
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, data)
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, data)
       .then((res) => {
         console.log("Entered Res");
         console.log(res);

@@ -29,7 +29,7 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },

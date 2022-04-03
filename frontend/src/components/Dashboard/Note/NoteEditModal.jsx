@@ -24,7 +24,7 @@ export default function NoteEditModal({
     if (editedTitle !== title || editedDescription !== description) {
       axios
         .put(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
           {
             noteID: noteID,
             title: `${editedTitle}`,
