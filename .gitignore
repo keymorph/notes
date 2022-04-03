@@ -25,8 +25,8 @@ yarn-error.log*
 
 # NextJS
 .next
-
-# Yarn
-frontend/.yarn/cache
-backend/.yarn/cache
 .vercel
+
+# Yarn cache
+.yarn/cache
+
