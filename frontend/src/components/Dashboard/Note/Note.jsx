@@ -63,14 +63,11 @@ export default function Note(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const url = "http://localhost:8000/api";
-  const token = localStorage.getItem("auth-token");
-
   const handleDelete = () => {
     axios
-      .delete(`${url}/note`, {
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`, {
         headers: {
-          "auth-token": token,
+          "auth-token": localStorage.getItem("auth-token"),
         },
         data: {
           noteID: props.noteID,
@@ -97,7 +94,7 @@ export default function Note(props) {
   const handleCreateDuplicate = () => {
     axios
       .post(
-        `${url}/note`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
         {
           title: props.title,
           description: props.description,
@@ -110,7 +107,7 @@ export default function Note(props) {
         },
         {
           headers: {
-            "auth-token": token,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       )

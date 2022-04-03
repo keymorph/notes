@@ -27,11 +27,9 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
 
   const open = Boolean(anchorEl);
 
-  const url = "http://localhost:8000/api";
-
   useEffect(() => {
     axios
-      .get(`${url}/token`, {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },

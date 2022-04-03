@@ -16,12 +16,10 @@ export default function Dashboard() {
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
-  const url = "http://localhost:8000/api";
-
   // Verify JWT token when component mounts
   useEffect(() => {
     axios
-      .get(`${url}/token`, {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"), // the token is a variable which holds the token
         },
@@ -41,7 +39,7 @@ export default function Dashboard() {
   // Get the note item from the database
   const getAllNotes = () => {
     axios
-      .get(`${url}/note`, {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`, {
         headers: {
           "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
         },

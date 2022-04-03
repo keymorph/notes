@@ -25,7 +25,7 @@ export default function AuthPage() {
     console.log(token);
 
     axios
-      .get(`${url}/token`, {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
         headers: {
           "auth-token": token, //the token is a variable which holds the token
         },
@@ -40,8 +40,6 @@ export default function AuthPage() {
         setLoading(false);
       });
   }, []);
-
-  const url = "http://localhost:8000/api";
 
   // TODO: Handle the forgot password functionality
   const handleForgotPassword = () => {
@@ -60,7 +58,7 @@ export default function AuthPage() {
     console.log("DATA", data);
 
     axios
-      .put("http://localhost:8000/api/user", data)
+      .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, data)
       .then((res) => {
         console.log("Entered Res");
         console.log(res);
@@ -86,7 +84,7 @@ export default function AuthPage() {
     console.log("DATA", data);
 
     axios
-      .post("http://localhost:8000/api/user", data)
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, data)
       .then((res) => {
         console.log("Entered Res");
         console.log(res);

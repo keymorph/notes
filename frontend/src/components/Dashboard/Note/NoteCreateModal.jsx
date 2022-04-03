@@ -39,13 +39,10 @@ export default function NoteCreateModal({
   const [selectedColor, setSelectedColor] = useState(0);
   const [createdCategory, setCreatedCategory] = useState("");
 
-  const url = "http://localhost:8000/api";
-  const token = localStorage.getItem("auth-token");
-
   const createNote = () => {
     axios
       .post(
-        `${url}/note`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
         {
           title: `${title}`,
           description: `${description}`,
@@ -57,7 +54,7 @@ export default function NoteCreateModal({
         },
         {
           headers: {
-            "auth-token": token,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       )

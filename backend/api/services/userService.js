@@ -1,8 +1,7 @@
-import { users } from "../models/database.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-/// asdlfkja;sldkfja;sldkfja;sldkfja;slkdfja;sldkfja;slkdfja;slkdfja;slkdjfa;lskdjfa;lskdf
+import { users } from "../models/database.js";
 
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database

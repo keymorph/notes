@@ -14,8 +14,6 @@ export default function NoteEditModal({
   setDescription,
   noteID,
 }) {
-  const url = "http://localhost:8000/api";
-  const token = localStorage.getItem("auth-token");
   const [categoryColor, setCategoryColor] = useState(1);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(description);
@@ -26,7 +24,7 @@ export default function NoteEditModal({
     if (editedTitle !== title || editedDescription !== description) {
       axios
         .put(
-          `${url}/note`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/note`,
           {
             noteID: noteID,
             title: `${editedTitle}`,
@@ -40,7 +38,7 @@ export default function NoteEditModal({
 
           {
             headers: {
-              "auth-token": token,
+              "auth-token": localStorage.getItem("auth-token"),
             },
           }
         )
