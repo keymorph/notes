@@ -29,3 +29,4 @@ yarn-error.log*
 # Yarn
 frontend/.yarn/cache
 backend/.yarn/cache
+.vercel

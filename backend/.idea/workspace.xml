@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98deef9-6815-4087-a632-d92242ec45f6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="5788bffb-9a1d-4aab-a358-07d1402ee3e2" name="Changes by Dante" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,21 +113,21 @@
       <recent name="C:\dev\Projects\notetakingapp\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Frontend Start">
+  <component name="RunManager" selected="npm.Backend Dev">
     <configuration type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
-    <configuration name="Backend Start" type="js.build_tools.npm" temporary="true">
+    <configuration name="Backend Dev" type="js.build_tools.npm" temporary="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="start" />
+        <script value="dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Frontend Start" type="js.build_tools.npm" temporary="true">
+    <configuration name="Frontend Dev" type="js.build_tools.npm" temporary="true">
       <package-json value="$PROJECT_DIR$/../frontend/package.json" />
       <command value="run" />
       <scripts>
@@ -136,13 +138,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="npm.Backend Start" />
-      <item itemvalue="npm.Frontend Start" />
+      <item itemvalue="npm.Backend Dev" />
+      <item itemvalue="npm.Frontend Dev" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Frontend Start" />
-        <item itemvalue="npm.Backend Start" />
+        <item itemvalue="npm.Backend Dev" />
+        <item itemvalue="npm.Frontend Dev" />
       </list>
     </recent_temporary>
   </component>
@@ -203,7 +205,7 @@
       <workItem from="1648742615351" duration="16406000" />
       <workItem from="1648775783739" duration="6400000" />
       <workItem from="1648851091021" duration="28686000" />
-      <workItem from="1648929029877" duration="15230000" />
+      <workItem from="1648929029877" duration="18888000" />
     </task>
     <servers />
   </component>

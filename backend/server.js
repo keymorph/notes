@@ -1,28 +1,25 @@
 import "dotenv/config";
-import cors from "cors";
 import express from "express";
+import cors from "cors";
 
 import note from "./api/routes/note.js";
 import user from "./api/routes/user.js";
 
 const app = express();
 
-const port = 8000;
-const host = "localhost";
-app.listen(port, host, () =>
-  console.log(`✓ Back-end server running at 'http://${host}:${port}'`)
-);
+// Send CORS headers to the front-end
+app.use(cors({ origin: process.env.FRONTEND_URL, optionsSuccessStatus: 200 }));
 
+// Parse incoming front-end requests as JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Allow requests originating from the front-end server
-const allowedOrigins = [process.env.FRONTEND_URL];
-app.use(
-  cors({
-    origin: allowedOrigins,
-  })
-);
-
+// Routes
 app.use("/api/", user);
 app.use("/api/", note);
+
+// Start server
+const port = process.env.PORT || 8000;
+app.listen(port, () =>
+  console.log(`✓ Back-end server running on port ${port}`)
+);
