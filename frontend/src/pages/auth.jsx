@@ -22,7 +22,6 @@ export default function AuthPage() {
   // Verifiy if the user has a valid token (JWT)
   useEffect(() => {
     const token = localStorage.getItem("auth-token");
-    console.log(token);
 
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token`, {
