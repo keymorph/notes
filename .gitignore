@@ -27,4 +27,5 @@ yarn-error.log*
 .next
 
 # Yarn
-.yarn
+frontend/.yarn/cache
+backend/.yarn/cache
