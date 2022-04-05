@@ -43,7 +43,7 @@ export default function AppToolbar({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Fade in>
-        <AppBar position="static">
+        <AppBar position="static" sx={{ boxShadow: "none" }}>
           <Toolbar sx={{ display: "flex" }} variant="dense">
             <NoteCreateModal
               modalOpen={modalOpen}
