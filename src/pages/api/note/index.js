@@ -12,21 +12,16 @@ export default async function handler(req, res) {
   // If token authentication failed, return
   if (res.statusCode !== 200) return;
 
-  switch (req.method) {
-    case "GET":
-      await show(req, res);
-      break;
-    case "POST":
-      await create(req, res);
-      break;
-    case "PUT":
-      await edit(req, res);
-      break;
-    case "DELETE":
-      await remove(req, res);
-      break;
-    default:
-      res.status(405).json({ error: `Method ${req.method} not allowed` });
+  if (req.method === "GET") {
+    return await show(req, res);
+  } else if (req.method === "POST") {
+    return await create(req, res);
+  } else if (req.method === "PUT") {
+    return await edit(req, res);
+  } else if (req.method === "DELETE") {
+    return await remove(req, res);
+  } else {
+    return res.status(405).json({error: `Method ${req.method} not allowed`});
   }
 }
 
