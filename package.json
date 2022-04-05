@@ -2,6 +2,12 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
     "@azure/cosmos": "^3.15.1",
     "@dnd-kit/core": "^5.0.3",
@@ -29,11 +35,10 @@
     "sass": "^1.49.11",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "devDependencies": {
+    "eslint": "8.12.0",
+    "eslint-config-next": "12.1.4",
+    "prettier": "^2.6.2"
   },
   "browserslist": {
     "production": [
@@ -46,10 +51,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "8.12.0",
-    "eslint-config-next": "12.1.4"
   },
   "packageManager": "yarn@3.2.0"
 }

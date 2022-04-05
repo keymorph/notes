@@ -1,15 +1,15 @@
 /*
   This component contains the shared components that are used on all pages.
 */
-import React, { useEffect, useMemo, useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { Container, Fade } from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
+import {ThemeProvider} from "@mui/material/styles";
+import {Container} from "@mui/material";
 
-import { ThemeDark, ThemeLight } from "../components/Themes/Theme";
-import Navbar from "../components/Navbar";
+import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
+import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
 
-export default function App({ Component, pageProps }) {
+export default function App({Component, pageProps}) {
   const [darkMode, setDarkMode] = useState(null);
 
   // Invoke setDarkMode whenever the page loads
@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
         <title>Jotfox: Note Taking App</title>
       </Head>
       <ThemeProvider theme={theme}>

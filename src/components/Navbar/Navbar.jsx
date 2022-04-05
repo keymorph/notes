@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Card, CardMedia, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { ThemeToggleSwitch } from "./Themes/Theme";
+import ThemeToggler from "./ThemeToggler";
 import axios from "axios";
 import { Box } from "@mui/system";
 
-const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
+export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -45,25 +45,25 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
   }, []);
 
   return (
-    <AppBar position="static" sx={{ maxHeight: 65 }}>
+    <AppBar position="static" sx={{ maxHeight: "3rem" }}>
       <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
         <Card>
           <CardMedia
             component="img"
-            height="60"
+            height="48em"
             image="https://avatars.githubusercontent.com/u/87445501"
             alt="FourScript Logo"
           />
         </Card>
-        <Box sx={{ position: "right" }}>
-          <ThemeToggleSwitch
-            checked={!darkMode}
-            onClick={handleDarkModeToggle}
+        <Box display={"flex"} flexDirection={"row"} position="right">
+          <ThemeToggler
+            darkMode={darkMode}
+            handleDarkModeToggle={handleDarkModeToggle}
           />
 
           <IconButton
             aria-label="settings"
-            sx={{ marginLeft: "10px", marginRight: "10px" }}
+            sx={{ marginLeft: "0.5em", marginRight: "0.5em" }}
             onClick={handleClick}
             disabled={buttonDisabled}
             size="small"
@@ -77,6 +77,4 @@ const ResponsiveAppBar = ({ darkMode, handleDarkModeToggle }) => {
       </Toolbar>
     </AppBar>
   );
-};
-
-export default ResponsiveAppBar;
+}
