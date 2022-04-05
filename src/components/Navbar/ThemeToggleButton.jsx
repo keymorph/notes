@@ -2,17 +2,15 @@ import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import { Box, IconButton } from "@mui/material";
 
-export default function ThemeToggler({ darkMode, handleDarkModeToggle }) {
+export default function ThemeToggleButton({ darkMode, handleDarkModeToggle }) {
   return (
-    <Box
+    <IconButton
       sx={{
         width: "1.5em",
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "transparent !important",
-        cursor: "pointer",
       }}
+      onClick={handleDarkModeToggle}
     >
       <DarkModeRoundedIcon
         sx={{
@@ -28,7 +26,6 @@ export default function ThemeToggler({ darkMode, handleDarkModeToggle }) {
             animation: "rotating 2s linear infinite",
           },
         }}
-        onClick={handleDarkModeToggle}
       />
       <LightModeRoundedIcon
         sx={{
@@ -44,8 +41,7 @@ export default function ThemeToggler({ darkMode, handleDarkModeToggle }) {
             transition: "all 0.2s ease-in-out",
           },
         }}
-        onClick={handleDarkModeToggle}
       />
-    </Box>
+    </IconButton>
   );
 }

@@ -32,6 +32,13 @@ export const ThemeDark = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

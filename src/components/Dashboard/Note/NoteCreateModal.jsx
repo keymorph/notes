@@ -421,7 +421,7 @@ function CategoryItem({ ctg, setCategoryName, getColor, setAnchorEl }) {
               borderRadius: 0.5,
               marginRight: 2,
             }}
-          ></Box>
+          />
           {ctg.name}
         </Box>
 

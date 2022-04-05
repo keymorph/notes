@@ -44,7 +44,7 @@ export default function AppToolbar({
     <Box sx={{ flexGrow: 1 }}>
       <Fade in>
         <AppBar position="static">
-          <Toolbar sx={{ display: "flex" }}>
+          <Toolbar sx={{ display: "flex" }} variant="dense">
             <NoteCreateModal
               modalOpen={modalOpen}
               handleClose={handleClose}
@@ -62,17 +62,16 @@ export default function AppToolbar({
             </IconButton>
             {/* Only display the search bar if there are notes */}
             {noteCollection.length > 0 && (
-              // Center the search bar
               <OutlinedInput
                 placeholder="Search…"
                 value={searchValue}
                 sx={{
                   position: "absolute",
                   borderRadius: 20,
-                  height: "2.5em",
+                  height: "2em",
                   width: searchFocus ? "15%" : "10%",
                   maxWidth: "400px",
-                  minWidth: "125px",
+                  minWidth: "120px",
                   left: "50%",
                   transform: "translateX(-50%)",
                   transition: "width 0.5s ease-in-out",
@@ -98,9 +97,7 @@ export default function AppToolbar({
                       </IconButton>
                     </Zoom>
                     <Zoom in={searchValue === ""}>
-                      <SearchIcon
-                        sx={{ position: "absolute", top: 8, left: 10 }}
-                      />
+                      <SearchIcon sx={{ position: "absolute", left: 8 }} />
                     </Zoom>
                   </InputAdornment>
                 }
@@ -111,7 +108,7 @@ export default function AppToolbar({
               variant="outlined"
               sx={{
                 ml: "auto",
-                height: "2.5em",
+                height: "2em",
                 width: "15vw",
                 maxWidth: "10em",
               }}

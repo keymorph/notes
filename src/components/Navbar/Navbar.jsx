@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Card, CardMedia, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import ThemeToggler from "./ThemeToggler";
+import ThemeToggleButton from "./ThemeToggleButton";
 import axios from "axios";
 import { Box } from "@mui/system";
 
@@ -45,22 +45,27 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   }, []);
 
   return (
-    <AppBar position="static" sx={{ maxHeight: "3rem" }}>
-      <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+    <AppBar position="static" sx={{ boxShadow: "none" }}>
+      <Toolbar
+        disableGutters
+        variant="dense"
+        sx={{
+          justifyContent: "space-between",
+        }}
+      >
         <Card>
           <CardMedia
             component="img"
-            height="48em"
+            height="48px"
             image="https://avatars.githubusercontent.com/u/87445501"
             alt="FourScript Logo"
           />
         </Card>
-        <Box display={"flex"} flexDirection={"row"} position="right">
-          <ThemeToggler
+        <Box display={"flex"} flexDirection={"row"}>
+          <ThemeToggleButton
             darkMode={darkMode}
             handleDarkModeToggle={handleDarkModeToggle}
           />
-
           <IconButton
             aria-label="settings"
             sx={{ marginLeft: "0.5em", marginRight: "0.5em" }}
