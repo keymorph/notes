@@ -45,7 +45,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   }, []);
 
   return (
-    <AppBar position="static" sx={{ boxShadow: "none" }}>
+    <AppBar position="fixed" sx={{ boxShadow: "none" }}>
       <Toolbar
         disableGutters
         variant="dense"

@@ -81,7 +81,7 @@ export default function NotesTimeline({
         items={filteredNoteCollection}
         strategy={rectSortingStrategy}
       >
-        <Grid container spacing={2} p={2}>
+        <Grid container spacing={2} p={2} mt={"6em"}>
           {filteredNoteCollection.map((note, index) => (
             <Grid
               item

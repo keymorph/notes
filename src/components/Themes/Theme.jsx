@@ -42,14 +42,15 @@ export const ThemeDark = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: "#000000A0",
+          background: "#000000AF",
+          backdropFilter: "blur(8px)",
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          background: "#000000A0",
+          background: "#000000AF",
           backdropFilter: "blur(8px)",
           borderRadius: 5,
         },
@@ -91,6 +92,7 @@ export const ThemeLight = createTheme({
       styleOverrides: {
         root: {
           background: "#FFFFFFAF",
+          backdropFilter: "blur(8px)",
         },
       },
     },
