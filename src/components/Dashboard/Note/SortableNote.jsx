@@ -20,6 +20,7 @@ export function SortableNote(props) {
   });
 
   const style = {
+    transformOrigin: "0 0",
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? "100" : "auto",
