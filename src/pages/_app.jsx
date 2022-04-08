@@ -3,9 +3,9 @@
 */
 import React, { useEffect, useMemo, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { Container } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
 
-import { ThemeDark, ThemeGlobal, ThemeLight } from "../components/Themes/Theme";
+import { ThemeDark, ThemeLight } from "../components/Themes/Theme";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
 
@@ -41,6 +41,8 @@ export default function App({ Component, pageProps }) {
       </Head>
 
       <ThemeProvider theme={theme}>
+        {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
+        <CssBaseline enableColorScheme />
         {/* While the page loads, don't display any content */}
         {/* This prevents the theme from changing after the page is loaded */}
         {darkMode !== null ? (
