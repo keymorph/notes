@@ -8,9 +8,6 @@ import * as React from "react";
 import { useState, createRef } from "react";
 
 export default function ToolbarSearch({ setSearchValue, searchValue }) {
-  // SEARCH
-  const [searchFocus, setSearchFocus] = useState(false);
-
   // Clear search value when Escape key is pressed
   const handleClearOnKeyPress = (event) => {
     if (event.key === "Escape") {
@@ -22,10 +19,8 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
     setSearchValue("");
   };
 
-  const handleSearchInputBlur = () => {
-    if (searchValue === "") {
-      setSearchFocus(false);
-    }
+  const handleOnChange = (event) => {
+    setSearchValue(event.target.value.trimStart().toLowerCase());
   };
 
   return (
@@ -36,22 +31,19 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
         ml: 1,
         borderRadius: 20,
         height: "2em",
-        width: searchFocus ? "10vw" : "40px",
-        minWidth: searchFocus ? "120px" : "40px",
+        minWidth: "120px",
+        maxWidth: "240px",
         transition: "all 0.5s ease-in-out",
         cursor: "pointer",
       }}
-      onBlur={handleSearchInputBlur}
-      onFocus={() => setSearchFocus(true)}
-      onChange={(event) =>
-        setSearchValue(event.target.value.trimStart().toLowerCase())
-      }
+      onChange={handleOnChange}
       onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press
       startAdornment={
         <InputAdornment position="start" sx={{ mr: 3 }}>
-          <Zoom in={searchFocus}>
+          <Zoom in={searchValue !== ""}>
             <IconButton
               onClick={handleClear}
+              tabIndex={-1}
               sx={{
                 position: "absolute",
                 left: 0,
@@ -65,13 +57,12 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
               />
             </IconButton>
           </Zoom>
-          <Zoom in={!searchFocus}>
+          <Zoom in={searchValue === ""}>
             <IconButton
-              onClick={() => setSearchFocus(true)}
+              tabIndex={-1}
               sx={{
                 position: "absolute",
                 left: 0,
-                zIndex: -1,
               }}
             >
               <SearchIcon />
