@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import AppToolbar from "../components/Dashboard/AppToolbar";
+import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import axios from "axios";
 import { LinearProgress, Zoom } from "@mui/material";
@@ -84,7 +84,7 @@ export default function Dashboard({ token }) {
   ) : (
     // While the user is being authenticated, show a loading indicator
     <Zoom in>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", mt: "3em" }}>
         <LinearProgress />
       </Box>
     </Zoom>

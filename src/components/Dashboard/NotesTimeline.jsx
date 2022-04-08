@@ -81,34 +81,34 @@ export default function NotesTimeline({
         items={filteredNoteCollection}
         strategy={rectSortingStrategy}
       >
-        <Grid container spacing={2} p={2} mt={"6em"}>
+        {/* Resize items in grid if screen size is too small */}
+        <Box
+          sx={{
+            p: 3,
+            mt: "6em",
+            display: "grid",
+            gap: "1em",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            justifyItems: "center",
+          }}
+        >
           {filteredNoteCollection.map((note, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              xl={2}
-              sx={{ transition: "all 0.5s ease-in-out" }}
+            <SortableNote
               key={note.id}
-            >
-              <SortableNote
-                noteID={note.id}
-                index={index}
-                title={note.title}
-                description={note.description}
-                tags={note.tags}
-                categoryName={note.category}
-                color={
-                  categories.find((category) => category.name === note.category)
-                    ?.color
-                }
-                searchValue={searchValue}
-                noteCollection={noteCollection}
-                setNoteCollection={setNoteCollection}
-              />
-            </Grid>
+              noteID={note.id}
+              index={index}
+              title={note.title}
+              description={note.description}
+              tags={note.tags}
+              categoryName={note.category}
+              color={
+                categories.find((category) => category.name === note.category)
+                  ?.color
+              }
+              searchValue={searchValue}
+              noteCollection={noteCollection}
+              setNoteCollection={setNoteCollection}
+            />
           ))}
           {/*  If filtered notes is 0, display not found message */}
           {filteredNoteCollection.length === 0 && (
@@ -124,7 +124,7 @@ export default function NotesTimeline({
               </Box>
             </Grid>
           )}
-        </Grid>
+        </Box>
       </SortableContext>
     </DndContext>
   ) : isGettingNotes ? (

@@ -56,6 +56,15 @@ export const ThemeDark = createTheme({
         },
       },
     },
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          background: "#000000AF",
+          backdropFilter: "blur(8px)",
+          borderRadius: 5,
+        },
+      },
+    },
   },
 });
 
@@ -99,6 +108,15 @@ export const ThemeLight = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
+          background: "#FFFFFFAF",
+          backdropFilter: "blur(8px)",
+          borderRadius: 5,
+        },
+      },
+    },
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
           background: "#FFFFFFAF",
           backdropFilter: "blur(8px)",
           borderRadius: 5,

@@ -2,7 +2,11 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Note from "./Note";
+import { Box } from "@mui/system";
 
+/*
+  @description Wrapper component for note to make it draggable
+*/
 export function SortableNote(props) {
   const {
     attributes,
@@ -19,21 +23,24 @@ export function SortableNote(props) {
     id: props.noteID,
   });
 
-  const style = {
-    transformOrigin: "0 0",
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: isDragging ? "100" : "auto",
-    opacity: isDragging ? 0.3 : 1,
-  };
-
   return (
-    <div id={props.noteID} ref={setNodeRef} style={style}>
+    <Box
+      key={props.key}
+      id={props.noteID}
+      ref={setNodeRef}
+      sx={{
+        transformOrigin: "0 0",
+        transform: CSS.Transform.toString(transform),
+        transition,
+        zIndex: isDragging ? "100" : "auto",
+        opacity: isDragging ? 0.3 : 1,
+      }}
+    >
       <Note
         dragHandleAttributes={attributes}
         dragHandleListeners={listeners}
         {...props}
       />
-    </div>
+    </Box>
   );
 }

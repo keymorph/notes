@@ -2,14 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/[...slugs].jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Note/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Note/SortableNote.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
@@ -59,12 +71,13 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\dev\Projects\notetakingapp\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Toolbar" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Navbar" />
     </key>
   </component>
@@ -82,7 +95,7 @@
       <workItem from="1649175503653" duration="2068000" />
       <workItem from="1649181520143" duration="23228000" />
       <workItem from="1649222340013" duration="1098000" />
-      <workItem from="1649265670937" duration="1395000" />
+      <workItem from="1649265670937" duration="20467000" />
     </task>
     <servers />
   </component>

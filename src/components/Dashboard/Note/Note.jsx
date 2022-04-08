@@ -184,7 +184,6 @@ export default function Note(props) {
         />
 
         <Card
-          className="NoteCard"
           sx={{
             width: "300px",
             minHeight: "300px",
