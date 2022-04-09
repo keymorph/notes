@@ -3,6 +3,7 @@ import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import {
   closestCenter,
   DndContext,
+  DragOverlay,
   KeyboardSensor,
   PointerSensor,
   TouchSensor,
@@ -16,6 +17,8 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { SortableNote } from "./Note/SortableNote";
+import NoteSkeleton from "./Note/NoteSkeleton";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 
 export default function NotesTimeline({
   noteCollection,
@@ -78,6 +81,14 @@ export default function NotesTimeline({
         items={filteredNoteCollection}
         strategy={rectSortingStrategy}
       >
+        <DragOverlay modifiers={[restrictToParentElement]}>
+          {activeId ? (
+            <NoteSkeleton
+              note={noteCollection.find((note) => note.id === activeId)}
+              categories={categories}
+            />
+          ) : null}
+        </DragOverlay>
         {/* Resize items in grid if screen size is too small */}
         <Box
           sx={{
