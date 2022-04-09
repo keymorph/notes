@@ -1,8 +1,10 @@
 import React from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import {useSortable} from "@dnd-kit/sortable";
+import {CSS} from "@dnd-kit/utilities";
 import Note from "./Note";
-import { Box } from "@mui/system";
+import {Box} from "@mui/material"; /*
+  @description Wrapper component for note to make it draggable
+*/
 
 /*
   @description Wrapper component for note to make it draggable
@@ -25,7 +27,6 @@ export function SortableNote(props) {
 
   return (
     <Box
-      key={props.key}
       id={props.noteID}
       ref={setNodeRef}
       sx={{

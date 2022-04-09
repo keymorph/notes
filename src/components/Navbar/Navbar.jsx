@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import { Card, CardMedia, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Card,
+  CardMedia,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+} from "@mui/material";
 import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import ThemeToggleButton from "./ThemeToggleButton";
 import axios from "axios";
-import { Box } from "@mui/system";
 
 export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   const router = useRouter();
@@ -45,8 +51,9 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   }, []);
 
   return (
-    <AppBar position="fixed" sx={{ boxShadow: "none" }}>
+    <AppBar sx={{ boxShadow: "none", position: "relative" }}>
       <Toolbar
+        id="back-to-top-anchor"
         disableGutters
         variant="dense"
         sx={{

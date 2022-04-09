@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
-import NotesTimeline from "../components/Dashboard/NotesTimeline";
+import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
 import axios from "axios";
-import { LinearProgress, Zoom } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, LinearProgress, Zoom } from "@mui/material";
 
 export default function Dashboard({ token }) {
   const router = useRouter();
@@ -63,7 +62,7 @@ export default function Dashboard({ token }) {
   };
 
   return showPage ? (
-    <>
+    <Box>
       <AppToolbar
         noteCollection={noteCollection}
         setNoteCollection={setNoteCollection}
@@ -80,11 +79,11 @@ export default function Dashboard({ token }) {
         searchValue={searchValue}
         isGettingNotes={isGettingNotes}
       />
-    </>
+    </Box>
   ) : (
     // While the user is being authenticated, show a loading indicator
     <Zoom in>
-      <Box sx={{ width: "100%", mt: "3em" }}>
+      <Box sx={{ width: "100%" }}>
         <LinearProgress />
       </Box>
     </Zoom>

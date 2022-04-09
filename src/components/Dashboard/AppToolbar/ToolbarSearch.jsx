@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
-import { useState, createRef } from "react";
 
 export default function ToolbarSearch({ setSearchValue, searchValue }) {
   // Clear search value when Escape key is pressed
@@ -33,8 +32,6 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
         height: "2em",
         minWidth: "120px",
         maxWidth: "240px",
-        transition: "all 0.5s ease-in-out",
-        cursor: "pointer",
       }}
       onChange={handleOnChange}
       onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press

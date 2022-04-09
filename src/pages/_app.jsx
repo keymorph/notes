@@ -1,13 +1,14 @@
 /*
   This component contains the shared components that are used on all pages.
 */
-import React, { useEffect, useMemo, useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { Container, CssBaseline } from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
+import {ThemeProvider} from "@mui/material/styles";
+import {Container, CssBaseline} from "@mui/material";
 
-import { ThemeDark, ThemeLight } from "../components/Themes/Theme";
+import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
+import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 
 export default function App({ Component, pageProps }) {
   const [darkMode, setDarkMode] = useState(null);
@@ -37,7 +38,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>Jotfox: Note Taking App</title>
+        <title>JotFox - Note Taking App</title>
       </Head>
 
       <ThemeProvider theme={theme}>
@@ -63,6 +64,7 @@ export default function App({ Component, pageProps }) {
             />
             {/* Each page is rendered in Component */}
             <Component {...pageProps} />
+            <ScrollTop />
           </Container>
         ) : null}
       </ThemeProvider>

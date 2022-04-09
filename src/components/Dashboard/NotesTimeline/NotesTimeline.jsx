@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { Grid, LinearProgress, Typography, Zoom } from "@mui/material";
+import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import {
   closestCenter,
   DndContext,
-  DragOverlay,
   KeyboardSensor,
   PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { Box } from "@mui/system";
 import {
   arrayMove,
   rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableNote } from "./Note/SortableNote";
 
@@ -85,9 +82,8 @@ export default function NotesTimeline({
         <Box
           sx={{
             p: 3,
-            mt: "6em",
             display: "grid",
-            gap: "1em",
+            gap: "2em",
             gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
             justifyItems: "center",
           }}
@@ -110,21 +106,13 @@ export default function NotesTimeline({
               setNoteCollection={setNoteCollection}
             />
           ))}
-          {/*  If filtered notes is 0, display not found message */}
-          {filteredNoteCollection.length === 0 && (
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="h6">No notes found 😭</Typography>
-              </Box>
-            </Grid>
-          )}
         </Box>
+        {/*  If filtered notes is 0, display no notes found message */}
+        {filteredNoteCollection.length === 0 && (
+          <Typography sx={{ width: "100%", textAlign: "center" }} variant="h5">
+            No notes found
+          </Typography>
+        )}
       </SortableContext>
     </DndContext>
   ) : isGettingNotes ? (
