@@ -97,6 +97,13 @@ export const ThemeLight = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {
