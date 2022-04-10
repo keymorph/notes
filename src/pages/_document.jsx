@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import {Head, Html, Main, NextScript} from "next/document"; // This is the html document as the root of the application, similar to index.html in a traditional web app.
 
 // This is the html document as the root of the application, similar to index.html in a traditional web app.
 export default function Document() {
@@ -16,7 +16,7 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta name="description" content="Jotfox Note taking App" />
       </Head>
-      <body style={{ margin: 0 }}>
+      <body>
         <Main />
         <NextScript />
       </body>

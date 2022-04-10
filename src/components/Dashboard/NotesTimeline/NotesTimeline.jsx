@@ -5,7 +5,7 @@ import {
   DndContext,
   DragOverlay,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -16,9 +16,10 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+
 import { SortableNote } from "./Note/SortableNote";
-import NoteSkeleton from "./Note/NoteSkeleton";
-import { restrictToParentElement } from "@dnd-kit/modifiers";
+import NoteDragOverlay from "./Note/NoteDragOverlay";
 
 export default function NotesTimeline({
   noteCollection,
@@ -44,11 +45,17 @@ export default function NotesTimeline({
   // activeId used for overlay
   const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(MouseSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
-    useSensor(TouchSensor)
+    useSensor(TouchSensor, {
+      // Press delay of 250ms, with tolerance of 5px of movement
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
+      },
+    })
   );
 
   // Sets the active note id when a note is being dragged
@@ -57,16 +64,14 @@ export default function NotesTimeline({
   };
 
   // Swap the note indexes when a note is dropped after being dragged
-  const handleDragEnd = (event) => {
-    setActiveId(null);
-    const { active, over } = event;
-
-    if (active.id !== over.id) {
+  const handleDragEnd = ({ active, over }) => {
+    if (over && active.id !== over.id) {
       setNoteCollection((noteCollection) => {
         const oldIndex = active.data.current.sortable.index;
         const newIndex = over.data.current.sortable.index;
         return arrayMove(noteCollection, oldIndex, newIndex);
       });
+      setActiveId(null);
     }
   };
 
@@ -76,20 +81,21 @@ export default function NotesTimeline({
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
+      modifiers={[restrictToWindowEdges]}
     >
       <SortableContext
         items={filteredNoteCollection}
         strategy={rectSortingStrategy}
       >
-        <DragOverlay modifiers={[restrictToParentElement]}>
+        <DragOverlay>
           {activeId ? (
-            <NoteSkeleton
+            <NoteDragOverlay
               note={noteCollection.find((note) => note.id === activeId)}
               categories={categories}
             />
           ) : null}
         </DragOverlay>
-        {/* Resize items in grid if screen size is too small */}
+        {/*Resize items in grid if screen size is too small*/}
         <Box
           sx={{
             p: 3,

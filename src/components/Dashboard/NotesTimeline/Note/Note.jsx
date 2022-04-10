@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -6,34 +6,21 @@ import {
   CardContent,
   Chip,
   Divider,
+  Grow,
   IconButton,
   Menu,
   MenuItem,
   Typography,
-  Grow,
-  Zoom,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import {
-  DeleteIcon,
-  DragHandle,
-  EditIcon,
-  MoreHoriz,
-  Square,
-} from "@mui/icons-material";
+import { DragHandle, MoreHoriz } from "@mui/icons-material";
 
 // Turn the Note grey, when the Modal is active.
-import NoteSkeleton from "./NoteSkeleton";
 // Trigger the Modal when editing a Note
 import NoteEditModal from "./NoteEditModal";
 
 export default function Note(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [cardHeight, setCardHeight] = useState("auto");
-  const [flip, setFlip] = useState("rotate(0deg)");
-  const [contentHeight, setContentHeight] = useState("");
-  const [checked, setChecked] = useState(false);
   const [title, setTitle] = useState(props.title);
   const [categoryName, setCategoryName] = useState(props.categoryName);
   const [description, setDescription] = useState(props.description);
@@ -54,10 +41,6 @@ export default function Note(props) {
   };
 
   const ref = useRef(null);
-
-  useEffect(() => {
-    setCardHeight(ref.current.clientHeight);
-  }, [description, title]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -212,18 +195,22 @@ export default function Note(props) {
             <Box
               aria-label="Drag note handle"
               sx={{
+                touchAction: "none", // Prevent scrolling while dragging on mobile devices
                 display: props.searchValue ? "none" : "inline-block", // Hide the handle when searching
                 position: "absolute",
                 px: "4em",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                cursor: "move",
                 opacity: "0.5",
                 transition: "opacity 0.2s ease-in-out",
                 "&:hover": {
+                  cursor: "grab",
                   opacity: "1",
                   transition: "opacity 0.2s ease-in-out",
+                },
+                "&:active": {
+                  cursor: "grabbing",
                 },
               }}
               //  Add listeners and attributes for drag and drop, making this Box the handle bar

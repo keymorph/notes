@@ -4,9 +4,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 export default function ScrollTop() {
   const trigger = useScrollTrigger({
-    target: window,
     disableHysteresis: true,
-    threshold: 100,
+    threshold: 50,
   });
 
   const handleClick = (event) => {
@@ -30,7 +29,7 @@ export default function ScrollTop() {
         sx={{ position: "fixed", bottom: 16, right: 8 }}
       >
         <Fab color="primary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
+          <KeyboardArrowUpIcon fontSize="large" />
         </Fab>
       </Box>
     </Zoom>

@@ -1,6 +1,6 @@
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 export default function ThemeToggleButton({ darkMode, handleDarkModeToggle }) {
   return (

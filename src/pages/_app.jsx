@@ -54,8 +54,8 @@ export default function App({ Component, pageProps }) {
               background: darkMode
                 ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
                 : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
-              height: "100vh",
-              overflowX: "hidden",
+              minHeight: "100vh",
+              height: "100%",
             }}
           >
             <Navbar

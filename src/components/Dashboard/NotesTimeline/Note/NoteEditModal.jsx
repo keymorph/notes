@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Chip, TextField, Typography, Card, Grow, Modal } from "@mui/material";
+import { Card, Chip, Grow, Modal, TextField, Typography } from "@mui/material";
 
 export default function NoteEditModal({
   modalOpen,

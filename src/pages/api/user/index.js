@@ -2,9 +2,9 @@
   /api/user endpoint for account actions
 */
 
-import userService from "../../../utils/services/user";
-import validateInput from "../../../utils/middleware/validate-input";
-import authenticateToken from "../../../utils/middleware/authenticate-token";
+import userService from "../../../utils/api/services/user";
+import validateInput from "../../../utils/api/middleware/validate-input";
+import authenticateToken from "../../../utils/api/middleware/authenticate-token";
 
 // Handle incoming requests
 export default async function handler(req, res) {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   } else if (req.method === "DELETE") {
     return await remove(req, res);
   } else {
-    return res.status(405).json({ error: `Method ${req.method} not allowed` });
+    return res.status(405).json({error: `Method ${req.method} not allowed`});
   }
 }
 
@@ -34,27 +34,27 @@ function authenticate(req, res) {
 
 async function register(req, res) {
   console.log("-----------------\nREGISTER USER API");
-  const { email, password } = req.body;
+  const {email, password} = req.body;
 
   // Ensure the email and password are valid before continuing
   try {
     validateInput.user(email, password);
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ error: err });
+    return res.status(400).json({error: err});
   }
 
   return await userService.register(email, password, res);
 }
 
 async function login(req, res) {
-  const { email, password } = req.body;
+  const {email, password} = req.body;
 
   try {
     validateInput.user(email, password);
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ error: err });
+    return res.status(400).json({error: err});
   }
 
   return await userService.login(email, password, res);

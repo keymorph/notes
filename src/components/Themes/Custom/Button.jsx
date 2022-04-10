@@ -6,8 +6,13 @@ import {LoadingButton} from "@mui/lab";
 
 export default function CustomButton({ children, loading, disabled, ...rest }) {
   return (
-      <LoadingButton loading={loading} disabled={disabled} variant={"contained"} {...rest}>
-        {children}
-      </LoadingButton>
+    <LoadingButton
+      loading={loading}
+      disabled={disabled}
+      variant={"contained"}
+      {...rest}
+    >
+      {children}
+    </LoadingButton>
   );
 }

@@ -2,8 +2,8 @@
   /api/note endpoint for anything note related
 */
 
-import noteService from "../../../utils/services/note";
-import authenticateToken from "../../../utils/middleware/authenticate-token";
+import noteService from "../../../utils/api/services/note";
+import authenticateToken from "../../../utils/api/middleware/authenticate-token";
 
 // Handle incoming requests
 export default async function handler(req, res) {

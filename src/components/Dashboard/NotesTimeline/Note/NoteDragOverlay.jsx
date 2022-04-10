@@ -6,12 +6,11 @@ import {
   Chip,
   Divider,
   IconButton,
-  Menu,
   Typography,
 } from "@mui/material";
 import { DragHandle, MoreHoriz } from "@mui/icons-material";
 
-export default function NoteSkeleton({ note, categories }) {
+export default function NoteDragOverlay({ note, categories }) {
   const categoryExists = () => {
     return note.category !== "";
   };
@@ -59,6 +58,7 @@ export default function NoteSkeleton({ note, categories }) {
         maxHeight: "400px",
         overflowWrap: "break-word",
         margin: "5px",
+        transform: "scale(1.02)",
       }}
     >
       <Box
@@ -80,8 +80,7 @@ export default function NoteSkeleton({ note, categories }) {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            cursor: "move",
-            opacity: "0.5",
+            cursor: "grabbing",
           }}
         >
           <DragHandle />
@@ -94,13 +93,9 @@ export default function NoteSkeleton({ note, categories }) {
         </IconButton>
       </Box>
 
-      <Menu open={open} />
-
       <CardContent
         sx={{
-          userSelect: "text",
           height: "100%",
-          cursor: "pointer",
           py: 0.5,
           px: 1,
         }}
