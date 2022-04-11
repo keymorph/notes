@@ -28,7 +28,22 @@ export default function ScrollTop() {
         role="presentation"
         sx={{ position: "fixed", bottom: 16, right: 8 }}
       >
-        <Fab color="primary" size="small" aria-label="scroll back to top">
+        <Fab
+          color="primary"
+          size="small"
+          aria-label="scroll back to top"
+          sx={{
+            transition: "all 0.3s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.1)",
+              transition: "all 0.2s ease-in-out",
+            },
+            "&:active": {
+              transform: "scale(0.9)",
+              transition: "all 0.2s ease-in-out",
+            },
+          }}
+        >
           <KeyboardArrowUpIcon fontSize="large" />
         </Fab>
       </Box>

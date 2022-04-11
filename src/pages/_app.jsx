@@ -48,7 +48,7 @@ export default function App({ Component, pageProps }) {
         {/* This prevents the theme from changing after the page is loaded */}
         {darkMode !== null ? (
           <Container
-            maxWidth={false}
+            maxWidth={false} // Remove default max width
             disableGutters
             sx={{
               background: darkMode

@@ -65,6 +65,8 @@ export default function NotesTimeline({
 
   // Swap the note indexes when a note is dropped after being dragged
   const handleDragEnd = ({ active, over }) => {
+    // over is null when the note is dropped onto itself
+    // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
       setNoteCollection((noteCollection) => {
         const oldIndex = active.data.current.sortable.index;

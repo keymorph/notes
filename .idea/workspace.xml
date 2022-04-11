@@ -3,27 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteSkeleton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteDragOverlay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/ThemeToggleButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/ThemeToggleButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Themes/Custom/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Custom/Button.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_document.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/note/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/note/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/user/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/middleware/authenticate-token.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/middleware/authenticate-token.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/middleware/validate-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/middleware/validate-input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/models/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/models/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/services/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/note.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +119,8 @@
       <workItem from="1649443538944" duration="664000" />
       <workItem from="1649453632472" duration="31102000" />
       <workItem from="1649543303529" duration="7086000" />
-      <workItem from="1649551826964" duration="11081000" />
+      <workItem from="1649551826964" duration="11861000" />
+      <workItem from="1649606535499" duration="4808000" />
     </task>
     <servers />
   </component>
