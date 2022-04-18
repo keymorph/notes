@@ -26,7 +26,7 @@ export default function ScrollTop() {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: "fixed", bottom: 16, right: 8 }}
+        sx={{ position: "fixed", bottom: 16, left: 8 }}
       >
         <Fab
           color="primary"
