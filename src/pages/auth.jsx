@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { Card, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Card } from "@mui/material";
 import NoPasswordBox from "../components/Auth/NoPasswordBox";
 import LoginBox from "../components/Auth/LoginBox.jsx";
 import RegisterBox from "../components/Auth/RegisterBox";
@@ -31,8 +31,8 @@ export default function AuthPage() {
       })
       .then((result) => {
         console.log(result);
-        console.log("VALID TOKEN == GO TO DASHBOARD INSTEAD");
-        router.replace("/");
+        console.log("VALID TOKEN == GO TO DASHBOARD");
+        router.replace("/dashboard");
       })
       // No token found, remain on login page
       .catch(() => {

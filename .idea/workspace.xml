@@ -5,7 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +74,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "settings.editor.selected.configurable": "actions.on.save",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -127,7 +129,12 @@
       <workItem from="1649738525273" duration="363000" />
       <workItem from="1649739216031" duration="1841000" />
       <workItem from="1649825919266" duration="3613000" />
-      <workItem from="1649941899453" duration="6248000" />
+      <workItem from="1649941899453" duration="8750000" />
+      <workItem from="1650287079645" duration="19000" />
+      <workItem from="1650316133768" duration="603000" />
+      <workItem from="1650318622095" duration="2736000" />
+      <workItem from="1650394081074" duration="697000" />
+      <workItem from="1650409634523" duration="3543000" />
     </task>
     <servers />
   </component>
