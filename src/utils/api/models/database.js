@@ -1,4 +1,4 @@
-import { CosmosClient } from "@azure/cosmos";
+import {CosmosClient} from "@azure/cosmos";
 
 // Initialize the CosmosDB client | Connect to the database
 const config = {

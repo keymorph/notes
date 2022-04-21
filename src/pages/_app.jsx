@@ -1,14 +1,17 @@
 /*
   This component contains the shared components that are used on all pages.
 */
-import React, {useEffect, useMemo, useState} from "react";
-import {ThemeProvider} from "@mui/material/styles";
 import {Container, CssBaseline} from "@mui/material";
+import {ThemeProvider} from "@mui/material/styles";
+import Head from "next/head";
+import React, {useEffect, useMemo, useState} from "react";
+import {QueryClient, QueryClientProvider} from "react-query";
+import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
+import Navbar from "../components/Navbar/Navbar";
 
 import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
-import Navbar from "../components/Navbar/Navbar";
-import Head from "next/head";
-import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
+
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
   const [darkMode, setDarkMode] = useState(null);
@@ -40,34 +43,35 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>JotFox - Note Taking App</title>
       </Head>
-
-      <ThemeProvider theme={theme}>
-        {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
-        <CssBaseline enableColorScheme />
-        {/* While the page loads, don't display any content */}
-        {/* This prevents the theme from changing after the page is loaded */}
-        {darkMode !== null ? (
-          <Container
-            maxWidth={false} // Remove default max width
-            disableGutters
-            sx={{
-              background: darkMode
-                ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
-                : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
-              minHeight: "100vh",
-              height: "100%",
-            }}
-          >
-            <Navbar
-              darkMode={darkMode}
-              handleDarkModeToggle={handleDarkModeToggle}
-            />
-            {/* Each page is rendered in Component */}
-            <Component {...pageProps} />
-            <ScrollTop />
-          </Container>
-        ) : null}
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
+          <CssBaseline enableColorScheme />
+          {/* While the page loads, don't display any content */}
+          {/* This prevents the theme from changing after the page is loaded */}
+          {darkMode !== null ? (
+            <Container
+              maxWidth={false} // Remove default max width
+              disableGutters
+              sx={{
+                background: darkMode
+                  ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
+                  : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
+                minHeight: "100vh",
+                height: "100%",
+              }}
+            >
+              <Navbar
+                darkMode={darkMode}
+                handleDarkModeToggle={handleDarkModeToggle}
+              />
+              {/* Each page is rendered in Component */}
+              <Component {...pageProps} />
+              <ScrollTop />
+            </Container>
+          ) : null}
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 }

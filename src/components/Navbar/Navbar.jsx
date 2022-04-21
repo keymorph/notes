@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -9,10 +9,10 @@ import {
   MenuItem,
   Toolbar,
 } from "@mui/material";
-import { AccountCircle, NoAccounts } from "@mui/icons-material";
-import { useRouter } from "next/router";
-import ThemeToggleButton from "./ThemeToggleButton";
 import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   const router = useRouter();

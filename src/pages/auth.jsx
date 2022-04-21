@@ -1,9 +1,9 @@
+import { Card } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Card } from "@mui/material";
-import NoPasswordBox from "../components/Auth/NoPasswordBox";
 import LoginBox from "../components/Auth/LoginBox.jsx";
+import NoPasswordBox from "../components/Auth/NoPasswordBox";
 import RegisterBox from "../components/Auth/RegisterBox";
 
 export default function AuthPage() {

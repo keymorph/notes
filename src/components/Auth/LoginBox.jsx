@@ -1,3 +1,4 @@
+import LockIcon from "@mui/icons-material/Lock";
 import {
   Avatar,
   Box,
@@ -7,7 +8,6 @@ import {
   Link,
   TextField,
 } from "@mui/material";
-import LockIcon from "@mui/icons-material/Lock";
 
 import CustomButton from "../Themes/Custom/Button";
 

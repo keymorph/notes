@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import axios from "axios";
+import { DragHandle, MoreHoriz } from "@mui/icons-material";
 import {
   Box,
   Card,
@@ -12,10 +11,10 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { DragHandle, MoreHoriz } from "@mui/icons-material";
+import { useRef, useState } from "react";
+import { useMutation } from "react-query";
 
-// Turn the Note grey, when the Modal is active.
-// Trigger the Modal when editing a Note
+import { createNote, deleteNote } from "../../../../helpers/note-requests";
 import NoteEditModal from "./NoteEditModal";
 
 export default function Note(props) {
@@ -24,6 +23,38 @@ export default function Note(props) {
   const [title, setTitle] = useState(props.title);
   const [categoryName, setCategoryName] = useState(props.categoryName);
   const [description, setDescription] = useState(props.description);
+
+  // Query Handling
+  const { mutate: mutateDelete, status: deleteStatus } = useMutation(
+    deleteNote,
+    {
+      onSuccess: ({ data }) => {
+        console.log(props.index);
+        setAnchorEl(null);
+        props.setNoteCollection(
+          props.noteCollection.filter((note, index) => {
+            return index !== props.index;
+          })
+        );
+      },
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
+  const { mutate: mutateDuplicate, status: duplicateStatus } = useMutation(
+    createNote,
+    {
+      onSuccess: ({ data }) => {
+        setAnchorEl(null);
+        // Reflect the database changes on the front-end by adding the newly created note to the NoteCollection
+        props.setNoteCollection((oldArray) => [...oldArray, data.note]);
+      },
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
 
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,63 +78,23 @@ export default function Note(props) {
   };
 
   const handleDelete = () => {
-    axios
-      .delete(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-        data: {
-          noteID: props.noteID,
-        },
-      })
-      .then((response) => {
-        console.log(props.index);
-        setAnchorEl(null);
-        props.setNoteCollection(
-          props.noteCollection.filter((note, index) => {
-            // [1, 2, 3, 4, 5, 6, 7] --->  5
-            console.log(index !== props.index);
-            return index !== props.index;
-          })
-        );
-
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+    mutateDelete({
+      noteID: props.noteID,
+    });
   };
 
   const handleCreateDuplicate = () => {
-    axios
-      .post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
-        {
-          title: props.title,
-          description: props.description,
-          category: {
-            name: props.categoryName,
-            color: props.color,
-            note_count: 1, // Number of notes in this category, always 1 when creating a note
-          },
-          tags: props.tags,
-        },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-        }
-      )
-      .then(({ data }) => {
-        setAnchorEl(null);
-
-        // Reflect the database changes on the front-end
-        // Add the newly created note to the NoteCollection
-        props.setNoteCollection((oldArray) => [...oldArray, data.note]);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+    const duplicateNote = {
+      title: props.title,
+      description: props.description,
+      category: {
+        name: props.categoryName,
+        color: props.color,
+        note_count: 1, // Number of notes in this category, always 1 when creating a note
+      },
+      tags: props.tags,
+    };
+    mutateDuplicate(duplicateNote);
   };
 
   const categoryExists = () => {

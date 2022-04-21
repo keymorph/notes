@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { Box, LinearProgress, Zoom } from "@mui/material";
+import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
-import axios from "axios";
-import { Box, LinearProgress, Zoom } from "@mui/material";
+import { getAllNotes } from "../helpers/note-requests";
 
 export default function Dashboard({ token }) {
   const router = useRouter();
@@ -11,9 +14,26 @@ export default function Dashboard({ token }) {
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showPage, setShowPage] = useState(false);
-  const [isGettingNotes, setIsGettingNotes] = useState(true);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
+
+  const { data: noteData, status: noteStatus } = useQuery(
+    "get_notes",
+    getAllNotes,
+    {
+      onSuccess: ({ data }) => {
+        const noteItem = data.noteItem;
+        // Update the state only if the user has a noteItem in the container
+        // Note: new users will not have a noteItem, but it will be created when the user creates their first note
+        setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
+        setCategories(noteItem.categories);
+      },
+      onError: (error) => {
+        console.error(error.message);
+      },
+      staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by querying the server
+    }
+  );
 
   // Verify JWT token when component mounts
   useEffect(() => {
@@ -38,29 +58,6 @@ export default function Dashboard({ token }) {
     verifyToken();
   }, []);
 
-  // Get the note item from the database
-  const getAllNotes = () => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
-        },
-      })
-      .then(({ data }) => {
-        // Update the state only if the user has a noteItem in the container
-        // Note: new users will not have a noteItem, but it will be created when the user creates their first note
-        if (data.noteItem !== undefined) {
-          setNoteCollection(data.noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-          setCategories(data.noteItem.categories);
-        }
-        setIsGettingNotes(false);
-        console.log("NoteITEM: ", data.noteItem);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  };
-
   return showPage ? (
     <Box>
       <AppToolbar
@@ -77,7 +74,7 @@ export default function Dashboard({ token }) {
         categories={categories}
         setCategories={setCategories}
         searchValue={searchValue}
-        isGettingNotes={isGettingNotes}
+        noteStatus={noteStatus}
       />
     </Box>
   ) : (

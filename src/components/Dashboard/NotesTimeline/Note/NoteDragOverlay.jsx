@@ -1,4 +1,4 @@
-import React from "react";
+import { DragHandle, MoreHoriz } from "@mui/icons-material";
 import {
   Box,
   Card,
@@ -8,7 +8,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { DragHandle, MoreHoriz } from "@mui/icons-material";
+import React from "react";
 
 export default function NoteDragOverlay({ note, categories }) {
   const categoryExists = () => {

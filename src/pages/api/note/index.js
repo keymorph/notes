@@ -2,8 +2,8 @@
   /api/note endpoint for anything note related
 */
 
-import noteService from "../../../utils/api/services/note";
 import authenticateToken from "../../../utils/api/middleware/authenticate-token";
+import noteService from "../../../utils/api/services/note";
 
 // Handle incoming requests
 export default async function handler(req, res) {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   } else if (req.method === "DELETE") {
     return await remove(req, res);
   } else {
-    return res.status(405).json({error: `Method ${req.method} not allowed`});
+    return res.status(405).json({ error: `Method ${req.method} not allowed` });
   }
 }
 
