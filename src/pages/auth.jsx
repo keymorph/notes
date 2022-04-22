@@ -1,44 +1,27 @@
 import { Card } from "@mui/material";
-import axios from "axios";
+import { getCsrfToken, getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoginBox from "../components/Auth/LoginBox.jsx";
 import NoPasswordBox from "../components/Auth/NoPasswordBox";
 import RegisterBox from "../components/Auth/RegisterBox";
+import { loginUser, registerUser } from "../helpers/user-requests";
 
-export default function AuthPage() {
+export default function AuthPage({ providers, csrfToken }) {
   const router = useRouter();
+  const [session, loading] = useSession();
+
+  if (session) {
+    router.replace("/dashboard");
+  }
 
   // Handles the state of which box is displayed, default is "login". Options are: "login", "register" and "nopass"
   const [currentBox, setCurrentBox] = useState("login");
-
-  const [loading, setLoading] = useState(true);
 
   // State handling for the box components
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
-
-  // Verifiy if the user has a valid token (JWT)
-  useEffect(() => {
-    const token = localStorage.getItem("auth-token");
-
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
-        headers: {
-          "auth-token": token, //the token is a variable which holds the token
-        },
-      })
-      .then((result) => {
-        console.log(result);
-        console.log("VALID TOKEN == GO TO DASHBOARD");
-        router.replace("/dashboard");
-      })
-      // No token found, remain on login page
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
 
   // TODO: Handle the forgot password functionality
   const handleForgotPassword = () => {
@@ -46,7 +29,6 @@ export default function AuthPage() {
   };
 
   const handleLogin = async (event) => {
-    setLoading(true);
     event.preventDefault();
 
     const data = {
@@ -54,25 +36,12 @@ export default function AuthPage() {
       password: password,
     };
 
-    console.log("DATA", data);
-
-    axios
-      .put(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, data)
-      .then((res) => {
-        console.log("Entered Res");
-        console.log(res);
-        localStorage.setItem("auth-token", res.data.accessToken);
-        router.replace("/");
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log("Entered Error");
-        console.log(error);
-      });
+    await loginUser(data).catch((error) => {
+      console.error(error.message);
+    });
   };
 
-  const handleRegister = (event) => {
-    setLoading(true);
+  const handleRegister = async (event) => {
     event.preventDefault();
 
     const data = {
@@ -80,25 +49,17 @@ export default function AuthPage() {
       password: password,
     };
 
-    console.log("DATA", data);
+    await registerUser(data).catch((error) => {
+      console.error(error.message);
+    });
 
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, data)
-      .then((res) => {
-        console.log("Entered Res");
-        console.log(res);
-        setLoading(false);
-        setCurrentBox("login");
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log("Entered Error");
-        console.log(error);
-      });
+    // Log in the user after registration
+    await loginUser(data).catch((error) => {
+      console.error(error.message);
+    });
   };
 
   return (
-    // Center Card
     <Card
       sx={{
         padding: 3,
@@ -146,4 +107,13 @@ export default function AuthPage() {
       ) : null}
     </Card>
   );
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      providers: await getProviders(), // For OAuth
+      csrfToken: getCsrfToken(context), // For credentials authentication
+    },
+  };
 }

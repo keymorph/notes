@@ -1,5 +1,6 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -10,6 +11,12 @@ import { getAllNotes } from "../helpers/note-requests";
 
 export default function Dashboard({ token }) {
   const router = useRouter();
+  const [session, loading] = useSession();
+
+  // If the user is not logged in, redirect to the login page
+  if (!session) {
+    router.replace("/auth");
+  }
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -17,6 +24,7 @@ export default function Dashboard({ token }) {
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
+  // Query Handler
   const { data: noteData, status: noteStatus } = useQuery(
     "get_notes",
     getAllNotes,
@@ -31,7 +39,7 @@ export default function Dashboard({ token }) {
       onError: (error) => {
         console.error(error.message);
       },
-      staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by querying the server
+      staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     }
   );
 

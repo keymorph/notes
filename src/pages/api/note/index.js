@@ -2,26 +2,30 @@
   /api/note endpoint for anything note related
 */
 
-import authenticateToken from "../../../utils/api/middleware/authenticate-token";
+import {getSession} from "next-auth/react";
 import noteService from "../../../utils/api/services/note";
 
 // Handle incoming requests
 export default async function handler(req, res) {
-  authenticateToken(req, res);
+  const session = await getSession({ req });
 
-  // If token authentication failed, return
-  if (res.statusCode !== 200) return;
-
-  if (req.method === "GET") {
-    return await show(req, res);
-  } else if (req.method === "POST") {
-    return await create(req, res);
-  } else if (req.method === "PUT") {
-    return await edit(req, res);
-  } else if (req.method === "DELETE") {
-    return await remove(req, res);
+  // If the user is authenticated, proceed with request
+  if (session) {
+    if (req.method === "GET") {
+      return await show(req, res);
+    } else if (req.method === "POST") {
+      return await create(req, res);
+    } else if (req.method === "PUT") {
+      return await edit(req, res);
+    } else if (req.method === "DELETE") {
+      return await remove(req, res);
+    } else {
+      return res
+        .status(405)
+        .json({ error: `Method ${req.method} not allowed` });
+    }
   } else {
-    return res.status(405).json({ error: `Method ${req.method} not allowed` });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 }
 

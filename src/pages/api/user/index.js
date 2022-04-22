@@ -33,7 +33,6 @@ function authenticate(req, res) {
 }
 
 async function register(req, res) {
-  console.log("-----------------\nREGISTER USER API");
   const { email, password } = req.body;
 
   // Ensure the email and password are valid before continuing
