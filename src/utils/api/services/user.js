@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import { users } from "../models/database.js";
 
@@ -9,8 +8,8 @@ const registerAccount = async (email, password, res) => {
   const { resources: userItem } = await users.items
     .query(`SELECT * FROM users WHERE users.email like '${email}'`)
     .fetchNext()
-    .catch((err) => {
-      console.log(err.message);
+    .catch((error) => {
+      console.error(error.message);
       res.status(500).send({
         error: "Internal server error",
       });
@@ -20,14 +19,14 @@ const registerAccount = async (email, password, res) => {
   if (userItem.length !== 0)
     return res.status(409).json({ message: "Email already in use." });
 
-  return bcrypt.hash(password, 10, (err, hash) => {
+  return bcrypt.hash(password, 10, (error, hash) => {
     const userDef = {
       email: email,
       password: hash,
       created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
     };
 
-    if (!err) {
+    if (!error) {
       return users.items
         .create(userDef)
         .then(() => {
@@ -35,64 +34,49 @@ const registerAccount = async (email, password, res) => {
             .status(201)
             .json({ message: "User account created successfully 🥳." });
         })
-        .catch((err) => {
+        .catch((error) => {
           return res.status(550).json({
-            message: `Database error while registering user:\n${err}`,
+            message: `Database error while registering user:\n${error}`,
           });
         });
     } else {
-      console.error(err.message);
+      console.error(error.message);
       return res
         .status(500)
-        .json({ message: `Error while hashing the password: ${err}` });
+        .json({ message: `Error while hashing the password: ${error}` });
     }
   });
 };
 
-const loginAccount = async (email, password, res, remember = false) => {
+const loginAccount = async (email, password, res) => {
   return await users.items
     .query(`SELECT * FROM users WHERE users.email = '${email}'`)
     .fetchNext()
     .then(({ resources }) => {
       // Check if account exists
       if (resources.length === 0) {
-        console.log("Account doesn't exist.");
+        console.error("Account doesn't exist.");
         return res.status(401).json({
-          message: `This Account doesn't exist. Try a different Email.`,
+          error: `This Account doesn't exist. Try a different Email.`,
         });
       }
       // Return token if password is correct
       const validPassword = bcrypt.compare(password, resources[0].password);
       if (!validPassword) {
-        console.log("Incorrect password.");
+        console.error("Incorrect password.");
         return res.status(400).json({
-          message:
+          error:
             "The email address or password you entered is invalid. Please try again.",
         });
       }
 
-      // TODO: Implement remember me feature with cookies
-      // if(remember) {
-      //     const token = jwt.sign({ id: resources[0].id }, process.env.AUTH_TOKEN_SECRET, { expiresIn: '1y' });
-      //     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 24 * 365, httpOnly: true, sameSite: "strict" });
-      // }
-      // else {
-      //     const token = jwt.sign({ id: resources[0].id }, process.env.AUTH_TOKEN_SECRET, { expiresIn: '1h' });
-      //     res.cookie('token', token, { maxAge: 1000 * 60 * 60, httpOnly: true, sameSite: "strict" });
-      // }
-
-      const accessToken = jwt.sign(
-        { userID: resources[0].id },
-        process.env.AUTH_TOKEN_SECRET,
-        { expiresIn: "3h" }
-      );
-      return res.status(200).json({ accessToken: accessToken });
+      return res.status(200).json({ userID: resources[0].id });
     })
-    .catch((err) => {
-      console.error(err.message);
+    .catch((error) => {
+      console.error(error.message);
       return res
         .status(500)
-        .json({ message: `Database error while logging in user:\n${err}` });
+        .json({ error: `Database error while logging in user:\n${error}` });
     });
 };
 
@@ -114,10 +98,10 @@ const removeAccount = async (req, res) => {
     .then(() => {
       return res.status(200).json({ message: "User deleted successfully." });
     })
-    .catch((err) => {
-      console.error(err.message);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(500).json({
-        message: `Database error while attempting to delete user:\n${err}`,
+        message: `Database error while attempting to delete user:\n${error}`,
       });
     });
 };

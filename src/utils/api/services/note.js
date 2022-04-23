@@ -11,8 +11,8 @@ const createNote = async (req, res) => {
   const { resource: noteItem } = await notes
     .item(req.headers.userID, req.headers.userID)
     .read()
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(200).json({
         message: "Database error while creating note",
       });
@@ -61,7 +61,7 @@ const createNote = async (req, res) => {
 
   // Note Item object with the noteDef object pushed to the notes array
   const noteItemDef = {
-    id: req.headers.userID, // The user ID is the same as the note item ID allowing for a 1:1 relationship
+    id: req.headers.userid, // The user ID is the same as the note item ID allowing for a 1:1 relationship
     notes: notesObjArr, // Note array object with all the notes inside
     categories: categoriesObjArr,
     tags: tagsArr,
@@ -77,8 +77,8 @@ const createNote = async (req, res) => {
         note: noteItem.notes[noteItem.notes.length - 1],
       });
     })
-    .catch((err) => {
-      console.error(err.message);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(500).json({
         message: "Database error while creating note",
       });
@@ -135,7 +135,7 @@ const createNote = async (req, res) => {
 
 const getNoteItem = async (req, res) => {
   return notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .read()
     .then(({ resource: noteItem }) => {
       return res.status(200).json({
@@ -143,8 +143,8 @@ const getNoteItem = async (req, res) => {
         noteItem,
       });
     })
-    .catch((err) => {
-      console.error(err.message);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(500).json({
         message: "Database error while retrieving note",
       });
@@ -154,10 +154,10 @@ const getNoteItem = async (req, res) => {
 const editNote = async (req, res) => {
   // Get the note resource object
   const { resource: noteItem } = await notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .read()
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(200).json({
         message: "Database error while editing note",
       });
@@ -223,15 +223,15 @@ const editNote = async (req, res) => {
   ];
 
   return notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .patch(noteItemPatchOperation)
     .then(() => {
       return res.status(200).json({
         message: "Note updated successfully",
       });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(500).json({
         message: "Database error while updating note",
       });
@@ -242,10 +242,10 @@ const editNote = async (req, res) => {
 const removeNote = async (req, res) => {
   // Get the note resource object
   const { resource: noteItem } = await notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .read()
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(200).json({
         message: "Database error while deleting note",
       });
@@ -285,15 +285,15 @@ const removeNote = async (req, res) => {
   ];
 
   return notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .patch(noteItemPatchOperation)
     .then(() => {
       return res.status(200).json({
         message: "Note deleted successfully",
       });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error.message);
       return res.status(500).json({
         message: "Database error while deleting note",
       });

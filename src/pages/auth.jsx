@@ -5,12 +5,13 @@ import { useState } from "react";
 import LoginBox from "../components/Auth/LoginBox.jsx";
 import NoPasswordBox from "../components/Auth/NoPasswordBox";
 import RegisterBox from "../components/Auth/RegisterBox";
-import { loginUser, registerUser } from "../helpers/user-requests";
+import { registerUser } from "../helpers/user-requests";
 
 export default function AuthPage({ providers, csrfToken }) {
   const router = useRouter();
-  const [session, loading] = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
+  // If the user is logged in, redirect to dashboard
   if (session) {
     router.replace("/dashboard");
   }
@@ -29,22 +30,30 @@ export default function AuthPage({ providers, csrfToken }) {
   };
 
   const handleLogin = async (event) => {
-    event.preventDefault();
-
-    const data = {
-      email: email,
-      password: password,
-    };
-
-    await loginUser(data).catch((error) => {
-      console.error(error.message);
-    });
+    // const data = {
+    //   csrfToken: csrfToken,
+    //   email: email,
+    //   password: password,
+    // };
+    // Log in the user and redirect to dashboard
+    // loginUser(data)
+    //   .then(async (res) => {
+    //     const updatedSession = await getSession();
+    //     console.log(updatedSession);
+    //     if (updatedSession) {
+    //       await router.push("/dashboard");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error.message);
+    //   });
   };
 
   const handleRegister = async (event) => {
     event.preventDefault();
 
     const data = {
+      csrfToken: csrfToken,
       email: email,
       password: password,
     };
@@ -53,10 +62,7 @@ export default function AuthPage({ providers, csrfToken }) {
       console.error(error.message);
     });
 
-    // Log in the user after registration
-    await loginUser(data).catch((error) => {
-      console.error(error.message);
-    });
+    await router.push("/user");
   };
 
   return (
@@ -83,7 +89,8 @@ export default function AuthPage({ providers, csrfToken }) {
           email={email}
           password={password}
           remember={remember}
-          loading={loading}
+          loading={sessionStatus === "loading"}
+          csrfToken={csrfToken}
         />
       ) : currentBox === "register" ? (
         <RegisterBox
@@ -94,7 +101,7 @@ export default function AuthPage({ providers, csrfToken }) {
           setRemember={setRemember}
           email={email}
           password={password}
-          loading={loading}
+          loading={sessionStatus === "loading"}
         />
       ) : currentBox === "nopass" ? (
         <NoPasswordBox
@@ -102,7 +109,7 @@ export default function AuthPage({ providers, csrfToken }) {
           handleSubmit={handleForgotPassword}
           setEmail={setEmail}
           email={email}
-          loading={loading}
+          loading={sessionStatus === "loading"}
         />
       ) : null}
     </Card>
@@ -113,7 +120,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       providers: await getProviders(), // For OAuth
-      csrfToken: getCsrfToken(context), // For credentials authentication
+      csrfToken: await getCsrfToken(context), // For credential auth
     },
   };
 }

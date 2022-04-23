@@ -3,7 +3,7 @@
 */
 
 import {getSession} from "next-auth/react";
-import noteService from "../../../utils/api/services/note";
+import noteService from "../../../utils/api/services/note"; // Handle incoming requests
 
 // Handle incoming requests
 export default async function handler(req, res) {

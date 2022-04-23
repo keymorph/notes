@@ -16,8 +16,7 @@ export default function RegisterBox(props) {
       }}
     >
       <Grid container justifyContent="center" alignItems="center">
-        {/* Harcoded bgcolor (Should be changed in the future) */}
-        <Avatar sx={{ bgcolor: "#FE6B8B" }}>
+        <Avatar sx={{ bgcolor: "primary.main" }}>
           <LockIcon />
         </Avatar>
       </Grid>

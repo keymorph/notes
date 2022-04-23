@@ -27,7 +27,8 @@ export default function LoginBox(props) {
       </Grid>
       <Box
         component="form"
-        onSubmit={props.handleSubmit}
+        method="post"
+        action="/api/auth/callback/credentials"
         noValidate
         sx={{
           display: "flex",
@@ -36,6 +37,14 @@ export default function LoginBox(props) {
           alignItems: "center",
         }}
       >
+        <TextField
+          name="csrfToken"
+          type="hidden"
+          defaultValue={props.csrfToken}
+          sx={{
+            display: "none",
+          }}
+        />
         <TextField
           margin="normal"
           sx={{ borderRadius: 100 }}

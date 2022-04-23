@@ -9,46 +9,32 @@ import {
   MenuItem,
   Toolbar,
 } from "@mui/material";
-import axios from "axios";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   const router = useRouter();
+  const { status: sessionStatus } = useSession();
+  const isUserLoggedIn = sessionStatus === "authenticated";
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // To log the user out, remove the token from the local storage and redirect user to login page
-  const removeToken = () => {
-    localStorage.removeItem("auth-token");
+  const handleSignOut = async () => {
+    // Remove session cookie and redirect user to login page
+    await signOut().catch((error) => {
+      console.error("Error during sign out: ", error.message);
+    });
     setAnchorEl(null);
-    router.replace("/auth");
+    await router.replace("/auth");
   };
 
   const open = Boolean(anchorEl);
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"), //the token is a variable which holds the token
-        },
-      })
-      .then(() => {
-        setButtonDisabled(false);
-      })
-      // No token found, remain on login page
-      .catch((error) => {
-        console.error(`Error: ${error.message}`);
-        setButtonDisabled(true);
-      });
-  }, []);
 
   return (
     <AppBar sx={{ boxShadow: "none", position: "relative" }}>
@@ -77,14 +63,14 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
             aria-label="settings"
             sx={{ marginLeft: "0.5em", marginRight: "0.5em" }}
             onClick={handleClick}
-            disabled={buttonDisabled}
+            disabled={!isUserLoggedIn}
             size="small"
           >
-            {buttonDisabled ? <NoAccounts /> : <AccountCircle />}
+            {isUserLoggedIn ? <AccountCircle /> : <NoAccounts />}
           </IconButton>
         </Box>
         <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-          <MenuItem onClick={removeToken}>Logout</MenuItem>
+          <MenuItem onClick={handleSignOut}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

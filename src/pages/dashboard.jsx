@@ -1,32 +1,30 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
 import { getAllNotes } from "../helpers/note-requests";
 
-export default function Dashboard({ token }) {
+export default function Dashboard() {
   const router = useRouter();
-  const [session, loading] = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
   // If the user is not logged in, redirect to the login page
-  if (!session) {
+  if (!session && sessionStatus !== "loading") {
     router.replace("/auth");
   }
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [showPage, setShowPage] = useState(false);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
   // Query Handler
   const { data: noteData, status: noteStatus } = useQuery(
-    "get_notes",
+    ["get_notes", session?.user.id], // Pass parameter user.id to getAllNotes
     getAllNotes,
     {
       onSuccess: ({ data }) => {
@@ -43,30 +41,7 @@ export default function Dashboard({ token }) {
     }
   );
 
-  // Verify JWT token when component mounts
-  useEffect(() => {
-    const verifyToken = () => {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
-          headers: {
-            "auth-token": localStorage.getItem("auth-token"), // the token is a variable which holds the token
-          },
-        })
-        .then((result) => {
-          console.log(result);
-          console.log("VALID TOKEN AFTER RESULT");
-          setShowPage(true);
-          getAllNotes();
-        })
-        .catch(() => {
-          console.log("GO BACK TO LOGIN");
-          router.replace("/auth");
-        });
-    };
-    verifyToken();
-  }, []);
-
-  return showPage ? (
+  return sessionStatus === "authenticated" ? (
     <Box>
       <AppToolbar
         noteCollection={noteCollection}

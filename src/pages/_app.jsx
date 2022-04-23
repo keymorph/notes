@@ -19,7 +19,6 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const [darkMode, setDarkMode] = useState(null);
-
   // Invoke setDarkMode whenever the page loads
   useEffect(() => {
     // If preference was set in localStorage, dont check the browser preference

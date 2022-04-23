@@ -28,7 +28,7 @@ export default function NoteEditModal({
       setDescription(editedDescription);
     },
     onError: (error) => {
-      console.error(error);
+      console.error(error.message);
     },
   });
 
