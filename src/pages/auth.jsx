@@ -25,8 +25,12 @@ export default function AuthPage({ providers, csrfToken }) {
   }
 
   let alertText = "";
+  // Check if an error query is present
+  // Wrong credentials error
   if (URLQueries.error === "CredentialsSignin") {
     alertText = alertTexts.login.credentials;
+  } else if (URLQueries.error) {
+    alertText = URLQueries.error;
   }
 
   // State handling for the box components
@@ -97,7 +101,7 @@ export default function AuthPage({ providers, csrfToken }) {
         </Avatar>
         <Collapse in={!!alertText}>
           <Alert sx={{ mt: 2 }} variant="outlined" severity="error">
-            {alertTexts.login.credentials}
+            {alertText}
           </Alert>
         </Collapse>
         {

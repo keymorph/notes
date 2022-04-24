@@ -11,7 +11,7 @@ const registerAccount = async (email, password, res) => {
     .catch((error) => {
       console.error(error.message);
       res.status(500).send({
-        error: "Internal server error",
+        error: `Database error while registering user: ${error.message}`,
       });
     });
 
@@ -36,14 +36,14 @@ const registerAccount = async (email, password, res) => {
         })
         .catch((error) => {
           return res.status(550).json({
-            message: `Database error while registering user:\n${error}`,
+            message: `Database error while registering user: ${error.message}`,
           });
         });
     } else {
       console.error(error.message);
-      return res
-        .status(500)
-        .json({ message: `Error while hashing the password: ${error}` });
+      return res.status(500).json({
+        message: `Error while hashing the password: ${error.message}`,
+      });
     }
   });
 };
@@ -52,37 +52,38 @@ const loginAccount = async (email, password, res) => {
   return await users.items
     .query(`SELECT * FROM users WHERE users.email = '${email}'`)
     .fetchNext()
-    .then(({ resources }) => {
+    .then(async ({ resources }) => {
       // Check if account exists
       if (resources.length === 0) {
         console.error("Account doesn't exist.");
         return res.status(401).json({
-          error: `This Account doesn't exist. Try a different Email.`,
+          error: `This Account doesn't exist.`,
         });
       }
-      // Return token if password is correct
-      const validPassword = bcrypt.compare(password, resources[0].password);
+      // Check if password is correct
+      const validPassword = await bcrypt.compare(
+        password,
+        resources[0].password
+      );
       if (!validPassword) {
         console.error("Incorrect password.");
         return res.status(400).json({
-          error:
-            "The email address or password you entered is invalid. Please try again.",
+          error: "The email address or password entered is invalid.",
         });
       }
-
       return res.status(200).json({ userID: resources[0].id });
     })
     .catch((error) => {
       console.error(error.message);
-      return res
-        .status(500)
-        .json({ error: `Database error while logging in user:\n${error}` });
+      return res.status(500).json({
+        error: `Database error while logging in user: ${error.message}`,
+      });
     });
 };
 
 const removeAccount = async (req, res) => {
   // TODO: Delete all user's notes by looping through the noteService delete method
-  // Below you can see the old method of deleting notes when it was using MySQL
+  // Old method of deleting notes when it was using MySQL
   // users.query(
   //     `DELETE FROM notes WHERE userID = '${req.userID}';`,
   //     async (err, results) => {
@@ -101,7 +102,7 @@ const removeAccount = async (req, res) => {
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: `Database error while attempting to delete user:\n${error}`,
+        message: `Database error while attempting to delete user:\n${error.message}`,
       });
     });
 };

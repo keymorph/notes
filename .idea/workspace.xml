@@ -3,11 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Auth/RegisterBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/RegisterBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/note-requests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/user-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/user-requests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/note/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/note/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/api/services/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/note.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/middleware/authenticate-token.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +145,7 @@
       <workItem from="1650594760347" duration="12923000" />
       <workItem from="1650632940660" duration="275000" />
       <workItem from="1650639540891" duration="1581000" />
-      <workItem from="1650662717521" duration="39688000" />
+      <workItem from="1650662717521" duration="44923000" />
     </task>
     <servers />
   </component>

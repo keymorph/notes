@@ -10,12 +10,10 @@ import {
   Toolbar,
 } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
-  const router = useRouter();
   const { status: sessionStatus } = useSession();
   const isUserLoggedIn = sessionStatus === "authenticated";
 
@@ -27,11 +25,10 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
 
   const handleSignOut = async () => {
     // Remove session cookie and redirect user to login page
-    await signOut().catch((error) => {
+    await signOut({ callbackUrl: `/auth` }).catch((error) => {
       console.error("Error during sign out: ", error.message);
     });
     setAnchorEl(null);
-    await router.replace("/auth");
   };
 
   const open = Boolean(anchorEl);

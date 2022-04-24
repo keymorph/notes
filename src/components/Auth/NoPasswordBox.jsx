@@ -25,7 +25,6 @@ export default function NoPasswordBox(props) {
         autoComplete="email"
         onChange={(event) => props.setEmail(event.target.value)}
         defaultValue={props.email}
-        autoFocus
       />
       <CustomButton
         loading={props.loading}

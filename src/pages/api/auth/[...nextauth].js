@@ -29,12 +29,10 @@ export default NextAuth({
           .catch((error) => {
             console.error(error.message);
           });
-        // If no error and we have user data, return it
-        if (user?.data) {
-          return user.data;
-        }
-        // Return null if user data could not be retrieved
-        return null;
+
+        // user will be undefined if the credentials are invalid
+        // If we have user data, return it
+        return user?.data;
       },
     }),
   ],
@@ -60,6 +58,7 @@ export default NextAuth({
   },
   pages: {
     signIn: "/auth",
+    signOut: "/auth",
     error: "/auth",
   },
 });

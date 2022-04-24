@@ -49,7 +49,6 @@ export default function LoginBox(props) {
         }}
       />
       <TextField
-        autoFocus
         error={!props.emailValid}
         helperText={!props.emailValid ? "Invalid email entered." : ""}
         required

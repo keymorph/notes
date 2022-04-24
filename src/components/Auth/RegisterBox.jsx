@@ -36,7 +36,6 @@ export default function RegisterBox(props) {
       }}
     >
       <TextField
-        autoFocus
         error={!props.emailValid}
         helperText={!props.emailValid ? "Invalid email entered." : ""}
         required
