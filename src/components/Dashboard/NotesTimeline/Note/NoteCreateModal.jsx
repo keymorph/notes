@@ -17,7 +17,7 @@ import {
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 
-import { createNote } from "../../../../helpers/note-requests";
+import { createNote } from "../../../../helpers/requests/note-requests";
 
 export default function NoteCreateModal({
   modalOpen,

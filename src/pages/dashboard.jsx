@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
-import { getAllNotes } from "../helpers/note-requests";
+import { getAllNotes } from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
   const router = useRouter();

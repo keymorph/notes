@@ -2,14 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/validate-credentials.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/alerts/auth-alerts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/RegisterBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/RegisterBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Themes/Custom/Button.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/user-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/user-requests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/validate-credentials.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/validate-credentials.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,16 +80,17 @@
     "nodejs_package_manager_path": "yarn",
     "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
     "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\helpers\requests" />
       <recent name="C:\dev\Projects\notetakingapp\src\pages\auth" />
       <recent name="C:\dev\Projects\notetakingapp\src" />
       <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Toolbar" />
     </key>
   </component>
   <component name="RunManager">
@@ -141,7 +146,7 @@
       <workItem from="1650594760347" duration="12923000" />
       <workItem from="1650632940660" duration="275000" />
       <workItem from="1650639540891" duration="1581000" />
-      <workItem from="1650662717521" duration="68105000" />
+      <workItem from="1650662717521" duration="79101000" />
     </task>
     <servers />
   </component>

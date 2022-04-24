@@ -14,7 +14,10 @@ import {
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
 
-import { createNote, deleteNote } from "../../../../helpers/note-requests";
+import {
+  createNote,
+  deleteNote,
+} from "../../../../helpers/requests/note-requests";
 import NoteEditModal from "./NoteEditModal";
 
 export default function Note(props) {

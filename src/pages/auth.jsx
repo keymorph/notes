@@ -2,7 +2,9 @@ import LockIcon from "@mui/icons-material/Lock";
 import { Alert, Avatar, Box, Card, Collapse, styled } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import AuthBox from "../components/Auth/AuthBox";
+import getAuthAlertText from "../helpers/alerts/auth-alerts";
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -19,6 +21,7 @@ const AuthCard = styled(Card)({
 export default function AuthPage() {
   const router = useRouter();
   const URLQueries = router.query;
+  const action = URLQueries.action ? URLQueries.action : "login"; // default to login
 
   const { data: session, status: sessionStatus } = useSession();
 
@@ -27,15 +30,16 @@ export default function AuthPage() {
     router.replace("/dashboard");
   }
 
-  let alertText = "";
-  // Check if an error query is present
-  if (URLQueries.error === "CredentialsSignin") {
-    // Wrong credentials error
-    alertText = "Email or password is incorrect.";
-  } else if (URLQueries.error) {
-    // Other errors
-    alertText = URLQueries.error;
-  }
+  const [alertSeverity, setAlertSeverity] = useState("error");
+  const [alertText, setAlertText] = useState("");
+
+  useEffect(() => {
+    setAlertSeverity(URLQueries.error ? "error" : "success");
+    setAlertText(
+      getAuthAlertText(URLQueries.error ? URLQueries.error : URLQueries.success)
+    );
+  }, [URLQueries.error, URLQueries.success]);
+
   return (
     <AuthCard>
       <Box
@@ -48,13 +52,15 @@ export default function AuthPage() {
           <LockIcon />
         </Avatar>
         <Collapse in={!!alertText}>
-          <Alert sx={{ mt: 2 }} variant="outlined" severity="error">
+          <Alert
+            sx={{ mt: 2, whiteSpace: "pre-line" }} // pre-line allows new lines "\n" in the text
+            variant="outlined"
+            severity={alertSeverity}
+          >
             {alertText}
           </Alert>
         </Collapse>
-        <AuthBox
-          context={URLQueries.context ? URLQueries.context : "login"} // default to login
-        />
+        <AuthBox action={action} />
       </Box>
     </AuthCard>
   );

@@ -2,67 +2,74 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Checkbox,
+  CircularProgress,
   Collapse,
   FormControlLabel,
   Grid,
   Link as MUILink,
   TextField,
 } from "@mui/material";
-import { getCsrfToken, getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { registerUser } from "../../helpers/user-requests";
+import { registerUser } from "../../helpers/requests/user-requests";
 import {
   getConfirmPasswordErrorText,
+  getPasswordErrorText,
   isConfirmPasswordValid,
   isEmailValid,
   isPasswordValid,
 } from "../../utils/validate-credentials";
 
-export default function AuthBox({ providers, csrfToken, context }) {
+export default function AuthBox({ providers, action }) {
   const router = useRouter();
 
-  // Input data
+  // Input data state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [remember, setRemember] = useState(false);
-  // Validation flags
+  // Validation flags state
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
-  // Error messages
+  // Error messages state
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  // Submit Button
+  // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
-  // Ensure that password does not persist between renders
-  const handleContextChange = () => {
-    setTimeout(() => {
-      setPassword("");
-      setConfirmPassword("");
-      setPasswordValid(true);
-      setConfirmPasswordValid(true);
-      setPasswordError("");
-      setConfirmPasswordError("");
-    }, 300);
+  // Ensure that password and other states are handled between action changes
+  const handleActionChange = () => {
+    setPassword("");
+    setConfirmPassword("");
+    setPasswordValid(true);
+    setConfirmPasswordValid(true);
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setSubmitButtonLoading(false);
   };
 
+  /*
+   * On Submit handlers
+   */
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("handleLogin");
+
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    // No need to redirect as next-auth handles that
     setSubmitButtonLoading(true);
-    signIn("credentials", { email: email, password: password })
-      .then((res) => {
-        console.log("User is signed in: ", res);
-      })
-      .catch((error) => {
-        console.log("Error signing in: ", error.message);
-      });
+    await signIn("credentials", data).catch(async (error) => {
+      console.error("Error signing in: ", error.message);
+      await router.push("/auth?action=login&error=Server Error :(");
+    });
     setSubmitButtonLoading(false);
   };
 
@@ -70,30 +77,33 @@ export default function AuthBox({ providers, csrfToken, context }) {
     event.preventDefault();
 
     const data = {
-      csrfToken: csrfToken,
       email: email,
       password: password,
     };
 
-    // TODO: Handle the forgot password functionality
-    const handleForgotPassword = async (event) => {
-      event.preventDefault();
-      console.log("handleForgotPassword");
-    };
-
     setSubmitButtonLoading(true);
-    registerUser(data)
+    await registerUser(data)
       .then(async () => {
         // Send the user to the login page
-        await router.push("/auth?context=login");
+        await router.push("/auth?action=login&success=RegisterSuccess");
       })
       .catch(async (error) => {
         // If an error is thrown, append it as a query param to the url
-        await router.push(`/auth?context=register&error=${error.message}`);
+        // await router.push(`/auth?action=register&error=${error.message}`);
       });
+    handleActionChange();
     setSubmitButtonLoading(false);
   };
 
+  // TODO: Handle the forgot password functionality
+  const handleForgotPassword = async (event) => {
+    event.preventDefault();
+    console.log("handleForgotPassword");
+  };
+
+  /*
+   * On Change handlers
+   */
   const handleEmailChange = (event) => {
     const email = event.target.value;
     setEmail(email);
@@ -110,23 +120,12 @@ export default function AuthBox({ providers, csrfToken, context }) {
     // Update state depending on whether the password is valid
     setPasswordValid(isPasswordValid(password));
     console.log(isPasswordValid(password));
-    setPasswordError(
-      !isPasswordValid(password) ? "Invalid password entered." : ""
-    );
+    setPasswordError(getPasswordErrorText(password));
+
     // Also update the state of confirm password upon changing password
-    setConfirmPasswordValid(
-      isConfirmPasswordValid(
-        confirmPassword,
-        password,
-        isPasswordValid(password)
-      )
-    );
+    setConfirmPasswordValid(isConfirmPasswordValid(confirmPassword, password));
     setConfirmPasswordError(
-      getConfirmPasswordErrorText(
-        confirmPassword,
-        password,
-        isPasswordValid(password)
-      )
+      getConfirmPasswordErrorText(confirmPassword, password)
     );
   };
 
@@ -135,11 +134,9 @@ export default function AuthBox({ providers, csrfToken, context }) {
     setConfirmPassword(confirmPassword);
 
     // Update state depending on whether the password is valid
-    setConfirmPasswordValid(
-      isConfirmPasswordValid(confirmPassword, password, passwordValid)
-    );
+    setConfirmPasswordValid(isConfirmPasswordValid(confirmPassword, password));
     setConfirmPasswordError(
-      getConfirmPasswordErrorText(confirmPassword, password, passwordValid)
+      getConfirmPasswordErrorText(confirmPassword, password)
     );
   };
 
@@ -147,11 +144,11 @@ export default function AuthBox({ providers, csrfToken, context }) {
     <Box
       component="form"
       onSubmit={
-        context === "login"
+        action === "login"
           ? handleLogin
-          : context === "register"
+          : action === "register"
           ? handleRegister
-          : null
+          : handleForgotPassword
       }
       noValidate
       sx={{
@@ -161,15 +158,6 @@ export default function AuthBox({ providers, csrfToken, context }) {
         alignItems: "center",
       }}
     >
-      {/* Ensures that the csrf token is passed upon submitting the form */}
-      <TextField
-        name="csrfToken"
-        type="hidden"
-        defaultValue={csrfToken}
-        sx={{
-          display: "none",
-        }}
-      />
       <TextField
         error={!emailValid}
         helperText={emailError}
@@ -184,10 +172,10 @@ export default function AuthBox({ providers, csrfToken, context }) {
         margin="normal"
       />
       {/* Don't display the password field for forgot password */}
-      <Collapse sx={{ width: "100%" }} in={context !== "forgot"}>
+      <Collapse sx={{ width: "100%" }} in={action !== "forgot"}>
         <TextField
-          error={!passwordValid}
-          helperText={passwordError}
+          error={action === "register" ? !passwordValid : false}
+          helperText={action === "register" ? passwordError : ""}
           required
           label="Password"
           name="password"
@@ -200,7 +188,7 @@ export default function AuthBox({ providers, csrfToken, context }) {
         />
       </Collapse>
       {/* Display "Confirm Password" for register only */}
-      <Collapse sx={{ width: "100%" }} in={context === "register"}>
+      <Collapse sx={{ width: "100%" }} in={action === "register"}>
         <TextField
           error={!(passwordValid && confirmPasswordValid) && confirmPassword}
           helperText={confirmPasswordError}
@@ -215,7 +203,7 @@ export default function AuthBox({ providers, csrfToken, context }) {
         />
       </Collapse>
       {/* Display "Remember Me" and "Forgot Password?" for login only */}
-      <Collapse sx={{ width: "100%" }} in={context === "login"}>
+      <Collapse sx={{ width: "100%" }} in={action === "login"}>
         <Grid container justifyContent="space-between">
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -223,37 +211,39 @@ export default function AuthBox({ providers, csrfToken, context }) {
             checked={remember}
             onChange={(event) => setRemember(event.target.checked)}
           />
-          <Link href="/auth?context=forgot" passHref>
+          <Link href="/auth?action=forgot" passHref>
             <MUILink sx={{ alignSelf: "center" }} variant="body2">
               Forgot password?
             </MUILink>
           </Link>
         </Grid>
       </Collapse>
-      {}
       <LoadingButton
-        loading={submitButtonLoading}
         type="submit"
+        disabled={
+          !(emailValid && passwordValid && confirmPasswordValid) ||
+          submitButtonLoading
+        }
+        loading={submitButtonLoading}
+        loadingIndicator={<CircularProgress size={24} />}
         fullWidth
-        variant="contained"
-        disabled={!(emailValid && passwordValid && confirmPasswordValid)}
-        sx={{ mt: 3, mb: 3 }}
+        sx={{ my: 3 }}
       >
-        {context === "login" && "login"}
-        {context === "register" && "register"}
-        {context === "forgot" && "Send Confirmation Code"}
+        {action === "login" && "login"}
+        {action === "register" && "register"}
+        {action === "forgot" && "Send Confirmation Code"}
       </LoadingButton>
-      {/* Display the respective footer link depending on the context */}
-      <Collapse in={context === "register"}>
-        <Link href="/auth?context=login" passHref>
-          <MUILink variant="body2" onClick={handleContextChange}>
+      {/* Display the respective footer link depending on the action */}
+      <Collapse in={action === "register"}>
+        <Link href="/auth?action=login" passHref>
+          <MUILink variant="body2" onClick={handleActionChange}>
             Already have an account? Log in!
           </MUILink>
         </Link>
       </Collapse>
-      <Collapse in={context === "login" || context === "forgot"}>
-        <Link href="/auth?context=register" passHref>
-          <MUILink variant="body2" onClick={handleContextChange}>
+      <Collapse in={action === "login" || action === "forgot"}>
+        <Link href="/auth?action=register" passHref>
+          <MUILink variant="body2" onClick={handleActionChange}>
             {"Don't have an account yet? Create one!"}
           </MUILink>
         </Link>
@@ -262,11 +252,10 @@ export default function AuthBox({ providers, csrfToken, context }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(action) {
   return {
     props: {
       providers: await getProviders(), // For OAuth
-      csrfToken: await getCsrfToken(context), // For credential auth
     },
   };
 }
