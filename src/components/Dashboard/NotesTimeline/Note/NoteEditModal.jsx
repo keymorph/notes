@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
 import { Card, Chip, Grow, Modal, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { updateNote } from "../../../../helpers/requests/note-requests";
 
 export default function NoteEditModal({
   modalOpen,
@@ -18,47 +19,41 @@ export default function NoteEditModal({
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(description);
 
-  // TODO: Add Category and Tags checks once those are implemented
-  const saveModalData = () => {
+  // Query Handling
+  const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
+    onSuccess: () => {
+      // TODO: Add Category and Tags checks once those are implemented
+      // Set the newly edited title and description after the request is successful
+      setTitle(editedTitle);
+      setDescription(editedDescription);
+    },
+    onError: (error) => {
+      console.error(error.message);
+    },
+  });
+
+  const handleNoteEdit = () => {
     // If no changes made, no request necessary
     if (editedTitle !== title || editedDescription !== description) {
-      axios
-        .put(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
-          {
-            noteID: noteID,
-            title: `${editedTitle}`,
-            description: `${editedDescription}`,
-            category: {
-              name: `${categoryName}`,
-              color: `${categoryColor}`,
-            },
-            tags: tags,
-          },
-
-          {
-            headers: {
-              "auth-token": localStorage.getItem("auth-token"),
-            },
-          }
-        )
-        .then(() => {
-          // Set the newly edited title and description after the request is successful
-          setTitle(editedTitle);
-          setDescription(editedDescription);
-        })
-        .catch((error) => {
-          console.error(`Error: ${error}`);
-        });
+      const editedNote = {
+        noteID: noteID,
+        title: `${editedTitle}`,
+        description: `${editedDescription}`,
+        category: {
+          name: `${categoryName}`,
+          color: `${categoryColor}`,
+        },
+        tags: tags,
+      };
+      mutateEdit(editedNote);
     }
-
     handleClose();
   };
 
   return (
     <Modal
       open={modalOpen}
-      onClose={saveModalData}
+      onClose={handleNoteEdit}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -94,7 +89,6 @@ export default function NoteEditModal({
             error={editedTitle.trim() === ""}
             sx={{ mt: 2, mb: 2 }}
             onChange={(event) => setEditedTitle(event.target.value.trim())}
-            autoFocus
           />
 
           <TextField
@@ -110,9 +104,8 @@ export default function NoteEditModal({
           />
 
           {/* Note Modal: CATEGORY (Chips) Field */}
-          <Typography>
-            <Chip label={categoryName} onDelete={handleChipDelete} />
-          </Typography>
+
+          <Chip label={categoryName} onDelete={handleChipDelete} />
         </Card>
       </Grow>
     </Modal>

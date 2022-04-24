@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
-import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -12,10 +10,14 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Modal,
   TextField,
   Typography,
 } from "@mui/material";
-import Modal from "@mui/material/Modal";
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+
+import { createNote } from "../../../../helpers/requests/note-requests";
 
 export default function NoteCreateModal({
   modalOpen,
@@ -34,26 +36,11 @@ export default function NoteCreateModal({
   const [selectedColor, setSelectedColor] = useState(0);
   const [createdCategory, setCreatedCategory] = useState("");
 
-  const createNote = () => {
-    axios
-      .post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/note`,
-        {
-          title: `${title}`,
-          description: `${description}`,
-          category: {
-            name: `${categoryName}`,
-            color: `${categoryName ? categoryColor : 0}`,
-          },
-          tags: tags,
-        },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-        }
-      )
-      .then((response) => {
+  // Query Handling
+  const { mutate: mutateCreate, status: createStatus } = useMutation(
+    createNote,
+    {
+      onSuccess: ({ data }) => {
         // Close the Modal.
         handleClose();
 
@@ -65,19 +52,31 @@ export default function NoteCreateModal({
 
         // Reflect the database changes on the front-end
         // Add the newly created note to the NoteCollection
-        console.log(response);
-
         setNoteCollection((oldNoteCollection) => [
-          response.data.note,
+          data.note,
           ...oldNoteCollection,
         ]);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+      },
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
+
+  const handleCreateNote = () => {
+    const newNote = {
+      title: `${title}`,
+      description: `${description}`,
+      category: {
+        name: `${categoryName}`,
+        color: `${categoryName ? categoryColor : 0}`,
+      },
+      tags: tags,
+    };
+    mutateCreate(newNote);
   };
 
-  const fieldsAreEmpty = () => {
+  const areFieldsEmpty = () => {
     return title.length === 0;
   };
 
@@ -167,7 +166,6 @@ export default function NoteCreateModal({
               defaultValue={title}
               onChange={(event) => setTitle(event.target.value.trim())}
               sx={{ width: "100%", mt: 2 }}
-              autoFocus
             />
           </Typography>
 
@@ -375,8 +373,8 @@ export default function NoteCreateModal({
           <Button
             variant="contained"
             size="small"
-            disabled={fieldsAreEmpty()}
-            onClick={createNote}
+            disabled={areFieldsEmpty()}
+            onClick={handleCreateNote}
             sx={{
               border: "1px",
               mt: 2,

@@ -4,7 +4,7 @@ export const ThemeDark = createTheme({
   palette: {
     mode: "dark",
     text: {
-      primary: "#ffffff",
+      primary: "#ffffffE0",
     },
   },
 
@@ -13,20 +13,11 @@ export const ThemeDark = createTheme({
     MuiLoadingButton: {
       styleOverrides: {
         root: {
-          background: "linear-gradient(45deg, #0176D3 30%, #01ABD3 90%)",
-          boxShadow: "0 3px 4px 2px rgba(33, 150, 243, .3)",
-          border: 0,
-          borderRadius: 20,
-        },
-        primary: {
-          background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
-          border: 0,
-          borderRadius: 20,
-        },
-        secondary: {
-          backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-          boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+          backgroundColor: "#056ac5AF",
+          "&:hover": {
+            backgroundColor: "#056ac5F0",
+            boxShadow: "0 0 1rem rgba(0,123,255,0.5)",
+          },
           border: 0,
           borderRadius: 20,
         },
@@ -78,20 +69,11 @@ export const ThemeLight = createTheme({
     MuiLoadingButton: {
       styleOverrides: {
         root: {
-          background: "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)",
-          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
-          border: 0,
-          borderRadius: 20,
-        },
-        primary: {
-          background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-          boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
-          border: 0,
-          borderRadius: 20,
-        },
-        secondary: {
-          background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-          boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+          backgroundColor: "#00a0d07F",
+          "&:hover": {
+            backgroundColor: "#00a0d0AF",
+            boxShadow: "0 0 1rem rgba(0,123,255,0.5)",
+          },
           border: 0,
           borderRadius: 20,
         },

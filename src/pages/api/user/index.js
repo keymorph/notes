@@ -2,59 +2,47 @@
   /api/user endpoint for account actions
 */
 
-import userService from "../../../utils/api/services/user";
 import validateInput from "../../../utils/api/middleware/validate-input";
-import authenticateToken from "../../../utils/api/middleware/authenticate-token";
+import userService from "../../../utils/api/services/user";
 
 // Handle incoming requests
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    return authenticate(req, res);
-  } else if (req.method === "POST") {
-    return await register(req, res);
-  } else if (req.method === "PUT") {
+  if (req.method === "POST") {
     return await login(req, res);
+  } else if (req.method === "PUT") {
+    return await register(req, res);
   } else if (req.method === "DELETE") {
     return await remove(req, res);
   } else {
-    return res.status(405).json({error: `Method ${req.method} not allowed`});
+    return res.status(405).json({ error: `Method ${req.method} not allowed` });
   }
 }
 
 /*
   User controllers
 */
-function authenticate(req, res) {
-  if (authenticateToken(req, res)) {
-    return res.status(200).json({
-      message: "Valid token",
-    });
-  }
-}
-
 async function register(req, res) {
-  console.log("-----------------\nREGISTER USER API");
-  const {email, password} = req.body;
+  const { email, password } = req.body;
 
   // Ensure the email and password are valid before continuing
   try {
     validateInput.user(email, password);
-  } catch (err) {
-    console.error(err);
-    return res.status(400).json({error: err});
+  } catch (error) {
+    console.error(error.message);
+    return res.status(400).json({ error: error });
   }
 
   return await userService.register(email, password, res);
 }
 
 async function login(req, res) {
-  const {email, password} = req.body;
+  const { email, password } = req.body;
 
   try {
     validateInput.user(email, password);
-  } catch (err) {
-    console.error(err);
-    return res.status(400).json({error: err});
+  } catch (error) {
+    console.error(error.message);
+    return res.status(400).json({ error: error });
   }
 
   return await userService.login(email, password, res);

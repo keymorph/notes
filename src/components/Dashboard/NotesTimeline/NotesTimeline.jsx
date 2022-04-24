@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import {
   closestCenter,
   DndContext,
@@ -10,23 +8,25 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
+import React, { useState } from "react";
+import NoteDragOverlay from "./Note/NoteDragOverlay";
 
 import { SortableNote } from "./Note/SortableNote";
-import NoteDragOverlay from "./Note/NoteDragOverlay";
 
 export default function NotesTimeline({
   noteCollection,
   setNoteCollection,
   categories,
   searchValue,
-  isGettingNotes,
+  noteStatus,
 }) {
   // Filter notes by search value
   const filteredNoteCollection = noteCollection.filter((note) => {
@@ -65,6 +65,8 @@ export default function NotesTimeline({
 
   // Swap the note indexes when a note is dropped after being dragged
   const handleDragEnd = ({ active, over }) => {
+    // over is null when the note is dropped onto itself
+    // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
       setNoteCollection((noteCollection) => {
         const oldIndex = active.data.current.sortable.index;
@@ -75,85 +77,91 @@ export default function NotesTimeline({
     }
   };
 
-  return noteCollection.length > 0 ? (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-      onDragStart={handleDragStart}
-      modifiers={[restrictToWindowEdges]}
-    >
-      <SortableContext
-        items={filteredNoteCollection}
-        strategy={rectSortingStrategy}
+  if (noteStatus === "loading") {
+    // If getting notes, display progress bar
+    return (
+      <Zoom in>
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      </Zoom>
+    );
+  } else {
+    return noteCollection.length > 0 ? (
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        modifiers={[restrictToWindowEdges]}
       >
-        <DragOverlay>
-          {activeId ? (
-            <NoteDragOverlay
-              note={noteCollection.find((note) => note.id === activeId)}
-              categories={categories}
-            />
-          ) : null}
-        </DragOverlay>
-        {/*Resize items in grid if screen size is too small*/}
-        <Box
+        <SortableContext
+          items={filteredNoteCollection}
+          strategy={rectSortingStrategy}
+        >
+          <DragOverlay>
+            {activeId ? (
+              <NoteDragOverlay
+                note={noteCollection.find((note) => note.id === activeId)}
+                categories={categories}
+              />
+            ) : null}
+          </DragOverlay>
+          {/*Resize items in grid if screen size is too small*/}
+          <Box
+            sx={{
+              p: 3,
+              display: "grid",
+              gap: "2em",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              justifyItems: "center",
+            }}
+          >
+            {filteredNoteCollection.map((note, index) => (
+              <SortableNote
+                key={note.id}
+                noteID={note.id}
+                index={index}
+                title={note.title}
+                description={note.description}
+                tags={note.tags}
+                categoryName={note.category}
+                color={
+                  categories.find((category) => category.name === note.category)
+                    ?.color
+                }
+                searchValue={searchValue}
+                noteCollection={noteCollection}
+                setNoteCollection={setNoteCollection}
+              />
+            ))}
+          </Box>
+          {/*  If filtered notes is 0, display no notes found message */}
+          {filteredNoteCollection.length === 0 && (
+            <Typography
+              sx={{ width: "100%", textAlign: "center" }}
+              variant="h5"
+            >
+              No notes found
+            </Typography>
+          )}
+        </SortableContext>
+      </DndContext>
+    ) : (
+      // If no notes, display no notes message
+      <Zoom in>
+        <Typography
+          variant={"h3"}
           sx={{
-            p: 3,
-            display: "grid",
-            gap: "2em",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            justifyItems: "center",
+            position: "relative",
+            width: "100%",
+            textAlign: "center",
+            mt: "2.5em",
           }}
         >
-          {filteredNoteCollection.map((note, index) => (
-            <SortableNote
-              key={note.id}
-              noteID={note.id}
-              index={index}
-              title={note.title}
-              description={note.description}
-              tags={note.tags}
-              categoryName={note.category}
-              color={
-                categories.find((category) => category.name === note.category)
-                  ?.color
-              }
-              searchValue={searchValue}
-              noteCollection={noteCollection}
-              setNoteCollection={setNoteCollection}
-            />
-          ))}
-        </Box>
-        {/*  If filtered notes is 0, display no notes found message */}
-        {filteredNoteCollection.length === 0 && (
-          <Typography sx={{ width: "100%", textAlign: "center" }} variant="h5">
-            No notes found
-          </Typography>
-        )}
-      </SortableContext>
-    </DndContext>
-  ) : isGettingNotes ? (
-    // If getting notes, display progress bar
-    <Zoom in>
-      <Box sx={{ width: "100%" }}>
-        <LinearProgress />
-      </Box>
-    </Zoom>
-  ) : (
-    // If no notes, display no notes message
-    <Zoom in>
-      <Typography
-        variant={"h3"}
-        sx={{
-          position: "relative",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
-        }}
-      >
-        No notes yet.
-      </Typography>
-    </Zoom>
-  );
+          No notes yet.
+        </Typography>
+      </Zoom>
+    );
+  }
 }

@@ -1,17 +1,17 @@
-import * as React from "react";
-import { useState } from "react";
+import { NoteAdd } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
-import MenuIcon from "@mui/icons-material/Menu";
-import { NoteAdd } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import * as PropTypes from "prop-types";
+import * as React from "react";
+import { useState } from "react";
+import NoteCreateModal from "../NotesTimeline/Note/NoteCreateModal";
 
 import ToolbarSearch from "./ToolbarSearch";
-import NoteCreateModal from "../NotesTimeline/Note/NoteCreateModal";
-import * as PropTypes from "prop-types";
 
 ToolbarSearch.propTypes = {
   value: PropTypes.any,

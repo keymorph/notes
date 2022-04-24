@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/LoginBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/NoPasswordBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteCreateModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteEditModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteSkeleton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/NoteDragOverlay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/ThemeToggleButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/ThemeToggleButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Themes/Custom/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Custom/Button.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_document.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/note/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/note/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/user/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/middleware/authenticate-token.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/middleware/authenticate-token.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/middleware/validate-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/middleware/validate-input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/models/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/models/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/services/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/note.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/user.js" afterDir="false" />
-    </list>
+    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +28,15 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/pages/_app.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/pages/_document.jsx" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="JsBowerSettings">
     <bower-package value="" />
     <bower.json value="" />
@@ -72,34 +58,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="code.cleanup.on.save" value="true" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.standard" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.standard" value="" />
-    <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="C:\dev\Projects\notetakingapp\node_modules\prettier" />
-    <property name="rearrange.code.on.save" value="true" />
-    <property name="settings.editor.selected.configurable" value="actions.on.save" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\helpers\requests" />
+      <recent name="C:\dev\Projects\notetakingapp\src\pages\auth" />
+      <recent name="C:\dev\Projects\notetakingapp\src" />
       <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Toolbar" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Navbar" />
     </key>
   </component>
   <component name="RunManager">
@@ -110,6 +88,7 @@
         <script value="dev" />
       </scripts>
       <node-interpreter value="project" />
+      <package-manager value="npm" />
       <envs />
       <method v="2" />
     </configuration>
@@ -137,7 +116,24 @@
       <workItem from="1649443538944" duration="664000" />
       <workItem from="1649453632472" duration="31102000" />
       <workItem from="1649543303529" duration="7086000" />
-      <workItem from="1649551826964" duration="11081000" />
+      <workItem from="1649551826964" duration="11861000" />
+      <workItem from="1649606535499" duration="6569000" />
+      <workItem from="1649649221479" duration="2759000" />
+      <workItem from="1649683344809" duration="3740000" />
+      <workItem from="1649738525273" duration="363000" />
+      <workItem from="1649739216031" duration="1841000" />
+      <workItem from="1649825919266" duration="3613000" />
+      <workItem from="1649941899453" duration="8750000" />
+      <workItem from="1650287079645" duration="19000" />
+      <workItem from="1650316133768" duration="603000" />
+      <workItem from="1650318622095" duration="2736000" />
+      <workItem from="1650394081074" duration="697000" />
+      <workItem from="1650409634523" duration="26251000" />
+      <workItem from="1650560853572" duration="8919000" />
+      <workItem from="1650594760347" duration="12923000" />
+      <workItem from="1650632940660" duration="275000" />
+      <workItem from="1650639540891" duration="1581000" />
+      <workItem from="1650662717521" duration="82607000" />
     </task>
     <servers />
   </component>
