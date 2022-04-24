@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   // Query Handler
   const { data: noteData, status: noteStatus } = useQuery(
-    ["get_notes", session?.user.id], // Pass parameter user.id to getAllNotes
+    ["get_notes"],
     getAllNotes,
     {
       onSuccess: ({ data }) => {

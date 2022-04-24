@@ -7,7 +7,7 @@ import noteService from "../../../utils/api/services/note"; // Handle incoming r
 
 // Handle incoming requests
 export default async function handler(req, res) {
-  const session = await getSession({ req });
+  const session = await getSession({req});
 
   // If the user is authenticated, proceed with request
   if (session) {
@@ -22,10 +22,10 @@ export default async function handler(req, res) {
     } else {
       return res
         .status(405)
-        .json({ error: `Method ${req.method} not allowed` });
+        .json({error: `Method ${req.method} not allowed`});
     }
   } else {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({error: "Unauthorized"});
   }
 }
 

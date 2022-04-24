@@ -9,7 +9,7 @@ import {notes} from "../models/database.js";
 const createNote = async (req, res) => {
   // Get the note resource object
   const { resource: noteItem } = await notes
-    .item(req.headers.userID, req.headers.userID)
+    .item(req.headers.userid, req.headers.userid)
     .read()
     .catch((error) => {
       console.error(error.message);
