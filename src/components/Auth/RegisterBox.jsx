@@ -1,95 +1,99 @@
-import LockIcon from "@mui/icons-material/Lock";
-import { Avatar, Box, Grid, Link, TextField } from "@mui/material";
+import { Box, Link as MUILink, TextField } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 
 import CustomButton from "../Themes/Custom/Button";
 
 export default function RegisterBox(props) {
   const [comfirmPassword, setComfirmPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(true);
+
+  const handlePasswordChange = (event) => {
+    const password = event.target.value;
+    props.setPassword(password);
+
+    // Check if password is valid
+    if (password.length < 8 && password.length > 0) {
+      setPasswordValid(false);
+    } else {
+      setPasswordValid(true);
+    }
+  };
+  const handleComfirmPasswordChange = (event) => {
+    setComfirmPassword(event.target.value);
+  };
 
   return (
     <Box
+      component="form"
+      onSubmit={props.handleSubmit}
+      noValidate
       sx={{
         display: "flex",
         flexDirection: "column",
+        width: "100%",
         alignItems: "center",
       }}
     >
-      <Grid container justifyContent="center" alignItems="center">
-        <Avatar sx={{ bgcolor: "primary.main" }}>
-          <LockIcon />
-        </Avatar>
-      </Grid>
-
-      <Box
-        component="form"
-        onSubmit={props.handleSubmit}
-        noValidate
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          alignItems: "center",
-        }}
+      <TextField
+        autoFocus
+        error={!props.emailValid}
+        helperText={!props.emailValid ? "Invalid email entered." : ""}
+        required
+        label="Email Address"
+        name="email"
+        type="email"
+        autoComplete="email"
+        onChange={props.handleEmailChange}
+        defaultValue={props.email}
+        fullWidth
+        margin="normal"
+        sx={{ borderRadius: 100 }}
+      />
+      <TextField
+        error={!passwordValid}
+        helperText={
+          !passwordValid ? "The password must have at least 8 characters." : ""
+        }
+        required
+        label="Password"
+        name="password"
+        type="password"
+        autoComplete="current-password"
+        onChange={handlePasswordChange}
+        margin="normal"
+        fullWidth
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Confirm Password"
+        type="password"
+        autoComplete="current-password"
+        onChange={handleComfirmPasswordChange}
+      />
+      <CustomButton
+        loading={props.loading}
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="secondary"
+        disabled={
+          props.email === "" ||
+          props.password === "" ||
+          !props.emailValid ||
+          !passwordValid ||
+          comfirmPassword !== props.password
+        }
+        sx={{ mt: 3, mb: 3 }}
       >
-        <TextField
-          margin="normal"
-          sx={{ borderRadius: 100 }}
-          required
-          fullWidth
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          type="email"
-          onChange={(event) => props.setEmail(event.target.value)}
-          defaultValue={props.email}
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={(event) => props.setPassword(event.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Confirm Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={(event) => setComfirmPassword(event.target.value)}
-        />
-        <CustomButton
-          loading={props.loading}
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          disabled={
-            props.email === "" ||
-            props.password === "" ||
-            comfirmPassword !== props.password
-          }
-          sx={{ mt: 3, mb: 3 }}
-        >
-          Register
-        </CustomButton>
-        <Link
-          href="#"
-          variant="body2"
-          onClick={() => {
-            props.setCurrentBox("login");
-          }}
-        >
-          {"Already have an account? Log in!"}
-        </Link>
-      </Box>
+        Register
+      </CustomButton>
+      <Link href="/auth" passHref>
+        <MUILink variant="body2">Already have an account? Log in!</MUILink>
+      </Link>
     </Box>
   );
 }
