@@ -6,7 +6,7 @@ export function user(email, password) {
     throw { error: "Empty field in form input." };
   }
 
-  if (email.length < 5 || email.length > 50 || !email.includes("@")) {
+  if (!email.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)) {
     throw { error: "Invalid email address." };
   }
 
