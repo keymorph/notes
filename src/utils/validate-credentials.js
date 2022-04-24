@@ -5,7 +5,7 @@ export function isEmailValid(email) {
 }
 
 export function isPasswordValid(password) {
-  return !(password.length < 8 && password.length > 0);
+  return password.length >= 8 || password.length === 0;
 }
 
 export function isConfirmPasswordValid(confirmPassword, password) {

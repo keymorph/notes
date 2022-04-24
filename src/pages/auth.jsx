@@ -18,10 +18,23 @@ const AuthCard = styled(Card)({
   transform: "translate(-50%, -50%)",
 });
 
+const sanitizeAction = (action) => {
+  switch (action) {
+    case "login":
+      return "login";
+    case "register":
+      return "register";
+    case "forgot":
+      return "forgot";
+    default:
+      return "login";
+  }
+};
+
 export default function AuthPage() {
   const router = useRouter();
   const URLQueries = router.query;
-  const action = URLQueries.action ? URLQueries.action : "login"; // default to login
+  const action = sanitizeAction(URLQueries.action); // default to login
 
   const { data: session, status: sessionStatus } = useSession();
 
@@ -33,11 +46,18 @@ export default function AuthPage() {
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [alertText, setAlertText] = useState("");
 
+  // Set the alertText and severity based on which is passed in the URL
+  // If nothing is passed in the URL, set the alertText to empty string
   useEffect(() => {
-    setAlertSeverity(URLQueries.error ? "error" : "success");
-    setAlertText(
-      getAuthAlertText(URLQueries.error ? URLQueries.error : URLQueries.success)
-    );
+    if (URLQueries.error) {
+      setAlertSeverity("error");
+      setAlertText(getAuthAlertText(URLQueries.error));
+    } else if (URLQueries.success) {
+      setAlertSeverity("success");
+      setAlertText(getAuthAlertText(URLQueries.success));
+    } else {
+      setAlertText("");
+    }
   }, [URLQueries.error, URLQueries.success]);
 
   return (

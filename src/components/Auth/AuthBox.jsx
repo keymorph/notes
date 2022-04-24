@@ -42,6 +42,10 @@ export default function AuthBox({ providers, action }) {
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
+  const submitButtonDisabled =
+    !(emailValid && passwordValid && confirmPasswordValid) ||
+    submitButtonLoading;
+
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
     setPassword("");
@@ -88,8 +92,13 @@ export default function AuthBox({ providers, action }) {
         await router.push("/auth?action=login&success=RegisterSuccess");
       })
       .catch(async (error) => {
+        const status = error.response?.status;
         // If an error is thrown, append it as a query param to the url
-        // await router.push(`/auth?action=register&error=${error.message}`);
+        await router.push(
+          `/auth?action=register&error=${
+            status === 409 ? "EmailTaken" : error.message
+          }`
+        );
       });
     handleActionChange();
     setSubmitButtonLoading(false);
@@ -98,7 +107,6 @@ export default function AuthBox({ providers, action }) {
   // TODO: Handle the forgot password functionality
   const handleForgotPassword = async (event) => {
     event.preventDefault();
-    console.log("handleForgotPassword");
   };
 
   /*
@@ -119,7 +127,6 @@ export default function AuthBox({ providers, action }) {
 
     // Update state depending on whether the password is valid
     setPasswordValid(isPasswordValid(password));
-    console.log(isPasswordValid(password));
     setPasswordError(getPasswordErrorText(password));
 
     // Also update the state of confirm password upon changing password
@@ -174,8 +181,8 @@ export default function AuthBox({ providers, action }) {
       {/* Don't display the password field for forgot password */}
       <Collapse sx={{ width: "100%" }} in={action !== "forgot"}>
         <TextField
-          error={action === "register" ? !passwordValid : false}
-          helperText={action === "register" ? passwordError : ""}
+          error={!passwordValid}
+          helperText={passwordError}
           required
           label="Password"
           name="password"
@@ -190,7 +197,10 @@ export default function AuthBox({ providers, action }) {
       {/* Display "Confirm Password" for register only */}
       <Collapse sx={{ width: "100%" }} in={action === "register"}>
         <TextField
-          error={!(passwordValid && confirmPasswordValid) && confirmPassword}
+          error={
+            confirmPassword.length !== 0 &&
+            (!passwordValid || !confirmPasswordValid)
+          }
           helperText={confirmPasswordError}
           required
           label="Confirm Password"
@@ -218,16 +228,17 @@ export default function AuthBox({ providers, action }) {
           </Link>
         </Grid>
       </Collapse>
+      {/* When button is disabled display cursor: not allowed */}
       <LoadingButton
         type="submit"
-        disabled={
-          !(emailValid && passwordValid && confirmPasswordValid) ||
-          submitButtonLoading
-        }
+        disabled={submitButtonDisabled}
+        inclusiveDisabled
         loading={submitButtonLoading}
         loadingIndicator={<CircularProgress size={24} />}
         fullWidth
-        sx={{ my: 3 }}
+        sx={{
+          my: 3,
+        }}
       >
         {action === "login" && "login"}
         {action === "register" && "register"}

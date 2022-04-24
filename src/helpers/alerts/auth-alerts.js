@@ -12,7 +12,7 @@ export default function getAuthAlertText(message) {
     // Registration success
     case "RegisterSuccess":
       return "Registration Successful 🥳!\nPlease sign in with your credentials below.";
-    case "Request failed with status code 409":
+    case "EmailTaken":
       return "Email already registered.";
     // Other errors
     default:
