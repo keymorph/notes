@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/alerts/auth-alerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/alerts/auth-alerts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/validate-credentials.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/validate-credentials.js" afterDir="false" />
-    </list>
+    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,7 +133,7 @@
       <workItem from="1650594760347" duration="12923000" />
       <workItem from="1650632940660" duration="275000" />
       <workItem from="1650639540891" duration="1581000" />
-      <workItem from="1650662717521" duration="82519000" />
+      <workItem from="1650662717521" duration="82607000" />
     </task>
     <servers />
   </component>
