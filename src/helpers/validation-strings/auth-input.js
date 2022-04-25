@@ -1,20 +1,4 @@
-export function isEmailValid(email) {
-  return !(
-    email.length > 0 && !email.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)
-  );
-}
-
-export function isPasswordValid(password) {
-  return password.length >= 8 || password.length === 0;
-}
-
-export function isConfirmPasswordValid(confirmPassword, password) {
-  return !getConfirmPasswordErrorText(
-    confirmPassword,
-    password,
-    isPasswordValid(password)
-  );
-}
+import { isPasswordValid } from "../../utils/input-validation/validate-credentials";
 
 export function getPasswordErrorText(password) {
   if (!isPasswordValid(password)) {

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="" />
+    <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/validation-strings/auth-input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/alerts/auth-alerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validation-strings/auth-alerts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/validate-credentials.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/input-validation/validate-credentials.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,26 +66,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "editor.preferences.tabs",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Auth" />
+      <recent name="C:\dev\Projects\notetakingapp\src\utils\input-validation" />
       <recent name="C:\dev\Projects\notetakingapp\src\helpers\requests" />
       <recent name="C:\dev\Projects\notetakingapp\src\pages\auth" />
       <recent name="C:\dev\Projects\notetakingapp\src" />
-      <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline" />
     </key>
   </component>
   <component name="RunManager">
@@ -134,6 +142,7 @@
       <workItem from="1650632940660" duration="275000" />
       <workItem from="1650639540891" duration="1581000" />
       <workItem from="1650662717521" duration="82607000" />
+      <workItem from="1650911853915" duration="3379000" />
     </task>
     <servers />
   </component>

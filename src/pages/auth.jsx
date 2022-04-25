@@ -3,8 +3,9 @@ import { Alert, Avatar, Box, Card, Collapse, styled } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import AuthBox from "../components/Auth/AuthBox";
-import getAuthAlertText from "../helpers/alerts/auth-alerts";
+import Credentials from "../components/AuthProviders/Credentials";
+import OAuth from "../components/AuthProviders/OAuth";
+import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -80,7 +81,8 @@ export default function AuthPage() {
             {alertText}
           </Alert>
         </Collapse>
-        <AuthBox action={action} />
+        <Credentials action={action} />
+        <OAuth />
       </Box>
     </AuthCard>
   );

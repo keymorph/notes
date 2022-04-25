@@ -9,7 +9,7 @@ import {
   Link as MUILink,
   TextField,
 } from "@mui/material";
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -18,12 +18,14 @@ import { registerUser } from "../../helpers/requests/user-requests";
 import {
   getConfirmPasswordErrorText,
   getPasswordErrorText,
+} from "../../helpers/validation-strings/auth-input";
+import {
   isConfirmPasswordValid,
   isEmailValid,
   isPasswordValid,
-} from "../../utils/validate-credentials";
+} from "../../utils/input-validation/validate-credentials";
 
-export default function AuthBox({ providers, action }) {
+export default function Credentials({ providers, action }) {
   const router = useRouter();
 
   // Input data state
@@ -261,12 +263,4 @@ export default function AuthBox({ providers, action }) {
       </Collapse>
     </Box>
   );
-}
-
-export async function getServerSideProps(action) {
-  return {
-    props: {
-      providers: await getProviders(), // For OAuth
-    },
-  };
 }
