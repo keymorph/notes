@@ -5,7 +5,6 @@ const session = await getSession();
 
 // Get the note item with all the notes from the database
 export async function getAllNotes() {
-  console.log(session?.user.id);
   return await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
     headers: {
       userid: session?.user.id,

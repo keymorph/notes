@@ -1,6 +1,7 @@
 import { AccountCircle, NoAccounts } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Box,
   Card,
   CardMedia,
@@ -10,11 +11,12 @@ import {
   Toolbar,
 } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import React, { useState } from "react";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
-  const { status: sessionStatus } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const isUserLoggedIn = sessionStatus === "authenticated";
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,6 +32,14 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
     });
     setAnchorEl(null);
   };
+
+  const userAvatar = session?.user.image ? (
+    <Avatar>
+      <Image src={session.user.image} alt={"profile picture"} layout="fill" />
+    </Avatar>
+  ) : (
+    <AccountCircle />
+  );
 
   const open = Boolean(anchorEl);
 
@@ -63,7 +73,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
             disabled={!isUserLoggedIn}
             size="small"
           >
-            {isUserLoggedIn ? <AccountCircle /> : <NoAccounts />}
+            {isUserLoggedIn ? userAvatar : <NoAccounts />}
           </IconButton>
         </Box>
         <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
