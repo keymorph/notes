@@ -3,24 +3,22 @@ import { createTheme } from "@mui/material/styles";
 export const ThemeDark = createTheme({
   palette: {
     mode: "dark",
-    text: {
-      primary: "#ffffffE0",
-    },
   },
 
   // Per Component Theme Style Overrides
   components: {
     MuiLoadingButton: {
       styleOverrides: {
-        root: {
-          backgroundColor: "#056ac5AF",
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.dark,
           "&:hover": {
-            backgroundColor: "#056ac5F0",
-            boxShadow: "0 0 1rem rgba(0,123,255,0.5)",
+            backgroundColor: theme.palette.primary.main,
+            boxShadow: `0 0 0.5rem ${theme.palette.primary.main}`,
           },
+          color: theme.palette.primary.contrastText,
           border: 0,
           borderRadius: 20,
-        },
+        }),
       },
     },
     MuiButton: {
@@ -68,15 +66,16 @@ export const ThemeLight = createTheme({
   components: {
     MuiLoadingButton: {
       styleOverrides: {
-        root: {
-          backgroundColor: "#00a0d07F",
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.main,
           "&:hover": {
-            backgroundColor: "#00a0d0AF",
-            boxShadow: "0 0 1rem rgba(0,123,255,0.5)",
+            backgroundColor: theme.palette.primary.light,
+            boxShadow: `0 0 0.5rem ${theme.palette.primary.light}`,
           },
+          color: theme.palette.primary.contrastText,
           border: 0,
           borderRadius: 20,
-        },
+        }),
       },
     },
     MuiButton: {

@@ -17,6 +17,8 @@ export default function Dashboard() {
     router.replace("/auth");
   }
 
+  console.log(session);
+
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
   // Search Bar
@@ -31,8 +33,10 @@ export default function Dashboard() {
         const noteItem = data.noteItem;
         // Update the state only if the user has a noteItem in the container
         // Note: new users will not have a noteItem, but it will be created when the user creates their first note
-        setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-        setCategories(noteItem.categories);
+        if (noteItem) {
+          setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
+          setCategories(noteItem.categories);
+        }
       },
       onError: (error) => {
         console.error(error.message);

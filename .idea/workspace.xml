@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/helpers/validation-strings/auth-input.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/api/oauth-user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Auth/AuthBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/alerts/auth-alerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validation-strings/auth-alerts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/validate-credentials.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/input-validation/validate-credentials.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/services/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +84,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Auth" />
       <recent name="C:\dev\Projects\notetakingapp\src\utils\input-validation" />
       <recent name="C:\dev\Projects\notetakingapp\src\helpers\requests" />
       <recent name="C:\dev\Projects\notetakingapp\src\pages\auth" />
-      <recent name="C:\dev\Projects\notetakingapp\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -142,7 +145,7 @@
       <workItem from="1650632940660" duration="275000" />
       <workItem from="1650639540891" duration="1581000" />
       <workItem from="1650662717521" duration="82607000" />
-      <workItem from="1650911853915" duration="3379000" />
+      <workItem from="1650911853915" duration="18935000" />
     </task>
     <servers />
   </component>

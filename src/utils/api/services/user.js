@@ -4,13 +4,12 @@ import { users } from "../models/database.js";
 
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
-
   const { resources: userItem } = await users.items
     .query(`SELECT * FROM users WHERE users.email like '${email}'`)
     .fetchNext()
     .catch((error) => {
       console.error(error.message);
-      res.status(500).send({
+      res.status(500).json({
         error: `Database error while registering user: ${error.message}`,
       });
     });
@@ -26,25 +25,25 @@ const registerAccount = async (email, password, res) => {
       created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
     };
 
-    if (!error) {
-      return users.items
-        .create(userDef)
-        .then(() => {
-          return res
-            .status(201)
-            .json({ message: "User account created successfully 🥳." });
-        })
-        .catch((error) => {
-          return res.status(550).json({
-            message: `Database error while registering user: ${error.message}`,
-          });
-        });
-    } else {
+    if (error) {
       console.error(error.message);
       return res.status(500).json({
         message: `Error while hashing the password: ${error.message}`,
       });
     }
+
+    return users.items
+      .create(userDef)
+      .then(({ resource: user }) => {
+        return res
+          .status(201)
+          .json({ message: "User account created successfully 🥳." });
+      })
+      .catch((error) => {
+        return res.status(550).json({
+          message: `Database error while registering user: ${error.message}`,
+        });
+      });
   });
 };
 

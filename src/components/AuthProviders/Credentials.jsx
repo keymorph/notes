@@ -25,7 +25,7 @@ import {
   isPasswordValid,
 } from "../../utils/input-validation/validate-credentials";
 
-export default function Credentials({ providers, action }) {
+export default function Credentials({ action }) {
   const router = useRouter();
 
   // Input data state
@@ -44,9 +44,11 @@ export default function Credentials({ providers, action }) {
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
-  const submitButtonDisabled =
-    !(emailValid && passwordValid && confirmPasswordValid) ||
-    submitButtonLoading;
+  const submitButtonDisabled = !(
+    emailValid &&
+    passwordValid &&
+    confirmPasswordValid
+  );
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
@@ -230,13 +232,14 @@ export default function Credentials({ providers, action }) {
           </Link>
         </Grid>
       </Collapse>
-      {/* When button is disabled display cursor: not allowed */}
+      {/* Loading button that displays the circular throbber whenever an action is being performed */}
       <LoadingButton
         type="submit"
         disabled={submitButtonDisabled}
-        inclusiveDisabled
         loading={submitButtonLoading}
-        loadingIndicator={<CircularProgress size={24} />}
+        loadingIndicator={
+          <CircularProgress size={24} sx={{ color: "background.paper" }} />
+        }
         fullWidth
         sx={{
           my: 3,
