@@ -2,6 +2,7 @@ import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
+import {createOAuthUserIfNotExists} from "../../../utils/api/oauth-user";
 
 /*
  *  NextAuth configuration
@@ -37,9 +38,16 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    // Ensures that the user id is passed to the client
+    // Ensure that the user id is passed to the client's cookie
     async jwt({ token, user }) {
-      if (user) {
+      if (user && !user.userID) {
+        // Temporary cosmosdb solution for getting the user id and/or creating an account for oauth users
+        token.userID = await createOAuthUserIfNotExists(user.email).catch(
+          (error) => {
+            console.error(error.message);
+          }
+        );
+      } else if (user) {
         token.userID = user.userID;
       }
       return token;
@@ -57,7 +65,8 @@ export default NextAuth({
     jwt: true,
   },
   pages: {
-    signIn: "/auth",
+    signIn: "/dashboard",
+    newUser: "/dashboard",
     signOut: "/auth",
     error: "/auth",
   },

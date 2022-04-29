@@ -1,10 +1,32 @@
 import LockIcon from "@mui/icons-material/Lock";
-import { Alert, Avatar, Box, Card, Collapse, styled } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Card,
+  Collapse,
+  styled,
+  Typography,
+} from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import AuthBox from "../components/Auth/AuthBox";
-import getAuthAlertText from "../helpers/alerts/auth-alerts";
+import Credentials from "../components/AuthProviders/Credentials";
+import OAuth from "../components/AuthProviders/OAuth";
+import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
+
+const sanitizeAction = (action) => {
+  switch (action) {
+    case "login":
+      return action;
+    case "register":
+      return action;
+    case "forgot":
+      return action;
+    default:
+      return "login";
+  }
+};
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -17,19 +39,6 @@ const AuthCard = styled(Card)({
   left: "50%",
   transform: "translate(-50%, -50%)",
 });
-
-const sanitizeAction = (action) => {
-  switch (action) {
-    case "login":
-      return "login";
-    case "register":
-      return "register";
-    case "forgot":
-      return "forgot";
-    default:
-      return "login";
-  }
-};
 
 export default function AuthPage() {
   const router = useRouter();
@@ -62,12 +71,7 @@ export default function AuthPage() {
 
   return (
     <AuthCard>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <Box display="flex" flexDirection="column">
         <Avatar sx={{ bgcolor: "primary.main", alignSelf: "center" }}>
           <LockIcon />
         </Avatar>
@@ -80,7 +84,16 @@ export default function AuthPage() {
             {alertText}
           </Alert>
         </Collapse>
-        <AuthBox action={action} />
+        <Credentials action={action} />
+        <Typography
+          sx={{
+            my: 2,
+            textAlign: "center",
+          }}
+        >
+          Or
+        </Typography>
+        <OAuth />
       </Box>
     </AuthCard>
   );
