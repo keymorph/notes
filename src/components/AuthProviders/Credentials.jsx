@@ -36,11 +36,11 @@ export default function Credentials({ action }) {
   // Validation flags state
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
   // Error messages state
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 

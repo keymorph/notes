@@ -15,9 +15,9 @@ import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
 const queryClient = new QueryClient();
 
 export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
+                              Component,
+                              pageProps: {session, ...pageProps},
+                            }) {
   const [darkMode, setDarkMode] = useState(null);
   // Invoke setDarkMode whenever the page loads
   useEffect(() => {
@@ -43,14 +43,14 @@ export default function App({
   return (
     <>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
         <title>JotFox - Note Taking App</title>
       </Head>
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
             {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
-            <CssBaseline enableColorScheme />
+            <CssBaseline enableColorScheme/>
             {/* While the page loads, don't display any content */}
             {/* This prevents the theme from changing after the page has loaded */}
             {darkMode !== null ? (
@@ -71,7 +71,7 @@ export default function App({
                 />
                 {/* Each page is rendered in Component */}
                 <Component {...pageProps} />
-                <ScrollTop />
+                <ScrollTop/>
               </Container>
             ) : null}
           </ThemeProvider>

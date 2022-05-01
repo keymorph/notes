@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/OAuth.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Themes/Theme.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,13 +73,19 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/racie/AppData/Local/fnm_multishells/21424_1651210806062/node.exe&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;C:/Users/racie/AppData/Local/fnm_multishells/21424_1651210806062/node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;sshConsole&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -92,7 +106,7 @@
       <scripts>
         <script value="dev" />
       </scripts>
-      <node-interpreter value="project" />
+      <node-interpreter value="$USER_HOME$/AppData/Local/fnm_multishells/21424_1651210806062/node" />
       <package-manager value="npm" />
       <envs />
       <method v="2" />
@@ -141,6 +155,21 @@
       <workItem from="1650662717521" duration="82607000" />
       <workItem from="1650911853915" duration="19532000" />
       <workItem from="1650948204671" duration="1824000" />
+      <workItem from="1651209428450" duration="118000" />
+      <workItem from="1651252390299" duration="3020000" />
+      <workItem from="1651280574077" duration="707000" />
+      <workItem from="1651287665796" duration="655000" />
+      <workItem from="1651289602411" duration="105000" />
+      <workItem from="1651289719049" duration="361000" />
+      <workItem from="1651290092491" duration="196000" />
+      <workItem from="1651290302204" duration="97000" />
+      <workItem from="1651290444880" duration="504000" />
+      <workItem from="1651290963700" duration="95000" />
+      <workItem from="1651291068491" duration="467000" />
+      <workItem from="1651294596202" duration="1216000" />
+      <workItem from="1651341799189" duration="3686000" />
+      <workItem from="1651367198522" duration="35000" />
+      <workItem from="1651433932301" duration="4056000" />
     </task>
     <servers />
   </component>

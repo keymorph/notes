@@ -34,7 +34,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
   };
 
   const userAvatar = session?.user.image ? (
-    <Avatar>
+    <Avatar sx={{ height: "1.5em", width: "1.5em" }}>
       <Image src={session.user.image} alt={"profile picture"} layout="fill" />
     </Avatar>
   ) : (
@@ -68,7 +68,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
           />
           <IconButton
             aria-label="settings"
-            sx={{ marginLeft: "0.5em", marginRight: "0.5em" }}
+            sx={{ mx: "0.5em" }}
             onClick={handleClick}
             disabled={!isUserLoggedIn}
             size="small"
