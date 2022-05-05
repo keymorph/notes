@@ -23,12 +23,12 @@
     "@mui/styled-engine-sc": "^5.6.1",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.1.1",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
-    "next": "^12.1.5",
+    "next": "^12.1.6",
     "next-auth": "^4.3.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "eslint": "^8.14.0",
-    "eslint-config-next": "^12.1.5",
+    "eslint-config-next": "^12.1.6",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.6.2"
   },

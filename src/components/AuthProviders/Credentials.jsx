@@ -52,11 +52,8 @@ export default function Credentials({ action }) {
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
-    setPassword("");
     setConfirmPassword("");
-    setPasswordValid(true);
     setConfirmPasswordValid(true);
-    setPasswordError("");
     setConfirmPasswordError("");
     setSubmitButtonLoading(false);
   };
@@ -245,9 +242,9 @@ export default function Credentials({ action }) {
           my: 3,
         }}
       >
-        {action === "login" && "login"}
-        {action === "register" && "register"}
-        {action === "forgot" && "Send Confirmation Code"}
+        {action === "login" && "LOGIN"}
+        {action === "register" && "REGISTER"}
+        {action === "forgot" && "SEND CONFIRMATION CODE"}
       </LoadingButton>
       {/* Display the respective footer link depending on the action */}
       <Collapse in={action === "register"}>
