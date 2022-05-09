@@ -1,10 +1,8 @@
-import { AccountCircle, NoAccounts } from "@mui/icons-material";
+import { AccountCircle, Key as KeyIcon, NoAccounts } from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
   Box,
-  Card,
-  CardMedia,
   IconButton,
   Menu,
   MenuItem,
@@ -53,14 +51,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
           justifyContent: "space-between",
         }}
       >
-        <Card>
-          <CardMedia
-            component="img"
-            height="48px"
-            image="https://avatars.githubusercontent.com/u/87445501"
-            alt="FourScript Logo"
-          />
-        </Card>
+        <KeyIcon color="primary" fontSize="large" sx={{ mx: "0.5rem" }} />
         <Box display={"flex"} flexDirection={"row"}>
           <ThemeToggleButton
             darkMode={darkMode}
@@ -68,7 +59,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
           />
           <IconButton
             aria-label="settings"
-            sx={{ mx: "0.5em" }}
+            sx={{ mx: "0.5rem" }}
             onClick={handleClick}
             disabled={!isUserLoggedIn}
             size="small"

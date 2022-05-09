@@ -1,27 +1,10 @@
 import { NoteAdd } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Fade from "@mui/material/Fade";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import * as PropTypes from "prop-types";
-import * as React from "react";
+import { AppBar, Box, Button, Collapse, Toolbar } from "@mui/material";
 import { useState } from "react";
 import NoteCreateModal from "../NotesTimeline/Note/NoteCreateModal";
 
 import ToolbarSearch from "./ToolbarSearch";
 
-ToolbarSearch.propTypes = {
-  value: PropTypes.any,
-  searchFocus: PropTypes.bool,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
-  onKeyUp: PropTypes.func,
-  onClick: PropTypes.func,
-};
 export default function AppToolbar({
   noteCollection,
   setNoteCollection,
@@ -36,11 +19,11 @@ export default function AppToolbar({
   const handleClose = () => setModalOpen(false);
 
   return (
-    <Fade in>
+    <Collapse in>
       <AppBar
+        position="sticky"
         sx={{
           boxShadow: "none",
-          position: "sticky",
         }}
       >
         <Toolbar
@@ -59,14 +42,11 @@ export default function AppToolbar({
             setCategories={setCategories}
           />
           <Box
-            width="15vw"
+            width="25vw"
             display={"flex"}
             flexDirection={"row"}
             alignItems="center"
           >
-            <IconButton edge="start">
-              <MenuIcon />
-            </IconButton>
             {/* Only display the search bar if there are notes */}
             {noteCollection.length > 0 && (
               <ToolbarSearch
@@ -90,11 +70,11 @@ export default function AppToolbar({
               startIcon={<NoteAdd />}
               onClick={handleOpen}
             >
-              Add
+              Add Note
             </Button>
           </Box>
         </Toolbar>
       </AppBar>
-    </Fade>
+    </Collapse>
   );
 }

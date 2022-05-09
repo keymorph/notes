@@ -8,8 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/SortableNote.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/oauth-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api/oauth-user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,10 +85,10 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "C:/Users/racie/AppData/Local/fnm_multishells/21424_1651210806062/node",
+    "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "yarn",
     "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "C:\\Program Files (x86)\\JetBrains\\WebStorm 2022.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -104,7 +109,7 @@
       <scripts>
         <script value="dev" />
       </scripts>
-      <node-interpreter value="$USER_HOME$/AppData/Local/fnm_multishells/21424_1651210806062/node" />
+      <node-interpreter value="node" />
       <package-manager value="npm" />
       <envs />
       <method v="2" />
@@ -169,7 +174,13 @@
       <workItem from="1651367198522" duration="35000" />
       <workItem from="1651433932301" duration="5947000" />
       <workItem from="1651505949445" duration="1214000" />
-      <workItem from="1651697700555" duration="7307000" />
+      <workItem from="1651697700555" duration="7907000" />
+      <workItem from="1651757273104" duration="13000" />
+      <workItem from="1651764902369" duration="262000" />
+      <workItem from="1651880889443" duration="615000" />
+      <workItem from="1651890941318" duration="1386000" />
+      <workItem from="1651949116451" duration="1485000" />
+      <workItem from="1651996801273" duration="10587000" />
     </task>
     <servers />
   </component>

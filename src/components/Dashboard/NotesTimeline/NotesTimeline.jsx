@@ -73,8 +73,8 @@ export default function NotesTimeline({
         const newIndex = over.data.current.sortable.index;
         return arrayMove(noteCollection, oldIndex, newIndex);
       });
-      setActiveId(null);
     }
+    setActiveId(null);
   };
 
   if (noteStatus === "loading") {
@@ -93,6 +93,7 @@ export default function NotesTimeline({
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
         onDragStart={handleDragStart}
+        autoScroll
         modifiers={[restrictToWindowEdges]}
       >
         <SortableContext
@@ -109,13 +110,11 @@ export default function NotesTimeline({
           </DragOverlay>
           {/*Resize items in grid if screen size is too small*/}
           <Box
-            sx={{
-              p: 3,
-              display: "grid",
-              gap: "2em",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              justifyItems: "center",
-            }}
+            p="1.5em"
+            display="grid"
+            gap="2em"
+            gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+            justifyItems="center"
           >
             {filteredNoteCollection.map((note, index) => (
               <SortableNote

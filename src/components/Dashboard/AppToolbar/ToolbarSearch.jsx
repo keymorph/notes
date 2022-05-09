@@ -4,7 +4,6 @@ import { InputAdornment } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Zoom from "@mui/material/Zoom";
-import * as React from "react";
 
 export default function ToolbarSearch({ setSearchValue, searchValue }) {
   // Clear search value when Escape key is pressed
