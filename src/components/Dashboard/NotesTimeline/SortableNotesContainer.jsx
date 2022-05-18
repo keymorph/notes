@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
+import { LayoutGroup } from "framer-motion";
 import { useRef } from "react";
 import {
   isColliding,
   mergePointIntoPosition,
-  swapPosition,
+  movePosition,
 } from "../../../helpers/sortable";
 import SortableNote from "./SortableNote";
 
@@ -17,7 +18,6 @@ export default function SortableNotesContainer({
 
   const setPosition = (index, position) => {
     positions.current[index] = position;
-    console.log(positions.current);
   };
 
   const moveNote = (currentIndex, currentPoint) => {
@@ -36,19 +36,18 @@ export default function SortableNotesContainer({
         continue;
       }
       if (isColliding(currentPosition, positions.current[positionIndex])) {
-        console.log(true);
         collidingIndices.push(positionIndex);
       }
     }
 
     if (collidingIndices.length > 0) {
-      positions.current = swapPosition(
+      positions.current = movePosition(
         positions.current,
         currentIndex,
         collidingIndices[0]
       );
       setNoteCollection(
-        swapPosition(noteCollection, currentIndex, collidingIndices[0])
+        movePosition(noteCollection, currentIndex, collidingIndices[0])
       );
     }
   };
@@ -62,19 +61,21 @@ export default function SortableNotesContainer({
       gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
       justifyItems="center"
     >
-      {noteCollection.map((note, index) => (
-        <SortableNote
-          key={note.id}
-          note={note}
-          noteIdx={index}
-          dragConstraintRef={dragConstraintRef}
-          moveNote={moveNote}
-          setPosition={setPosition}
-          noteCollection={noteCollection}
-          setNoteCollection={setNoteCollection}
-          categories={categories}
-        />
-      ))}
+      <LayoutGroup>
+        {noteCollection.map((note, index) => (
+          <SortableNote
+            key={note.id}
+            note={note}
+            noteIdx={index}
+            dragConstraintRef={dragConstraintRef}
+            moveNote={moveNote}
+            setPosition={setPosition}
+            noteCollection={noteCollection}
+            setNoteCollection={setNoteCollection}
+            categories={categories}
+          />
+        ))}
+      </LayoutGroup>
     </Box>
   );
 }

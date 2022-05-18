@@ -16,25 +16,26 @@ export function getBox(node) {
   };
 }
 
-// Has source.x, source.y, source.width, source.height, target.x, target.y, target.width, target.height
-export function isColliding(source, sample) {
+export function isColliding(source, sample, threshold = 0.5) {
   return (
-    source.x < sample.x + sample.width &&
-    source.x + source.width > sample.x &&
-    source.y < sample.y + sample.height &&
-    source.height + source.y > sample.y
+    source.x < sample.x + sample.width - threshold * sample.width && // left side
+    source.x + source.width > sample.x + threshold * sample.width && // right side
+    source.y < sample.y + sample.height - threshold * sample.height && // top side
+    source.y + source.height > sample.y + threshold * sample.height // bottom side
   );
 }
 
 export function mergePointIntoPosition(position, point) {
   return {
     ...position,
-    x: position.x + point.x,
-    y: position.y + point.y,
+    x: point.x - position.width / 2,
+    y: point.y - position.height / 2,
   };
 }
 
-export function swapPosition(array, indexA, indexB) {
-  [array[indexA], array[indexB]] = [array[indexB], array[indexA]];
+// Array move logic for dragging a note
+export function movePosition(array, indexA, indexB) {
+  const displaced = array.splice(indexA, 1);
+  array.splice(indexB, 0, ...displaced);
   return array;
 }

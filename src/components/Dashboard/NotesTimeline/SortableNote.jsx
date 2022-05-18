@@ -30,14 +30,16 @@ export default function SortableNote({
       ref={ref}
       animate={dragging ? onTop : flat}
       drag
-      dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      dragElastic={1}
+      dragSnapToOrigin
       onDragStart={() => setDragging(true)}
       onDragEnd={() => setDragging(false)}
       onDrag={(_, { point }) => moveNote(noteIdx, point)}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 1.04 }}
       layout={!dragging}
+      transition={{ type: "spring", bounce: 0.3, duration: 0.4 }}
+      dragTransition={{ bounceStiffness: 200, bounceDamping: 25 }}
+      // transition={}
     >
       <Note
         noteID={note.id}
