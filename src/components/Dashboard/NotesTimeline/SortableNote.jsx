@@ -19,8 +19,8 @@ export default function SortableNote({
     setPosition(noteIdx, getBox(ref.current));
   });
 
-  const onTop = { zIndex: 1 };
-  const flat = {
+  const onTopStyles = { zIndex: 1 };
+  const flatStyles = {
     zIndex: 0,
     transition: { delay: 0.5 },
   };
@@ -28,7 +28,7 @@ export default function SortableNote({
   return (
     <motion.div
       ref={ref}
-      animate={dragging ? onTop : flat}
+      animate={dragging ? onTopStyles : flatStyles}
       drag
       dragSnapToOrigin
       onDragStart={() => setDragging(true)}
@@ -39,11 +39,9 @@ export default function SortableNote({
       layout={!dragging}
       transition={{ type: "spring", bounce: 0.3, duration: 0.4 }}
       dragTransition={{ bounceStiffness: 200, bounceDamping: 25 }}
-      // transition={}
     >
       <Note
         noteID={note.id}
-        index={noteIdx}
         title={note.title}
         description={note.description}
         categoryName={note.category}

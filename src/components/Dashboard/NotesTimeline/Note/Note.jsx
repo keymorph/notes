@@ -21,7 +21,6 @@ import NoteEditModal from "./NoteEditModal";
 
 export default function Note({
   noteID,
-  index,
   title: initialTitle,
   description: initialDescription,
   categoryName: initialCategoryName,
@@ -31,20 +30,23 @@ export default function Note({
   setNoteCollection,
   categories,
 }) {
+  //#region Hooks
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [categoryName, setCategoryName] = useState(initialCategoryName);
   const [description, setDescription] = useState(initialDescription);
 
+  //#endregion
+
   const menuOpen = Boolean(anchorEl);
 
-  // Query Handling
+  //#region Query Handling
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
     deleteNote,
     {
       onSuccess: ({ data }) => {
-        console.log(index);
         setAnchorEl(null);
         setNoteCollection(
           noteCollection.filter((note, index) => {
@@ -71,7 +73,10 @@ export default function Note({
     }
   );
 
-  // Modal Handlers
+  //#endregion
+
+  //#region Handlers
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -113,6 +118,8 @@ export default function Note({
     };
     mutateDuplicate(duplicateNote);
   };
+
+  //#endregion
 
   const categoryExists = () => {
     return categoryName !== "";
