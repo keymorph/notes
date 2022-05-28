@@ -5,7 +5,6 @@ import {
   CardContent,
   Chip,
   Divider,
-  Grow,
   IconButton,
   Menu,
   MenuItem,
@@ -20,23 +19,38 @@ import {
 } from "../../../../helpers/requests/note-requests";
 import NoteEditModal from "./NoteEditModal";
 
-export default function Note(props) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const [title, setTitle] = useState(props.title);
-  const [categoryName, setCategoryName] = useState(props.categoryName);
-  const [description, setDescription] = useState(props.description);
+export default function Note({
+  noteID,
+  title: initialTitle,
+  description: initialDescription,
+  categoryName: initialCategoryName,
+  tags,
+  color,
+  noteCollection,
+  setNoteCollection,
+  categories,
+}) {
+  //#region Hooks
 
-  // Query Handling
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [title, setTitle] = useState(initialTitle);
+  const [categoryName, setCategoryName] = useState(initialCategoryName);
+  const [description, setDescription] = useState(initialDescription);
+
+  //#endregion
+
+  const menuOpen = Boolean(anchorEl);
+
+  //#region Query Handling
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
     deleteNote,
     {
       onSuccess: ({ data }) => {
-        console.log(props.index);
         setAnchorEl(null);
-        props.setNoteCollection(
-          props.noteCollection.filter((note, index) => {
-            return index !== props.index;
+        setNoteCollection(
+          noteCollection.filter((note, index) => {
+            return index !== index;
           })
         );
       },
@@ -51,7 +65,7 @@ export default function Note(props) {
       onSuccess: ({ data }) => {
         setAnchorEl(null);
         // Reflect the database changes on the front-end by adding the newly created note to the NoteCollection
-        props.setNoteCollection((oldArray) => [...oldArray, data.note]);
+        setNoteCollection((oldArray) => [...oldArray, data.note]);
       },
       onError: (error) => {
         console.error(error.message);
@@ -59,10 +73,15 @@ export default function Note(props) {
     }
   );
 
-  // MODAL
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleOpen = () => setModalOpen(true);
-  const handleClose = () => {
+  //#endregion
+
+  //#region Handlers
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
     setModalOpen(false);
     setAnchorEl(null);
   };
@@ -82,26 +101,28 @@ export default function Note(props) {
 
   const handleDelete = () => {
     mutateDelete({
-      noteID: props.noteID,
+      noteID: noteID,
     });
   };
 
   const handleCreateDuplicate = () => {
     const duplicateNote = {
-      title: props.title,
-      description: props.description,
+      title: title,
+      description: description,
       category: {
-        name: props.categoryName,
-        color: props.color,
+        name: categoryName,
+        color: color,
         note_count: 1, // Number of notes in this category, always 1 when creating a note
       },
-      tags: props.tags,
+      tags: tags,
     };
     mutateDuplicate(duplicateNote);
   };
 
+  //#endregion
+
   const categoryExists = () => {
-    return props.categoryName !== "";
+    return categoryName !== "";
   };
 
   const categoryColorValue = (colorNumber) => {
@@ -138,121 +159,110 @@ export default function Note(props) {
   };
 
   return (
-    <Grow in>
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+      }}
+    >
+      <NoteEditModal
+        noteID={noteID}
+        title={title}
+        description={description}
+        categoryName={categoryName}
+        categoryColor={color}
+        tags={tags}
+        setTitle={setTitle}
+        setDescription={setDescription}
+        setCategoryName={setCategoryName}
+        categories={categories}
+        modalOpen={modalOpen}
+        handleClose={handleModalClose}
+        handleChipDelete={handleChipDelete}
+      />
+
+      <Card
         sx={{
-          display: "flex",
+          width: "300px",
+          minHeight: "300px",
+          maxHeight: "400px",
+          overflowWrap: "break-word",
+          margin: "5px",
         }}
+        ref={ref}
       >
-        <NoteEditModal
-          noteID={props.noteID}
-          title={title}
-          description={description}
-          categoryName={categoryName}
-          categoryColor={props.color}
-          tags={props.tags}
-          setTitle={setTitle}
-          setDescription={setDescription}
-          setCategoryName={setCategoryName}
-          categories={props.categories}
-          modalOpen={modalOpen}
-          handleClose={handleClose}
-          handleChipDelete={handleChipDelete}
-        />
-
-        <Card
+        <Box
           sx={{
-            width: "300px",
-            minHeight: "300px",
-            maxHeight: "400px",
-            overflowWrap: "break-word",
-            margin: "5px",
-            transition: "transform 0.2s ease-in-out",
-            "&:hover": {
-              transform: "scale(1.02)",
-              transition: "transform 0.1s ease-in-out",
-            },
+            backgroundColor: categoryColorValue(color),
+            display: "flex",
+            position: "relative",
           }}
-          ref={ref}
         >
+          {categoryExists() ? (
+            <Chip label={categoryName} sx={{ m: 0.5, height: "2em" }} />
+          ) : null}
+
           <Box
+            aria-label="Drag note handle"
             sx={{
-              backgroundColor: categoryColorValue(props.color),
-              display: "flex",
-              position: "relative",
-            }}
-          >
-            {categoryExists() ? (
-              <Chip label={props.categoryName} sx={{ m: 0.5, height: "2em" }} />
-            ) : null}
-
-            <Box
-              aria-label="Drag note handle"
-              sx={{
-                touchAction: "none", // Prevent scrolling while dragging on mobile devices
-                display: props.searchValue ? "none" : "inline-block", // Hide the handle when searching
-                position: "absolute",
-                px: "4em",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                opacity: "0.5",
+              touchAction: "none", // Prevent scrolling while dragging on mobile devices
+              position: "absolute",
+              px: "4em",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              opacity: "0.5",
+              transition: "opacity 0.2s ease-in-out",
+              "&:hover": {
+                cursor: "grab",
+                opacity: "1",
                 transition: "opacity 0.2s ease-in-out",
-                "&:hover": {
-                  cursor: "grab",
-                  opacity: "1",
-                  transition: "opacity 0.2s ease-in-out",
-                },
-                "&:active": {
-                  cursor: "grabbing",
-                },
-              }}
-              //  Add listeners and attributes for drag and drop, making this Box the handle bar
-              {...props.dragHandleListeners}
-              {...props.dragHandleAttributes}
-            >
-              <DragHandle />
-            </Box>
-            <IconButton
-              aria-label="Note settings"
-              sx={{ m: 0.5, ml: "auto", height: "1em" }}
-              onClick={handleClick}
-            >
-              <MoreHoriz />
-            </IconButton>
-          </Box>
-
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={() => setAnchorEl(null)}
-            style={{ opacity: modalOpen ? 0 : 1 }}
-          >
-            <MenuItem onClick={handleOpen}>Edit</MenuItem>
-            <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
-            <MenuItem onClick={handleDelete}>Delete</MenuItem>
-          </Menu>
-
-          <CardContent
-            onClick={handleOpen}
-            sx={{
-              userSelect: "text",
-              height: "100%",
-              cursor: "pointer",
-              py: 0.5,
-              px: 1,
+              },
+              "&:active": {
+                cursor: "grabbing",
+              },
             }}
           >
-            <Typography variant="body1" title="Title Name" noWrap>
-              {title}
-            </Typography>
+            <DragHandle />
+          </Box>
+          <IconButton
+            aria-label="Note settings"
+            sx={{ m: 0.5, ml: "auto", height: "1em" }}
+            onClick={handleClick}
+          >
+            <MoreHoriz />
+          </IconButton>
+        </Box>
 
-            <Divider />
+        <Menu
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={() => setAnchorEl(null)}
+          style={{ opacity: modalOpen ? 0 : 1 }}
+        >
+          <MenuItem onClick={handleModalOpen}>Edit</MenuItem>
+          <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </Menu>
 
-            <Typography variant="body2">{description}</Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    </Grow>
+        <CardContent
+          onClick={handleModalOpen}
+          sx={{
+            userSelect: "text",
+            height: "100%",
+            cursor: "pointer",
+            py: 0.5,
+            px: 1,
+          }}
+        >
+          <Typography variant="body1" title="Title Name" noWrap>
+            {title}
+          </Typography>
+
+          <Divider />
+
+          <Typography variant="body2">{description}</Typography>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

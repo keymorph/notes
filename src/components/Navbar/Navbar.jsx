@@ -25,7 +25,7 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
 
   const handleSignOut = async () => {
     // Remove session cookie and redirect user to login page
-    await signOut({ callbackUrl: `/auth` }).catch((error) => {
+    await signOut({ callbackUrl: `/auth`, redirect: false }).catch((error) => {
       console.error("Error during sign out: ", error.message);
     });
     setAnchorEl(null);

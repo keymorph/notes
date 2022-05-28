@@ -10,14 +10,12 @@ import { getAllNotes } from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
+  const { status: sessionStatus } = useSession();
 
   // If the user is not logged in, redirect to the login page
-  if (!session && sessionStatus !== "loading") {
+  if (sessionStatus === "unauthenticated") {
     router.replace("/auth");
   }
-
-  console.log(session);
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -44,6 +42,7 @@ export default function Dashboard() {
       staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     }
   );
+  console.info(noteCollection);
 
   return sessionStatus === "authenticated" ? (
     <Box>
