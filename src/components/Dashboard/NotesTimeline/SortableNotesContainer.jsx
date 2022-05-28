@@ -75,7 +75,6 @@ export default function SortableNotesContainer({
 
   return (
     <Box
-      ref={dragConstraintRef}
       p="1.5em"
       display="grid"
       gap="2em"

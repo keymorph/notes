@@ -29,6 +29,8 @@ export default function Note({
   noteCollection,
   setNoteCollection,
   categories,
+  dragHandleListeners,
+  dragHandleAttributes,
 }) {
   //#region Hooks
 
@@ -181,6 +183,9 @@ export default function Note({
       />
 
       <Card
+        ref={ref}
+        {...dragHandleListeners}
+        {...dragHandleAttributes}
         sx={{
           width: "300px",
           minHeight: "300px",
@@ -188,7 +193,6 @@ export default function Note({
           overflowWrap: "break-word",
           margin: "5px",
         }}
-        ref={ref}
       >
         <Box
           sx={{

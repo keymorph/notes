@@ -1,4 +1,4 @@
-import {notes} from "../models/database.js";
+import { notes } from "../models/database.js";
 
 // Category object
 // {

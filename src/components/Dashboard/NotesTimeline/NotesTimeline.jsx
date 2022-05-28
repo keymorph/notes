@@ -1,6 +1,23 @@
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import {
+  arrayMove,
+  rectSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
-import React, { useState } from "react";
-import SortableNotesContainer from "./SortableNotesContainer";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { useState } from "react";
+import SortableNote from "./SortableNote";
 
 export default function NotesTimeline({
   noteCollection,
@@ -25,6 +42,19 @@ export default function NotesTimeline({
 
   // activeId used for overlay
   const [activeId, setActiveId] = useState(null);
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+    useSensor(TouchSensor, {
+      // Press delay of 100ms, with tolerance of 5px of movement
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
+      },
+    })
+  );
 
   // Sets the active note id when a note is being dragged
   const handleDragStart = (event) => {
@@ -56,19 +86,62 @@ export default function NotesTimeline({
     );
   } else {
     return noteCollection.length > 0 ? (
-      <>
-        <SortableNotesContainer
-          noteCollection={filteredNoteCollection}
-          setNoteCollection={setNoteCollection}
-          categories={categories}
-        />
-        {/*  If filtered notes is 0, display no notes found message */}
-        {filteredNoteCollection.length === 0 && (
-          <Typography sx={{ width: "100%", textAlign: "center" }} variant="h5">
-            No notes found
-          </Typography>
-        )}
-      </>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        autoScroll
+        modifiers={[restrictToWindowEdges]}
+      >
+        <SortableContext
+          items={filteredNoteCollection}
+          strategy={rectSortingStrategy}
+        >
+          <Box
+            p="1.5em"
+            display="grid"
+            gap="2em"
+            gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+            justifyItems="center"
+          >
+            <LayoutGroup>
+              {/* AnimatePresence allows components to animate out when they're removed from the React tree */}
+              <AnimatePresence>
+                {filteredNoteCollection.map((note, index) => (
+                  <SortableNote
+                    key={note.id}
+                    isDragging={!!activeId} // If activeId is set, a note is being dragged
+                    index={index}
+                    noteID={note.id}
+                    title={note.title}
+                    description={note.description}
+                    tags={note.tags}
+                    categoryName={note.category}
+                    color={
+                      categories.find(
+                        (category) => category.name === note.category
+                      )?.color
+                    }
+                    searchValue={searchValue}
+                    noteCollection={noteCollection}
+                    setNoteCollection={setNoteCollection}
+                  />
+                ))}
+              </AnimatePresence>
+            </LayoutGroup>
+          </Box>
+          {/*  If filtered notes is 0, display no notes found message */}
+          {filteredNoteCollection.length === 0 && (
+            <Typography
+              sx={{ width: "100%", textAlign: "center" }}
+              variant="h5"
+            >
+              No notes found
+            </Typography>
+          )}
+        </SortableContext>
+      </DndContext>
     ) : (
       // If no notes, display no notes message
       <Zoom in>
