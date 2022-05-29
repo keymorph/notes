@@ -1,7 +1,7 @@
 import { Card, Chip, Grow, Modal, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { updateNote } from "../../../../helpers/requests/note-requests";
+import { updateNote } from "../../../../../helpers/requests/note-requests";
 
 export default function NoteEditModal({
   modalOpen,

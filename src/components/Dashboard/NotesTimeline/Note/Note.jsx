@@ -1,4 +1,4 @@
-import { DragHandle, MoreHoriz } from "@mui/icons-material";
+import { MoreHoriz } from "@mui/icons-material";
 import {
   Box,
   Card,
@@ -8,6 +8,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  styled,
   Typography,
 } from "@mui/material";
 import { useRef, useState } from "react";
@@ -17,7 +18,17 @@ import {
   createNote,
   deleteNote,
 } from "../../../../helpers/requests/note-requests";
-import NoteEditModal from "./NoteEditModal";
+import NoteEditModal from "./Modals/NoteEditModal";
+
+const NoteCard = styled(Card)({
+  touchAction: "none", // Disable browser handling of all touch panning and zooming gestures
+  width: "300px",
+  minHeight: "300px",
+  maxHeight: "400px",
+  overflowWrap: "break-word",
+  margin: "5px",
+  transition: "opacity 0.2s ease-in-out",
+});
 
 export default function Note({
   noteID,
@@ -51,8 +62,8 @@ export default function Note({
       onSuccess: ({ data }) => {
         setAnchorEl(null);
         setNoteCollection(
-          noteCollection.filter((note, index) => {
-            return index !== index;
+          noteCollection.filter((note) => {
+            return note.id !== noteID;
           })
         );
       },
@@ -123,43 +134,6 @@ export default function Note({
 
   //#endregion
 
-  const categoryExists = () => {
-    return categoryName !== "";
-  };
-
-  const categoryColorValue = (colorNumber) => {
-    if (categoryExists()) {
-      switch (colorNumber) {
-        case "0": {
-          // Grey
-          return "#999999A0";
-        }
-        case "1": {
-          // Red
-          return "#af0500A0";
-        }
-        case "2": {
-          // Yellow
-          return "#da6e00A0";
-        }
-        case "3": {
-          // Green
-          return "#b2b100A0";
-        }
-        case "4": {
-          // Blue
-          return "#7789ABA0";
-        }
-        default: {
-          return "#999999A0";
-        }
-      }
-    } else {
-      // There is no category, so return Grey
-      return "#999999A0";
-    }
-  };
-
   return (
     <Box
       sx={{
@@ -182,52 +156,19 @@ export default function Note({
         handleChipDelete={handleChipDelete}
       />
 
-      <Card
-        ref={ref}
-        {...dragHandleListeners}
-        {...dragHandleAttributes}
-        sx={{
-          width: "300px",
-          minHeight: "300px",
-          maxHeight: "400px",
-          overflowWrap: "break-word",
-          margin: "5px",
-        }}
-      >
+      <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
         <Box
           sx={{
-            backgroundColor: categoryColorValue(color),
+            backgroundColor: color ? `category.${color}` : `category.none`,
             display: "flex",
             position: "relative",
           }}
         >
-          {categoryExists() ? (
+          {/* If category exists, show the name */}
+          {categoryName ? (
             <Chip label={categoryName} sx={{ m: 0.5, height: "2em" }} />
           ) : null}
 
-          <Box
-            aria-label="Drag note handle"
-            sx={{
-              touchAction: "none", // Prevent scrolling while dragging on mobile devices
-              position: "absolute",
-              px: "4em",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              opacity: "0.5",
-              transition: "opacity 0.2s ease-in-out",
-              "&:hover": {
-                cursor: "grab",
-                opacity: "1",
-                transition: "opacity 0.2s ease-in-out",
-              },
-              "&:active": {
-                cursor: "grabbing",
-              },
-            }}
-          >
-            <DragHandle />
-          </Box>
           <IconButton
             aria-label="Note settings"
             sx={{ m: 0.5, ml: "auto", height: "1em" }}
@@ -266,7 +207,7 @@ export default function Note({
 
           <Typography variant="body2">{description}</Typography>
         </CardContent>
-      </Card>
+      </NoteCard>
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 import { NoteAdd } from "@mui/icons-material";
-import { AppBar, Box, Button, Collapse, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { useState } from "react";
-import NoteCreateModal from "../NotesTimeline/Note/NoteCreateModal";
+import NoteCreateModal from "../NotesTimeline/Note/Modals/NoteCreateModal";
 
 import ToolbarSearch from "./ToolbarSearch";
 
@@ -19,62 +19,60 @@ export default function AppToolbar({
   const handleClose = () => setModalOpen(false);
 
   return (
-    <Collapse in>
-      <AppBar
-        position="sticky"
+    <AppBar
+      position="sticky"
+      sx={{
+        boxShadow: "none",
+      }}
+    >
+      <Toolbar
         sx={{
-          boxShadow: "none",
+          display: "flex",
+          justifyContent: "space-between",
         }}
+        variant="dense"
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-          variant="dense"
+        <NoteCreateModal
+          modalOpen={modalOpen}
+          handleClose={handleClose}
+          noteCollection={noteCollection}
+          setNoteCollection={setNoteCollection}
+          categories={categories}
+          setCategories={setCategories}
+        />
+        <Box
+          width="25vw"
+          display={"flex"}
+          flexDirection={"row"}
+          alignItems="center"
         >
-          <NoteCreateModal
-            modalOpen={modalOpen}
-            handleClose={handleClose}
-            noteCollection={noteCollection}
-            setNoteCollection={setNoteCollection}
-            categories={categories}
-            setCategories={setCategories}
-          />
-          <Box
-            width="25vw"
-            display={"flex"}
-            flexDirection={"row"}
-            alignItems="center"
+          {/* Only display the search bar if there are notes */}
+          {noteCollection.length > 0 && (
+            <ToolbarSearch
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+            />
+          )}
+        </Box>
+        <Box
+          width="15vw"
+          display={"flex"}
+          flexDirection={"row-reverse"}
+          alignItems="center"
+        >
+          <Button
+            variant="outlined"
+            sx={{
+              height: "2em",
+              minWidth: "6em",
+            }}
+            startIcon={<NoteAdd />}
+            onClick={handleOpen}
           >
-            {/* Only display the search bar if there are notes */}
-            {noteCollection.length > 0 && (
-              <ToolbarSearch
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
-            )}
-          </Box>
-          <Box
-            width="15vw"
-            display={"flex"}
-            flexDirection={"row-reverse"}
-            alignItems="center"
-          >
-            <Button
-              variant="outlined"
-              sx={{
-                height: "2em",
-                minWidth: "6em",
-              }}
-              startIcon={<NoteAdd />}
-              onClick={handleOpen}
-            >
-              Add Note
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Collapse>
+            Add Note
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

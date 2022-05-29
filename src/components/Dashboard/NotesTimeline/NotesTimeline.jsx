@@ -17,7 +17,8 @@ import {
 import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useState } from "react";
-import SortableNote from "./SortableNote";
+import Fade from "../../Transitions/Fade";
+import SortableItem from "./Sortable/SortableItem";
 
 export default function NotesTimeline({
   noteCollection,
@@ -43,15 +44,18 @@ export default function NotesTimeline({
   // activeId used for overlay
   const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(
-    useSensor(MouseSensor),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 2, // Distance, in pixels, that the note must be dragged before it is considered active
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
     useSensor(TouchSensor, {
-      // Press delay of 100ms, with tolerance of 5px of movement
       activationConstraint: {
         delay: 100,
-        tolerance: 5,
+        tolerance: 5, // Distance, in pixels, of motion that is tolerated before the drag operation is aborted
       },
     })
   );
@@ -74,6 +78,8 @@ export default function NotesTimeline({
     }
     setActiveId(null);
   };
+
+  const draggedNote = noteCollection.find((note) => note.id === activeId);
 
   if (noteStatus === "loading") {
     // If getting notes, display progress bar
@@ -98,6 +104,25 @@ export default function NotesTimeline({
           items={filteredNoteCollection}
           strategy={rectSortingStrategy}
         >
+          {/*<DragOverlay>*/}
+          {/*  {activeId ? (*/}
+          {/*    <NoteDragOverlay*/}
+          {/*      noteID={draggedNote.noteID}*/}
+          {/*      title={draggedNote.title}*/}
+          {/*      description={draggedNote.description}*/}
+          {/*      tags={draggedNote.tags}*/}
+          {/*      categoryName={draggedNote.category}*/}
+          {/*      color={*/}
+          {/*        categories.find(*/}
+          {/*          (category) => category.name === draggedNote.category*/}
+          {/*        )?.color*/}
+          {/*      }*/}
+          {/*      searchValue={searchValue}*/}
+          {/*      noteCollection={noteCollection}*/}
+          {/*      setNoteCollection={setNoteCollection}*/}
+          {/*    />*/}
+          {/*  ) : null}*/}
+          {/*</DragOverlay>*/}
           <Box
             p="1.5em"
             display="grid"
@@ -109,9 +134,10 @@ export default function NotesTimeline({
               {/* AnimatePresence allows components to animate out when they're removed from the React tree */}
               <AnimatePresence>
                 {filteredNoteCollection.map((note, index) => (
-                  <SortableNote
+                  <SortableItem
+                    id={note.id}
                     key={note.id}
-                    isDragging={!!activeId} // If activeId is set, a note is being dragged
+                    isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
                     index={index}
                     noteID={note.id}
                     title={note.title}
@@ -133,30 +159,37 @@ export default function NotesTimeline({
           </Box>
           {/*  If filtered notes is 0, display no notes found message */}
           {filteredNoteCollection.length === 0 && (
-            <Typography
-              sx={{ width: "100%", textAlign: "center" }}
-              variant="h5"
-            >
-              No notes found
-            </Typography>
+            <Fade visible>
+              <Typography
+                sx={{
+                  position: "absolute",
+                  width: "100%",
+                  top: "10%",
+                  textAlign: "center",
+                }}
+                variant="h5"
+              >
+                No notes found...
+              </Typography>
+            </Fade>
           )}
         </SortableContext>
       </DndContext>
     ) : (
       // If no notes, display no notes message
-      <Zoom in>
+      <Fade visible>
         <Typography
           variant={"h3"}
           sx={{
-            position: "relative",
+            position: "absolute",
             width: "100%",
+            top: "10%",
             textAlign: "center",
-            mt: "2.5em",
           }}
         >
           No notes yet.
         </Typography>
-      </Zoom>
+      </Fade>
     );
   }
 }

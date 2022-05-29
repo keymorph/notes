@@ -10,7 +10,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar/Navbar";
 
-import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
+import {darkTheme, lightTheme} from "../themes/theme";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ export default function App({
   }, []);
 
   // Set the theme palette based on the dark mode preference
-  const theme = useMemo(() => (darkMode ? ThemeDark : ThemeLight), [darkMode]);
+  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
 
   // Change the mode when this function is called
   // Store the preference in localStorage
