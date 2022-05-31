@@ -107,7 +107,6 @@ export default function NotesTimeline({
           {/*<DragOverlay>*/}
           {/*  {activeId ? (*/}
           {/*    <NoteDragOverlay*/}
-          {/*      noteID={draggedNote.noteID}*/}
           {/*      title={draggedNote.title}*/}
           {/*      description={draggedNote.description}*/}
           {/*      tags={draggedNote.tags}*/}
@@ -117,9 +116,6 @@ export default function NotesTimeline({
           {/*          (category) => category.name === draggedNote.category*/}
           {/*        )?.color*/}
           {/*      }*/}
-          {/*      searchValue={searchValue}*/}
-          {/*      noteCollection={noteCollection}*/}
-          {/*      setNoteCollection={setNoteCollection}*/}
           {/*    />*/}
           {/*  ) : null}*/}
           {/*</DragOverlay>*/}

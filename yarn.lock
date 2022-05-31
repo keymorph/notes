@@ -236,9 +236,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dnd-kit/core@npm:^6.0.2":
-  version: 6.0.2
-  resolution: "@dnd-kit/core@npm:6.0.2"
+"@dnd-kit/core@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "@dnd-kit/core@npm:6.0.3"
   dependencies:
     "@dnd-kit/accessibility": ^3.0.0
     "@dnd-kit/utilities": ^3.2.0
@@ -246,7 +246,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: ba8b22d1e9357dbccbe8a73b9d5f528927b4ec1563df6fe2224abc9d9aa8742a98be0c34523b99a4ae7fa0b4a0be0f7cedba2b487e001b58fde7af1df3ff85c5
+  checksum: c7279e20bd2e15a529a77338c4abaf85e766b94bac55e4924c59ce430e8bb220b4e0871c9f96bb5f50d15a04a3f88b121b103a46f831fb3e98006800dd95fc8b
   languageName: node
   linkType: hard
 
@@ -1009,9 +1009,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.2.0":
-  version: 13.2.0
-  resolution: "@testing-library/react@npm:13.2.0"
+"@testing-library/react@npm:^13.3.0":
+  version: 13.3.0
+  resolution: "@testing-library/react@npm:13.3.0"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^8.5.0
@@ -1019,7 +1019,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 29f4a97c932a7fd78a55791a0ae0ba8d33c5241acbade98b6714440981e6e3d86a243e0b22161d3323b549ce059c175ae56d6b5053ad44083ab6e40ca211f19e
+  checksum: 98fd8616a7cae0ecfcbe97b5b3c5b91fbafccf449c04875395ccc0e3f0b139e53b3261b9536ec2169a5e2883a1be2098907209064061fe0c2ff21dfbc785dd40
   languageName: node
   linkType: hard
 
@@ -2597,7 +2597,7 @@ __metadata:
   resolution: "frontend@workspace:."
   dependencies:
     "@azure/cosmos": ^3.16.0
-    "@dnd-kit/core": ^6.0.2
+    "@dnd-kit/core": ^6.0.3
     "@dnd-kit/modifiers": ^6.0.0
     "@dnd-kit/sortable": ^7.0.0
     "@dnd-kit/utilities": ^3.2.0
@@ -2610,7 +2610,7 @@ __metadata:
     "@mui/styled-engine-sc": ^5.8.0
     "@testing-library/dom": ^8.13.0
     "@testing-library/jest-dom": ^5.16.4
-    "@testing-library/react": ^13.2.0
+    "@testing-library/react": ^13.3.0
     "@testing-library/user-event": ^14.2.0
     axios: ^0.27.2
     bcrypt: ^5.0.1
@@ -2624,9 +2624,9 @@ __metadata:
     prettier: ^2.6.2
     react: ^18.1.0
     react-dom: ^18.1.0
-    react-query: ^3.39.0
+    react-query: ^3.39.1
     sass: ^1.52.1
-    sharp: ^0.30.5
+    sharp: ^0.30.6
     web-vitals: ^2.1.4
   languageName: unknown
   linkType: soft
@@ -4463,9 +4463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-query@npm:^3.39.0":
-  version: 3.39.0
-  resolution: "react-query@npm:3.39.0"
+"react-query@npm:^3.39.1":
+  version: 3.39.1
+  resolution: "react-query@npm:3.39.1"
   dependencies:
     "@babel/runtime": ^7.5.5
     broadcast-channel: ^3.4.1
@@ -4477,7 +4477,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 18fd745ef86375c73496d6bcffdd4a6d02b48feb1e63c05bcb1881406a91ecf776543d0751b776a6ff6ffddd3d7bf31973a37df8e4eb72d1626c41b815396aef
+  checksum: 9273b7c2adf4a78152d3c0b0ac44cfabacc867d5e8e4ad66e6aaccd8a2bd10c5a836c4d3b462e5f083f273998e1c3dd01ed5d126b7508bcfd615eb5aba419b3b
   languageName: node
   linkType: hard
 
@@ -4774,9 +4774,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:^0.30.5":
-  version: 0.30.5
-  resolution: "sharp@npm:0.30.5"
+"sharp@npm:^0.30.6":
+  version: 0.30.6
+  resolution: "sharp@npm:0.30.6"
   dependencies:
     color: ^4.2.3
     detect-libc: ^2.0.1
@@ -4787,7 +4787,7 @@ __metadata:
     simple-get: ^4.0.1
     tar-fs: ^2.1.1
     tunnel-agent: ^0.6.0
-  checksum: e2b6238770ae1498815c14b2711de9398176a8e1ea1131ef583edc4a1c421f55fd9fe52ffc996ea4a259bdfed2f5d68a076a6ddc85499c229025efbe8ccf0b56
+  checksum: 2560b5769d78ee660d767e59f6fa56531c448d16383f9700e4ecb8016382104c1bb42991bdd4ea741c0f4d934ea5246c5d602fc5f39062bcc1c2c8786421fd5a
   languageName: node
   linkType: hard
 

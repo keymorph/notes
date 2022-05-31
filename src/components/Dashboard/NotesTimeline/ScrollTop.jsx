@@ -5,7 +5,7 @@ import React from "react";
 export default function ScrollTop() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 500,
+    threshold: 2000,
   });
 
   const handleClick = (event) => {

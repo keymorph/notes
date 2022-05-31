@@ -28,7 +28,6 @@ export default function SortableItem({ id, index, isDraggingMode, ...rest }) {
     id: id,
   });
 
-  // const springTransition = !isDraggingMode && { type: "spring", bounce: 0.3, duration: 0.7 };
   const variants = {
     hidden: { opacity: 0, transition: { duration: 0.15 } },
     visible: (i) => ({
@@ -55,14 +54,15 @@ export default function SortableItem({ id, index, isDraggingMode, ...rest }) {
         layout={!isDraggingMode} // Only animate position changes when not dragging
         transition={{ type: "spring", bounce: 0.3, duration: 0.7 }}
         variants={variants}
-        initial="hidden"
+        initial={"hidden"}
         animate={"visible"}
-        exit="hidden"
+        exit={"hidden"}
         custom={index} // Passes parameters to functions inside of variants
       >
         <Note
           dragHandleAttributes={attributes}
           dragHandleListeners={listeners}
+          isDragging={isDragging}
           {...rest}
         />
       </motion.div>

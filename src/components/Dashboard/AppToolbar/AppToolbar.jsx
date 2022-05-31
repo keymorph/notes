@@ -1,5 +1,5 @@
-import { NoteAdd } from "@mui/icons-material";
-import { AppBar, Box, Button, Toolbar } from "@mui/material";
+import { FilterList, MoreVert, NoteAdd } from "@mui/icons-material";
+import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import { useState } from "react";
 import NoteCreateModal from "../NotesTimeline/Note/Modals/NoteCreateModal";
 
@@ -20,17 +20,18 @@ export default function AppToolbar({
 
   return (
     <AppBar
-      position="sticky"
+      position={"sticky"}
       sx={{
         boxShadow: "none",
       }}
     >
       <Toolbar
+        disableGutters
+        variant={"dense"}
         sx={{
           display: "flex",
           justifyContent: "space-between",
         }}
-        variant="dense"
       >
         <NoteCreateModal
           modalOpen={modalOpen}
@@ -41,24 +42,31 @@ export default function AppToolbar({
           setCategories={setCategories}
         />
         <Box
-          width="25vw"
           display={"flex"}
           flexDirection={"row"}
-          alignItems="center"
+          gap={"0.3em"}
+          alignItems={"center"}
+          ml={"0.2em"}
         >
-          {/* Only display the search bar if there are notes */}
+          {/* Only display the search bar and filter if there are notes */}
           {noteCollection.length > 0 && (
-            <ToolbarSearch
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-            />
+            <>
+              <IconButton>
+                <FilterList />
+              </IconButton>
+              <ToolbarSearch
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+              />
+            </>
           )}
         </Box>
         <Box
-          width="15vw"
           display={"flex"}
-          flexDirection={"row-reverse"}
-          alignItems="center"
+          flexDirection={"row"}
+          gap={"0.3em"}
+          alignItems={"center"}
+          mr={"0.2em"}
         >
           <Button
             variant="outlined"
@@ -71,6 +79,9 @@ export default function AppToolbar({
           >
             Add Note
           </Button>
+          <IconButton>
+            <MoreVert />
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

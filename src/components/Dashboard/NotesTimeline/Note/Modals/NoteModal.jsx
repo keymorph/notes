@@ -3,29 +3,32 @@ import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { updateNote } from "../../../../../helpers/requests/note-requests";
 
-export default function NoteEditModal({
-  modalOpen,
-  handleClose,
-  categoryName,
-  tags,
-  description,
+export default function NoteModal({
+  noteID,
   title,
-  handleChipDelete,
+  description,
+  categoryName,
+  categoryColor,
   setTitle,
   setDescription,
-  noteID,
+  setCategoryName,
+  setCategoryColor,
+  modalOpen,
+  handleClose,
 }) {
-  const [categoryColor, setCategoryColor] = useState(1);
-  const [editedTitle, setEditedTitle] = useState(title);
-  const [editedDescription, setEditedDescription] = useState(description);
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
+  const [newCategoryName, setNewCategoryName] = useState(categoryName);
+  const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
 
   // Query Handling
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: () => {
-      // TODO: Add Category and Tags checks once those are implemented
-      // Set the newly edited title and description after the request is successful
-      setTitle(editedTitle);
-      setDescription(editedDescription);
+      // Set the newly edited note data to the global note state
+      setTitle(newTitle);
+      setDescription(newDescription);
+      setCategoryName(newCategoryName);
+      setCategoryColor(newCategoryColor);
     },
     onError: (error) => {
       console.error(error.message);
@@ -34,14 +37,14 @@ export default function NoteEditModal({
 
   const handleNoteEdit = () => {
     // If no changes made, no request necessary
-    if (editedTitle !== title || editedDescription !== description) {
+    if (newTitle !== title || newDescription !== description) {
       const editedNote = {
         noteID: noteID,
-        title: `${editedTitle}`,
-        description: `${editedDescription}`,
+        title: `${newTitle}`,
+        description: `${newDescription}`,
         category: {
-          name: `${categoryName}`,
-          color: `${categoryColor}`,
+          name: `${newCategoryName}`,
+          color: `${newCategoryColor}`,
         },
         tags: tags,
       };
@@ -68,7 +71,7 @@ export default function NoteEditModal({
             right: 0,
             display: "flex",
             flexDirection: "column",
-            width: "80%",
+            width: "90%",
             minWidth: "200px",
             maxWidth: "400px",
             borderRadius: "10px",
@@ -86,9 +89,9 @@ export default function NoteEditModal({
             id="outlined-required"
             label="Title"
             defaultValue={title}
-            error={editedTitle.trim() === ""}
+            error={newTitle.trim() === ""}
             sx={{ mt: 2, mb: 2 }}
-            onChange={(event) => setEditedTitle(event.target.value.trim())}
+            onChange={(event) => setNewTitle(event.target.value.trim())}
           />
 
           <TextField
@@ -98,14 +101,10 @@ export default function NoteEditModal({
             rows={4}
             defaultValue={description}
             sx={{ mb: 2 }}
-            onChange={(event) =>
-              setEditedDescription(event.target.value.trim())
-            }
+            onChange={(event) => setNewDescription(event.target.value.trim())}
           />
 
-          {/* Note Modal: CATEGORY (Chips) Field */}
-
-          <Chip label={categoryName} onDelete={handleChipDelete} />
+          <Chip label={categoryName} />
         </Card>
       </Grow>
     </Modal>

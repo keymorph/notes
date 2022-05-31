@@ -22,17 +22,11 @@ const NoteCard = styled(Card)({
 });
 
 export default function NoteDragOverlay({
-  noteID,
   title,
   description,
   categoryName,
   tags,
   color,
-  noteCollection,
-  setNoteCollection,
-  categories,
-  dragHandleListeners,
-  dragHandleAttributes,
 }) {
   return (
     <Box

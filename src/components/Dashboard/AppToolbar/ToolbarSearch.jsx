@@ -26,9 +26,9 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
       placeholder="Search…"
       value={searchValue}
       sx={{
-        ml: 1,
         borderRadius: 20,
         height: "2em",
+        width: "25vw",
         minWidth: "120px",
         maxWidth: "240px",
       }}

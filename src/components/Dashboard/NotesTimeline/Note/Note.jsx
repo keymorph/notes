@@ -18,7 +18,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../../helpers/requests/note-requests";
-import NoteEditModal from "./Modals/NoteEditModal";
+import NoteModal from "./Modals/NoteModal";
 
 const NoteCard = styled(Card)({
   touchAction: "none", // Disable browser handling of all touch panning and zooming gestures
@@ -42,10 +42,11 @@ export default function Note({
   categories,
   dragHandleListeners,
   dragHandleAttributes,
+  isDragging,
 }) {
   //#region Hooks
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [categoryName, setCategoryName] = useState(initialCategoryName);
@@ -53,14 +54,12 @@ export default function Note({
 
   //#endregion
 
-  const menuOpen = Boolean(anchorEl);
-
   //#region Query Handling
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
     deleteNote,
     {
       onSuccess: ({ data }) => {
-        setAnchorEl(null);
+        setMoreMenuAnchorEl(null);
         setNoteCollection(
           noteCollection.filter((note) => {
             return note.id !== noteID;
@@ -76,7 +75,7 @@ export default function Note({
     createNote,
     {
       onSuccess: ({ data }) => {
-        setAnchorEl(null);
+        setMoreMenuAnchorEl(null);
         // Reflect the database changes on the front-end by adding the newly created note to the NoteCollection
         setNoteCollection((oldArray) => [...oldArray, data.note]);
       },
@@ -96,20 +95,13 @@ export default function Note({
 
   const handleModalClose = () => {
     setModalOpen(false);
-    setAnchorEl(null);
-  };
-
-  // MODAL: Category (Chip)
-  const [chipCategory, deleteChip] = useState(false);
-  // Delete the category for the note, and update the database.
-  const handleChipDelete = () => {
-    deleteChip(true);
+    setMoreMenuAnchorEl(null);
   };
 
   const ref = useRef(null);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    setMoreMenuAnchorEl(event.currentTarget);
   };
 
   const handleDelete = () => {
@@ -134,26 +126,29 @@ export default function Note({
 
   //#endregion
 
+  // Close the menu if the note is being dragged
+  if (moreMenuAnchorEl && isDragging) {
+    setMoreMenuAnchorEl(null);
+  }
+
   return (
     <Box
       sx={{
         display: "flex",
       }}
     >
-      <NoteEditModal
+      <NoteModal
         noteID={noteID}
         title={title}
         description={description}
         categoryName={categoryName}
         categoryColor={color}
-        tags={tags}
         setTitle={setTitle}
         setDescription={setDescription}
         setCategoryName={setCategoryName}
         categories={categories}
         modalOpen={modalOpen}
         handleClose={handleModalClose}
-        handleChipDelete={handleChipDelete}
       />
 
       <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
@@ -179,9 +174,9 @@ export default function Note({
         </Box>
 
         <Menu
-          anchorEl={anchorEl}
-          open={menuOpen}
-          onClose={() => setAnchorEl(null)}
+          anchorEl={moreMenuAnchorEl}
+          open={!!moreMenuAnchorEl}
+          onClose={() => setMoreMenuAnchorEl(null)}
           style={{ opacity: modalOpen ? 0 : 1 }}
         >
           <MenuItem onClick={handleModalOpen}>Edit</MenuItem>
