@@ -1,4 +1,4 @@
-import { notes } from "../models/database.js";
+import {notes} from "../models/database.js";
 
 // Category object
 // {
@@ -74,7 +74,7 @@ const createNote = async (req, res) => {
     .then(({ resource: noteItem }) => {
       return res.status(201).json({
         message: "Note created successfully",
-        note: noteItem.notes[noteItem.notes.length - 1],
+        noteItem,
       });
     })
     .catch((error) => {
@@ -84,54 +84,6 @@ const createNote = async (req, res) => {
       });
     });
 };
-
-// notesCollection > documents > evansDocument,
-//                               dantesDocument,
-//                               richsDocument ------>
-//                     notes: [
-//                                {
-//                                  note 1
-//                                }
-
-//                                {
-//                                 note 2
-//                               }
-//                               ]
-// categories [
-
-// ]
-// // {
-//  notes: [
-//   {"title"
-// "description"
-// "category"
-// "tags"
-// "id"
-// "created_at"
-// },
-// {"title"
-// "description"
-// "category"
-// "tags"
-// "id"
-// "created_at"
-// },
-// {"title"
-// "description"
-// "category"
-// "tags"
-// "id"
-// "created_at"
-// }
-// ]
-// }
-//   title: req.body.title,
-//   description: req.body.description,
-//   category: req.body.category.name, // The category the note belongs to
-//   tags: req.body.tags, // The tags the note has
-//   id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
-//   created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
-// };
 
 const getNoteItem = async (req, res) => {
   return notes
@@ -225,9 +177,10 @@ const editNote = async (req, res) => {
   return notes
     .item(req.headers.userid, req.headers.userid)
     .patch(noteItemPatchOperation)
-    .then(() => {
+    .then(({ resource: noteItem }) => {
       return res.status(200).json({
         message: "Note updated successfully",
+        noteItem,
       });
     })
     .catch((error) => {
@@ -287,9 +240,10 @@ const removeNote = async (req, res) => {
   return notes
     .item(req.headers.userid, req.headers.userid)
     .patch(noteItemPatchOperation)
-    .then(() => {
+    .then(({ resource: noteItem }) => {
       return res.status(200).json({
         message: "Note deleted successfully",
+        noteItem,
       });
     })
     .catch((error) => {
