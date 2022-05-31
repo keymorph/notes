@@ -1,7 +1,12 @@
-import { Card, Chip, Grow, Modal, TextField, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Card, Grow, Modal, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { updateNote } from "../../../../../helpers/requests/note-requests";
+import {
+  createNote,
+  updateNote,
+} from "../../../../../helpers/requests/note-requests";
+import CategoryChip from "../../../../Misc/Chips/CategoryChip";
 
 export default function NoteModal({
   noteID,
@@ -9,31 +14,74 @@ export default function NoteModal({
   description,
   categoryName,
   categoryColor,
-  setTitle,
-  setDescription,
-  setCategoryName,
-  setCategoryColor,
+  categories,
+  setNoteCollection,
+  setCategories,
+  action,
   modalOpen,
-  handleClose,
+  handleModalClose,
 }) {
+  //#region Hooks
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
 
-  // Query Handling
+  //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
-    onSuccess: () => {
-      // Set the newly edited note data to the global note state
-      setTitle(newTitle);
-      setDescription(newDescription);
-      setCategoryName(newCategoryName);
-      setCategoryColor(newCategoryColor);
+    onSuccess: ({ data }) => {
+      // Reflect the database changes on the front-end
+      setCategories(data.noteItem.categories);
+      setNoteCollection(data.noteItem.notes.reverse());
     },
     onError: (error) => {
       console.error(error.message);
     },
   });
+
+  const { mutate: mutateCreate, status: createStatus } = useMutation(
+    createNote,
+    {
+      onSuccess: ({ data }) => {
+        handleModalClose();
+        clearModalValues();
+        // Reflect the database changes on the front-end
+        setCategories(data.noteItem.categories);
+        setNoteCollection(data.noteItem.notes.reverse());
+      },
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
+
+  //#endregion
+  //#endregion
+
+  //#region Helper Functions
+
+  const clearModalValues = () => {
+    setNewTitle("");
+    setNewDescription("");
+    setNewCategoryName("");
+    setNewCategoryColor("");
+  };
+
+  //#endregion
+
+  //#region Handlers
+  const handleCreateNote = () => {
+    const newNote = {
+      title: `${title}`,
+      description: `${description}`,
+      category: {
+        name: `${categoryName}`,
+        color: `${categoryName ? categoryColor : 0}`,
+      },
+      tags: [],
+    };
+    mutateCreate(newNote);
+  };
 
   const handleNoteEdit = () => {
     // If no changes made, no request necessary
@@ -46,12 +94,14 @@ export default function NoteModal({
           name: `${newCategoryName}`,
           color: `${newCategoryColor}`,
         },
-        tags: tags,
+        tags: [],
       };
       mutateEdit(editedNote);
     }
-    handleClose();
+    handleModalClose();
   };
+
+  const handleCategoryColorPopperOpen = null;
 
   return (
     <Modal
@@ -79,10 +129,8 @@ export default function NoteModal({
           }}
         >
           <Typography variant="h5" color={"primary"}>
-            Edit Note
+            {action === "edit" ? "Edit Note" : "Create a Note"}
           </Typography>
-
-          {/* Note Modal: TITLE Field */}
 
           <TextField
             required
@@ -104,7 +152,33 @@ export default function NoteModal({
             onChange={(event) => setNewDescription(event.target.value.trim())}
           />
 
-          <Chip label={categoryName} />
+          {/* If a note is in a category, display the category color and name */}
+          {categoryName ? (
+            <CategoryChip
+              label={categoryName}
+              categoryName={newCategoryName}
+              categoryColor={newCategoryColor}
+              setCategoryName={setNewCategoryName}
+              setCategoryColor={setNewCategoryColor}
+              onClick={handleCategoryColorPopperOpen}
+              onDelete={() => setNewCategoryName("")}
+            />
+          ) : null}
+
+          <LoadingButton
+            loading={editStatus === "loading" || createStatus === "loading"}
+            variant="contained"
+            size="small"
+            disabled={newTitle.trim() === ""} // Disable button if required title field is empty
+            onClick={action === "edit" ? handleNoteEdit : handleNoteCreate}
+            sx={{
+              border: "1px",
+              mt: 2,
+              ml: "auto",
+            }}
+          >
+            {action === "edit" ? "Save" : "Create"}
+          </LoadingButton>
         </Card>
       </Grow>
     </Modal>

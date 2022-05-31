@@ -52,10 +52,7 @@ export default function NoteCreateModal({
 
         // Reflect the database changes on the front-end
         // Add the newly created note to the NoteCollection
-        setNoteCollection((oldNoteCollection) => [
-          data.note,
-          ...oldNoteCollection,
-        ]);
+        setNoteCollection(data.noteItem.notes);
       },
       onError: (error) => {
         console.error(error.message);

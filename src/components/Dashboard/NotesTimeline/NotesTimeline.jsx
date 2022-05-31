@@ -24,6 +24,7 @@ export default function NotesTimeline({
   noteCollection,
   setNoteCollection,
   categories,
+  setCategories,
   searchValue,
   noteStatus,
 }) {
@@ -140,14 +141,16 @@ export default function NotesTimeline({
                     description={note.description}
                     tags={note.tags}
                     categoryName={note.category}
-                    color={
+                    categoryColor={
                       categories.find(
                         (category) => category.name === note.category
                       )?.color
                     }
                     searchValue={searchValue}
                     noteCollection={noteCollection}
+                    categories={categories}
                     setNoteCollection={setNoteCollection}
+                    setCategories={setCategories}
                   />
                 ))}
               </AnimatePresence>

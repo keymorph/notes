@@ -35,11 +35,12 @@ export default function Note({
   title: initialTitle,
   description: initialDescription,
   categoryName: initialCategoryName,
+  categoryColor: initialCategoryColor,
   tags,
-  color,
+  categories,
   noteCollection,
   setNoteCollection,
-  categories,
+  setCategories,
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
@@ -50,21 +51,18 @@ export default function Note({
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [categoryName, setCategoryName] = useState(initialCategoryName);
+  const [categoryColor, setCategoryColor] = useState(initialCategoryColor);
   const [description, setDescription] = useState(initialDescription);
 
-  //#endregion
-
-  //#region Query Handling
+  //#region Query Handling Hooks
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
     deleteNote,
     {
       onSuccess: ({ data }) => {
         setMoreMenuAnchorEl(null);
-        setNoteCollection(
-          noteCollection.filter((note) => {
-            return note.id !== noteID;
-          })
-        );
+        // Reflect the database changes on the front-end
+        setCategories(data.noteItem.categories);
+        setNoteCollection(data.noteItem.notes.reverse());
       },
       onError: (error) => {
         console.error(error.message);
@@ -76,8 +74,9 @@ export default function Note({
     {
       onSuccess: ({ data }) => {
         setMoreMenuAnchorEl(null);
-        // Reflect the database changes on the front-end by adding the newly created note to the NoteCollection
-        setNoteCollection((oldArray) => [...oldArray, data.note]);
+        // Reflect the database changes on the front-end
+        setCategories(data.noteItem.categories);
+        setNoteCollection(data.noteItem.notes.reverse());
       },
       onError: (error) => {
         console.error(error.message);
@@ -85,6 +84,7 @@ export default function Note({
     }
   );
 
+  //#endregion
   //#endregion
 
   //#region Handlers
@@ -116,7 +116,7 @@ export default function Note({
       description: description,
       category: {
         name: categoryName,
-        color: color,
+        color: categoryColor,
         note_count: 1, // Number of notes in this category, always 1 when creating a note
       },
       tags: tags,
@@ -142,19 +142,20 @@ export default function Note({
         title={title}
         description={description}
         categoryName={categoryName}
-        categoryColor={color}
-        setTitle={setTitle}
-        setDescription={setDescription}
-        setCategoryName={setCategoryName}
+        categoryColor={categoryColor}
         categories={categories}
+        setCategories={setCategories}
+        action={"edit"}
         modalOpen={modalOpen}
-        handleClose={handleModalClose}
+        handleModalClose={handleModalClose}
       />
 
       <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
         <Box
           sx={{
-            backgroundColor: color ? `category.${color}` : `category.none`,
+            backgroundColor: categoryColor
+              ? `category.${categoryColor}`
+              : `category.none`,
             display: "flex",
             position: "relative",
           }}

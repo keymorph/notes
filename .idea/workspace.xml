@@ -5,19 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/CategoriesModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/ManageCategories.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Misc/Chips/CategoryChip.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Misc/Poppers/CategoryPalettePopper.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteEditModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/CategoriesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/ManageCategoriesModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/ManageCategories.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteCreateModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteCreateModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Modals/NoteModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/Overlays/NoteDragOverlay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/Overlays/NoteDragOverlay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/SortableItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/SortableItem.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,11 +123,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Misc" />
       <recent name="C:\dev\Projects\notetakingapp\src" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline\Sortable" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline\Sortable\Overlays" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline\Note\Modals" />
-      <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
     </key>
   </component>
   <component name="RunManager">
@@ -230,7 +228,7 @@
       <workItem from="1653793422624" duration="242000" />
       <workItem from="1653793750756" duration="836000" />
       <workItem from="1653876478581" duration="4685000" />
-      <workItem from="1653899463501" duration="6702000" />
+      <workItem from="1653899463501" duration="23504000" />
     </task>
     <servers />
   </component>
