@@ -42,7 +42,8 @@ export default function Dashboard() {
       staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     }
   );
-  console.info(noteCollection);
+  console.info("Note Collection: ", noteCollection);
+  console.info("Categories: ", categories);
 
   return sessionStatus === "authenticated" ? (
     <Box>

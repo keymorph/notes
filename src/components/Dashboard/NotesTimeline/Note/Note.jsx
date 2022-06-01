@@ -32,10 +32,10 @@ const NoteCard = styled(Card)({
 
 export default function Note({
   noteID,
-  title: initialTitle,
-  description: initialDescription,
-  categoryName: initialCategoryName,
-  categoryColor: initialCategoryColor,
+  title,
+  description,
+  categoryName,
+  categoryColor,
   tags,
   categories,
   noteCollection,
@@ -49,10 +49,6 @@ export default function Note({
 
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [title, setTitle] = useState(initialTitle);
-  const [categoryName, setCategoryName] = useState(initialCategoryName);
-  const [categoryColor, setCategoryColor] = useState(initialCategoryColor);
-  const [description, setDescription] = useState(initialDescription);
 
   //#region Query Handling Hooks
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
@@ -145,6 +141,7 @@ export default function Note({
         categoryColor={categoryColor}
         categories={categories}
         setCategories={setCategories}
+        setNoteCollection={setNoteCollection}
         action={"edit"}
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}

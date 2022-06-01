@@ -1,10 +1,11 @@
 import { Circle, HighlightOff } from "@mui/icons-material";
-import { Box, Chip, Grow, IconButton, Input, useTheme } from "@mui/material";
+import { Box, Chip, IconButton, Input, useTheme } from "@mui/material";
+import { AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import PopIn from "../../Transitions/PopIn";
 
 export default function CategoryChip({
-  label,
   categoryName,
   categoryColor,
   setCategoryName,
@@ -54,34 +55,38 @@ export default function CategoryChip({
         variant="outlined"
       />
 
-      {isPaletteOpen && (
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          justifyContent={"space-evenly"}
-        >
-          {categoryColors.map((category, index) => (
-            <Grow
-              key={index}
-              in
-              style={{ transformOrigin: "0 0 0" }}
-              timeout={index * 250}
+      <AnimatePresence>
+        {isPaletteOpen && (
+          <PopIn>
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              py={"1em"}
+              sx={{
+                overflowX: "scroll",
+                overflowY: "hidden",
+                // boxShadow: `inset 2em 0px 1em -1em #000, inset -2em 0px 1em -1em #000`,
+              }}
             >
-              <IconButton
-                sx={{
-                  color: `category.${category}`,
-                }}
-                size={"small"}
-                onClick={() => {
-                  setCategoryColor(category);
-                }}
-              >
-                <Circle fontSize={"large"} />
-              </IconButton>
-            </Grow>
-          ))}
-        </Box>
-      )}
+              {categoryColors.map((category, index) => (
+                <PopIn key={index}>
+                  <IconButton
+                    sx={{
+                      color: `category.${category}`,
+                    }}
+                    size={"small"}
+                    onClick={() => {
+                      setCategoryColor(category);
+                    }}
+                  >
+                    <Circle fontSize={"large"} />
+                  </IconButton>
+                </PopIn>
+              ))}
+            </Box>
+          </PopIn>
+        )}
+      </AnimatePresence>
     </>
   );
 }

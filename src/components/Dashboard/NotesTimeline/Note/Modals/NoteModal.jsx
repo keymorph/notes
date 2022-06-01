@@ -26,6 +26,7 @@ export default function NoteModal({
   const [newDescription, setNewDescription] = useState(description);
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
+  const [hasCategory, setHasCategory] = useState(categoryName !== "");
 
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
@@ -72,11 +73,11 @@ export default function NoteModal({
   //#region Handlers
   const handleCreateNote = () => {
     const newNote = {
-      title: `${title}`,
-      description: `${description}`,
+      title: `${newTitle}`,
+      description: `${newDescription}`,
       category: {
-        name: `${categoryName}`,
-        color: `${categoryName ? categoryColor : 0}`,
+        name: `${newCategoryName}`,
+        color: `${newCategoryColor || "none"}`,
       },
       tags: [],
     };
@@ -84,8 +85,13 @@ export default function NoteModal({
   };
 
   const handleNoteEdit = () => {
-    // If no changes made, no request necessary
-    if (newTitle !== title || newDescription !== description) {
+    // If no changes made, no database request necessary
+    if (
+      newTitle !== title ||
+      newDescription !== description ||
+      newCategoryName !== categoryName ||
+      newCategoryColor !== categoryColor
+    ) {
       const editedNote = {
         noteID: noteID,
         title: `${newTitle}`,
@@ -106,17 +112,16 @@ export default function NoteModal({
   return (
     <Modal
       open={modalOpen}
-      onClose={handleNoteEdit}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      onClose={action === "edit" ? handleNoteEdit : handleModalClose()}
+      closeAfterTransition
     >
       <Grow in={modalOpen}>
         <Card
           sx={{
             position: "fixed",
-            mt: "30vh",
+            mt: "25vh",
             mx: "auto",
-            p: 4,
+            p: 2,
             left: 0,
             right: 0,
             display: "flex",
@@ -153,15 +158,13 @@ export default function NoteModal({
           />
 
           {/* If a note is in a category, display the category color and name */}
-          {categoryName ? (
+          {hasCategory ? (
             <CategoryChip
-              label={categoryName}
               categoryName={newCategoryName}
               categoryColor={newCategoryColor}
               setCategoryName={setNewCategoryName}
               setCategoryColor={setNewCategoryColor}
-              onClick={handleCategoryColorPopperOpen}
-              onDelete={() => setNewCategoryName("")}
+              onDelete={() => setHasCategory(false)}
             />
           ) : null}
 

@@ -17,7 +17,7 @@ import {
 import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { useState } from "react";
-import Fade from "../../Transitions/Fade";
+import PopIn from "../../Transitions/PopIn";
 import SortableItem from "./Sortable/SortableItem";
 
 export default function NotesTimeline({
@@ -158,7 +158,7 @@ export default function NotesTimeline({
           </Box>
           {/*  If filtered notes is 0, display no notes found message */}
           {filteredNoteCollection.length === 0 && (
-            <Fade visible>
+            <PopIn visible>
               <Typography
                 sx={{
                   position: "absolute",
@@ -170,13 +170,13 @@ export default function NotesTimeline({
               >
                 No notes found...
               </Typography>
-            </Fade>
+            </PopIn>
           )}
         </SortableContext>
       </DndContext>
     ) : (
       // If no notes, display no notes message
-      <Fade visible>
+      <PopIn visible>
         <Typography
           variant={"h3"}
           sx={{
@@ -188,7 +188,7 @@ export default function NotesTimeline({
         >
           No notes yet.
         </Typography>
-      </Fade>
+      </PopIn>
     );
   }
 }
