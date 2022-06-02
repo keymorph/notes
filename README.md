@@ -8,7 +8,7 @@
 
 > **Name:** "Jotfox"  
 > **Description:** Simple note-taking web application.  
-> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, dnd kit and CosmosDB.  
+> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, Framer Motion, dnd kit and CosmosDB.  
 > **Start Date:** 08/13/2021  
 > **End Date:** --  
 > **Links:** https://www.notes.fourscript.com/
