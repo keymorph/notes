@@ -1,16 +1,19 @@
 import { Circle, HighlightOff } from "@mui/icons-material";
-import { Box, Chip, IconButton, Input, useTheme } from "@mui/material";
+import { Box, Chip, IconButton, Input, Tooltip, useTheme } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import PopIn from "../../Transitions/PopIn";
+import PopIn from "../../../../../Transitions/PopIn";
 
 export default function CategoryChip({
   categoryName,
   categoryColor,
-  setCategoryName,
-  setCategoryColor,
-  onDelete,
+  setCategoryName = null,
+  setCategoryColor = null,
+  onSelect = null,
+  onDelete = null,
+  disableEdit = true,
+  chipStyles = {},
 }) {
   const theme = useTheme();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
@@ -24,34 +27,40 @@ export default function CategoryChip({
   return (
     <>
       <Chip
-        sx={{
-          width: "100%",
-        }}
         icon={
-          <IconButton
-            size={"small"}
-            color={"inherit"}
-            onClick={handleOpenPopper}
-          >
-            <Circle
-              sx={{
-                color: categoryColor
-                  ? `category.${categoryColor}`
-                  : "category.none",
-              }}
-            />
-          </IconButton>
+          <Tooltip title="Change Color" placement="top" arrow>
+            <IconButton
+              size={"small"}
+              disabled={disableEdit}
+              onClick={handleOpenPopper}
+            >
+              <Circle
+                sx={{
+                  color: categoryColor
+                    ? `category.${categoryColor}`
+                    : "category.none",
+                }}
+              />
+            </IconButton>
+          </Tooltip>
         }
         label={
           <Input
             defaultValue={categoryName}
             placeholder={"Name the category"}
+            disabled={true} // Indefinitely disabled for now
             disableUnderline
             onChange={(e) => setCategoryName(e.target.value)}
           />
         }
-        deleteIcon={<HighlightOff sx={{ ml: "auto !important" }} />}
+        deleteIcon={
+          <Tooltip title="Remove Category" placement="top" arrow>
+            <HighlightOff sx={{ ml: "auto !important" }} />
+          </Tooltip>
+        }
+        style={chipStyles}
         onDelete={onDelete}
+        onClick={onSelect}
         variant="outlined"
       />
 

@@ -6,7 +6,8 @@ import {
   createNote,
   updateNote,
 } from "../../../../../helpers/requests/note-requests";
-import CategoryChip from "../../../../Misc/Chips/CategoryChip";
+import CategoryChip from "./Category/CategoryChip";
+import SearchCategory from "./Category/SearchCategory";
 
 export default function NoteModal({
   noteID,
@@ -26,7 +27,10 @@ export default function NoteModal({
   const [newDescription, setNewDescription] = useState(description);
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
-  const [hasCategory, setHasCategory] = useState(categoryName !== "");
+  const [displayCategoryChip, setDisplayCategoryChip] = useState(
+    categoryName !== ""
+  );
+  const [isCategoryNew, setIsCategoryNew] = useState(false);
 
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
@@ -93,7 +97,7 @@ export default function NoteModal({
       newCategoryColor !== categoryColor
     ) {
       const editedNote = {
-        noteID: noteID,
+        noteID: Number(noteID),
         title: `${newTitle}`,
         description: `${newDescription}`,
         category: {
@@ -107,7 +111,11 @@ export default function NoteModal({
     handleModalClose();
   };
 
-  const handleCategoryColorPopperOpen = null;
+  const handleCategoryChipDelete = () => {
+    setNewCategoryName("");
+    setNewCategoryColor("none");
+    setDisplayCategoryChip(false);
+  };
 
   return (
     <Modal
@@ -157,17 +165,26 @@ export default function NoteModal({
             onChange={(event) => setNewDescription(event.target.value.trim())}
           />
 
-          {/* If a note is in a category, display the category color and name */}
-          {hasCategory ? (
+          {/* Display the proper component based */}
+          {displayCategoryChip ? (
             <CategoryChip
               categoryName={newCategoryName}
               categoryColor={newCategoryColor}
               setCategoryName={setNewCategoryName}
               setCategoryColor={setNewCategoryColor}
-              onDelete={() => setHasCategory(false)}
+              onDelete={handleCategoryChipDelete}
+              disableEdit={!isCategoryNew} // Enable edit if category is new
             />
-          ) : null}
-
+          ) : (
+            <SearchCategory
+              categories={categories}
+              categoryName={newCategoryName}
+              setCategoryName={setNewCategoryName}
+              setCategoryColor={setNewCategoryColor}
+              setIsCategoryNew={setIsCategoryNew}
+              setDisplayCategoryChip={setDisplayCategoryChip}
+            />
+          )}
           <LoadingButton
             loading={editStatus === "loading" || createStatus === "loading"}
             variant="contained"

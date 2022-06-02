@@ -117,9 +117,16 @@ const editNote = async (req, res) => {
 
   // Get the note to be edited
   const noteIdx = noteItem.notes.findIndex(
-    (note) => note.id == req.body.noteID
+    (note) => note.id === req.body.noteID
   );
+  if (noteIdx === -1) {
+    return res.status(404).json({
+      message: "Note to edit not found",
+    });
+  }
+
   const noteToEdit = noteItem.notes[noteIdx];
+
   let [categoriesObjArr, tagsArr] = [noteItem.categories, noteItem.tags];
   let categoryIsNew = true; // Track if the category is new
   let tagsToAdd = req.body.tags; // Track the tags to be added
@@ -134,14 +141,16 @@ const editNote = async (req, res) => {
         categoryIsNew = false;
       }
     });
-    if (categoryIsNew) {
-      categoriesObjArr.push({
-        name: req.body.category.name,
-        color: req.body.category.color,
-        note_count: 1,
-      });
-    }
   }
+  // Create category if it is new
+  if (categoryIsNew) {
+    categoriesObjArr.push({
+      name: req.body.category.name,
+      color: req.body.category.color,
+      note_count: 1,
+    });
+  }
+
   // Check if tags have changed, if so, add the new tags to the global tags array
   if (req.body.tags !== noteToEdit.tags) {
     tagsToAdd = req.body.tags.filter((tag) => !tagsArr.includes(tag));

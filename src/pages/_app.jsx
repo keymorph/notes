@@ -59,8 +59,8 @@ export default function App({
                 disableGutters
                 sx={{
                   background: darkMode
-                    ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
-                    : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
+                    ? "linear-gradient(45deg, #002081 30%, #0056C0 90%)"
+                    : "linear-gradient(45deg, #0056B0 30%, #0080B0 90%)",
                   minHeight: "100vh",
                   height: "100%",
                 }}
