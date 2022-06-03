@@ -11,7 +11,7 @@
 > **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, Framer Motion, dnd kit and CosmosDB.  
 > **Start Date:** 08/13/2021  
 > **End Date:** --  
-> **Links:** https://www.notes.fourscript.com/
+> **Links:** https://jotfox.keymorph.com/
 
 :busts_in_silhouette: **CONTRIBUTING FOURSCRIPTERS:**
 
