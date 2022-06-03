@@ -18,7 +18,7 @@ export default function Dashboard() {
   }
 
   const [noteCollection, setNoteCollection] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categoriesCollection, setCategoriesCollection] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
@@ -33,7 +33,7 @@ export default function Dashboard() {
         // Note: new users will not have a noteItem, but it will be created when the user creates their first note
         if (noteItem) {
           setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-          setCategories(noteItem.categories);
+          setCategoriesCollection(noteItem.categories);
         }
       },
       onError: (error) => {
@@ -43,23 +43,23 @@ export default function Dashboard() {
     }
   );
   console.info("Note Collection: ", noteCollection);
-  console.info("Categories: ", categories);
+  console.info("Categories: ", categoriesCollection);
 
   return sessionStatus === "authenticated" ? (
     <Box>
       <AppToolbar
         noteCollection={noteCollection}
         setNoteCollection={setNoteCollection}
-        categories={categories}
-        setCategories={setCategories}
+        categoriesCollection={categoriesCollection}
+        setCategoriesCollection={setCategoriesCollection}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
       <NotesTimeline
         noteCollection={noteCollection}
         setNoteCollection={setNoteCollection}
-        categories={categories}
-        setCategories={setCategories}
+        categoriesCollection={categoriesCollection}
+        setCategoriesCollection={setCategoriesCollection}
         searchValue={searchValue}
         noteStatus={noteStatus}
       />

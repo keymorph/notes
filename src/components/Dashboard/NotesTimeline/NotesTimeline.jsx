@@ -15,7 +15,7 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
-import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import PopIn from "../../Transitions/PopIn";
 import SortableItem from "./Sortable/SortableItem";
@@ -23,8 +23,8 @@ import SortableItem from "./Sortable/SortableItem";
 export default function NotesTimeline({
   noteCollection,
   setNoteCollection,
-  categories,
-  setCategories,
+  categoriesCollection,
+  setCategoriesCollection,
   searchValue,
   noteStatus,
 }) {
@@ -113,7 +113,7 @@ export default function NotesTimeline({
           {/*      tags={draggedNote.tags}*/}
           {/*      categoryName={draggedNote.category}*/}
           {/*      color={*/}
-          {/*        categories.find(*/}
+          {/*        categoriesCollection.find(*/}
           {/*          (category) => category.name === draggedNote.category*/}
           {/*        )?.color*/}
           {/*      }*/}
@@ -127,34 +127,32 @@ export default function NotesTimeline({
             gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
             justifyItems="center"
           >
-            <LayoutGroup>
-              {/* AnimatePresence allows components to animate out when they're removed from the React tree */}
-              <AnimatePresence>
-                {filteredNoteCollection.map((note, index) => (
-                  <SortableItem
-                    id={note.id}
-                    key={note.id}
-                    isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
-                    index={index}
-                    noteID={note.id}
-                    title={note.title}
-                    description={note.description}
-                    tags={note.tags}
-                    categoryName={note.category}
-                    categoryColor={
-                      categories.find(
-                        (category) => category.name === note.category
-                      )?.color
-                    }
-                    searchValue={searchValue}
-                    noteCollection={noteCollection}
-                    categories={categories}
-                    setNoteCollection={setNoteCollection}
-                    setCategories={setCategories}
-                  />
-                ))}
-              </AnimatePresence>
-            </LayoutGroup>
+            {/* AnimatePresence allows components to animate out when they're removed from the React tree */}
+            <AnimatePresence>
+              {filteredNoteCollection.map((note, index) => (
+                <SortableItem
+                  id={note.id}
+                  key={note.id}
+                  isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
+                  index={index}
+                  noteID={note.id}
+                  title={note.title}
+                  description={note.description}
+                  tags={note.tags}
+                  categoryName={note.category}
+                  categoryColor={
+                    categoriesCollection.find(
+                      (category) => category.name === note.category
+                    )?.color
+                  }
+                  searchValue={searchValue}
+                  noteCollection={noteCollection}
+                  categoriesCollection={categoriesCollection}
+                  setNoteCollection={setNoteCollection}
+                  setCategoriesCollection={setCategoriesCollection}
+                />
+              ))}
+            </AnimatePresence>
           </Box>
           {/*  If filtered notes is 0, display no notes found message */}
           {filteredNoteCollection.length === 0 && (

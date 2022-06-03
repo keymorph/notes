@@ -10,7 +10,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar/Navbar";
 
-import {darkTheme, lightTheme} from "../themes/theme";
+import {darkTheme, lightTheme} from "../styles/themes/theme";
 
 const queryClient = new QueryClient();
 
@@ -58,9 +58,7 @@ export default function App({
                 maxWidth={false} // Remove default max width
                 disableGutters
                 sx={{
-                  background: darkMode
-                    ? "linear-gradient(45deg, #002081 30%, #0056C0 90%)"
-                    : "linear-gradient(45deg, #0056B0 30%, #0080B0 90%)",
+                  background: darkMode ? "#002081" : "#0056B0",
                   minHeight: "100vh",
                   height: "100%",
                 }}

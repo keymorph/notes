@@ -1,22 +1,22 @@
 import { FilterList, MoreVert, NoteAdd } from "@mui/icons-material";
 import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import { useState } from "react";
-import NoteCreateModal from "../NotesTimeline/Note/Modals/NoteCreateModal";
+import NoteModal from "../NotesTimeline/Note/Modals/NoteModal";
 
 import ToolbarSearch from "./ToolbarSearch";
 
 export default function AppToolbar({
   noteCollection,
-  setNoteCollection,
-  setSearchValue,
-  categories,
+  categoriesCollection,
   searchValue,
-  setCategories,
+  setNoteCollection,
+  setCategoriesCollection,
+  setSearchValue,
 }) {
   // MODAL
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
+  const handleModalClose = () => setModalOpen(false);
 
   return (
     <AppBar
@@ -33,13 +33,14 @@ export default function AppToolbar({
           justifyContent: "space-between",
         }}
       >
-        <NoteCreateModal
+        <NoteModal
+          action={"create"}
           modalOpen={modalOpen}
-          handleClose={handleClose}
+          handleModalClose={handleModalClose}
           noteCollection={noteCollection}
           setNoteCollection={setNoteCollection}
-          categories={categories}
-          setCategories={setCategories}
+          categoriesCollection={categoriesCollection}
+          setCategoriesCollection={setCategoriesCollection}
         />
         <Box
           display={"flex"}

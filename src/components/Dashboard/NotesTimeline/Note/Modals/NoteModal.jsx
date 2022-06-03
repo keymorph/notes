@@ -1,11 +1,13 @@
 import { LoadingButton } from "@mui/lab";
 import { Card, Grow, Modal, TextField, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import {
   createNote,
   updateNote,
 } from "../../../../../helpers/requests/note-requests";
+import { variantFadeSlideUpSlow } from "../../../../../styles/transitions/definitions";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";
 
@@ -15,20 +17,22 @@ export default function NoteModal({
   description,
   categoryName,
   categoryColor,
-  categories,
+  categoriesCollection,
   setNoteCollection,
-  setCategories,
+  setCategoriesCollection,
   action,
   modalOpen,
   handleModalClose,
 }) {
   //#region Hooks
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newCategoryName, setNewCategoryName] = useState(categoryName);
-  const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
+  const [newTitle, setNewTitle] = useState(title); // Cannot make it a string because we use the null value to check if the user has typed anything
+  const [newDescription, setNewDescription] = useState(description || "");
+  const [newCategoryName, setNewCategoryName] = useState(categoryName || "");
+  const [newCategoryColor, setNewCategoryColor] = useState(
+    categoryColor || "none"
+  );
   const [displayCategoryChip, setDisplayCategoryChip] = useState(
-    categoryName !== ""
+    !!categoryName
   );
   const [isCategoryNew, setIsCategoryNew] = useState(false);
 
@@ -36,7 +40,7 @@ export default function NoteModal({
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
       // Reflect the database changes on the front-end
-      setCategories(data.noteItem.categories);
+      setCategoriesCollection(data.noteItem.categories);
       setNoteCollection(data.noteItem.notes.reverse());
     },
     onError: (error) => {
@@ -51,7 +55,7 @@ export default function NoteModal({
         handleModalClose();
         clearModalValues();
         // Reflect the database changes on the front-end
-        setCategories(data.noteItem.categories);
+        setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
       },
       onError: (error) => {
@@ -88,7 +92,7 @@ export default function NoteModal({
     mutateCreate(newNote);
   };
 
-  const handleNoteEdit = () => {
+  const handleEditNote = () => {
     // If no changes made, no database request necessary
     if (
       newTitle !== title ||
@@ -117,10 +121,12 @@ export default function NoteModal({
     setDisplayCategoryChip(false);
   };
 
+  const titleError = newTitle?.trim() === "";
+
   return (
     <Modal
       open={modalOpen}
-      onClose={action === "edit" ? handleNoteEdit : handleModalClose()}
+      onClose={action === "edit" ? handleEditNote : handleModalClose}
       closeAfterTransition
     >
       <Grow in={modalOpen}>
@@ -150,8 +156,14 @@ export default function NoteModal({
             id="outlined-required"
             label="Title"
             defaultValue={title}
-            error={newTitle.trim() === ""}
+            error={titleError}
+            helperText={titleError && "Please enter a title"}
             sx={{ mt: 2, mb: 2 }}
+            inputProps={{
+              style: {
+                transition: "all 0.3s ease-in-out",
+              },
+            }}
             onChange={(event) => setNewTitle(event.target.value.trim())}
           />
 
@@ -165,19 +177,26 @@ export default function NoteModal({
             onChange={(event) => setNewDescription(event.target.value.trim())}
           />
 
-          {/* Display the proper component based */}
+          {/* Display either the category chip or the search category component based on the user intended action */}
           {displayCategoryChip ? (
-            <CategoryChip
-              categoryName={newCategoryName}
-              categoryColor={newCategoryColor}
-              setCategoryName={setNewCategoryName}
-              setCategoryColor={setNewCategoryColor}
-              onDelete={handleCategoryChipDelete}
-              disableEdit={!isCategoryNew} // Enable edit if category is new
-            />
+            <motion.div
+              variants={variantFadeSlideUpSlow}
+              initial={"hidden"}
+              animate={"visible"}
+              exit={"hidden"}
+            >
+              <CategoryChip
+                categoryName={newCategoryName}
+                categoryColor={newCategoryColor}
+                setCategoryName={setNewCategoryName}
+                setCategoryColor={setNewCategoryColor}
+                onDelete={handleCategoryChipDelete}
+                enableEditColor={isCategoryNew} // Enable edit if category is new
+              />
+            </motion.div>
           ) : (
             <SearchCategory
-              categories={categories}
+              categoriesCollection={categoriesCollection}
               categoryName={newCategoryName}
               setCategoryName={setNewCategoryName}
               setCategoryColor={setNewCategoryColor}
@@ -189,8 +208,8 @@ export default function NoteModal({
             loading={editStatus === "loading" || createStatus === "loading"}
             variant="contained"
             size="small"
-            disabled={newTitle.trim() === ""} // Disable button if required title field is empty
-            onClick={action === "edit" ? handleNoteEdit : handleNoteCreate}
+            disabled={!newTitle || titleError} // Disable button if required title field is empty
+            onClick={action === "edit" ? handleEditNote : handleCreateNote}
             sx={{
               border: "1px",
               mt: 2,

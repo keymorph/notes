@@ -6,11 +6,17 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import {
+  springShort,
+  variantFadeSlideDown,
+} from "../../../../../../styles/transitions/definitions";
+import PopIn from "../../../../../Transitions/PopIn";
 import CategoryChip from "./CategoryChip";
 
 export default function SearchCategory({
-  categories,
+  categoriesCollection,
   categoryName,
   setCategoryName,
   setCategoryColor,
@@ -18,7 +24,7 @@ export default function SearchCategory({
   setDisplayCategoryChip,
 }) {
   const [filteredCategories, setFilteredCategories] = useState(
-    categories.filter((category) => !!category.name.trim())
+    categoriesCollection.filter((category) => !!category.name.trim())
   );
   const [categoryExists, setCategoryExists] = useState(false);
 
@@ -26,7 +32,7 @@ export default function SearchCategory({
     setCategoryName(e.target.value);
 
     setFilteredCategories(
-      categories.filter(
+      categoriesCollection.filter(
         (category) =>
           !!category.name.trim() &&
           category.name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -34,7 +40,7 @@ export default function SearchCategory({
     );
 
     setCategoryExists(
-      categories.find((category) => category.name === e.target.value)
+      categoriesCollection.find((category) => category.name === e.target.value)
     );
   };
 
@@ -60,6 +66,7 @@ export default function SearchCategory({
             <Tooltip title="Add Category" placement="top" arrow>
               <IconButton
                 onClick={handleAddCategory}
+                sx={{ transition: "all 0.2s ease-in-out" }}
                 disabled={categoryName.trim() === "" || categoryExists}
               >
                 <Add />
@@ -69,21 +76,42 @@ export default function SearchCategory({
         }
       />
       {/* Display searched categories horizontally */}
-      {categories?.length > 0 && (
-        <Stack direction={"row"} spacing={2} py={"1em"} overflow={"scroll"}>
-          {filteredCategories.map((category) => (
-            <CategoryChip
-              key={category.name}
-              categoryName={category.name}
-              categoryColor={category.color}
-              onSelect={() =>
-                handleSelectCategory(category.name, category.color)
-              }
-              chipStyles={{ width: "10em" }}
-            />
-          ))}
-        </Stack>
-      )}
+      <AnimatePresence>
+        {filteredCategories.length > 0 && (
+          <PopIn>
+            <Stack
+              direction={"row"}
+              spacing={2}
+              py={"1.5em"}
+              overflow={"scroll"}
+            >
+              <AnimatePresence>
+                {filteredCategories.map((category) => (
+                  <motion.div
+                    key={category.name}
+                    layout
+                    transition={springShort}
+                    variants={variantFadeSlideDown}
+                    whileTap={{ scale: 0.95 }}
+                    initial={"hidden"}
+                    animate={"visible"}
+                    exit={"hidden"}
+                  >
+                    <CategoryChip
+                      categoryName={category.name}
+                      categoryColor={category.color}
+                      onSelect={() =>
+                        handleSelectCategory(category.name, category.color)
+                      }
+                      chipStyles={{ width: "12em" }}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </Stack>
+          </PopIn>
+        )}
+      </AnimatePresence>
     </>
   );
 }

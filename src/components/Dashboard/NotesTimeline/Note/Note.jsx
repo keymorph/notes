@@ -37,10 +37,10 @@ export default function Note({
   categoryName,
   categoryColor,
   tags,
-  categories,
+  categoriesCollection,
   noteCollection,
   setNoteCollection,
-  setCategories,
+  setCategoriesCollection,
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
@@ -57,7 +57,7 @@ export default function Note({
       onSuccess: ({ data }) => {
         setMoreMenuAnchorEl(null);
         // Reflect the database changes on the front-end
-        setCategories(data.noteItem.categories);
+        setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
       },
       onError: (error) => {
@@ -71,7 +71,7 @@ export default function Note({
       onSuccess: ({ data }) => {
         setMoreMenuAnchorEl(null);
         // Reflect the database changes on the front-end
-        setCategories(data.noteItem.categories);
+        setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
       },
       onError: (error) => {
@@ -139,8 +139,8 @@ export default function Note({
         description={description}
         categoryName={categoryName}
         categoryColor={categoryColor}
-        categories={categories}
-        setCategories={setCategories}
+        categoriesCollection={categoriesCollection}
+        setCategoriesCollection={setCategoriesCollection}
         setNoteCollection={setNoteCollection}
         action={"edit"}
         modalOpen={modalOpen}
