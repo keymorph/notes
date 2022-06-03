@@ -1,16 +1,14 @@
-# :yellow_heart: FourScript
+# 💙 Keymorph
 
-### Follow us at ***@FourScript***, on all social media sites.
-
-#### Reach out to us at: contact@fourscript.com
+#### Reach out to us at: contact@keymorph.com
 
 <hr>
 
 # :speech_balloon: Project Information
 
-> **Name:** "Note Keeping Application"  
+> **Name:** "Jotfox"  
 > **Description:** Simple note-taking web application.  
-> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, dnd kit and CosmosDB.  
+> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, Framer Motion, dnd kit and CosmosDB.  
 > **Start Date:** 08/13/2021  
 > **End Date:** --  
 > **Links:** https://www.notes.fourscript.com/
