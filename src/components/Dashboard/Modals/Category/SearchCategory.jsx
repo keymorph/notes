@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { AddCircleOutline } from "@mui/icons-material";
 import {
   IconButton,
   Input,
@@ -11,8 +11,8 @@ import { useState } from "react";
 import {
   springShort,
   variantFadeSlideDown,
-} from "../../../../../../styles/transitions/definitions";
-import PopIn from "../../../../../Transitions/PopIn";
+} from "../../../../styles/transitions/definitions";
+import PopIn from "../../../Transitions/PopIn";
 import CategoryChip from "./CategoryChip";
 
 export default function SearchCategory({
@@ -28,6 +28,8 @@ export default function SearchCategory({
   );
   const [categoryExists, setCategoryExists] = useState(false);
 
+  const isCategoryValid = categoryName?.trim() !== "" && !categoryExists;
+
   const handleCategorySearch = (e) => {
     setCategoryName(e.target.value);
 
@@ -40,7 +42,10 @@ export default function SearchCategory({
     );
 
     setCategoryExists(
-      categoriesCollection.find((category) => category.name === e.target.value)
+      categoriesCollection.find(
+        (category) =>
+          category.name.toLowerCase() === e.target.value.toLowerCase()
+      )
     );
   };
 
@@ -51,8 +56,10 @@ export default function SearchCategory({
   };
 
   const handleAddCategory = () => {
-    setDisplayCategoryChip(true);
-    setIsCategoryNew(true);
+    if (isCategoryValid) {
+      setDisplayCategoryChip(true);
+      setIsCategoryNew(true);
+    }
   };
 
   return (
@@ -61,15 +68,16 @@ export default function SearchCategory({
         placeholder="Search or add a category"
         value={categoryName}
         onChange={handleCategorySearch}
+        onKeyUp={(e) => e.key === "Enter" && handleAddCategory()}
         endAdornment={
           <InputAdornment position="end">
             <Tooltip title="Add Category" placement="top" arrow>
               <IconButton
                 onClick={handleAddCategory}
                 sx={{ transition: "all 0.2s ease-in-out" }}
-                disabled={categoryName.trim() === "" || categoryExists}
+                disabled={!isCategoryValid}
               >
-                <Add />
+                <AddCircleOutline />
               </IconButton>
             </Tooltip>
           </InputAdornment>
@@ -103,7 +111,7 @@ export default function SearchCategory({
                       onSelect={() =>
                         handleSelectCategory(category.name, category.color)
                       }
-                      chipStyles={{ width: "12em" }}
+                      chipStyles={{ width: "10em" }}
                     />
                   </motion.div>
                 ))}

@@ -18,7 +18,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../../helpers/requests/note-requests";
-import NoteModal from "./Modals/NoteModal";
+import NoteActionModal from "../../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
   touchAction: "none", // Disable browser handling of all touch panning and zooming gestures
@@ -133,7 +133,7 @@ export default function Note({
         display: "flex",
       }}
     >
-      <NoteModal
+      <NoteActionModal
         noteID={noteID}
         title={title}
         description={description}

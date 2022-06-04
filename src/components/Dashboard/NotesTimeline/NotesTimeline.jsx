@@ -127,7 +127,7 @@ export default function NotesTimeline({
             gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
             justifyItems="center"
           >
-            {/* AnimatePresence allows components to animate out when they're removed from the React tree */}
+            {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
             <AnimatePresence>
               {filteredNoteCollection.map((note, index) => (
                 <SortableItem

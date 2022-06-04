@@ -1,5 +1,5 @@
 /*
-  This component contains the shared components and providers that are used on all pages.
+  This component contains the shared Components and providers that are used on all pages.
 */
 import {Container, CssBaseline} from "@mui/material";
 import {ThemeProvider} from "@mui/material/styles";
@@ -49,7 +49,7 @@ export default function App({
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={session} refetchOnWindowFocus={true}>
           <ThemeProvider theme={theme}>
-            {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
+            {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
             <CssBaseline enableColorScheme />
             {/* While the page loads, don't display any content */}
             {/* This prevents the theme from changing after the page has loaded */}

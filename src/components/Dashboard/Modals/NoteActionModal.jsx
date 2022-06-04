@@ -1,17 +1,29 @@
 import { LoadingButton } from "@mui/lab";
-import { Card, Grow, Modal, TextField, Typography } from "@mui/material";
+import {
+  Card,
+  Grow,
+  Modal,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import {
   createNote,
   updateNote,
-} from "../../../../../helpers/requests/note-requests";
-import { variantFadeSlideUpSlow } from "../../../../../styles/transitions/definitions";
+} from "../../../helpers/requests/note-requests";
+import { modalCard } from "../../../styles/components/modals/modal";
+import { variantFadeSlideUpSlow } from "../../../styles/transitions/definitions";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";
 
-export default function NoteModal({
+const NOTE_TITLE_CHAR_LIMIT = 100;
+const NOTE_DESCRIPTION_CHAR_LIMIT = 1000;
+
+export default function NoteActionModal({
   noteID,
   title,
   description,
@@ -25,6 +37,9 @@ export default function NoteModal({
   handleModalClose,
 }) {
   //#region Hooks
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [newTitle, setNewTitle] = useState(title); // Cannot make it a string because we use the null value to check if the user has typed anything
   const [newDescription, setNewDescription] = useState(description || "");
   const [newCategoryName, setNewCategoryName] = useState(categoryName || "");
@@ -35,6 +50,9 @@ export default function NoteModal({
     !!categoryName
   );
   const [isCategoryNew, setIsCategoryNew] = useState(false);
+  //#endregion
+
+  const titleError = newTitle?.trim() === "";
 
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
@@ -53,7 +71,6 @@ export default function NoteModal({
     {
       onSuccess: ({ data }) => {
         handleModalClose();
-        clearModalValues();
         // Reflect the database changes on the front-end
         setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
@@ -63,19 +80,18 @@ export default function NoteModal({
       },
     }
   );
-
   //#endregion
   //#endregion
 
   //#region Helper Functions
-
-  const clearModalValues = () => {
-    setNewTitle("");
-    setNewDescription("");
-    setNewCategoryName("");
-    setNewCategoryColor("");
+  const resetModalValues = () => {
+    setNewTitle(title);
+    setNewDescription(description);
+    setNewCategoryName(categoryName);
+    setNewCategoryColor(categoryColor);
+    setDisplayCategoryChip(!!categoryName);
+    setIsCategoryNew(false);
   };
-
   //#endregion
 
   //#region Handlers
@@ -121,34 +137,27 @@ export default function NoteModal({
     setDisplayCategoryChip(false);
   };
 
-  const titleError = newTitle?.trim() === "";
+  const handleBeforeModalClose = (event, reason) => {
+    if (action === "edit") {
+      handleEditNote();
+    } else if (action === "create") {
+      handleModalClose();
+    }
+  };
+  //#endregion
 
+  console.log(isMobile);
   return (
     <Modal
       open={modalOpen}
-      onClose={action === "edit" ? handleEditNote : handleModalClose}
+      onClose={(event, reason) => handleBeforeModalClose(event, reason)}
       closeAfterTransition
     >
       <Grow in={modalOpen}>
-        <Card
-          sx={{
-            position: "fixed",
-            mt: "25vh",
-            mx: "auto",
-            p: 2,
-            left: 0,
-            right: 0,
-            display: "flex",
-            flexDirection: "column",
-            width: "90%",
-            minWidth: "200px",
-            maxWidth: "400px",
-            borderRadius: "10px",
-            boxShadow: 24,
-          }}
-        >
+        <Card sx={modalCard}>
           <Typography variant="h5" color={"primary"}>
-            {action === "edit" ? "Edit Note" : "Create a Note"}
+            {action === "edit" && "Edit Note"}
+            {action === "create" && "Create a Note"}
           </Typography>
 
           <TextField
@@ -160,9 +169,7 @@ export default function NoteModal({
             helperText={titleError && "Please enter a title"}
             sx={{ mt: 2, mb: 2 }}
             inputProps={{
-              style: {
-                transition: "all 0.3s ease-in-out",
-              },
+              maxLength: NOTE_TITLE_CHAR_LIMIT,
             }}
             onChange={(event) => setNewTitle(event.target.value.trim())}
           />
@@ -171,9 +178,10 @@ export default function NoteModal({
             id="outlined-multiline-static"
             label="Description"
             multiline
-            rows={4}
+            rows={isMobile ? 6 : 8}
             defaultValue={description}
             sx={{ mb: 2 }}
+            inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
             onChange={(event) => setNewDescription(event.target.value.trim())}
           />
 
@@ -216,7 +224,8 @@ export default function NoteModal({
               ml: "auto",
             }}
           >
-            {action === "edit" ? "Save" : "Create"}
+            {action === "edit" && "Save"}
+            {action === "create" && "Create"}
           </LoadingButton>
         </Card>
       </Grow>

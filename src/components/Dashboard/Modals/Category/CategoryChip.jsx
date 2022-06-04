@@ -10,8 +10,8 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { variantFadeSlideDownSlow } from "../../../../../../styles/transitions/definitions";
-import PopIn from "../../../../../Transitions/PopIn";
+import { variantFadeSlideDownSlow } from "../../../../styles/transitions/definitions";
+import PopIn from "../../../Transitions/PopIn";
 
 export default function CategoryChip({
   categoryName,
@@ -39,6 +39,7 @@ export default function CategoryChip({
         icon={
           <Tooltip title="Change Color" placement="top" arrow>
             <IconButton
+              autoFocus={enableEditColor}
               size={"small"}
               disabled={!enableEditColor}
               onClick={handleOpenPopper}
@@ -71,10 +72,17 @@ export default function CategoryChip({
         }
         deleteIcon={
           <Tooltip title="Remove Category" placement="top" arrow>
-            <HighlightOff sx={{ ml: "auto !important" }} />
+            <IconButton size={"small"} sx={{ ml: "auto !important" }}>
+              <HighlightOff />
+            </IconButton>
           </Tooltip>
         }
-        sx={{ justifyContent: "start", width: "100%", ...chipStyles }}
+        sx={{
+          justifyContent: "start",
+          height: "3em",
+          width: "100%",
+          ...chipStyles,
+        }}
         onDelete={onDelete}
         onClick={onSelect}
         variant="outlined"

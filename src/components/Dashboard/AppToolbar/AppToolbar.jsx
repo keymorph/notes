@@ -1,7 +1,7 @@
 import { FilterList, MoreVert, NoteAdd } from "@mui/icons-material";
 import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import { useState } from "react";
-import NoteModal from "../NotesTimeline/Note/Modals/NoteModal";
+import NoteActionModal from "../Modals/NoteActionModal";
 
 import ToolbarSearch from "./ToolbarSearch";
 
@@ -33,7 +33,7 @@ export default function AppToolbar({
           justifyContent: "space-between",
         }}
       >
-        <NoteModal
+        <NoteActionModal
           action={"create"}
           modalOpen={modalOpen}
           handleModalClose={handleModalClose}
