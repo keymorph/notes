@@ -21,7 +21,6 @@ import {
 import NoteActionModal from "../../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
-  touchAction: "none", // Disable browser handling of all touch panning and zooming gestures
   width: "300px",
   minHeight: "300px",
   maxHeight: "400px",
