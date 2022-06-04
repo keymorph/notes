@@ -77,17 +77,6 @@ export const darkTheme = createTheme(
 
     // Per Component Theme Style Overrides
     components: {
-      MuiLoadingButton: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            backgroundColor: theme.palette.primary.dark,
-            "&:hover": {
-              backgroundColor: theme.palette.primary.main,
-              boxShadow: `0 0 0.5rem ${theme.palette.primary.main}`,
-            },
-          }),
-        },
-      },
       MuiAppBar: {
         styleOverrides: {
           root: {

@@ -1,6 +1,15 @@
 import { FilterList, MoreVert, NoteAdd } from "@mui/icons-material";
-import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+} from "@mui/material";
 import { useState } from "react";
+import ManageCategories from "../Modals/ManageCategories";
 import NoteActionModal from "../Modals/NoteActionModal";
 
 import ToolbarSearch from "./ToolbarSearch";
@@ -13,10 +22,64 @@ export default function AppToolbar({
   setCategoriesCollection,
   setSearchValue,
 }) {
-  // MODAL
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
+  //#region Hooks
+  const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
+  const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
+  const [manageCategoriesModalOpen, setManageCategoriesModalOpen] =
+    useState(false);
+  //#endregion
+
+  //#region Handlers
+  const handleMoreMenuClick = (event) => {
+    setMoreMenuAnchorEl(event.currentTarget);
+  };
+  const handleCreateNoteModalOpen = () => {
+    setCreateNoteModalOpen(true);
+  };
+  const handleCreateNoteModalClose = () => {
+    setCreateNoteModalOpen(false);
+  };
+  const handleManageCategoriesModalOpen = () => {
+    setMoreMenuAnchorEl(null); // Close the more menu
+    setManageCategoriesModalOpen(true);
+  };
+  const handleManageCategoriesModalClose = () => {
+    setManageCategoriesModalOpen(false);
+  };
+  //#endregion
+
+  //#region Render Components
+  const noteActionModal = (
+    <NoteActionModal
+      action={"create"}
+      modalOpen={createNoteModalOpen}
+      handleModalClose={handleCreateNoteModalClose}
+      noteCollection={noteCollection}
+      setNoteCollection={setNoteCollection}
+      categoriesCollection={categoriesCollection}
+      setCategoriesCollection={setCategoriesCollection}
+    />
+  );
+  const manageCategoriesModal = (
+    <ManageCategories
+      categoriesCollection={categoriesCollection}
+      setCategoriesCollection={setCategoriesCollection}
+      modalOpen={manageCategoriesModalOpen}
+      handleModalClose={handleManageCategoriesModalClose}
+    />
+  );
+  const moreMenu = (
+    <Menu
+      anchorEl={moreMenuAnchorEl}
+      open={!!moreMenuAnchorEl}
+      onClose={() => setMoreMenuAnchorEl(null)}
+    >
+      <MenuItem onClick={handleManageCategoriesModalOpen}>
+        Manage Categories
+      </MenuItem>
+    </Menu>
+  );
+  //#endregion
 
   return (
     <AppBar
@@ -33,15 +96,11 @@ export default function AppToolbar({
           justifyContent: "space-between",
         }}
       >
-        <NoteActionModal
-          action={"create"}
-          modalOpen={modalOpen}
-          handleModalClose={handleModalClose}
-          noteCollection={noteCollection}
-          setNoteCollection={setNoteCollection}
-          categoriesCollection={categoriesCollection}
-          setCategoriesCollection={setCategoriesCollection}
-        />
+        {/* The dom order doesn't matter for these components */}
+        {noteActionModal}
+        {manageCategoriesModal}
+        {moreMenu}
+
         <Box
           display={"flex"}
           flexDirection={"row"}
@@ -76,11 +135,11 @@ export default function AppToolbar({
               minWidth: "6em",
             }}
             startIcon={<NoteAdd />}
-            onClick={handleOpen}
+            onClick={handleCreateNoteModalOpen}
           >
             Add Note
           </Button>
-          <IconButton>
+          <IconButton onClick={handleMoreMenuClick}>
             <MoreVert />
           </IconButton>
         </Box>

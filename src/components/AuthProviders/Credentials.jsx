@@ -239,6 +239,7 @@ export default function Credentials({ action }) {
           <CircularProgress size={24} sx={{ color: "background.paper" }} />
         }
         fullWidth
+        variant="contained"
         sx={{
           my: 3,
         }}

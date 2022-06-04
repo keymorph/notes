@@ -45,7 +45,6 @@ export default function Note({
   isDragging,
 }) {
   //#region Hooks
-
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -78,24 +77,23 @@ export default function Note({
       },
     }
   );
-
   //#endregion
   //#endregion
 
   //#region Handlers
-
-  const handleModalOpen = () => {
+  const handleEditModalOpen = () => {
+    setMoreMenuAnchorEl(null); // Close the more menu
     setModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleEditModalClose = () => {
     setModalOpen(false);
     setMoreMenuAnchorEl(null);
   };
 
   const ref = useRef(null);
 
-  const handleClick = (event) => {
+  const handleMoreMenuClick = (event) => {
     setMoreMenuAnchorEl(event.currentTarget);
   };
 
@@ -118,7 +116,6 @@ export default function Note({
     };
     mutateDuplicate(duplicateNote);
   };
-
   //#endregion
 
   // Close the menu if the note is being dragged
@@ -143,7 +140,7 @@ export default function Note({
         setNoteCollection={setNoteCollection}
         action={"edit"}
         modalOpen={modalOpen}
-        handleModalClose={handleModalClose}
+        handleModalClose={handleEditModalClose}
       />
 
       <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
@@ -162,27 +159,25 @@ export default function Note({
           ) : null}
 
           <IconButton
-            aria-label="Note settings"
             sx={{ m: 0.5, ml: "auto", height: "1em" }}
-            onClick={handleClick}
+            onClick={handleMoreMenuClick}
           >
             <MoreHoriz />
           </IconButton>
         </Box>
-
+        {/* Note Action Menu that triggers  */}
         <Menu
           anchorEl={moreMenuAnchorEl}
           open={!!moreMenuAnchorEl}
           onClose={() => setMoreMenuAnchorEl(null)}
-          style={{ opacity: modalOpen ? 0 : 1 }}
         >
-          <MenuItem onClick={handleModalOpen}>Edit</MenuItem>
+          <MenuItem onClick={handleEditModalOpen}>Edit</MenuItem>
           <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
 
         <CardContent
-          onClick={handleModalOpen}
+          onClick={handleEditModalOpen}
           sx={{
             userSelect: "text",
             height: "100%",

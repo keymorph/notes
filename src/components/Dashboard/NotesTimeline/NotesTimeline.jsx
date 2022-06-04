@@ -161,7 +161,7 @@ export default function NotesTimeline({
                 sx={{
                   position: "absolute",
                   width: "100%",
-                  top: "10%",
+                  top: "20vh",
                   textAlign: "center",
                 }}
                 variant="h5"
@@ -180,7 +180,7 @@ export default function NotesTimeline({
           sx={{
             position: "absolute",
             width: "100%",
-            top: "10%",
+            top: "20vh",
             textAlign: "center",
           }}
         >
