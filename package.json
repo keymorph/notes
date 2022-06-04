@@ -27,7 +27,7 @@
     "@testing-library/user-event": "^14.2.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
-    "framer-motion": "^6.3.6",
+    "framer-motion": "^6.3.10",
     "jsonwebtoken": "^8.5.1",
     "next": "^12.1.6",
     "next-auth": "^4.3.4",
@@ -35,12 +35,12 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-query": "^3.39.1",
-    "sass": "^1.52.1",
+    "sass": "^1.52.2",
     "sharp": "^0.30.6",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.16.0",
+    "eslint": "^8.17.0",
     "eslint-config-next": "^12.1.6",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.6.2"

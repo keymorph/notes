@@ -133,17 +133,6 @@ export const lightTheme = createTheme(
 
     // Per Component Theme Style Overrides
     components: {
-      MuiLoadingButton: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            backgroundColor: theme.palette.primary.main,
-            "&:hover": {
-              backgroundColor: theme.palette.primary.light,
-              boxShadow: `0 0 0.5rem ${theme.palette.primary.light}`,
-            },
-          }),
-        },
-      },
       MuiAppBar: {
         styleOverrides: {
           root: {
