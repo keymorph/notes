@@ -54,6 +54,7 @@ export default function Dashboard() {
         setCategoriesCollection={setCategoriesCollection}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
+        noteStatus={noteStatus}
       />
       <NotesTimeline
         noteCollection={noteCollection}

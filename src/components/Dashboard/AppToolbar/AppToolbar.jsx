@@ -9,7 +9,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { useState } from "react";
-import ManageCategories from "../Modals/ManageCategories";
+import ManageCategoriesModal from "../Modals/ManageCategoriesModal";
 import NoteActionModal from "../Modals/NoteActionModal";
 
 import ToolbarSearch from "./ToolbarSearch";
@@ -21,6 +21,7 @@ export default function AppToolbar({
   setNoteCollection,
   setCategoriesCollection,
   setSearchValue,
+  noteStatus,
 }) {
   //#region Hooks
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
@@ -33,16 +34,20 @@ export default function AppToolbar({
   const handleMoreMenuClick = (event) => {
     setMoreMenuAnchorEl(event.currentTarget);
   };
+
   const handleCreateNoteModalOpen = () => {
     setCreateNoteModalOpen(true);
   };
+
   const handleCreateNoteModalClose = () => {
     setCreateNoteModalOpen(false);
   };
+
   const handleManageCategoriesModalOpen = () => {
     setMoreMenuAnchorEl(null); // Close the more menu
     setManageCategoriesModalOpen(true);
   };
+
   const handleManageCategoriesModalClose = () => {
     setManageCategoriesModalOpen(false);
   };
@@ -61,7 +66,7 @@ export default function AppToolbar({
     />
   );
   const manageCategoriesModal = (
-    <ManageCategories
+    <ManageCategoriesModal
       categoriesCollection={categoriesCollection}
       setCategoriesCollection={setCategoriesCollection}
       modalOpen={manageCategoriesModalOpen}
@@ -96,10 +101,14 @@ export default function AppToolbar({
           justifyContent: "space-between",
         }}
       >
-        {/* The dom order doesn't matter for these components */}
-        {noteActionModal}
-        {manageCategoriesModal}
-        {moreMenu}
+        {/* The dom order doesn't matter for these components and as such they are grouped together */}
+        {noteStatus !== "loading" && (
+          <>
+            {moreMenu}
+            {manageCategoriesModal}
+            {noteActionModal}
+          </>
+        )}
 
         <Box
           display={"flex"}

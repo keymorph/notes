@@ -5,13 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/constants/input-limits.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/requests/category-requests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/api/category/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/input-validation/validate-category.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/SearchCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/SearchCategory.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategories.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/SortableItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/SortableItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Transitions/PopIn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Transitions/PopIn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/note/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/note/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/user/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/components/modals/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/components/modals/modal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/styles/themes/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/themes/theme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/transitions/definitions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/transitions/definitions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/middleware/validate-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/middleware/validate-input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/models/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/oauth-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/oauth-user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/services/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/note.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,11 +136,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src" />
+      <recent name="C:\dev\Projects\notetakingapp\src\constants" />
       <recent name="C:\dev\Projects\notetakingapp\src\styles\components\modals" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Modals" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Modals\ActionModal" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard" />
-      <recent name="C:\dev\Projects\notetakingapp\src\styles" />
     </key>
   </component>
   <component name="RunManager">
@@ -230,7 +248,8 @@
       <workItem from="1654143765679" duration="7454000" />
       <workItem from="1654207538132" duration="16134000" />
       <workItem from="1654290653058" duration="6152000" />
-      <workItem from="1654300539671" duration="13172000" />
+      <workItem from="1654300539671" duration="27431000" />
+      <workItem from="1654365259237" duration="24918000" />
     </task>
     <servers />
   </component>

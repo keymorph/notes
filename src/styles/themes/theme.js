@@ -1,16 +1,8 @@
-import {
-  blue,
-  green,
-  indigo,
-  orange,
-  purple,
-  red,
-  teal,
-  yellow,
-} from "@mui/material/colors";
-import { createTheme } from "@mui/material/styles";
+import {blue, green, indigo, orange, purple, red, teal, yellow,} from "@mui/material/colors";
+import {createTheme} from "@mui/material/styles";
 
-const hexTransparency = "B3"; // 70% Hex transparency value to append at the end of colors
+// 70% Hex transparency value to append at the end of colors
+const hexTransparency = "B3";
 
 // Shared theme configuration for all themes
 const commonThemeConfig = {
@@ -52,6 +44,16 @@ const commonThemeConfig = {
         paper: {
           backdropFilter: "blur(8px)",
           borderRadius: 5,
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          // Ensure the width of the text input is as wide as it can get
+          "& > span": {
+            width: "100%",
+          },
         },
       },
     },

@@ -1,3 +1,9 @@
+//#region CSS TRANSITIONS
+export const adornmentButtonTransition = {
+  transition: "all 0.2s ease-in-out",
+};
+//#endregion
+
 //#region SPRING TRANSITIONS
 export const springDefault = {
   type: "spring",
@@ -31,7 +37,7 @@ export const variantFade = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
-export const variantFadeWithStagger = {
+export const variantFadeStagger = {
   hidden: { opacity: 0, transition: { duration: 0.2 } },
   visible: (i) => ({
     opacity: 1,
@@ -44,6 +50,14 @@ export const variantFadeWithStagger = {
 export const variantFadeSlideDown = {
   hidden: { opacity: 0, y: -20, transition: springShortest },
   visible: { opacity: 1, y: 0, transition: springShorter },
+};
+export const variantFadeSlideDownStagger = {
+  hidden: { opacity: 0, y: -20, transition: springShortest },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { ...springShorter, delay: i * 0.02 },
+  }),
 };
 export const variantFadeSlideDownSlow = {
   hidden: { opacity: 0, y: -20, transition: springShort },

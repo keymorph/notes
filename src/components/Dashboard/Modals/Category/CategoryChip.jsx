@@ -1,16 +1,29 @@
-import { Circle, HighlightOff } from "@mui/icons-material";
 import {
+  CheckCircleOutline,
+  Circle,
+  DeleteOutline,
+  EditOutlined,
+  HighlightOff,
+} from "@mui/icons-material";
+import {
+  Box,
   Chip,
   IconButton,
   Input,
   Stack,
   Tooltip,
   useTheme,
+  Zoom,
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { variantFadeSlideDownSlow } from "../../../../styles/transitions/definitions";
+import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
+import {
+  adornmentButtonTransition,
+  variantFadeSlideDownSlow,
+} from "../../../../styles/transitions/definitions";
+import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 
 export default function CategoryChip({
@@ -18,20 +31,55 @@ export default function CategoryChip({
   categoryColor,
   setCategoryName = null,
   setCategoryColor = null,
+  categoryCollection,
   onSelect = null,
   onDelete = null,
-  enableEditColor = false,
-  enableEditName = false,
+  enableEdit = false,
   chipStyles = {},
 }) {
+  //#region Hooks
   const theme = useTheme();
+  const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  // Determines if the category chip is being edited (only valid when both enableEditName and enableEditColor are true)
+  const [editMode, setEditMode] = useState(false);
+  // Disables the save functionality when editing the category
+  const [disableSave, setDisableSave] = useState(false);
+  //#endregion
 
   const categoryColors = Object.keys(theme.palette.category);
 
+  //#region Handlers
   const handleOpenPopper = () => {
     setIsPaletteOpen((isPaletteOpen) => !isPaletteOpen);
   };
+
+  const handleCategoryNameChange = (e) => {
+    const newCategoryName = e.target.value.trim();
+    setNewCategoryName(newCategoryName);
+
+    const categoryExists = doesCategoryExist(
+      newCategoryName,
+      categoryCollection
+    );
+
+    if (newCategoryName.trim() === "" || categoryExists) {
+      setDisableSave(true);
+    } else {
+      setDisableSave(false);
+    }
+  };
+
+  const handleSetEditMode = () => {
+    setIsPaletteOpen(false);
+    setEditMode((editMode) => {
+      if (editMode) {
+        setCategoryName(newCategoryName.trim());
+      }
+      return !editMode;
+    });
+  };
+  //#endregion
 
   return (
     <>
@@ -39,9 +87,9 @@ export default function CategoryChip({
         icon={
           <Tooltip title="Change Color" placement="top" arrow>
             <IconButton
-              autoFocus={enableEditColor}
+              autoFocus={enableEdit}
               size={"small"}
-              disabled={!enableEditColor}
+              disabled={!editMode}
               onClick={handleOpenPopper}
             >
               <Circle
@@ -56,28 +104,87 @@ export default function CategoryChip({
           </Tooltip>
         }
         label={
-          <Input
-            defaultValue={categoryName}
-            placeholder={"Name the category"}
-            disabled={!enableEditName}
-            disableUnderline
-            fullWidth
-            sx={{
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              "&.Mui-disabled": { pointerEvents: "none" },
-            }}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
+          <Box display={"flex"} flexDirection={"row"} width={"100%"}>
+            <Input
+              defaultValue={categoryName}
+              disabled={!editMode}
+              disableUnderline
+              fullWidth
+              inputProps={{
+                maxLength: CATEGORY_NAME_CHAR_LIMIT,
+              }}
+              sx={{
+                width: "100% !important",
+                overflow: "hidden",
+                mr: "auto !important",
+                "&.Mui-disabled": { pointerEvents: "none" },
+              }}
+              onChange={handleCategoryNameChange}
+            />
+            {/* Only enable edit/save buttons when enableEdit is true */}
+            {enableEdit && (
+              <IconButton
+                size={"small"}
+                onClick={handleSetEditMode}
+                disabled={editMode && disableSave}
+                sx={adornmentButtonTransition}
+              >
+                <div style={{ width: "1em", height: "1em" }}>
+                  <Zoom in={!editMode} unmountOnExit>
+                    <EditOutlined
+                      sx={{
+                        position: "absolute",
+                        top: "0.15em",
+                        left: "0.1em",
+                      }}
+                    />
+                  </Zoom>
+                  <Zoom in={editMode} unmountOnExit>
+                    <CheckCircleOutline
+                      sx={{
+                        position: "absolute",
+                        top: "0.15em",
+                        left: "0.1em",
+                      }}
+                    />
+                  </Zoom>
+                </div>
+              </IconButton>
+            )}
+          </Box>
         }
         deleteIcon={
-          <Tooltip title="Remove Category" placement="top" arrow>
-            <IconButton size={"small"} sx={{ ml: "auto !important" }}>
-              <HighlightOff />
+          <Tooltip
+            title={enableEdit ? "Delete Category" : "Remove Category from Note"}
+            placement="top"
+            arrow
+          >
+            <IconButton size={"small"}>
+              {/* If the category has both enableEditColor and enableEditName, then it is in an editable context and
+              as such it should display the icon indicating that the category can be deleted. */}
+              <Zoom in={enableEdit} unmountOnExit>
+                <div>
+                  <DeleteOutline
+                    color={"action"}
+                    sx={{
+                      display: "flex",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                      transition: "all 0.2s ease-in-out",
+                    }}
+                  />
+                </div>
+              </Zoom>
+              <Zoom in={!enableEdit} unmountOnExit>
+                <HighlightOff />
+              </Zoom>
             </IconButton>
           </Tooltip>
         }
         sx={{
+          display: "flex",
+          flexDirection: "row",
           justifyContent: "start",
           height: "3em",
           width: "100%",

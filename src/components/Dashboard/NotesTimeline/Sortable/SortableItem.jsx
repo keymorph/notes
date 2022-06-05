@@ -1,7 +1,7 @@
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import {motion} from "framer-motion";
-import {spring, variantFadeWithStagger,} from "../../../../styles/transitions/definitions";
+import {spring, variantFadeStagger,} from "../../../../styles/transitions/definitions";
 import Note from "../Note/Note";
 
 /**
@@ -43,7 +43,7 @@ export default function SortableItem({ id, index, isDraggingMode, ...rest }) {
       <motion.div
         layout={!isDraggingMode} // Only animate position changes when not dragging
         transition={spring}
-        variants={variantFadeWithStagger}
+        variants={variantFadeStagger}
         initial={"hidden"}
         animate={"visible"}
         exit={"hidden"}

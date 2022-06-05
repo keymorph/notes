@@ -8,10 +8,13 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
 import {
+  adornmentButtonTransition,
   springShort,
   variantFadeSlideDown,
 } from "../../../../styles/transitions/definitions";
+import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 import CategoryChip from "./CategoryChip";
 
@@ -31,22 +34,18 @@ export default function SearchCategory({
   const isCategoryValid = categoryName?.trim() !== "" && !categoryExists;
 
   const handleCategorySearch = (e) => {
-    setCategoryName(e.target.value);
+    const searchValue = e.target.value;
+    setCategoryName(searchValue);
 
     setFilteredCategories(
       categoriesCollection.filter(
         (category) =>
           !!category.name.trim() &&
-          category.name.toLowerCase().includes(e.target.value.toLowerCase())
+          category.name.toLowerCase().includes(searchValue.toLowerCase())
       )
     );
 
-    setCategoryExists(
-      categoriesCollection.find(
-        (category) =>
-          category.name.toLowerCase() === e.target.value.toLowerCase()
-      )
-    );
+    setCategoryExists(doesCategoryExist(searchValue, categoriesCollection));
   };
 
   const handleSelectCategory = (categoryName, categoryColor) => {
@@ -74,7 +73,7 @@ export default function SearchCategory({
             <Tooltip title="Add Category" placement="top" arrow>
               <IconButton
                 onClick={handleAddCategory}
-                sx={{ transition: "all 0.2s ease-in-out" }}
+                sx={adornmentButtonTransition}
                 disabled={!isCategoryValid}
               >
                 <AddCircleOutline />
@@ -82,6 +81,9 @@ export default function SearchCategory({
             </Tooltip>
           </InputAdornment>
         }
+        inputProps={{
+          maxLength: CATEGORY_NAME_CHAR_LIMIT,
+        }}
       />
       {/* Display searched categories horizontally */}
       <AnimatePresence>

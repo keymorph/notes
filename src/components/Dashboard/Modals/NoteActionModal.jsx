@@ -12,6 +12,10 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import {
+  NOTE_DESCRIPTION_CHAR_LIMIT,
+  NOTE_TITLE_CHAR_LIMIT,
+} from "../../../constants/input-limits";
+import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
@@ -19,9 +23,6 @@ import { modalCard } from "../../../styles/components/modals/modal";
 import { variantFadeSlideUpSlow } from "../../../styles/transitions/definitions";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";
-
-const NOTE_TITLE_CHAR_LIMIT = 100;
-const NOTE_DESCRIPTION_CHAR_LIMIT = 1000;
 
 export default function NoteActionModal({
   noteID,
@@ -121,7 +122,7 @@ export default function NoteActionModal({
         title: `${newTitle}`,
         description: `${newDescription}`,
         category: {
-          name: `${newCategoryName}`,
+          name: displayCategoryChip ? `${newCategoryName}` : "", // Don't include the temporary category name, before it is created
           color: `${newCategoryColor}`,
         },
         tags: [],
@@ -135,6 +136,7 @@ export default function NoteActionModal({
     setNewCategoryName("");
     setNewCategoryColor("none");
     setDisplayCategoryChip(false);
+    setIsCategoryNew(false);
   };
 
   const handleBeforeModalClose = (event, reason) => {
@@ -146,7 +148,6 @@ export default function NoteActionModal({
   };
   //#endregion
 
-  console.log(isMobile);
   return (
     <Modal
       open={modalOpen}
@@ -167,7 +168,7 @@ export default function NoteActionModal({
             defaultValue={title}
             error={titleError}
             helperText={titleError && "Please enter a title"}
-            sx={{ mt: 2, mb: 2 }}
+            sx={{ my: "1em" }}
             inputProps={{
               maxLength: NOTE_TITLE_CHAR_LIMIT,
             }}
@@ -198,8 +199,9 @@ export default function NoteActionModal({
                 categoryColor={newCategoryColor}
                 setCategoryName={setNewCategoryName}
                 setCategoryColor={setNewCategoryColor}
+                categoryCollection={categoriesCollection}
+                enableEdit={isCategoryNew} // Enable edit if category is new
                 onDelete={handleCategoryChipDelete}
-                enableEditColor={isCategoryNew} // Enable edit if category is new
               />
             </motion.div>
           ) : (
