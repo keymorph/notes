@@ -17,6 +17,10 @@ import {
 import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import {
+  getCategoryColor,
+  getCategoryName,
+} from "../../../helpers/note/getters";
 import PopIn from "../../Transitions/PopIn";
 import SortableItem from "./Sortable/SortableItem";
 
@@ -25,25 +29,13 @@ export default function NotesTimeline({
   setNoteCollection,
   categoriesCollection,
   setCategoriesCollection,
+  notesHidden,
+  setNotesHidden,
   searchValue,
   noteStatus,
 }) {
-  // Filter notes by search value
-  const filteredNoteCollection = noteCollection.filter((note) => {
-    if (searchValue.trim() === "") {
-      return true;
-    } else {
-      return (
-        note.title.toLowerCase().includes(searchValue) ||
-        note.description.toLowerCase().includes(searchValue) ||
-        note.tags.includes(searchValue) ||
-        note.category.toLowerCase().includes(searchValue)
-      );
-    }
-  });
-
-  // activeId used for overlay
-  const [activeId, setActiveId] = useState(null);
+  //#region Hooks
+  const [activeId, setActiveId] = useState(null); // activeId used to track the active note being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -60,6 +52,23 @@ export default function NotesTimeline({
       },
     })
   );
+  //#endregion
+
+  // Filter notes by search value
+  const filteredNoteCollection = noteCollection.filter((note) => {
+    if (searchValue.trim() === "") {
+      return true;
+    } else {
+      return (
+        note.title.toLowerCase().includes(searchValue) ||
+        note.description.toLowerCase().includes(searchValue) ||
+        note.tags.includes(searchValue) ||
+        getCategoryName(note.category_id, categoriesCollection).includes(
+          searchValue
+        )
+      );
+    }
+  });
 
   // Sets the active note id when a note is being dragged
   const handleDragStart = (event) => {
@@ -131,25 +140,28 @@ export default function NotesTimeline({
             <AnimatePresence>
               {filteredNoteCollection.map((note, index) => (
                 <SortableItem
-                  id={note.id}
                   key={note.id}
+                  noteID={note.id}
                   isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
                   index={index}
-                  noteID={note.id}
                   title={note.title}
                   description={note.description}
                   tags={note.tags}
-                  categoryName={note.category}
-                  categoryColor={
-                    categoriesCollection.find(
-                      (category) => category.name === note.category
-                    )?.color
-                  }
+                  categoryName={getCategoryName(
+                    note.category_id,
+                    categoriesCollection
+                  )}
+                  categoryColor={getCategoryColor(
+                    note.category_id,
+                    categoriesCollection
+                  )}
                   searchValue={searchValue}
                   noteCollection={noteCollection}
                   categoriesCollection={categoriesCollection}
                   setNoteCollection={setNoteCollection}
                   setCategoriesCollection={setCategoriesCollection}
+                  notesHidden={notesHidden}
+                  setNotesHidden={setNotesHidden}
                 />
               ))}
             </AnimatePresence>

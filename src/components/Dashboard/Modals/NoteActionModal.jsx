@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
@@ -21,6 +21,7 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { modalCard } from "../../../styles/components/modals/modal";
 import { variantFadeSlideUpSlow } from "../../../styles/transitions/definitions";
+import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";
 
@@ -41,7 +42,7 @@ export default function NoteActionModal({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [newTitle, setNewTitle] = useState(title); // Cannot make it a string because we use the null value to check if the user has typed anything
+  const [newTitle, setNewTitle] = useState(title); // Cannot do string comparison because we use the null value to check if the user has typed anything
   const [newDescription, setNewDescription] = useState(description || "");
   const [newCategoryName, setNewCategoryName] = useState(categoryName || "");
   const [newCategoryColor, setNewCategoryColor] = useState(
@@ -51,6 +52,14 @@ export default function NoteActionModal({
     !!categoryName
   );
   const [isCategoryNew, setIsCategoryNew] = useState(false);
+
+  useEffect(() => {
+    setNewTitle(title);
+    setNewDescription(description);
+    setNewCategoryName(categoryName);
+    setNewCategoryColor(categoryColor);
+    setDisplayCategoryChip(!!categoryName);
+  }, [title, description, categoryName, categoryColor]);
   //#endregion
 
   const titleError = newTitle?.trim() === "";
@@ -101,11 +110,13 @@ export default function NoteActionModal({
       title: `${newTitle}`,
       description: `${newDescription}`,
       category: {
+        id: getOrCreateCategoryId(categoriesCollection, newCategoryName),
         name: `${newCategoryName}`,
         color: `${newCategoryColor || "none"}`,
       },
       tags: [],
     };
+    console.log("newNote", newNote);
     mutateCreate(newNote);
   };
 
@@ -117,12 +128,27 @@ export default function NoteActionModal({
       newCategoryName !== categoryName ||
       newCategoryColor !== categoryColor
     ) {
+      console.log("newTitle", newTitle, "title", title);
+      console.log("newDescription", newDescription, "description", description);
+      console.log(
+        "newCategoryName",
+        newCategoryName,
+        "categoryName",
+        categoryName
+      );
+      console.log(
+        "newCategoryColor",
+        newCategoryColor,
+        "categoryColor",
+        categoryColor
+      );
       const editedNote = {
         noteID: Number(noteID),
         title: `${newTitle}`,
         description: `${newDescription}`,
         category: {
-          name: displayCategoryChip ? `${newCategoryName}` : "", // Don't include the temporary category name, before it is created
+          id: getOrCreateCategoryId(categoriesCollection, newCategoryName),
+          name: displayCategoryChip ? `${newCategoryName}` : "", // Ensure we don't send the temporary category name
           color: `${newCategoryColor}`,
         },
         tags: [],
@@ -143,6 +169,9 @@ export default function NoteActionModal({
     if (action === "edit") {
       handleEditNote();
     } else if (action === "create") {
+      setTimeout(() => {
+        resetModalValues();
+      }, 500);
       handleModalClose();
     }
   };
@@ -165,7 +194,7 @@ export default function NoteActionModal({
             required
             id="outlined-required"
             label="Title"
-            defaultValue={title}
+            defaultValue={newTitle}
             error={titleError}
             helperText={titleError && "Please enter a title"}
             sx={{ my: "1em" }}
@@ -178,9 +207,9 @@ export default function NoteActionModal({
           <TextField
             id="outlined-multiline-static"
             label="Description"
+            defaultValue={newDescription}
             multiline
             rows={isMobile ? 6 : 8}
-            defaultValue={description}
             sx={{ mb: 2 }}
             inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
             onChange={(event) => setNewDescription(event.target.value.trim())}

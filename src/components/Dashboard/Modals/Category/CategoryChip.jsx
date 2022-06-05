@@ -55,7 +55,7 @@ export default function CategoryChip({
   };
 
   const handleCategoryNameChange = (e) => {
-    const newCategoryName = e.target.value.trim();
+    const newCategoryName = e.target.value;
     setNewCategoryName(newCategoryName);
 
     const categoryExists = doesCategoryExist(

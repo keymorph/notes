@@ -40,8 +40,8 @@ export default function SearchCategory({
     setFilteredCategories(
       categoriesCollection.filter(
         (category) =>
-          !!category.name.trim() &&
-          category.name.toLowerCase().includes(searchValue.toLowerCase())
+          !!category.name &&
+          category.name.toLowerCase().includes(searchValue.trim().toLowerCase())
       )
     );
 

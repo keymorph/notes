@@ -5,19 +5,21 @@ import {
   CardContent,
   Chip,
   Divider,
+  Fade,
   IconButton,
   Menu,
   MenuItem,
   styled,
   Typography,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation } from "react-query";
 
 import {
   createNote,
   deleteNote,
 } from "../../../../helpers/requests/note-requests";
+import { getOrCreateCategoryId } from "../../../../utils/id-utils";
 import NoteActionModal from "../../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
@@ -40,6 +42,8 @@ export default function Note({
   noteCollection,
   setNoteCollection,
   setCategoriesCollection,
+  notesHidden,
+  setNotesHidden,
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
@@ -47,6 +51,14 @@ export default function Note({
   //#region Hooks
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (modalOpen) {
+      setNotesHidden(true);
+    } else {
+      setNotesHidden(false);
+    }
+  }, [modalOpen]);
 
   //#region Query Handling Hooks
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
@@ -108,9 +120,9 @@ export default function Note({
       title: title,
       description: description,
       category: {
+        id: getOrCreateCategoryId(categoriesCollection, categoryName),
         name: categoryName,
         color: categoryColor,
-        note_count: 1, // Number of notes in this category, always 1 when creating a note
       },
       tags: tags,
     };
@@ -143,58 +155,60 @@ export default function Note({
         handleModalClose={handleEditModalClose}
       />
 
-      <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
-        <Box
-          sx={{
-            backgroundColor: categoryColor
-              ? `category.${categoryColor}`
-              : `category.none`,
-            display: "flex",
-            position: "relative",
-          }}
-        >
-          {/* If category exists, show the name */}
-          {categoryName ? (
-            <Chip label={categoryName} sx={{ m: 0.5, height: "2em" }} />
-          ) : null}
-
-          <IconButton
-            sx={{ m: 0.5, ml: "auto", height: "1em" }}
-            onClick={handleMoreMenuClick}
+      <Fade in={!notesHidden}>
+        <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
+          <Box
+            sx={{
+              backgroundColor: categoryColor
+                ? `category.${categoryColor}`
+                : `category.none`,
+              display: "flex",
+              position: "relative",
+            }}
           >
-            <MoreHoriz />
-          </IconButton>
-        </Box>
-        {/* Note Action Menu that triggers  */}
-        <Menu
-          anchorEl={moreMenuAnchorEl}
-          open={!!moreMenuAnchorEl}
-          onClose={() => setMoreMenuAnchorEl(null)}
-        >
-          <MenuItem onClick={handleEditModalOpen}>Edit</MenuItem>
-          <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        </Menu>
+            {/* If category exists, show the name */}
+            {categoryName ? (
+              <Chip label={categoryName} sx={{ m: 0.5, height: "2em" }} />
+            ) : null}
 
-        <CardContent
-          onClick={handleEditModalOpen}
-          sx={{
-            userSelect: "text",
-            height: "100%",
-            cursor: "pointer",
-            py: 0.5,
-            px: 1,
-          }}
-        >
-          <Typography variant="body1" title="Title Name" noWrap>
-            {title}
-          </Typography>
+            <IconButton
+              sx={{ m: 0.5, ml: "auto", height: "1em" }}
+              onClick={handleMoreMenuClick}
+            >
+              <MoreHoriz />
+            </IconButton>
+          </Box>
+          {/* Note Action Menu that triggers  */}
+          <Menu
+            anchorEl={moreMenuAnchorEl}
+            open={!!moreMenuAnchorEl}
+            onClose={() => setMoreMenuAnchorEl(null)}
+          >
+            <MenuItem onClick={handleEditModalOpen}>Edit</MenuItem>
+            <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          </Menu>
 
-          <Divider />
+          <CardContent
+            onClick={handleEditModalOpen}
+            sx={{
+              userSelect: "text",
+              height: "100%",
+              cursor: "pointer",
+              py: 0.5,
+              px: 1,
+            }}
+          >
+            <Typography variant="body1" title="Title Name" noWrap>
+              {title}
+            </Typography>
 
-          <Typography variant="body2">{description}</Typography>
-        </CardContent>
-      </NoteCard>
+            <Divider />
+
+            <Typography variant="body2">{description}</Typography>
+          </CardContent>
+        </NoteCard>
+      </Fade>
     </Box>
   );
 }

@@ -22,6 +22,7 @@ import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/transitions/definitions";
+import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import { doesCategoryExist } from "../../../utils/input-validation/validate-category";
 import CategoryChip from "./Category/CategoryChip";
 
@@ -30,6 +31,7 @@ export default function ManageCategoriesModal({
   handleModalClose,
   categoriesCollection,
   setCategoriesCollection,
+  setNoteCollection,
 }) {
   //#region Hooks
   const [inputCategoryName, setInputCategoryName] = useState("");
@@ -53,7 +55,8 @@ export default function ManageCategoriesModal({
     updateCategories,
     {
       onSuccess: ({ data }) => {
-        setCategoriesCollection(data.categories);
+        setCategoriesCollection(data.noteItem.categories);
+        setNoteCollection(data.noteItem.notes.reverse());
         handleModalClose();
       },
       onError: (error) => {
@@ -70,7 +73,9 @@ export default function ManageCategoriesModal({
     (category) =>
       !!category.name.trim() &&
       (inputCategoryName === "" ||
-        category.name.toLowerCase().includes(inputCategoryName.toLowerCase()))
+        category.name
+          .toLowerCase()
+          .includes(inputCategoryName.trim().toLowerCase()))
   );
 
   // If there are no filtered categories delay the display of the no categories message to avoid flicker
@@ -86,7 +91,7 @@ export default function ManageCategoriesModal({
 
   //#region Handlers
   const handleSaveCategories = () => {
-    mutateUpdate(modifiedCategories);
+    mutateUpdate({ categories: modifiedCategories });
   };
 
   const handleCategorySearch = (e) => {
@@ -94,11 +99,15 @@ export default function ManageCategoriesModal({
   };
 
   // Change the previous name of the category to the new one
-  const handleRenameCategory = (prevCategoryName, newCategoryName) => {
+  const handleRenameCategory = (
+    categoryId,
+    prevCategoryName,
+    newCategoryName
+  ) => {
     if (prevCategoryName !== newCategoryName) {
       setModifiedCategories((prevCategories) =>
         prevCategories.map((category) =>
-          category.name === prevCategoryName
+          category.id === categoryId
             ? { ...category, name: newCategoryName }
             : category
         )
@@ -107,14 +116,14 @@ export default function ManageCategoriesModal({
   };
 
   const handleRecolorCategory = (
-    categoryName,
+    categoryId,
     prevCategoryColor,
     categoryColor
   ) => {
     if (prevCategoryColor !== categoryColor) {
       setModifiedCategories((prevCategories) =>
         prevCategories.map((category) =>
-          category.name === categoryName
+          category.id === categoryId
             ? { ...category, color: categoryColor }
             : category
         )
@@ -123,18 +132,29 @@ export default function ManageCategoriesModal({
   };
 
   const handleCreateCategory = () => {
+    console.log("input", inputCategoryName);
     if (isCategoryNew) {
+      console.log(
+        "id: ",
+        getOrCreateCategoryId(modifiedCategories, inputCategoryName)
+      );
+      console.log("name: ", inputCategoryName);
       setModifiedCategories((prevCategories) => [
-        { name: inputCategoryName, color: "none" },
+        {
+          id: getOrCreateCategoryId(prevCategories, inputCategoryName),
+          name: inputCategoryName,
+          color: "none",
+          note_count: 0,
+        },
         ...prevCategories,
       ]);
       setInputCategoryName("");
     }
   };
 
-  const handleDeleteCategory = (categoryName) => {
+  const handleDeleteCategory = (categoryId) => {
     setModifiedCategories((prevCategories) =>
-      prevCategories.filter((category) => category.name !== categoryName)
+      prevCategories.filter((category) => category.id !== categoryId)
     );
   };
   //#endregion
@@ -180,7 +200,7 @@ export default function ManageCategoriesModal({
             <AnimatePresence>
               {filteredCategories.map((category, index) => (
                 <motion.div
-                  key={category.name}
+                  key={category.id}
                   layout
                   transition={springShort}
                   variants={variantFadeSlideDownStagger}
@@ -193,18 +213,22 @@ export default function ManageCategoriesModal({
                     categoryName={category.name}
                     categoryColor={category.color}
                     setCategoryName={(categoryName) =>
-                      handleRenameCategory(category.name, categoryName)
+                      handleRenameCategory(
+                        category.id,
+                        category.name,
+                        categoryName
+                      )
                     }
                     setCategoryColor={(categoryColor) =>
                       handleRecolorCategory(
-                        category.name,
+                        category.id,
                         category.color,
                         categoryColor
                       )
                     }
                     categoryCollection={modifiedCategories}
                     enableEdit
-                    onDelete={() => handleDeleteCategory(category.name)}
+                    onDelete={() => handleDeleteCategory(category.id)}
                   />
                 </motion.div>
               ))}

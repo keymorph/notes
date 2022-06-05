@@ -13,7 +13,7 @@ import Note from "../Note/Note";
  * @param rest - rest of the props for the item being wrapped
  * @returns {JSX.Element}
  */
-export default function SortableItem({ id, index, isDraggingMode, ...rest }) {
+export default function SortableItem({ index, isDraggingMode, ...rest }) {
   const {
     attributes,
     listeners,
@@ -26,7 +26,7 @@ export default function SortableItem({ id, index, isDraggingMode, ...rest }) {
       duration: 250,
       easing: "ease-out",
     },
-    id: id,
+    id: rest.noteID,
   });
 
   return (

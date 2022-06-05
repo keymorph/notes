@@ -22,8 +22,8 @@ const createNote = async (req, res) => {
   const noteDef = {
     title: req.body.title,
     description: req.body.description,
-    category: req.body.category.name, // The category the note belongs to
     tags: req.body.tags, // The tags the note has
+    category_id: req.body.category.id, // The category the note is in
     id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
@@ -31,6 +31,7 @@ const createNote = async (req, res) => {
   let notesObjArr = [noteDef]; // Base case if there are no notes
   let categoriesObjArr = [
     {
+      id: req.body.category.id,
       name: req.body.category.name,
       color: req.body.category.color,
       note_count: 1,
@@ -41,7 +42,7 @@ const createNote = async (req, res) => {
   // If the user has a note resource already, add the new note to it. Otherwise, create a new note resource.
   if (noteItem) {
     const categoryIdx = noteItem.categories.findIndex(
-      (category) => category.name === noteDef.category // Case-insensitive comparison
+      (category) => category.id === noteDef.category_id
     );
     const tagsToAdd = noteDef.tags.filter(
       (tag) => !noteItem.tags.includes(tag)
@@ -110,7 +111,7 @@ const editNote = async (req, res) => {
     .read()
     .catch((error) => {
       console.error(error.message);
-      return res.status(200).json({
+      return res.status(500).json({
         message: "Database error while editing note",
       });
     });
@@ -132,19 +133,23 @@ const editNote = async (req, res) => {
   let tagsToAdd = req.body.tags; // Track the tags to be added
 
   // Check if categories have changed. If so, update the note count
-  if (req.body.category.name !== noteToEdit.category) {
+  if (req.body.category.id !== noteToEdit.category_id) {
     categoriesObjArr.forEach((category) => {
-      if (category.name === noteToEdit.category && category.note_count > 0) {
+      if (category.id === noteToEdit.category_id && category.note_count > 0) {
         category.note_count--;
-      } else if (category.name === req.body.category.name) {
+      } else if (category.id === req.body.category.id) {
         category.note_count++;
         categoryIsNew = false;
       }
     });
+  } else {
+    categoryIsNew = false;
   }
+
   // Create category if it is new
   if (categoryIsNew) {
     categoriesObjArr.push({
+      id: req.body.category.id,
       name: req.body.category.name,
       color: req.body.category.color,
       note_count: 1,
@@ -161,7 +166,7 @@ const editNote = async (req, res) => {
   const editedNote = noteToEdit;
   editedNote.title = req.body.title;
   editedNote.description = req.body.description;
-  editedNote.category = req.body.category.name;
+  editedNote.category_id = req.body.category.id;
   editedNote.tags = req.body.tags;
 
   // Database Patch operation
@@ -215,7 +220,7 @@ const removeNote = async (req, res) => {
 
   // Get the note to be deleted
   const noteIdx = noteItem.notes.findIndex(
-    (note) => note.id == req.body.noteID
+    (note) => note.id === req.body.noteID
   );
   const noteToDelete = noteItem.notes[noteIdx];
 
@@ -228,7 +233,7 @@ const removeNote = async (req, res) => {
   let categoriesObjArr = noteItem.categories;
   // Decrement the category's note count.
   categoriesObjArr.forEach((category) => {
-    if (category.name === noteToDelete.category && category.note_count > 0) {
+    if (category.id === noteToDelete.category_id && category.note_count > 0) {
       category.note_count--;
     }
   });

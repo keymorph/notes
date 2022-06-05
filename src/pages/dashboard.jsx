@@ -9,18 +9,15 @@ import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
 import { getAllNotes } from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
+  //#region Hooks
   const router = useRouter();
   const { status: sessionStatus } = useSession();
-
-  // If the user is not logged in, redirect to the login page
-  if (sessionStatus === "unauthenticated") {
-    router.replace("/auth");
-  }
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
+  const [notesHidden, setNotesHidden] = useState(false);
 
   // Query Handler
   const { data: noteData, status: noteStatus } = useQuery(
@@ -42,6 +39,13 @@ export default function Dashboard() {
       staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     }
   );
+  //#endregion
+
+  // If the user is not logged in, redirect to the login page
+  if (sessionStatus === "unauthenticated") {
+    router.replace("/auth");
+  }
+
   console.info("Note Collection: ", noteCollection);
   console.info("Categories: ", categoriesCollection);
 
@@ -54,6 +58,7 @@ export default function Dashboard() {
         setCategoriesCollection={setCategoriesCollection}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
+        setNotesHidden={setNotesHidden}
         noteStatus={noteStatus}
       />
       <NotesTimeline
@@ -61,6 +66,8 @@ export default function Dashboard() {
         setNoteCollection={setNoteCollection}
         categoriesCollection={categoriesCollection}
         setCategoriesCollection={setCategoriesCollection}
+        notesHidden={notesHidden}
+        setNotesHidden={setNotesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
       />
@@ -68,7 +75,7 @@ export default function Dashboard() {
   ) : (
     // While the user is being authenticated, show a loading indicator
     <Zoom in>
-      <Box sx={{ width: "100%" }}>
+      <Box width={"100%"}>
         <LinearProgress />
       </Box>
     </Zoom>

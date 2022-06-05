@@ -8,7 +8,7 @@ import {
   MenuItem,
   Toolbar,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ManageCategoriesModal from "../Modals/ManageCategoriesModal";
 import NoteActionModal from "../Modals/NoteActionModal";
 
@@ -20,6 +20,7 @@ export default function AppToolbar({
   searchValue,
   setNoteCollection,
   setCategoriesCollection,
+  setNotesHidden,
   setSearchValue,
   noteStatus,
 }) {
@@ -28,6 +29,16 @@ export default function AppToolbar({
   const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
   const [manageCategoriesModalOpen, setManageCategoriesModalOpen] =
     useState(false);
+
+  // Hide notes while the modal is open
+  useEffect(() => {
+    if (createNoteModalOpen || manageCategoriesModalOpen) {
+      setNotesHidden(true);
+    } else {
+      setNotesHidden(false);
+    }
+  }, [createNoteModalOpen, manageCategoriesModalOpen]);
+
   //#endregion
 
   //#region Handlers
@@ -69,6 +80,7 @@ export default function AppToolbar({
     <ManageCategoriesModal
       categoriesCollection={categoriesCollection}
       setCategoriesCollection={setCategoriesCollection}
+      setNoteCollection={setNoteCollection}
       modalOpen={manageCategoriesModalOpen}
       handleModalClose={handleManageCategoriesModalClose}
     />

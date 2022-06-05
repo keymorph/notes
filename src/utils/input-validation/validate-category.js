@@ -6,7 +6,11 @@
  * @returns {boolean}
  */
 export function doesCategoryExist(categoryName, categoryCollection) {
-  return categoryCollection.find(
-    (category) => category.name.toLowerCase() === categoryName.toLowerCase()
-  );
+  if (categoryCollection.length > 0) {
+    return categoryCollection.find(
+      (category) =>
+        category.name.toLowerCase() === categoryName.trim().toLowerCase()
+    );
+  }
+  return false;
 }
