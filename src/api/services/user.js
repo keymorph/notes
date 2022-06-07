@@ -5,7 +5,7 @@ import { users } from "../models/database.js";
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
   const { resources: userItem } = await users.items
-    .query(`SELECT * FROM users WHERE users.email like '${email}'`)
+    .query(`SELECT * FROM users WHERE users.email = '${email}'`)
     .fetchNext()
     .catch((error) => {
       console.error(error.message);
@@ -70,7 +70,7 @@ const loginAccount = async (email, password, res) => {
           error: "The email address or password entered is invalid.",
         });
       }
-      return res.status(200).json({ userID: resources[0].id });
+      return res.status(200).json({ user_id: resources[0].id });
     })
     .catch((error) => {
       console.error(error.message);
@@ -84,7 +84,7 @@ const removeAccount = async (req, res) => {
   // TODO: Delete all user's notes by looping through the noteService delete method
   // Old method of deleting notes when it was using MySQL
   // users.query(
-  //     `DELETE FROM notes WHERE userID = '${req.userID}';`,
+  //     `DELETE FROM notes WHERE user_id = '${req.user_id}';`,
   //     async (err, results) => {
   //         if (err) throw err
   //         if (results.affectedRows === 0) {
@@ -93,7 +93,7 @@ const removeAccount = async (req, res) => {
   //         return res.status(200).json({ message : `Account & Notes deleted.` })
   // })
   users
-    .item(req.userID, req.userID)
+    .item(req.user_id, req.user_id)
     .delete()
     .then(() => {
       return res.status(200).json({ message: "User deleted successfully." });

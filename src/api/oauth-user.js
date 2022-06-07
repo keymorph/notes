@@ -8,7 +8,7 @@ import {users} from "./models/database";
 export async function createOAuthUserIfNotExists(email) {
   // Check if the email already exists in the database
   const { resources: userItem } = await users.items
-    .query(`SELECT * FROM users WHERE users.email like '${email}'`)
+    .query(`SELECT * FROM users WHERE users.email = '${email}'`)
     .fetchNext()
     .catch((error) => {
       console.error(error.message);
@@ -17,9 +17,8 @@ export async function createOAuthUserIfNotExists(email) {
 
   // If a user with email exists, then email in use
   if (userItem.length !== 0) {
-    const { resource: user } = await users
-      .item(userItem[0].id)
-      .replace({
+    const { resource: user } = await users.items
+      .upsert({
         ...userItem[0],
         oauth: true,
       })

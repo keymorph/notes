@@ -10,7 +10,7 @@ export async function updateCategories(data) {
     data,
     {
       headers: {
-        userid: session?.user.id,
+        user_id: session.user.id,
       },
     }
   );

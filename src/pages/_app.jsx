@@ -47,7 +47,7 @@ export default function App({
         <title>JotFox - Note Taking App</title>
       </Head>
       <QueryClientProvider client={queryClient}>
-        <SessionProvider session={session} refetchOnWindowFocus={true}>
+        <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
             {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
             <CssBaseline enableColorScheme />

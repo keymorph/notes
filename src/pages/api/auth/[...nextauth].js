@@ -45,21 +45,21 @@ export default NextAuth({
   callbacks: {
     // Ensure that the user id is passed to the client's cookie
     async jwt({ token, user }) {
-      if (user && !user.userID) {
+      if (user && !user.user_id) {
         // Temporary cosmosdb solution for getting the user id and/or creating an account for oauth users
-        token.userID = await createOAuthUserIfNotExists(user.email).catch(
+        token.user_id = await createOAuthUserIfNotExists(user.email).catch(
           (error) => {
             console.error(error.message);
           }
         );
       } else if (user) {
-        token.userID = user.userID;
+        token.user_id = user.user_id;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.userID;
+        session.user.id = token.user_id;
       }
       return session;
     },

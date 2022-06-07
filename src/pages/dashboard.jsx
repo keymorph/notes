@@ -1,5 +1,5 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -11,7 +11,12 @@ import { getAllNotes } from "../helpers/requests/note-requests";
 export default function Dashboard() {
   //#region Hooks
   const router = useRouter();
-  const { status: sessionStatus } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
+
+  // If the user is not logged in, redirect to the login page
+  if (sessionStatus === "unauthenticated") {
+    router.replace("/auth");
+  }
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
@@ -40,11 +45,6 @@ export default function Dashboard() {
     }
   );
   //#endregion
-
-  // If the user is not logged in, redirect to the login page
-  if (sessionStatus === "unauthenticated") {
-    router.replace("/auth");
-  }
 
   console.info("Note Collection: ", noteCollection);
   console.info("Categories: ", categoriesCollection);
@@ -80,4 +80,10 @@ export default function Dashboard() {
       </Box>
     </Zoom>
   );
+}
+
+// Get user session from the server-side
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {props: {session}};
 }

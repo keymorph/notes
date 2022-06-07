@@ -2,7 +2,7 @@ import { notes } from "../models/database";
 import { createNoteItemIfNotExists } from "./helper";
 
 const replaceCategory = async (req, res) => {
-  const noteItem = await createNoteItemIfNotExists(req.headers.userid).catch(
+  const noteItem = await createNoteItemIfNotExists(req.headers.user_id).catch(
     (error) => {
       console.error(error.message);
       return res.status(500).json({
@@ -31,7 +31,6 @@ const replaceCategory = async (req, res) => {
     }
   });
 
-  // console.log(req.body.categories, req.headers.userid);
   const noteItemPatchOperation = [
     {
       op: "replace",
@@ -46,7 +45,7 @@ const replaceCategory = async (req, res) => {
   ];
 
   return notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
     .then(({ resource: noteItem }) => {
       return res.status(200).json({

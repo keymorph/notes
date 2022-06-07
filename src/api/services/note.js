@@ -1,4 +1,5 @@
 import {notes} from "../models/database.js";
+import {createNoteItemIfNotExists} from "./helper";
 
 // Category object
 // {
@@ -8,18 +9,17 @@ import {notes} from "../models/database.js";
 // }
 const createNote = async (req, res) => {
   // Get the note resource object
-  const { resource: noteItem } = await notes
-    .item(req.headers.userid, req.headers.userid)
-    .read()
-    .catch((error) => {
+  const noteItem = await createNoteItemIfNotExists(req.headers.user_id).catch(
+    (error) => {
       console.error(error.message);
-      return res.status(200).json({
-        message: "Database error while creating note",
+      return res.status(500).json({
+        message: "Database error while creating or reading note item",
       });
-    });
+    }
+  );
 
   // Note object to be created
-  const noteDef = {
+  const newNoteDef = {
     title: req.body.title,
     description: req.body.description,
     tags: req.body.tags, // The tags the note has
@@ -27,47 +27,39 @@ const createNote = async (req, res) => {
     id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
+  // Category object to be created if it doesn't exist
+  const newCategoryDef = {
+    id: req.body.category.id,
+    name: req.body.category.name,
+    color: req.body.category.color,
+    note_count: 1,
+  };
 
-  let notesObjArr = [noteDef]; // Base case if there are no notes
-  let categoriesObjArr = [
-    {
-      id: req.body.category.id,
-      name: req.body.category.name,
-      color: req.body.category.color,
-      note_count: 1,
-    },
-  ]; // Base case if there are no categories
-  let tagsArr = req.body.tags; // Base case if there are no tags
+  const notesObjArr = [...noteItem.notes, newNoteDef];
 
-  // If the user has a note resource already, add the new note to it. Otherwise, create a new note resource.
-  if (noteItem) {
-    const categoryIdx = noteItem.categories.findIndex(
-      (category) => category.id === noteDef.category_id
-    );
-    const tagsToAdd = noteDef.tags.filter(
-      (tag) => !noteItem.tags.includes(tag)
-    );
-
-    // If the category already exists, update the note count
-    if (categoryIdx !== -1) {
-      noteItem.categories[categoryIdx].note_count++;
-      categoriesObjArr = noteItem.categories;
-    } else {
-      categoriesObjArr = noteItem.categories.concat(categoriesObjArr);
-    }
-
-    tagsArr = noteItem.tags.concat(tagsToAdd);
-    notesObjArr = noteItem.notes.concat(noteDef);
+  let categoriesObjArr = noteItem.categories;
+  const categoryIdx = categoriesObjArr.findIndex(
+    (category) => category.id === newNoteDef.category_id
+  );
+  // If the category already exists, update the note count
+  if (categoryIdx !== -1) {
+    categoriesObjArr[categoryIdx].note_count++;
+  } else {
+    categoriesObjArr = [newCategoryDef, ...categoriesObjArr];
   }
 
-  // Note Item object with the noteDef object pushed to the notes array
+  const tagsToAdd = newNoteDef.tags.filter(
+    (tag) => !noteItem.tags.includes(tag)
+  );
+  const tagsArr = [...noteItem.tags, ...tagsToAdd];
+
+  // Note Item object with the new note object pushed to the notes array
   const noteItemDef = {
-    id: req.headers.userid, // The user ID is the same as the note item ID allowing for a 1:1 relationship
-    notes: notesObjArr, // Note array object with all the notes inside
+    id: noteItem.id,
+    notes: notesObjArr,
     categories: categoriesObjArr,
     tags: tagsArr,
-    last_note_id: noteDef.id,
-    created_at: noteItem?.created_at || Math.round(Date.now() / 1000), // Seconds since Unix epoch
+    last_note_id: newNoteDef.id,
   };
 
   return notes.items
@@ -88,11 +80,11 @@ const createNote = async (req, res) => {
 
 const getNoteItem = async (req, res) => {
   return notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .read()
     .then(({ resource: noteItem }) => {
       return res.status(200).json({
-        message: "Note retrieved successfully",
+        message: "Note Item retrieved successfully",
         noteItem,
       });
     })
@@ -107,7 +99,7 @@ const getNoteItem = async (req, res) => {
 const editNote = async (req, res) => {
   // Get the note resource object
   const { resource: noteItem } = await notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .read()
     .catch((error) => {
       console.error(error.message);
@@ -125,13 +117,10 @@ const editNote = async (req, res) => {
       message: "Note to edit not found",
     });
   }
-
   const noteToEdit = noteItem.notes[noteIdx];
 
-  let [categoriesObjArr, tagsArr] = [noteItem.categories, noteItem.tags];
+  let categoriesObjArr = noteItem.categories;
   let categoryIsNew = true; // Track if the category is new
-  let tagsToAdd = req.body.tags; // Track the tags to be added
-
   // Check if categories have changed. If so, update the note count
   if (req.body.category.id !== noteToEdit.category_id) {
     categoriesObjArr.forEach((category) => {
@@ -145,7 +134,6 @@ const editNote = async (req, res) => {
   } else {
     categoryIsNew = false;
   }
-
   // Create category if it is new
   if (categoryIsNew) {
     categoriesObjArr.push({
@@ -156,6 +144,8 @@ const editNote = async (req, res) => {
     });
   }
 
+  let tagsArr = noteItem.tags;
+  let tagsToAdd = req.body.tags; // Track the tags to be added
   // Check if tags have changed, if so, add the new tags to the global tags array
   if (req.body.tags !== noteToEdit.tags) {
     tagsToAdd = req.body.tags.filter((tag) => !tagsArr.includes(tag));
@@ -189,7 +179,7 @@ const editNote = async (req, res) => {
   ];
 
   return notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
     .then(({ resource: noteItem }) => {
       return res.status(200).json({
@@ -209,11 +199,11 @@ const editNote = async (req, res) => {
 const removeNote = async (req, res) => {
   // Get the note resource object
   const { resource: noteItem } = await notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .read()
     .catch((error) => {
       console.error(error.message);
-      return res.status(200).json({
+      return res.status(500).json({
         message: "Database error while deleting note",
       });
     });
@@ -223,9 +213,8 @@ const removeNote = async (req, res) => {
     (note) => note.id === req.body.noteID
   );
   const noteToDelete = noteItem.notes[noteIdx];
-
-  if (noteToDelete === undefined) {
-    return res.status(200).json({
+  if (!noteToDelete) {
+    return res.status(404).json({
       message: "Note not found. It may have already been deleted",
     });
   }
@@ -237,6 +226,8 @@ const removeNote = async (req, res) => {
       category.note_count--;
     }
   });
+
+  // TODO: Tag removal from global tags array (Do we even want a global tags array?)
 
   // Database Patch operation
   const noteItemPatchOperation = [
@@ -252,7 +243,7 @@ const removeNote = async (req, res) => {
   ];
 
   return notes
-    .item(req.headers.userid, req.headers.userid)
+    .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
     .then(({ resource: noteItem }) => {
       return res.status(200).json({
