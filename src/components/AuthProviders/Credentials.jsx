@@ -67,7 +67,7 @@ export default function Credentials({ action }) {
     const data = {
       email: email,
       password: password,
-      redirect: false,
+      redirect: true,
     };
 
     // No need to redirect as next-auth handles that

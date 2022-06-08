@@ -55,9 +55,9 @@ export default function NoteActionModal({
 
   useEffect(() => {
     setNewTitle(title);
-    setNewDescription(description);
-    setNewCategoryName(categoryName);
-    setNewCategoryColor(categoryColor);
+    setNewDescription(description || "");
+    setNewCategoryName(categoryName || "");
+    setNewCategoryColor(categoryColor || "none");
     setDisplayCategoryChip(!!categoryName);
   }, [title, description, categoryName, categoryColor]);
   //#endregion
@@ -128,20 +128,6 @@ export default function NoteActionModal({
       newCategoryName !== categoryName ||
       newCategoryColor !== categoryColor
     ) {
-      console.log("newTitle", newTitle, "title", title);
-      console.log("newDescription", newDescription, "description", description);
-      console.log(
-        "newCategoryName",
-        newCategoryName,
-        "categoryName",
-        categoryName
-      );
-      console.log(
-        "newCategoryColor",
-        newCategoryColor,
-        "categoryColor",
-        categoryColor
-      );
       const editedNote = {
         noteID: Number(noteID),
         title: `${newTitle}`,

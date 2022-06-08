@@ -29,13 +29,14 @@ export default function SearchCategory({
   const [filteredCategories, setFilteredCategories] = useState(
     categoriesCollection.filter((category) => !!category.name.trim())
   );
+  const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [categoryExists, setCategoryExists] = useState(false);
 
-  const isCategoryValid = categoryName?.trim() !== "" && !categoryExists;
+  const isCategoryValid = newCategoryName.trim() !== "" && !categoryExists;
 
   const handleCategorySearch = (e) => {
     const searchValue = e.target.value;
-    setCategoryName(searchValue);
+    setNewCategoryName(searchValue);
 
     setFilteredCategories(
       categoriesCollection.filter(
@@ -56,6 +57,7 @@ export default function SearchCategory({
 
   const handleAddCategory = () => {
     if (isCategoryValid) {
+      setCategoryName(newCategoryName);
       setDisplayCategoryChip(true);
       setIsCategoryNew(true);
     }
@@ -65,7 +67,7 @@ export default function SearchCategory({
     <>
       <Input
         placeholder="Search or add a category"
-        value={categoryName}
+        value={newCategoryName}
         onChange={handleCategorySearch}
         onKeyUp={(e) => e.key === "Enter" && handleAddCategory()}
         endAdornment={
@@ -85,7 +87,7 @@ export default function SearchCategory({
           maxLength: CATEGORY_NAME_CHAR_LIMIT,
         }}
       />
-      {/* Display searched categories horizontally */}
+      {/* Display category results below the search input */}
       <AnimatePresence>
         {filteredCategories.length > 0 && (
           <PopIn>
