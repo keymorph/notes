@@ -12,11 +12,7 @@ export default function Dashboard() {
   //#region Hooks
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
-
-  // If the user is not logged in, redirect to the login page
-  if (sessionStatus === "unauthenticated") {
-    router.replace("/auth");
-  }
+  console.log("session", session);
 
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
@@ -25,26 +21,28 @@ export default function Dashboard() {
   const [notesHidden, setNotesHidden] = useState(false);
 
   // Query Handler
-  const { data: noteData, status: noteStatus } = useQuery(
-    ["get_notes"],
-    getAllNotes,
-    {
-      onSuccess: ({ data }) => {
-        const noteItem = data.noteItem;
-        // Update the state only if the user has a noteItem in the container
-        // Note: new users will not have a noteItem, but it will be created when the user creates their first note
-        if (noteItem) {
-          setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-          setCategoriesCollection(noteItem.categories);
-        }
-      },
-      onError: (error) => {
-        console.error(error.message);
-      },
-      staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
-    }
-  );
+  const { status: noteStatus } = useQuery(["get_notes"], getAllNotes, {
+    onSuccess: ({ data }) => {
+      const noteItem = data.noteItem;
+      // Update the state only if the user has a noteItem in the container
+      // Note: new users will not have a noteItem, but it will be created when the user creates their first note
+      if (noteItem) {
+        setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
+        setCategoriesCollection(noteItem.categories);
+      }
+    },
+    onError: (error) => {
+      console.error(error.message);
+    },
+    staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
+    enabled: sessionStatus === "authenticated", // Disable unless the user is logged in
+  });
   //#endregion
+
+  // If the user is not logged in, redirect to the login page
+  if (sessionStatus === "unauthenticated") {
+    router.replace("/auth");
+  }
 
   console.info("Note Collection: ", noteCollection);
   console.info("Categories: ", categoriesCollection);
@@ -85,5 +83,5 @@ export default function Dashboard() {
 // Get user session from the server-side
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  return {props: {session}};
+  return { props: { session } };
 }

@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.yarn/cache/@mui-lab-npm-5.0.0-alpha.85-fcf8683d79-bf86463572.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@mui-base-npm-5.0.0-alpha.83-db5a6143f4-0ad413a8da.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/cache/@mui-base-npm-5.0.0-alpha.84-495aa7f0d5-1c632d5209.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@mui-icons-material-npm-5.8.2-41a4036994-120244cf35.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/cache/@mui-icons-material-npm-5.8.3-dd2b6aaeb7-6c09ab2019.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@mui-lab-npm-5.0.0-alpha.84-07a85ac1ef-38cf41b348.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@mui-material-npm-5.8.2-c0df91bede-2957cb5047.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/cache/@mui-material-npm-5.8.3-58661db59e-5a73172178.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@mui-system-npm-5.8.2-936923189b-1d968620bb.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/cache/@mui-system-npm-5.8.3-8e5f4348c8-e295eafd84.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/SearchCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/SearchCategory.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +236,9 @@
       <workItem from="1654568995983" duration="769000" />
       <workItem from="1654569836283" duration="62000" />
       <workItem from="1654569925125" duration="11064000" />
-      <workItem from="1654636537042" duration="8290000" />
+      <workItem from="1654636537042" duration="8493000" />
+      <workItem from="1654655917075" duration="2388000" />
+      <workItem from="1654807817256" duration="602000" />
     </task>
     <servers />
   </component>

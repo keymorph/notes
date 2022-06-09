@@ -65,10 +65,6 @@ export default NextAuth({
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,
-  session: {
-    // Specify that the session is using JWT
-    jwt: true,
-  },
   pages: {
     signIn: "/dashboard",
     newUser: "/dashboard",

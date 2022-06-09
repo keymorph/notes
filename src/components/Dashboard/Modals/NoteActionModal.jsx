@@ -96,9 +96,9 @@ export default function NoteActionModal({
   //#region Helper Functions
   const resetModalValues = () => {
     setNewTitle(title);
-    setNewDescription(description);
-    setNewCategoryName(categoryName);
-    setNewCategoryColor(categoryColor);
+    setNewDescription(description || "");
+    setNewCategoryName(categoryName || "");
+    setNewCategoryColor(categoryColor || "");
     setDisplayCategoryChip(!!categoryName);
     setIsCategoryNew(false);
   };
@@ -155,11 +155,12 @@ export default function NoteActionModal({
     if (action === "edit") {
       handleEditNote();
     } else if (action === "create") {
-      setTimeout(() => {
-        resetModalValues();
-      }, 500);
       handleModalClose();
     }
+
+    setTimeout(() => {
+      resetModalValues(); // Don't immediately reset the values till the closing animation is complete
+    }, 500);
   };
   //#endregion
 
