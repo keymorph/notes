@@ -70,6 +70,7 @@ export default function NotesTimeline({
     }
   });
 
+  //#region Handlers
   // Sets the active note id when a note is being dragged
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
@@ -88,117 +89,113 @@ export default function NotesTimeline({
     }
     setActiveId(null);
   };
+  //#endregion
 
   const draggedNote = noteCollection.find((note) => note.id === activeId);
 
-  if (noteStatus === "loading") {
-    // If getting notes, display progress bar
-    return (
-      <Zoom in>
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress />
-        </Box>
-      </Zoom>
-    );
-  } else {
-    return noteCollection.length > 0 ? (
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
-        autoScroll
-        modifiers={[restrictToWindowEdges]}
+  return noteStatus === "loading" ? (
+    <Zoom in>
+      <Box width={"100%"}>
+        <LinearProgress />
+      </Box>
+    </Zoom>
+  ) : noteCollection.length > 0 ? (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      autoScroll
+      modifiers={[restrictToWindowEdges]}
+    >
+      <SortableContext
+        items={filteredNoteCollection}
+        strategy={rectSortingStrategy}
       >
-        <SortableContext
-          items={filteredNoteCollection}
-          strategy={rectSortingStrategy}
+        {/*<DragOverlay>*/}
+        {/*  {activeId ? (*/}
+        {/*    <NoteDragOverlay*/}
+        {/*      title={draggedNote.title}*/}
+        {/*      description={draggedNote.description}*/}
+        {/*      tags={draggedNote.tags}*/}
+        {/*      categoryName={draggedNote.category}*/}
+        {/*      color={*/}
+        {/*        categoriesCollection.find(*/}
+        {/*          (category) => category.name === draggedNote.category*/}
+        {/*        )?.color*/}
+        {/*      }*/}
+        {/*    />*/}
+        {/*  ) : null}*/}
+        {/*</DragOverlay>*/}
+        <Box
+          p="1.5em"
+          display="grid"
+          gap="2em"
+          gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+          justifyItems="center"
         >
-          {/*<DragOverlay>*/}
-          {/*  {activeId ? (*/}
-          {/*    <NoteDragOverlay*/}
-          {/*      title={draggedNote.title}*/}
-          {/*      description={draggedNote.description}*/}
-          {/*      tags={draggedNote.tags}*/}
-          {/*      categoryName={draggedNote.category}*/}
-          {/*      color={*/}
-          {/*        categoriesCollection.find(*/}
-          {/*          (category) => category.name === draggedNote.category*/}
-          {/*        )?.color*/}
-          {/*      }*/}
-          {/*    />*/}
-          {/*  ) : null}*/}
-          {/*</DragOverlay>*/}
-          <Box
-            p="1.5em"
-            display="grid"
-            gap="2em"
-            gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-            justifyItems="center"
-          >
-            {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
-            <AnimatePresence>
-              {filteredNoteCollection.map((note, index) => (
-                <SortableItem
-                  key={note.id}
-                  noteID={note.id}
-                  isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
-                  index={index}
-                  title={note.title}
-                  description={note.description}
-                  tags={note.tags}
-                  categoryName={getCategoryName(
-                    note.category_id,
-                    categoriesCollection
-                  )}
-                  categoryColor={getCategoryColor(
-                    note.category_id,
-                    categoriesCollection
-                  )}
-                  searchValue={searchValue}
-                  noteCollection={noteCollection}
-                  categoriesCollection={categoriesCollection}
-                  setNoteCollection={setNoteCollection}
-                  setCategoriesCollection={setCategoriesCollection}
-                  notesHidden={notesHidden}
-                  setNotesHidden={setNotesHidden}
-                />
-              ))}
-            </AnimatePresence>
-          </Box>
-          {/*  If filtered notes is 0, display no notes found message */}
-          {filteredNoteCollection.length === 0 && (
-            <PopIn visible>
-              <Typography
-                sx={{
-                  position: "absolute",
-                  width: "100%",
-                  top: "20vh",
-                  textAlign: "center",
-                }}
-                variant="h5"
-              >
-                No notes found...
-              </Typography>
-            </PopIn>
-          )}
-        </SortableContext>
-      </DndContext>
-    ) : (
-      // If no notes, display no notes message
-      <PopIn visible>
-        <Typography
-          variant={"h3"}
-          sx={{
-            position: "absolute",
-            width: "100%",
-            top: "20vh",
-            textAlign: "center",
-          }}
-        >
-          No notes yet.
-        </Typography>
-      </PopIn>
-    );
-  }
+          {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
+          <AnimatePresence>
+            {filteredNoteCollection.map((note, index) => (
+              <SortableItem
+                key={note.id}
+                noteID={note.id}
+                isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
+                index={index}
+                title={note.title}
+                description={note.description}
+                tags={note.tags}
+                categoryName={getCategoryName(
+                  note.category_id,
+                  categoriesCollection
+                )}
+                categoryColor={getCategoryColor(
+                  note.category_id,
+                  categoriesCollection
+                )}
+                searchValue={searchValue}
+                noteCollection={noteCollection}
+                categoriesCollection={categoriesCollection}
+                setNoteCollection={setNoteCollection}
+                setCategoriesCollection={setCategoriesCollection}
+                notesHidden={notesHidden}
+                setNotesHidden={setNotesHidden}
+              />
+            ))}
+          </AnimatePresence>
+        </Box>
+        {/*  If filtered notes is 0, display no notes found message */}
+        {filteredNoteCollection.length === 0 && (
+          <PopIn visible>
+            <Typography
+              sx={{
+                position: "absolute",
+                width: "100%",
+                top: "20vh",
+                textAlign: "center",
+              }}
+              variant="h5"
+            >
+              No notes found...
+            </Typography>
+          </PopIn>
+        )}
+      </SortableContext>
+    </DndContext>
+  ) : (
+    // If no notes, display no notes message
+    <PopIn visible>
+      <Typography
+        variant={"h3"}
+        sx={{
+          position: "absolute",
+          width: "100%",
+          top: "20vh",
+          textAlign: "center",
+        }}
+      >
+        No notes yet.
+      </Typography>
+    </PopIn>
+  );
 }

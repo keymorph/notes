@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
+import FilterView from "../components/Dashboard/FilterView/FilterView";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
 import { getAllNotes } from "../helpers/requests/note-requests";
 
@@ -12,13 +13,15 @@ export default function Dashboard() {
   //#region Hooks
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
-  console.log("session", session);
-
+  // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
+  // Hide notes while the modal is open
   const [notesHidden, setNotesHidden] = useState(false);
+
+  const [filterViewOpen, setFilterViewOpen] = useState(false);
 
   // Query Handler
   const { status: noteStatus } = useQuery(["get_notes"], getAllNotes, {
@@ -51,23 +54,27 @@ export default function Dashboard() {
     <Box>
       <AppToolbar
         noteCollection={noteCollection}
-        setNoteCollection={setNoteCollection}
         categoriesCollection={categoriesCollection}
-        setCategoriesCollection={setCategoriesCollection}
         searchValue={searchValue}
+        noteStatus={noteStatus}
+        filterViewOpen={filterViewOpen}
+        setNoteCollection={setNoteCollection}
+        setCategoriesCollection={setCategoriesCollection}
         setSearchValue={setSearchValue}
         setNotesHidden={setNotesHidden}
-        noteStatus={noteStatus}
+        setFilterViewOpen={setFilterViewOpen}
       />
+      <FilterView open={filterViewOpen} />
       <NotesTimeline
         noteCollection={noteCollection}
-        setNoteCollection={setNoteCollection}
         categoriesCollection={categoriesCollection}
-        setCategoriesCollection={setCategoriesCollection}
         notesHidden={notesHidden}
-        setNotesHidden={setNotesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
+        filterViewOpen={filterViewOpen}
+        setNoteCollection={setNoteCollection}
+        setCategoriesCollection={setCategoriesCollection}
+        setNotesHidden={setNotesHidden}
       />
     </Box>
   ) : (

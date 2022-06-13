@@ -33,7 +33,12 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
 
   const userAvatar = session?.user?.image ? (
     <Avatar sx={{ height: "1.5em", width: "1.5em" }}>
-      <Image src={session.user.image} alt={"profile picture"} layout="fill" />
+      <Image
+        priority
+        src={session.user.image}
+        alt={"profile picture"}
+        layout="fill"
+      />
     </Avatar>
   ) : (
     <AccountCircle />

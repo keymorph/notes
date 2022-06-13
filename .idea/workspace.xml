@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/FilterView/FilterView.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@emotion-react-npm-11.9.0-59b3a70c1e-4ceb004f94.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@emotion-serialize-npm-1.0.3-2a28e46c06-99a9053bd9.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/@emotion-styled-npm-11.8.1-af85f2fe52-67150fa788.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/framer-motion-npm-6.3.10-e92d27599e-19d21425a6.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/next-auth-npm-4.3.4-318b350447-4b5f6f6d3f.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/cache/sass-npm-1.52.2-ad4574e1be-d5efcbad4b.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +240,8 @@
       <workItem from="1654807817256" duration="3265000" />
       <workItem from="1654898145297" duration="9427000" />
       <workItem from="1655063393794" duration="18000" />
-      <workItem from="1655063422123" duration="6878000" />
+      <workItem from="1655063422123" duration="9433000" />
+      <workItem from="1655152411797" duration="3698000" />
     </task>
     <servers />
   </component>

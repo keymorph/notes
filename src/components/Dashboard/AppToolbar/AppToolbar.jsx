@@ -20,11 +20,13 @@ export default function AppToolbar({
   noteCollection,
   categoriesCollection,
   searchValue,
+  noteStatus,
+  filterViewOpen,
   setNoteCollection,
   setCategoriesCollection,
   setNotesHidden,
   setSearchValue,
-  noteStatus,
+  setFilterViewOpen,
 }) {
   //#region Hooks
   const theme = useTheme();
@@ -140,7 +142,7 @@ export default function AppToolbar({
           {/* Only display the search bar and filter if there are notes */}
           {noteCollection.length > 0 && (
             <>
-              <IconButton>
+              <IconButton onClick={() => setFilterViewOpen(!filterViewOpen)}>
                 <FilterList />
               </IconButton>
               <ToolbarSearch
