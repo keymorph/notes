@@ -91,8 +91,8 @@ export default function CategoryChip({
         icon={
           <Tooltip title="Change Color" placement="top" arrow>
             <IconButton
-              autoFocus={enableEdit}
               size={"small"}
+              disabled={!enableEdit}
               onClick={handleOpenPopper}
             >
               <Circle
@@ -201,7 +201,7 @@ export default function CategoryChip({
       <AnimatePresence>
         {isPaletteOpen && (
           <PopIn>
-            <Stack direction={"row"} py={"1em"} overflow={["hidden", "hidden"]}>
+            <Stack direction={"row"} py={"1em"} overflow={["auto", "hidden"]}>
               <AnimatePresence>
                 {categoryColors.map((category, index) => (
                   <motion.div
