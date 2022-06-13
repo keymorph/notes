@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
 import {
   adornmentButtonTransition,
@@ -41,10 +41,14 @@ export default function CategoryChip({
   const theme = useTheme();
   const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
-  // Determines if the category chip is being edited (only valid when both enableEditName and enableEditColor are true)
+  // Determines if the category name is being edited (only used when enableEdit is true)
   const [editMode, setEditMode] = useState(false);
   // Disables the save functionality when editing the category
   const [disableSave, setDisableSave] = useState(false);
+
+  useEffect(() => {
+    setNewCategoryName(categoryName);
+  }, [categoryName]);
   //#endregion
 
   const categoryColors = Object.keys(theme.palette.category);
@@ -89,7 +93,6 @@ export default function CategoryChip({
             <IconButton
               autoFocus={enableEdit}
               size={"small"}
-              disabled={!editMode}
               onClick={handleOpenPopper}
             >
               <Circle
@@ -106,7 +109,7 @@ export default function CategoryChip({
         label={
           <Box display={"flex"} flexDirection={"row"} width={"100%"}>
             <Input
-              defaultValue={categoryName}
+              value={newCategoryName}
               disabled={!editMode}
               disableUnderline
               fullWidth
@@ -160,7 +163,7 @@ export default function CategoryChip({
             arrow
           >
             <IconButton size={"small"}>
-              {/* If the category has both enableEditColor and enableEditName, then it is in an editable context and
+              {/* If the category has both enableEdit, then it is in an editable context and
               as such it should display the icon indicating that the category can be deleted. */}
               <Zoom in={enableEdit} unmountOnExit>
                 <div>

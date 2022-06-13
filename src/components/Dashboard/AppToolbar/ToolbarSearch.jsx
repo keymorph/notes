@@ -25,12 +25,12 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
     <OutlinedInput
       placeholder="Search…"
       value={searchValue}
+      fullWidth
       sx={{
         borderRadius: 20,
         height: "2em",
-        width: "25vw",
-        minWidth: "120px",
-        maxWidth: "240px",
+        minWidth: "8em",
+        maxWidth: "24em",
       }}
       onChange={handleOnChange}
       onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press

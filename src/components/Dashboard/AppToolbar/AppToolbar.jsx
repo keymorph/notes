@@ -1,4 +1,4 @@
-import { FilterList, MoreVert, NoteAdd } from "@mui/icons-material";
+import { FilterList, MoreVert, NoteAddOutlined } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -7,6 +7,8 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import ManageCategoriesModal from "../Modals/ManageCategoriesModal";
@@ -25,6 +27,9 @@ export default function AppToolbar({
   noteStatus,
 }) {
   //#region Hooks
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
   const [manageCategoriesModalOpen, setManageCategoriesModalOpen] =
@@ -68,6 +73,10 @@ export default function AppToolbar({
   const noteActionModal = (
     <NoteActionModal
       action={"create"}
+      title={""}
+      description={""}
+      categoryName={""}
+      categoryColor={"none"}
       modalOpen={createNoteModalOpen}
       handleModalClose={handleCreateNoteModalClose}
       noteCollection={noteCollection}
@@ -110,7 +119,6 @@ export default function AppToolbar({
         variant={"dense"}
         sx={{
           display: "flex",
-          justifyContent: "space-between",
         }}
       >
         {/* The dom order doesn't matter for these components and as such they are grouped together */}
@@ -124,10 +132,10 @@ export default function AppToolbar({
 
         <Box
           display={"flex"}
-          flexDirection={"row"}
           gap={"0.3em"}
           alignItems={"center"}
-          ml={"0.2em"}
+          ml={"0.5em"}
+          mr={"auto"}
         >
           {/* Only display the search bar and filter if there are notes */}
           {noteCollection.length > 0 && (
@@ -142,25 +150,28 @@ export default function AppToolbar({
             </>
           )}
         </Box>
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          gap={"0.3em"}
-          alignItems={"center"}
-          mr={"0.2em"}
-        >
-          <Button
-            variant="outlined"
-            sx={{
-              height: "2em",
-              minWidth: "6em",
-            }}
-            startIcon={<NoteAdd />}
-            onClick={handleCreateNoteModalOpen}
-          >
-            Add Note
-          </Button>
-          <IconButton onClick={handleMoreMenuClick}>
+        <Box display={"flex"} gap={"0.3em"} alignItems={"center"} mr={"0.75em"}>
+          {isMobile ? (
+            <IconButton
+              sx={{ left: "0.25em" }}
+              color={"primary"}
+              onClick={handleCreateNoteModalOpen}
+            >
+              <NoteAddOutlined />
+            </IconButton>
+          ) : (
+            <Button
+              variant="outlined"
+              sx={{
+                height: "2em",
+              }}
+              startIcon={<NoteAddOutlined />}
+              onClick={handleCreateNoteModalOpen}
+            >
+              Add Note
+            </Button>
+          )}
+          <IconButton sx={{ width: "1.25em" }} onClick={handleMoreMenuClick}>
             <MoreVert />
           </IconButton>
         </Box>

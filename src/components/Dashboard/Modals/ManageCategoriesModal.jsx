@@ -1,6 +1,7 @@
-import { AddCircleOutline } from "@mui/icons-material";
+import { AddCircleOutline, Close, Restore } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Card,
   Grow,
   IconButton,
@@ -67,6 +68,8 @@ export default function ManageCategoriesModal({
   //#endregion
   //#endregion
 
+  const categoriesChanged =
+    JSON.stringify(modifiedCategories) !== JSON.stringify(categoriesCollection);
   // Filter out the empty "" category names
   // From the filtered categories, filter out the ones that don't match the inputCategoryName if it's not empty
   const filteredCategories = modifiedCategories.filter(
@@ -87,7 +90,13 @@ export default function ManageCategoriesModal({
     setNoCategoriesDisplayed(false);
   }
 
-  console.log("filteredCategories", filteredCategories);
+  //#region Helper Functions
+  // Reset modal values is used when creating a note
+  const resetModalValues = () => {
+    setInputCategoryName("");
+    setModifiedCategories(categoriesCollection);
+  };
+  //#endregion
 
   //#region Handlers
   const handleSaveCategories = () => {
@@ -157,15 +166,46 @@ export default function ManageCategoriesModal({
       prevCategories.filter((category) => category.id !== categoryId)
     );
   };
+
+  const handleBeforeModalClose = (event, reason) => {
+    if (reason === "closeModal") {
+      handleModalClose();
+      setTimeout(() => {
+        resetModalValues();
+      }, 500); // Don't immediately reset the values till the closing animation is complete
+    } else {
+      handleModalClose();
+    }
+  };
   //#endregion
 
   return (
     <Modal open={modalOpen} onClose={handleModalClose} closeAfterTransition>
       <Grow in={modalOpen}>
         <Card sx={modalCard}>
-          <Typography variant="h5" color={"primary"}>
-            Manage Categories
-          </Typography>
+          <Box display={"flex"}>
+            <Typography
+              display={"flex"}
+              alignSelf={"center"}
+              variant="h5"
+              color={"primary"}
+            >
+              Manage Categories
+            </Typography>
+            <IconButton
+              disabled={!categoriesChanged}
+              onClick={resetModalValues}
+              sx={{ ml: "auto", transition: "all 0.2s ease-in-out" }}
+            >
+              <Restore />
+            </IconButton>
+            <IconButton
+              onClick={(event) => handleBeforeModalClose(event, "closeModal")}
+              edge="end"
+            >
+              <Close />
+            </IconButton>
+          </Box>
           <Input
             placeholder="Search or add a category"
             value={inputCategoryName}
@@ -249,6 +289,7 @@ export default function ManageCategoriesModal({
             loading={updateStatus === "loading"}
             variant="contained"
             size="small"
+            disabled={!categoriesChanged}
             onClick={handleSaveCategories}
             sx={{
               border: "1px",

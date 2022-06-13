@@ -1,7 +1,10 @@
+import { Close, Restore } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Card,
   Grow,
+  IconButton,
   Modal,
   TextField,
   Typography,
@@ -42,12 +45,10 @@ export default function NoteActionModal({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [newTitle, setNewTitle] = useState(title); // Cannot do string comparison because we use the null value to check if the user has typed anything
-  const [newDescription, setNewDescription] = useState(description || "");
-  const [newCategoryName, setNewCategoryName] = useState(categoryName || "");
-  const [newCategoryColor, setNewCategoryColor] = useState(
-    categoryColor || "none"
-  );
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
+  const [newCategoryName, setNewCategoryName] = useState(categoryName);
+  const [newCategoryColor, setNewCategoryColor] = useState(categoryColor);
   const [displayCategoryChip, setDisplayCategoryChip] = useState(
     !!categoryName
   );
@@ -55,21 +56,26 @@ export default function NoteActionModal({
 
   useEffect(() => {
     setNewTitle(title);
-    setNewDescription(description || "");
-    setNewCategoryName(categoryName || "");
-    setNewCategoryColor(categoryColor || "none");
+    setNewDescription(description);
+    setNewCategoryName(categoryName);
+    setNewCategoryColor(categoryColor);
     setDisplayCategoryChip(!!categoryName);
   }, [title, description, categoryName, categoryColor]);
   //#endregion
 
-  const titleError = newTitle?.trim() === "";
+  const titleError = newTitle.trim() === "";
+  const valuesChanged =
+    newTitle.trim() !== title ||
+    newDescription.trim() !== description ||
+    newCategoryName.trim() !== categoryName ||
+    newCategoryColor !== categoryColor;
 
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
       // Reflect the database changes on the front-end
-      setCategoriesCollection(data.noteItem.categories);
       setNoteCollection(data.noteItem.notes.reverse());
+      setCategoriesCollection(data.noteItem.categories);
     },
     onError: (error) => {
       console.error(error.message);
@@ -82,8 +88,11 @@ export default function NoteActionModal({
       onSuccess: ({ data }) => {
         handleModalClose();
         // Reflect the database changes on the front-end
-        setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
+        setCategoriesCollection(data.noteItem.categories);
+        setTimeout(() => {
+          resetModalValues(); // Don't immediately reset the values till the closing animation is complete
+        }, 500);
       },
       onError: (error) => {
         console.error(error.message);
@@ -94,11 +103,12 @@ export default function NoteActionModal({
   //#endregion
 
   //#region Helper Functions
+  // Reset modal values is used when creating a note
   const resetModalValues = () => {
     setNewTitle(title);
-    setNewDescription(description || "");
-    setNewCategoryName(categoryName || "");
-    setNewCategoryColor(categoryColor || "");
+    setNewDescription(description);
+    setNewCategoryName(categoryName);
+    setNewCategoryColor(categoryColor);
     setDisplayCategoryChip(!!categoryName);
     setIsCategoryNew(false);
   };
@@ -107,34 +117,31 @@ export default function NoteActionModal({
   //#region Handlers
   const handleCreateNote = () => {
     const newNote = {
-      title: `${newTitle}`,
-      description: `${newDescription}`,
+      title: `${newTitle.trim()}`,
+      description: `${newDescription.trim()}`,
       category: {
-        id: getOrCreateCategoryId(categoriesCollection, newCategoryName),
-        name: `${newCategoryName}`,
+        id: getOrCreateCategoryId(categoriesCollection, newCategoryName.trim()),
+        name: `${newCategoryName.trim()}`,
         color: `${newCategoryColor || "none"}`,
       },
       tags: [],
     };
-    console.log("newNote", newNote);
     mutateCreate(newNote);
   };
 
   const handleEditNote = () => {
     // If no changes made, no database request necessary
-    if (
-      newTitle !== title ||
-      newDescription !== description ||
-      newCategoryName !== categoryName ||
-      newCategoryColor !== categoryColor
-    ) {
+    if (valuesChanged) {
       const editedNote = {
         noteID: Number(noteID),
-        title: `${newTitle}`,
-        description: `${newDescription}`,
+        title: `${newTitle.trim()}`,
+        description: `${newDescription.trim()}`,
         category: {
-          id: getOrCreateCategoryId(categoriesCollection, newCategoryName),
-          name: displayCategoryChip ? `${newCategoryName}` : "", // Ensure we don't send the temporary category name
+          id: getOrCreateCategoryId(
+            categoriesCollection,
+            newCategoryName.trim()
+          ),
+          name: displayCategoryChip ? `${newCategoryName.trim()}` : "", // Ensure we don't send the temporary category name
           color: `${newCategoryColor}`,
         },
         tags: [],
@@ -152,15 +159,18 @@ export default function NoteActionModal({
   };
 
   const handleBeforeModalClose = (event, reason) => {
-    if (action === "edit") {
-      handleEditNote();
-    } else if (action === "create") {
+    if (reason === "closeModal") {
       handleModalClose();
+      setTimeout(() => {
+        resetModalValues();
+      }, 500); // Don't immediately reset the values till the closing animation is complete
+    } else {
+      if (action === "edit") {
+        handleEditNote();
+      } else if (action === "create") {
+        handleModalClose();
+      }
     }
-
-    setTimeout(() => {
-      resetModalValues(); // Don't immediately reset the values till the closing animation is complete
-    }, 500);
   };
   //#endregion
 
@@ -172,34 +182,52 @@ export default function NoteActionModal({
     >
       <Grow in={modalOpen}>
         <Card sx={modalCard}>
-          <Typography variant="h5" color={"primary"}>
-            {action === "edit" && "Edit Note"}
-            {action === "create" && "Create a Note"}
-          </Typography>
+          <Box display={"flex"}>
+            <Typography
+              display={"flex"}
+              alignSelf={"center"}
+              variant="h5"
+              color={"primary"}
+            >
+              {action === "edit" && "Edit Note"}
+              {action === "create" && "Create a Note"}
+            </Typography>
+            <IconButton
+              disabled={!valuesChanged}
+              onClick={resetModalValues}
+              sx={{ ml: "auto", transition: "all 0.2s ease-in-out" }}
+            >
+              <Restore />
+            </IconButton>
+            <IconButton
+              onClick={(event) => handleBeforeModalClose(event, "closeModal")}
+              edge="end"
+            >
+              <Close />
+            </IconButton>
+          </Box>
 
           <TextField
             required
             id="outlined-required"
             label="Title"
-            defaultValue={newTitle}
-            error={titleError}
-            helperText={titleError && "Please enter a title"}
+            value={newTitle}
             sx={{ my: "1em" }}
             inputProps={{
               maxLength: NOTE_TITLE_CHAR_LIMIT,
             }}
-            onChange={(event) => setNewTitle(event.target.value.trim())}
+            onChange={(event) => setNewTitle(event.target.value)}
           />
 
           <TextField
             id="outlined-multiline-static"
             label="Description"
-            defaultValue={newDescription}
+            value={newDescription}
             multiline
             rows={isMobile ? 6 : 8}
             sx={{ mb: 2 }}
             inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
-            onChange={(event) => setNewDescription(event.target.value.trim())}
+            onChange={(event) => setNewDescription(event.target.value)}
           />
 
           {/* Display either the category chip or the search category component based on the user intended action */}
@@ -234,7 +262,7 @@ export default function NoteActionModal({
             loading={editStatus === "loading" || createStatus === "loading"}
             variant="contained"
             size="small"
-            disabled={!newTitle || titleError} // Disable button if required title field is empty
+            disabled={titleError || !valuesChanged} // Disable button if required title field is empty
             onClick={action === "edit" ? handleEditNote : handleCreateNote}
             sx={{
               border: "1px",
