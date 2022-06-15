@@ -36,11 +36,11 @@ export default function NotesTimeline({
   noteStatus,
 }) {
   //#region Hooks
-  const [activeId, setActiveId] = useState(null); // activeId used to track the active notes being dragged
+  const [activeId, setActiveId] = useState(null); // activeId used to track the active note being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 2, // Distance, in pixels, that the notes must be dragged before it is considered active
+        distance: 2, // Distance, in pixels, that the note must be dragged before it is considered active
       },
     }),
     useSensor(KeyboardSensor, {
@@ -56,14 +56,14 @@ export default function NotesTimeline({
   //#endregion
 
   //#region Handlers
-  // Sets the active notes id when a notes is being dragged
+  // Sets the active note id when a note is being dragged
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
   };
 
-  // Swap the notes indexes when a notes is dropped after being dragged
+  // Swap the note indexes when a note is dropped after being dragged
   const handleDragEnd = ({ active, over }) => {
-    // over is null when the notes is dropped onto itself
+    // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
       setNoteCollection((noteCollection) => {
@@ -125,7 +125,7 @@ export default function NotesTimeline({
               <SortableItem
                 key={note.id}
                 noteID={note.id}
-                isDraggingMode={!!activeId} // If activeId is set, a notes is being dragged
+                isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
                 index={index}
                 title={note.title}
                 description={note.description}

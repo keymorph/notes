@@ -1,5 +1,5 @@
 /*
-  /api/notes endpoint for anything notes related
+  /api/note endpoint for anything note related
 */
 
 import {getSession} from "next-auth/react";

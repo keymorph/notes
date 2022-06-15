@@ -91,7 +91,7 @@ export default function ManageCategoriesModal({
   }
 
   //#region Helper Functions
-  // Reset modal values is used when creating a notes
+  // Reset modal values is used when creating a note
   const resetModalValues = () => {
     setInputCategoryName("");
     setModifiedCategories(categoriesCollection);

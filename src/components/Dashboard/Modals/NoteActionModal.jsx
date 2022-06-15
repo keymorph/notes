@@ -103,7 +103,7 @@ export default function NoteActionModal({
   //#endregion
 
   //#region Helper Functions
-  // Reset modal values is used when creating a notes
+  // Reset modal values is used when creating a note
   const resetModalValues = () => {
     setNewTitle(title);
     setNewDescription(description);
