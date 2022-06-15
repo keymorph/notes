@@ -14,7 +14,7 @@ const replaceCategory = async (req, res) => {
   let noteCountToAddToEmptyCategory = 0;
   const newCategoryIds = req.body.categories.map((category) => category.id);
   const editedNotes = noteItem.notes.map((note) => {
-    // If a note is found with an id different from the new category ids, it means that the category was removed
+    // If a notes is found with an id different from the new category ids, it means that the category was removed
     // As such, we set the category_id to 0 which is the default category
     if (newCategoryIds.indexOf(note.category_id) === -1) {
       note.category_id = 0;
@@ -23,7 +23,7 @@ const replaceCategory = async (req, res) => {
     return note;
   });
 
-  // Update the no category note count
+  // Update the no category notes count
   req.body.categories.some((category) => {
     if (category.id === 0) {
       category.note_count += noteCountToAddToEmptyCategory;

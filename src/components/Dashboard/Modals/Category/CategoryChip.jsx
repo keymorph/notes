@@ -31,7 +31,7 @@ export default function CategoryChip({
   categoryColor,
   setCategoryName = null,
   setCategoryColor = null,
-  categoryCollection,
+  categoryCollection = [],
   onSelect = null,
   onDelete = null,
   enableEdit = false,

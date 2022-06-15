@@ -130,7 +130,7 @@ export default function Note({
   };
   //#endregion
 
-  // Close the menu if the note is being dragged
+  // Close the menu if the notes is being dragged
   if (moreMenuAnchorEl && isDragging) {
     setMoreMenuAnchorEl(null);
   }

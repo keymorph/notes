@@ -1,4 +1,4 @@
-import { FilterList, MoreVert, NoteAddOutlined } from "@mui/icons-material";
+import { Add, FilterList, MoreVert } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -153,26 +153,22 @@ export default function AppToolbar({
           )}
         </Box>
         <Box display={"flex"} gap={"0.3em"} alignItems={"center"} mr={"0.75em"}>
-          {isMobile ? (
-            <IconButton
-              sx={{ left: "0.25em" }}
-              color={"primary"}
-              onClick={handleCreateNoteModalOpen}
-            >
-              <NoteAddOutlined />
-            </IconButton>
-          ) : (
-            <Button
-              variant="outlined"
-              sx={{
-                height: "2em",
-              }}
-              startIcon={<NoteAddOutlined />}
-              onClick={handleCreateNoteModalOpen}
-            >
-              Add Note
-            </Button>
-          )}
+          <Button
+            variant="outlined"
+            sx={{
+              height: "1.8rem",
+              minWidth: isMobile ? "2em" : "auto",
+              maxWidth: isMobile ? "2em" : "auto",
+              ".MuiButton-startIcon": {
+                mr: isMobile ? "0em" : "0.5rem",
+                ml: isMobile ? "0em" : "-0.25rem",
+              },
+            }}
+            startIcon={<Add />}
+            onClick={handleCreateNoteModalOpen}
+          >
+            {isMobile ? "" : "Add Note"}
+          </Button>
           <IconButton sx={{ width: "1.25em" }} onClick={handleMoreMenuClick}>
             <MoreVert />
           </IconButton>

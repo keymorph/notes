@@ -1,9 +1,9 @@
 import {notes} from "../models/database";
 
 /**
- * Creates a note item if one doesn't already exist. If no or an invalid user_id is provided, an error will be thrown.
+ * Creates a notes item if one doesn't already exist. If no or an invalid user_id is provided, an error will be thrown.
  *
- * @param {string} userID The user ID of the user to find or create the note item for
+ * @param {string} userID The user ID of the user to find or create the notes item for
  * @returns {Promise<*>}
  */
 export const createNoteItemIfNotExists = async (userID) => {
@@ -11,19 +11,19 @@ export const createNoteItemIfNotExists = async (userID) => {
     throw new Error("User ID is required");
   }
 
-  // Get the note resource object
+  // Get the notes resource object
   const { resource: noteItem } = await notes
     .item(userID, userID)
     .read()
     .catch((error) => {
       console.error(error.message);
-      throw new Error("Database error while reading note item");
+      throw new Error("Database error while reading notes item");
     });
 
-  // If the note item does not exist, create it
+  // If the notes item does not exist, create it
   if (!noteItem) {
     const noteItemDef = {
-      id: userID, // The user ID is the same as the note item ID allowing for a 1:1 relationship
+      id: userID, // The user ID is the same as the notes item ID allowing for a 1:1 relationship
       notes: [],
       categories: [
         {
@@ -45,7 +45,7 @@ export const createNoteItemIfNotExists = async (userID) => {
       })
       .catch((error) => {
         console.error(error.message);
-        throw new Error("Database error while creating note item");
+        throw new Error("Database error while creating notes item");
       });
   } else {
     return noteItem;

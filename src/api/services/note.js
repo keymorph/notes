@@ -5,15 +5,15 @@ import {createNoteItemIfNotExists} from "./helper";
 // {
 //   category_name: "Chicken",
 //   color: "Yellow"
-//   note_count: 1, Number of notes in this category, always 1 when creating a note
+//   note_count: 1, Number of notes in this category, always 1 when creating a notes
 // }
 const createNote = async (req, res) => {
-  // Get the note resource object
+  // Get the notes resource object
   const noteItem = await createNoteItemIfNotExists(req.headers.user_id).catch(
     (error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while creating or reading note item",
+        message: "Database error while creating or reading notes item",
       });
     }
   );
@@ -22,9 +22,9 @@ const createNote = async (req, res) => {
   const newNoteDef = {
     title: req.body.title,
     description: req.body.description,
-    tags: req.body.tags, // The tags the note has
-    category_id: req.body.category.id, // The category the note is in
-    id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
+    tags: req.body.tags, // The tags the notes has
+    category_id: req.body.category.id, // The category the notes is in
+    id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last notes's id number + 1
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
   // Category object to be created if it doesn't exist
@@ -41,7 +41,7 @@ const createNote = async (req, res) => {
   const categoryIdx = categoriesObjArr.findIndex(
     (category) => category.id === newNoteDef.category_id
   );
-  // If the category already exists, update the note count
+  // If the category already exists, update the notes count
   if (categoryIdx !== -1) {
     categoriesObjArr[categoryIdx].note_count++;
   } else {
@@ -53,7 +53,7 @@ const createNote = async (req, res) => {
   );
   const tagsArr = [...noteItem.tags, ...tagsToAdd];
 
-  // Note Item object with the new note object pushed to the notes array
+  // Note Item object with the new notes object pushed to the notes array
   const noteItemDef = {
     id: noteItem.id,
     notes: notesObjArr,
@@ -73,7 +73,7 @@ const createNote = async (req, res) => {
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while creating note",
+        message: "Database error while creating notes",
       });
     });
 };
@@ -91,24 +91,24 @@ const getNoteItem = async (req, res) => {
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while retrieving note",
+        message: "Database error while retrieving notes",
       });
     });
 };
 
 const editNote = async (req, res) => {
-  // Get the note resource object
+  // Get the notes resource object
   const { resource: noteItem } = await notes
     .item(req.headers.user_id, req.headers.user_id)
     .read()
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while editing note",
+        message: "Database error while editing notes",
       });
     });
 
-  // Get the note to be edited
+  // Get the notes to be edited
   const noteIdx = noteItem.notes.findIndex(
     (note) => note.id === req.body.noteID
   );
@@ -121,7 +121,7 @@ const editNote = async (req, res) => {
 
   let categoriesObjArr = noteItem.categories;
   let categoryIsNew = true; // Track if the category is new
-  // Check if categories have changed. If so, update the note count
+  // Check if categories have changed. If so, update the notes count
   if (req.body.category.id !== noteToEdit.category_id) {
     categoriesObjArr.forEach((category) => {
       if (category.id === noteToEdit.category_id && category.note_count > 0) {
@@ -152,7 +152,7 @@ const editNote = async (req, res) => {
     tagsArr = tagsArr.concat(tagsToAdd);
   }
 
-  // Update the note with the new data
+  // Update the notes with the new data
   const editedNote = noteToEdit;
   editedNote.title = req.body.title;
   editedNote.description = req.body.description;
@@ -190,25 +190,25 @@ const editNote = async (req, res) => {
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while updating note",
+        message: "Database error while updating notes",
       });
     });
 };
 
 // Needs to be implemented
 const removeNote = async (req, res) => {
-  // Get the note resource object
+  // Get the notes resource object
   const { resource: noteItem } = await notes
     .item(req.headers.user_id, req.headers.user_id)
     .read()
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while deleting note",
+        message: "Database error while deleting notes",
       });
     });
 
-  // Get the note to be deleted
+  // Get the notes to be deleted
   const noteIdx = noteItem.notes.findIndex(
     (note) => note.id === req.body.noteID
   );
@@ -220,7 +220,7 @@ const removeNote = async (req, res) => {
   }
 
   let categoriesObjArr = noteItem.categories;
-  // Decrement the category's note count.
+  // Decrement the category's notes count.
   categoriesObjArr.forEach((category) => {
     if (category.id === noteToDelete.category_id && category.note_count > 0) {
       category.note_count--;
@@ -254,7 +254,7 @@ const removeNote = async (req, res) => {
     .catch((error) => {
       console.error(error.message);
       return res.status(500).json({
-        message: "Database error while deleting note",
+        message: "Database error while deleting notes",
       });
     });
 };

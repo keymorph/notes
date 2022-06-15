@@ -28,7 +28,7 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
       fullWidth
       sx={{
         borderRadius: 20,
-        height: "2em",
+        height: "2rem",
         minWidth: "8em",
         maxWidth: "24em",
       }}

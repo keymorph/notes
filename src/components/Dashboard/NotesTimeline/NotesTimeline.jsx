@@ -20,7 +20,7 @@ import { useState } from "react";
 import {
   getCategoryColor,
   getCategoryName,
-} from "../../../helpers/note/getters";
+} from "../../../helpers/notes/getters";
 import PopIn from "../../Transitions/PopIn";
 import SortableItem from "./Sortable/SortableItem";
 
@@ -28,6 +28,7 @@ export default function NotesTimeline({
   noteCollection,
   setNoteCollection,
   categoriesCollection,
+  filteredNoteCollection,
   setCategoriesCollection,
   notesHidden,
   setNotesHidden,
@@ -35,11 +36,11 @@ export default function NotesTimeline({
   noteStatus,
 }) {
   //#region Hooks
-  const [activeId, setActiveId] = useState(null); // activeId used to track the active note being dragged
+  const [activeId, setActiveId] = useState(null); // activeId used to track the active notes being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 2, // Distance, in pixels, that the note must be dragged before it is considered active
+        distance: 2, // Distance, in pixels, that the notes must be dragged before it is considered active
       },
     }),
     useSensor(KeyboardSensor, {
@@ -54,31 +55,15 @@ export default function NotesTimeline({
   );
   //#endregion
 
-  // Filter notes by search value
-  const filteredNoteCollection = noteCollection.filter((note) => {
-    if (searchValue.trim() === "") {
-      return true;
-    } else {
-      return (
-        note.title.toLowerCase().includes(searchValue) ||
-        note.description.toLowerCase().includes(searchValue) ||
-        note.tags.includes(searchValue) ||
-        getCategoryName(note.category_id, categoriesCollection).includes(
-          searchValue
-        )
-      );
-    }
-  });
-
   //#region Handlers
-  // Sets the active note id when a note is being dragged
+  // Sets the active notes id when a notes is being dragged
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
   };
 
-  // Swap the note indexes when a note is dropped after being dragged
+  // Swap the notes indexes when a notes is dropped after being dragged
   const handleDragEnd = ({ active, over }) => {
-    // over is null when the note is dropped onto itself
+    // over is null when the notes is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
       setNoteCollection((noteCollection) => {
@@ -140,7 +125,7 @@ export default function NotesTimeline({
               <SortableItem
                 key={note.id}
                 noteID={note.id}
-                isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
+                isDraggingMode={!!activeId} // If activeId is set, a notes is being dragged
                 index={index}
                 title={note.title}
                 description={note.description}
