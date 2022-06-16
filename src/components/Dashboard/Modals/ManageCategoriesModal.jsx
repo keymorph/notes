@@ -81,7 +81,7 @@ export default function ManageCategoriesModal({
           .includes(inputCategoryName.trim().toLowerCase()))
   );
 
-  // If there are no filtered categories delay the display of the no categories message to avoid flicker
+  // If there are no filtered categories, delay the display of the no categories message to avoid flicker
   if (filteredCategories.length === 0 && !noCategoriesDisplayed) {
     setTimeout(() => {
       setNoCategoriesDisplayed(true);

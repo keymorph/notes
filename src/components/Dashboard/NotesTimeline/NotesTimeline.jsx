@@ -14,28 +14,31 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { Box, LinearProgress, Typography, Zoom } from "@mui/material";
-import { AnimatePresence } from "framer-motion";
+import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import {
   getCategoryColor,
   getCategoryName,
+  getFilteredNotesCollection,
 } from "../../../helpers/notes/getters";
-import PopIn from "../../Transitions/PopIn";
+import { spring } from "../../../styles/transitions/definitions";
 import SortableItem from "./Sortable/SortableItem";
 
 export default function NotesTimeline({
   noteCollection,
-  setNoteCollection,
   categoriesCollection,
-  filteredNoteCollection,
-  setCategoriesCollection,
   notesHidden,
-  setNotesHidden,
+  filterCategories,
   searchValue,
   noteStatus,
+  setNoteCollection,
+  setCategoriesCollection,
+  setNotesHidden,
 }) {
   //#region Hooks
+  const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
+
   const [activeId, setActiveId] = useState(null); // activeId used to track the active note being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -77,6 +80,22 @@ export default function NotesTimeline({
   //#endregion
 
   const draggedNote = noteCollection.find((note) => note.id === activeId);
+  const isFiltering = filterCategories.length !== categoriesCollection.length;
+  const filteredNoteCollection = getFilteredNotesCollection(
+    noteCollection,
+    categoriesCollection,
+    searchValue,
+    filterCategories
+  );
+
+  // If there are no searched categories, delay the display of the no categories message to avoid flicker
+  if (filteredNoteCollection.length === 0 && !noNotesDisplayed) {
+    setTimeout(() => {
+      setNoNotesDisplayed(true);
+    }, 400);
+  } else if (filteredNoteCollection.length > 0 && noNotesDisplayed) {
+    setNoNotesDisplayed(false);
+  }
 
   return noteStatus === "loading" ? (
     <Zoom in>
@@ -150,37 +169,25 @@ export default function NotesTimeline({
           </AnimatePresence>
         </Box>
         {/*  If filtered notes is 0, display no notes found message */}
-        {filteredNoteCollection.length === 0 && (
-          <PopIn visible>
-            <Typography
-              sx={{
-                position: "absolute",
-                width: "100%",
-                top: "20vh",
-                textAlign: "center",
-              }}
-              variant="h5"
-            >
-              No notes found...
-            </Typography>
-          </PopIn>
+        {noNotesDisplayed && (
+          <motion.div layout transition={spring}>
+            <Grow in>
+              <Typography textAlign={"center"} variant="h5">
+                No notes found...
+              </Typography>
+            </Grow>
+          </motion.div>
         )}
       </SortableContext>
     </DndContext>
   ) : (
     // If no notes, display no notes message
-    <PopIn visible>
-      <Typography
-        variant={"h3"}
-        sx={{
-          position: "absolute",
-          width: "100%",
-          top: "20vh",
-          textAlign: "center",
-        }}
-      >
-        No notes yet.
-      </Typography>
-    </PopIn>
+    <motion.div layout transition={spring}>
+      <Grow in>
+        <Typography variant={"h5"} textAlign={"center"}>
+          No notes yet.
+        </Typography>
+      </Grow>
+    </motion.div>
   );
 }

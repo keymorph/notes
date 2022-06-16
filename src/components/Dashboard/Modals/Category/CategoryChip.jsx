@@ -203,7 +203,7 @@ export default function CategoryChip({
           <PopIn>
             <Stack direction={"row"} py={"1em"} overflow={["auto", "hidden"]}>
               <AnimatePresence>
-                {categoryColors.map((category, index) => (
+                {categoryColors.map((color, index) => (
                   <motion.div
                     key={index}
                     variants={variantFadeSlideDownSlow}
@@ -214,11 +214,11 @@ export default function CategoryChip({
                   >
                     <IconButton
                       sx={{
-                        color: `category.${category}`,
+                        color: `category.${color}`,
                       }}
                       size={"small"}
                       onClick={() => {
-                        setCategoryColor(category);
+                        setCategoryColor(color);
                       }}
                     >
                       <Circle fontSize={"large"} />

@@ -27,7 +27,9 @@ export function getFilteredNotesCollection(
         )
       );
     } else if (searchValue.trim() === "" && filterCategories.length > 0) {
-      return filterCategories.includes(note.category_id);
+      return filterCategories.find(
+        (category) => category.id === note.category_id
+      );
     } else {
       return (
         note.title.toLowerCase().includes(searchValue) ||

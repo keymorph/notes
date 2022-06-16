@@ -1,13 +1,12 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import FilterView from "../components/Dashboard/FilterView/FilterView";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
-import { getFilteredNotesCollection } from "../helpers/notes/getters";
 import { getAllNotes } from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
@@ -16,30 +15,15 @@ export default function Dashboard() {
   const { data: session, status: sessionStatus } = useSession();
   // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
-  const [filteredNoteCollection, setFilteredNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   // These categories will be used to filter the notes
   const [filterCategories, setFilterCategories] = useState([]);
-
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
   // Hide notes while the modal is open
   const [notesHidden, setNotesHidden] = useState(false);
 
   const [filterViewOpen, setFilterViewOpen] = useState(false);
-
-  useEffect(() => {
-    if (noteCollection.length !== 0) {
-      setFilteredNoteCollection(
-        getFilteredNotesCollection(
-          noteCollection,
-          categoriesCollection,
-          searchValue,
-          filterCategories
-        )
-      );
-    }
-  }, [noteCollection, filterCategories, searchValue, categoriesCollection]);
 
   // Query Handler
   const { status: noteStatus } = useQuery(["get_notes"], getAllNotes, {
@@ -82,14 +66,17 @@ export default function Dashboard() {
         setNotesHidden={setNotesHidden}
         setFilterViewOpen={setFilterViewOpen}
       />
-      <FilterView
-        open={filterViewOpen}
-        categoriesCollection={categoriesCollection}
-      />
+      {filterViewOpen && (
+        <FilterView
+          categoriesCollection={categoriesCollection}
+          filterCategories={filterCategories}
+          setFilterCategories={setFilterCategories}
+        />
+      )}
       <NotesTimeline
         noteCollection={noteCollection}
-        filteredNoteCollection={filteredNoteCollection}
         categoriesCollection={categoriesCollection}
+        filterCategories={filterCategories}
         notesHidden={notesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
