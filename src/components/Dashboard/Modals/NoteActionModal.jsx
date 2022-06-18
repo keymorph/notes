@@ -22,7 +22,7 @@ import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
-import { modalCard } from "../../../styles/components/modals/modal";
+import { modalCard } from "../../../styles/components/modal";
 import { variantFadeSlideUpSlow } from "../../../styles/transitions/definitions";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import CategoryChip from "./Category/CategoryChip";

@@ -9,7 +9,6 @@ import {
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import {
-  arrayMove,
   rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
@@ -21,6 +20,8 @@ import {
   getCategoryColor,
   getCategoryName,
   getFilteredNotesCollection,
+  getOrderedNotesCollection,
+  getUpdatedNotesOrder,
 } from "../../../helpers/notes/getters";
 import { spring } from "../../../styles/transitions/definitions";
 import SortableItem from "./Sortable/SortableItem";
@@ -28,12 +29,16 @@ import SortableItem from "./Sortable/SortableItem";
 export default function NotesTimeline({
   noteCollection,
   categoriesCollection,
+  notesOrder,
+  notesOrderBy,
   notesHidden,
   filterCategories,
   searchValue,
   noteStatus,
   setNoteCollection,
   setCategoriesCollection,
+  setNotesOrder,
+  setNotesOrderBy,
   setNotesHidden,
 }) {
   //#region Hooks
@@ -69,10 +74,20 @@ export default function NotesTimeline({
     // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
-      setNoteCollection((noteCollection) => {
+      setNotesOrder((prev) => {
         const oldIndex = active.data.current.sortable.index;
         const newIndex = over.data.current.sortable.index;
-        return arrayMove(noteCollection, oldIndex, newIndex);
+
+        const newNotesOrder = getUpdatedNotesOrder(
+          noteCollection,
+          prev,
+          "custom",
+          oldIndex,
+          newIndex
+        );
+        setNotesOrderBy("custom");
+
+        return newNotesOrder;
       });
     }
     setActiveId(null);
@@ -81,19 +96,19 @@ export default function NotesTimeline({
 
   const draggedNote = noteCollection.find((note) => note.id === activeId);
   const isFiltering = filterCategories.length !== categoriesCollection.length;
-  const filteredNoteCollection = getFilteredNotesCollection(
-    noteCollection,
+  const filteredNotesCollection = getFilteredNotesCollection(
+    getOrderedNotesCollection(noteCollection, notesOrder, notesOrderBy),
     categoriesCollection,
     searchValue,
     filterCategories
   );
 
   // If there are no searched categories, delay the display of the no categories message to avoid flicker
-  if (filteredNoteCollection.length === 0 && !noNotesDisplayed) {
+  if (filteredNotesCollection.length === 0 && !noNotesDisplayed) {
     setTimeout(() => {
       setNoNotesDisplayed(true);
     }, 400);
-  } else if (filteredNoteCollection.length > 0 && noNotesDisplayed) {
+  } else if (filteredNotesCollection.length > 0 && noNotesDisplayed) {
     setNoNotesDisplayed(false);
   }
 
@@ -113,7 +128,7 @@ export default function NotesTimeline({
       modifiers={[restrictToWindowEdges]}
     >
       <SortableContext
-        items={filteredNoteCollection}
+        items={filteredNotesCollection}
         strategy={rectSortingStrategy}
       >
         {/*<DragOverlay>*/}
@@ -140,7 +155,7 @@ export default function NotesTimeline({
         >
           {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
           <AnimatePresence>
-            {filteredNoteCollection.map((note, index) => (
+            {filteredNotesCollection.map((note, index) => (
               <SortableItem
                 key={note.id}
                 noteID={note.id}

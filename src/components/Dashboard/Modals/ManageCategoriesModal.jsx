@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
 import { updateCategories } from "../../../helpers/requests/category-requests";
-import { modalCard } from "../../../styles/components/modals/modal";
+import { modalCard } from "../../../styles/components/modal";
 import {
   adornmentButtonTransition,
   springShort,

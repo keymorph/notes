@@ -29,8 +29,8 @@ export default function ToolbarSearch({ setSearchValue, searchValue }) {
       sx={{
         borderRadius: 20,
         height: "2rem",
-        minWidth: "8em",
-        maxWidth: "24em",
+        minWidth: "8rem",
+        maxWidth: "24rem",
       }}
       onChange={handleOnChange}
       onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press

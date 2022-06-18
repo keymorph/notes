@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/helpers/filter/categories-filtering.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/helpers/local-storage/local-storage-service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/services/notes-order.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/api/note/order.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/FilterView/FilterView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/FilterView/FilterView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/notes/getters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/notes/getters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/components/modals/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/components/modal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,18 +116,18 @@
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files (x86)\\JetBrains\\WebStorm 2022.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src\styles\components" />
       <recent name="C:\dev\Projects\notetakingapp\src\api\services\note-item" />
       <recent name="C:\dev\Projects\notetakingapp\src\utils" />
       <recent name="C:\dev\Projects\notetakingapp\src" />
       <recent name="C:\dev\Projects\notetakingapp\src\constants" />
-      <recent name="C:\dev\Projects\notetakingapp\src\styles\components\modals" />
     </key>
   </component>
   <component name="RunManager">
@@ -248,7 +251,10 @@
       <workItem from="1655245188164" duration="10537000" />
       <workItem from="1655299456928" duration="9000" />
       <workItem from="1655299965939" duration="14000" />
-      <workItem from="1655328825622" duration="18517000" />
+      <workItem from="1655328825622" duration="18913000" />
+      <workItem from="1655431104260" duration="1056000" />
+      <workItem from="1655500759958" duration="56000" />
+      <workItem from="1655500827286" duration="11010000" />
     </task>
     <servers />
   </component>

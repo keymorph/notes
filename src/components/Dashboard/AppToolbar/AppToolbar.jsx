@@ -1,8 +1,7 @@
-import { Add, FilterList, MoreVert } from "@mui/icons-material";
+import { Add, FilterList, MoreVert, Sort } from "@mui/icons-material";
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -121,6 +120,7 @@ export default function AppToolbar({
         variant={"dense"}
         sx={{
           display: "flex",
+          justifyContent: "space-between",
         }}
       >
         {/* The dom order doesn't matter for these components and as such they are grouped together */}
@@ -142,6 +142,9 @@ export default function AppToolbar({
           {/* Only display the search bar and filter if there are notes */}
           {noteCollection.length > 0 && (
             <>
+              <IconButton sx={{ mr: "-0.5rem" }}>
+                <Sort />
+              </IconButton>
               <IconButton onClick={() => setFilterViewOpen(!filterViewOpen)}>
                 <FilterList />
               </IconButton>
@@ -152,24 +155,28 @@ export default function AppToolbar({
             </>
           )}
         </Box>
+
         <Box display={"flex"} gap={"0.3em"} alignItems={"center"} mr={"0.75em"}>
-          <Button
-            variant="outlined"
-            sx={{
-              height: "1.8rem",
-              minWidth: isMobile ? "2em" : "auto",
-              maxWidth: isMobile ? "2em" : "auto",
-              ".MuiButton-startIcon": {
-                mr: isMobile ? "0em" : "0.5rem",
-                ml: isMobile ? "0em" : "-0.25rem",
-              },
-            }}
-            startIcon={<Add />}
-            onClick={handleCreateNoteModalOpen}
-          >
-            {isMobile ? "" : "Add Note"}
-          </Button>
-          <IconButton sx={{ width: "1.25em" }} onClick={handleMoreMenuClick}>
+          {/*<Button*/}
+          {/*  variant="outlined"*/}
+          {/*  sx={{*/}
+          {/*    height: "1.8rem",*/}
+          {/*    minWidth: isMobile ? "2em" : "auto",*/}
+          {/*    maxWidth: isMobile ? "2em" : "auto",*/}
+          {/*    ".MuiButton-startIcon": {*/}
+          {/*      mr: isMobile ? "0em" : "0.5rem",*/}
+          {/*      ml: isMobile ? "0em" : "-0.25rem",*/}
+          {/*    },*/}
+          {/*  }}*/}
+          {/*  startIcon={<Add />}*/}
+          {/*  onClick={handleCreateNoteModalOpen}*/}
+          {/*>*/}
+          {/*  {isMobile ? "" : "Add Note"}*/}
+          {/*</Button>*/}
+          <IconButton onClick={handleCreateNoteModalOpen}>
+            <Add />
+          </IconButton>
+          <IconButton sx={{ ml: "-0.5rem" }} onClick={handleMoreMenuClick}>
             <MoreVert />
           </IconButton>
         </Box>

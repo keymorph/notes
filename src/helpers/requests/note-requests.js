@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 const session = await getSession();
 
 // Get the note item with all the notes from the database
-export async function getAllNotes() {
+export async function getNoteItem() {
   return await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
     headers: {
       user_id: session.user.id,
@@ -38,4 +38,17 @@ export async function updateNote(data) {
       user_id: session.user.id,
     },
   });
+}
+
+// Put the new notes order in the database
+export async function updateNotesOrder(data) {
+  return await axios.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/note/order`,
+    data,
+    {
+      headers: {
+        user_id: session.user.id,
+      },
+    }
+  );
 }

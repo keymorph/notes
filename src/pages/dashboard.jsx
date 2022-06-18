@@ -1,13 +1,16 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import FilterView from "../components/Dashboard/FilterView/FilterView";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
-import { getAllNotes } from "../helpers/requests/note-requests";
+import {
+  getNoteItem,
+  updateNotesOrder,
+} from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
   //#region Hooks
@@ -16,6 +19,8 @@ export default function Dashboard() {
   // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
+  const [notesOrder, setNotesOrder] = useState([]);
+  const [notesOrderBy, setNotesOrderBy] = useState("latest");
   // These categories will be used to filter the notes
   const [filterCategories, setFilterCategories] = useState([]);
   // Search Bar
@@ -25,13 +30,19 @@ export default function Dashboard() {
 
   const [filterViewOpen, setFilterViewOpen] = useState(false);
 
-  // Query Handler
-  const { status: noteStatus } = useQuery(["get_notes"], getAllNotes, {
+  useEffect(() => {
+    mutateOrder({ notesOrder });
+  }, [notesOrder]);
+
+  //#region Query Handling Hooks
+  const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
     onSuccess: ({ data }) => {
       const noteItem = data.noteItem;
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
       if (noteItem) {
+        setNotesOrder(noteItem.notes_order);
+        setNotesOrderBy(noteItem.last_notes_order || "latest");
         setNoteCollection(noteItem.notes.reverse()); // Reverse the notes order, to show the newest first.
         setCategoriesCollection(noteItem.categories);
       }
@@ -42,6 +53,17 @@ export default function Dashboard() {
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     enabled: sessionStatus === "authenticated", // Disable unless the user is logged in
   });
+
+  // Changes and gets the order of notes in the database
+  const { mutate: mutateOrder, status: orderStatus } = useMutation(
+    updateNotesOrder,
+    {
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
+  //#endregion
   //#endregion
 
   // If the user is not logged in, redirect to the login page
@@ -76,12 +98,16 @@ export default function Dashboard() {
       <NotesTimeline
         noteCollection={noteCollection}
         categoriesCollection={categoriesCollection}
+        notesOrder={notesOrder}
+        notesOrderBy={notesOrderBy}
         filterCategories={filterCategories}
         notesHidden={notesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
+        setNotesOrder={setNotesOrder}
+        setNotesOrderBy={setNotesOrderBy}
         setNotesHidden={setNotesHidden}
       />
     </Box>
