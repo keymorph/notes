@@ -19,7 +19,7 @@ export default function Dashboard() {
   // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
-  const [notesOrder, setNotesOrder] = useState([]);
+  const [orderedNotesID, setOrderedNotesID] = useState([]);
   const [notesOrderBy, setNotesOrderBy] = useState("latest");
   // These categories will be used to filter the notes
   const [filterCategories, setFilterCategories] = useState([]);
@@ -31,8 +31,8 @@ export default function Dashboard() {
   const [filterViewOpen, setFilterViewOpen] = useState(false);
 
   useEffect(() => {
-    mutateOrder({ notesOrder });
-  }, [notesOrder]);
+    mutateOrder({ orderedNotesID, notesOrderBy });
+  }, [notesOrderBy, orderedNotesID]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
@@ -41,8 +41,8 @@ export default function Dashboard() {
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
       if (noteItem) {
-        setNotesOrder(noteItem.notes_order);
-        setNotesOrderBy(noteItem.last_notes_order || "latest");
+        setOrderedNotesID(noteItem.ordered_notes_id);
+        setNotesOrderBy(noteItem.notes_order_by || "latest");
         setNoteCollection(noteItem.notes.reverse()); // Reverse the notes order, to show the newest first.
         setCategoriesCollection(noteItem.categories);
       }
@@ -98,7 +98,7 @@ export default function Dashboard() {
       <NotesTimeline
         noteCollection={noteCollection}
         categoriesCollection={categoriesCollection}
-        notesOrder={notesOrder}
+        orderedNotesID={orderedNotesID}
         notesOrderBy={notesOrderBy}
         filterCategories={filterCategories}
         notesHidden={notesHidden}
@@ -106,7 +106,7 @@ export default function Dashboard() {
         noteStatus={noteStatus}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
-        setNotesOrder={setNotesOrder}
+        setOrderedNotesID={setOrderedNotesID}
         setNotesOrderBy={setNotesOrderBy}
         setNotesHidden={setNotesHidden}
       />

@@ -173,7 +173,7 @@ export default function AppToolbar({
           {/*>*/}
           {/*  {isMobile ? "" : "Add Note"}*/}
           {/*</Button>*/}
-          <IconButton onClick={handleCreateNoteModalOpen}>
+          <IconButton onClick={handleCreateNoteModalOpen} sx={{ ml: "0.3em" }}>
             <Add />
           </IconButton>
           <IconButton sx={{ ml: "-0.5rem" }} onClick={handleMoreMenuClick}>

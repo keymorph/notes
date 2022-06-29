@@ -19,17 +19,19 @@ import { useState } from "react";
 import {
   getCategoryColor,
   getCategoryName,
-  getFilteredNotesCollection,
+} from "../../../helpers/notes/category";
+import { getFilteredNotesCollection } from "../../../helpers/notes/filter";
+import {
   getOrderedNotesCollection,
-  getUpdatedNotesOrder,
-} from "../../../helpers/notes/getters";
+  swapOrderedNotesID,
+} from "../../../helpers/notes/order";
 import { spring } from "../../../styles/transitions/definitions";
 import SortableItem from "./Sortable/SortableItem";
 
 export default function NotesTimeline({
   noteCollection,
   categoriesCollection,
-  notesOrder,
+  orderedNotesID,
   notesOrderBy,
   notesHidden,
   filterCategories,
@@ -37,7 +39,7 @@ export default function NotesTimeline({
   noteStatus,
   setNoteCollection,
   setCategoriesCollection,
-  setNotesOrder,
+  setOrderedNotesID,
   setNotesOrderBy,
   setNotesHidden,
 }) {
@@ -74,12 +76,12 @@ export default function NotesTimeline({
     // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
-      setNotesOrder((prev) => {
+      setOrderedNotesID((prev) => {
         const oldIndex = active.data.current.sortable.index;
         const newIndex = over.data.current.sortable.index;
 
-        const newNotesOrder = getUpdatedNotesOrder(
-          noteCollection,
+        const newOrderedNotesID = swapOrderedNotesID(
+          orderedNotesCollection,
           prev,
           "custom",
           oldIndex,
@@ -87,7 +89,7 @@ export default function NotesTimeline({
         );
         setNotesOrderBy("custom");
 
-        return newNotesOrder;
+        return newOrderedNotesID;
       });
     }
     setActiveId(null);
@@ -96,8 +98,15 @@ export default function NotesTimeline({
 
   const draggedNote = noteCollection.find((note) => note.id === activeId);
   const isFiltering = filterCategories.length !== categoriesCollection.length;
+
+  // Order and filter notes
+  const orderedNotesCollection = getOrderedNotesCollection(
+    noteCollection,
+    orderedNotesID,
+    notesOrderBy
+  );
   const filteredNotesCollection = getFilteredNotesCollection(
-    getOrderedNotesCollection(noteCollection, notesOrder, notesOrderBy),
+    orderedNotesCollection,
     categoriesCollection,
     searchValue,
     filterCategories
