@@ -73,7 +73,9 @@ export default function ResponsiveAppBar({ darkMode, handleDarkModeToggle }) {
           </IconButton>
         </Box>
         <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
-          <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+          <MenuItem dense onClick={handleSignOut}>
+            Logout
+          </MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

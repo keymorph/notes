@@ -9,7 +9,6 @@ import {
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import {
-  arrayMove,
   rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
@@ -17,23 +16,30 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { NOTES_ORDER_BY } from "../../../helpers/models/note_order";
 import {
   getCategoryColor,
   getCategoryName,
-  getFilteredNotesCollection,
-} from "../../../helpers/notes/getters";
+} from "../../../helpers/notes/category";
+import { getFilteredNotesCollection } from "../../../helpers/notes/filter";
+import {
+  getOrderedNotesCollection,
+  swapOrderedNotesID,
+} from "../../../helpers/notes/order";
 import { spring } from "../../../styles/transitions/definitions";
 import SortableItem from "./Sortable/SortableItem";
 
 export default function NotesTimeline({
   noteCollection,
   categoriesCollection,
+  notesOrder,
   notesHidden,
   filterCategories,
   searchValue,
   noteStatus,
   setNoteCollection,
   setCategoriesCollection,
+  setNotesOrder,
   setNotesHidden,
 }) {
   //#region Hooks
@@ -69,10 +75,22 @@ export default function NotesTimeline({
     // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
-      setNoteCollection((noteCollection) => {
+      setNotesOrder((prev) => {
         const oldIndex = active.data.current.sortable.index;
         const newIndex = over.data.current.sortable.index;
-        return arrayMove(noteCollection, oldIndex, newIndex);
+
+        const newOrderedNotesID = swapOrderedNotesID(
+          orderedNotesCollection,
+          prev.orderedNotesID,
+          "custom",
+          oldIndex,
+          newIndex
+        );
+
+        return {
+          orderedNotesID: newOrderedNotesID,
+          orderBy: NOTES_ORDER_BY.CUSTOM,
+        };
       });
     }
     setActiveId(null);
@@ -81,19 +99,27 @@ export default function NotesTimeline({
 
   const draggedNote = noteCollection.find((note) => note.id === activeId);
   const isFiltering = filterCategories.length !== categoriesCollection.length;
-  const filteredNoteCollection = getFilteredNotesCollection(
+
+  // Order and filter notes
+  const orderedNotesCollection = getOrderedNotesCollection(
     noteCollection,
+    categoriesCollection,
+    notesOrder.orderedNotesID,
+    notesOrder.orderBy
+  );
+  const filteredNotesCollection = getFilteredNotesCollection(
+    orderedNotesCollection,
     categoriesCollection,
     searchValue,
     filterCategories
   );
 
   // If there are no searched categories, delay the display of the no categories message to avoid flicker
-  if (filteredNoteCollection.length === 0 && !noNotesDisplayed) {
+  if (filteredNotesCollection.length === 0 && !noNotesDisplayed) {
     setTimeout(() => {
       setNoNotesDisplayed(true);
     }, 400);
-  } else if (filteredNoteCollection.length > 0 && noNotesDisplayed) {
+  } else if (filteredNotesCollection.length > 0 && noNotesDisplayed) {
     setNoNotesDisplayed(false);
   }
 
@@ -113,7 +139,7 @@ export default function NotesTimeline({
       modifiers={[restrictToWindowEdges]}
     >
       <SortableContext
-        items={filteredNoteCollection}
+        items={filteredNotesCollection}
         strategy={rectSortingStrategy}
       >
         {/*<DragOverlay>*/}
@@ -140,7 +166,7 @@ export default function NotesTimeline({
         >
           {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
           <AnimatePresence>
-            {filteredNoteCollection.map((note, index) => (
+            {filteredNotesCollection.map((note, index) => (
               <SortableItem
                 key={note.id}
                 noteID={note.id}

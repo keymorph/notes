@@ -1,4 +1,4 @@
-import { Add, FilterList, MoreVert } from "@mui/icons-material";
+import { FilterAltOutlined, MoreVert } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -21,12 +21,13 @@ export default function AppToolbar({
   categoriesCollection,
   searchValue,
   noteStatus,
-  filterViewOpen,
+  orderFilterViewOpen,
   setNoteCollection,
   setCategoriesCollection,
   setNotesHidden,
   setSearchValue,
-  setFilterViewOpen,
+  setOrderFilterViewOpen,
+  setOrderViewOpen,
 }) {
   //#region Hooks
   const theme = useTheme();
@@ -102,7 +103,7 @@ export default function AppToolbar({
       open={!!moreMenuAnchorEl}
       onClose={() => setMoreMenuAnchorEl(null)}
     >
-      <MenuItem onClick={handleManageCategoriesModalOpen}>
+      <MenuItem dense onClick={handleManageCategoriesModalOpen}>
         Manage Categories
       </MenuItem>
     </Menu>
@@ -121,6 +122,7 @@ export default function AppToolbar({
         variant={"dense"}
         sx={{
           display: "flex",
+          justifyContent: "space-between",
         }}
       >
         {/* The dom order doesn't matter for these components and as such they are grouped together */}
@@ -142,8 +144,12 @@ export default function AppToolbar({
           {/* Only display the search bar and filter if there are notes */}
           {noteCollection.length > 0 && (
             <>
-              <IconButton onClick={() => setFilterViewOpen(!filterViewOpen)}>
-                <FilterList />
+              <IconButton
+                size={"small"}
+                onClick={() => setOrderFilterViewOpen(!orderFilterViewOpen)}
+                color={orderFilterViewOpen ? "primary" : "inherit"}
+              >
+                <FilterAltOutlined />
               </IconButton>
               <ToolbarSearch
                 searchValue={searchValue}
@@ -152,24 +158,30 @@ export default function AppToolbar({
             </>
           )}
         </Box>
+
         <Box display={"flex"} gap={"0.3em"} alignItems={"center"} mr={"0.75em"}>
           <Button
-            variant="outlined"
+            color={createNoteModalOpen ? "primary" : "inherit"}
+            variant={"text"}
+            size={"small"}
             sx={{
-              height: "1.8rem",
-              minWidth: isMobile ? "2em" : "auto",
-              maxWidth: isMobile ? "2em" : "auto",
-              ".MuiButton-startIcon": {
-                mr: isMobile ? "0em" : "0.5rem",
-                ml: isMobile ? "0em" : "-0.25rem",
-              },
+              ml: "0.3em",
+              minWidth: "6em",
             }}
-            startIcon={<Add />}
+            // startIcon={<Add />}
             onClick={handleCreateNoteModalOpen}
           >
-            {isMobile ? "" : "Add Note"}
+            {isMobile ? "Add Note" : "Add Note"}
           </Button>
-          <IconButton sx={{ width: "1.25em" }} onClick={handleMoreMenuClick}>
+          {/*<IconButton onClick={handleCreateNoteModalOpen} sx={{ ml: "0.3em" }}>*/}
+          {/*  <Add />*/}
+          {/*</IconButton>*/}
+          <IconButton
+            size={"small"}
+            sx={{ ml: "-0.5rem" }}
+            onClick={handleMoreMenuClick}
+            color={moreMenuAnchorEl ? "primary" : "inherit"}
+          >
             <MoreVert />
           </IconButton>
         </Box>
