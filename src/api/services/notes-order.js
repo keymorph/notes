@@ -5,13 +5,13 @@ const replaceOrder = async (req, res) => {
   const noteItemPatchOperation = [
     {
       op: "add", // Add replaces the entire object if it already exists or creates a new one if it doesn't
-      path: `/ordered_notes_id`,
-      value: req.body.orderedNotesID,
+      path: `/notes_order/ordered_notes_id`,
+      value: req.body.notesOrder.orderedNotesID,
     },
     {
       op: "add",
-      path: `/notes_order_by`,
-      value: req.body.notesOrderBy,
+      path: `/notes_order/order_by`,
+      value: req.body.notesOrder.orderBy,
     },
   ];
 
@@ -21,8 +21,7 @@ const replaceOrder = async (req, res) => {
     .then(({ resource: noteItem }) => {
       return res.status(200).json({
         message: "Note order updated successfully",
-        orderedNotesID: noteItem.ordered_notes_id,
-        notesOrderBy: noteItem.notes_order_by,
+        notesOrder: noteItem.notes_order,
       });
     })
     .catch((error) => {

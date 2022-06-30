@@ -25,6 +25,10 @@ export const createNoteItemIfNotExists = async (userID) => {
     const noteItemDef = {
       id: userID, // The user ID is the same as the note item ID allowing for a 1:1 relationship
       notes: [],
+      notes_order: {
+        ordered_notes_id: [],
+        order_by: "recent",
+      },
       categories: [
         {
           id: 0,

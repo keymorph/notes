@@ -1,7 +1,6 @@
 import { Check } from "@mui/icons-material";
 import {
   Box,
-  Card,
   Chip,
   Grow,
   Input,
@@ -11,7 +10,6 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { getSearchedCategories } from "../../../helpers/filter/categories-filtering";
 import { variantFadeStagger } from "../../../styles/transitions/definitions";
 
 export default function FilterView({
@@ -27,12 +25,15 @@ export default function FilterView({
   const [noCategoriesDisplayed, setNoCategoriesDisplayed] = useState(false);
   //#endregion
 
-  const searchedAndSortedCategories = getSearchedCategories(
-    categoriesCollection,
-    searchValue
-  );
+  // S
+  const filteredCategories = categoriesCollection.filter((category) => {
+    return (
+      category.name !== "" &&
+      category.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  });
 
-  const categoryChips = searchedAndSortedCategories.map((category, index) => {
+  const categoryChips = filteredCategories.map((category, index) => {
     const isSelected = filterCategories.find(
       (filterCategory) => filterCategory.id === category.id
     );
@@ -77,11 +78,11 @@ export default function FilterView({
   });
 
   // If there are no searched categories, delay the display of the no categories message to avoid flicker
-  if (searchedAndSortedCategories.length === 0 && !noCategoriesDisplayed) {
+  if (filteredCategories.length === 0 && !noCategoriesDisplayed) {
     setTimeout(() => {
       setNoCategoriesDisplayed(true);
     }, 400);
-  } else if (searchedAndSortedCategories.length > 0 && noCategoriesDisplayed) {
+  } else if (filteredCategories.length > 0 && noCategoriesDisplayed) {
     setNoCategoriesDisplayed(false);
   }
 
@@ -108,49 +109,30 @@ export default function FilterView({
   console.log(filterCategories);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: "-2rem" }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.3, ease: "easeInOut" },
-      }}
-    >
-      <Card
-        sx={{
-          borderRadius: "0",
-          px: "1em",
-          pb: "1em",
-        }}
+    <Box>
+      <Typography variant="h6">Filter By Category</Typography>
+      <Input
+        placeholder={"Search Category..."}
+        fullWidth
+        onChange={handleCategorySearch}
+        sx={{ maxWidth: "24rem" }}
+      />
+      <Box
+        display={"flex"}
+        gap={"0.5em"}
+        pt={"1em"}
+        flexWrap={"wrap"}
+        minWidth={"24rem"}
       >
-        <Typography variant="h6">Filter By Category</Typography>
-        <Input
-          placeholder={"Search Category..."}
-          fullWidth
-          onChange={handleCategorySearch}
-          sx={{ maxWidth: "24rem" }}
-        ></Input>
-        <Box
-          display={"flex"}
-          gap={"0.5em"}
-          pt={"1em"}
-          flexWrap={"wrap"}
-          sx={{
-            transition: "max-height 2s ease-in-out",
-            overFlow: "hidden",
-            maxHeight: "25vh",
-          }}
-        >
-          <AnimatePresence>{categoryChips}</AnimatePresence>
-        </Box>
-        {noCategoriesDisplayed && (
-          <Grow in>
-            <Typography textAlign={"center"} variant="body1">
-              No categories to display
-            </Typography>
-          </Grow>
-        )}
-      </Card>
-    </motion.div>
+        <AnimatePresence>{categoryChips}</AnimatePresence>
+      </Box>
+      {noCategoriesDisplayed && (
+        <Grow in>
+          <Typography textAlign={"center"} variant="body1">
+            No categories to display
+          </Typography>
+        </Grow>
+      )}
+    </Box>
   );
 }

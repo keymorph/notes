@@ -1,24 +1,63 @@
-import {arrayMove} from "@dnd-kit/sortable";
+import { arrayMove } from "@dnd-kit/sortable";
+import { NOTES_ORDER_BY } from "../models/note_order";
+
+function orderNotesCollectionByOrderBy(
+  notesCollection,
+  categoriesCollection,
+  orderBy
+) {
+  switch (orderBy) {
+    case NOTES_ORDER_BY.RECENT:
+      // Order notes by latest using the note property "created_at"
+      return notesCollection.sort((a, b) => {
+        return b.created_at - a.created_at;
+      });
+    case NOTES_ORDER_BY.OLDEST:
+      // Order notes by oldest using the note property "created_at"
+      return notesCollection.sort((a, b) => {
+        return a.created_at - b.created_at;
+      });
+    case NOTES_ORDER_BY.CATEGORY_NAME:
+      // Order notes by category name using the note property "category_id"
+      return notesCollection.sort((a, b) => {
+        const categoryA = categoriesCollection.find(
+          (category) => category.id === a.category_id
+        );
+        const categoryB = categoriesCollection.find(
+          (category) => category.id === b.category_id
+        );
+        if (categoryA && categoryB) {
+          return categoryA.name.localeCompare(categoryB.name);
+        } else {
+          return 0;
+        }
+      });
+    case NOTES_ORDER_BY.NOTE_TITLE:
+      // Order notes by note title using the note property "title"
+      return notesCollection.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    default:
+      return notesCollection;
+  }
+}
 
 /**
  * Get the order Notes Collection based on the passed orderBy string
  *
  * @param {Array<Object>} notesCollection - The notes collection
+ * @param {Array<Object>} categoriesCollection - The categories collection
  * @param {Array<Object>} orderedNotesID - The IDs of the notes as ordered by the user
  * @param {string} orderBy - Used to specify the order
  * @returns {Array<Object>} - The ordered notes collection
  */
 export function getOrderedNotesCollection(
   notesCollection,
+  categoriesCollection,
   orderedNotesID,
   orderBy
 ) {
-  if (orderBy === "latest") {
-    // Order notes by latest using the existing note property "created_at"
-    return notesCollection.sort((a, b) => {
-      return b.created_at - a.created_at;
-    });
-  } else {
+  if (orderBy === NOTES_ORDER_BY.CUSTOM) {
     let orderedNotesCollection = orderedNotesID.map((noteID) => {
       return notesCollection.find((note) => note.id === noteID);
     });
@@ -41,6 +80,12 @@ export function getOrderedNotesCollection(
     } else {
       return orderedNotesCollection;
     }
+  } else {
+    return orderNotesCollectionByOrderBy(
+      notesCollection,
+      categoriesCollection,
+      orderBy
+    );
   }
 }
 

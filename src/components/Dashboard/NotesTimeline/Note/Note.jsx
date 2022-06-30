@@ -184,9 +184,15 @@ export default function Note({
             open={!!moreMenuAnchorEl}
             onClose={() => setMoreMenuAnchorEl(null)}
           >
-            <MenuItem onClick={handleEditModalOpen}>Edit</MenuItem>
-            <MenuItem onClick={handleCreateDuplicate}>Duplicate</MenuItem>
-            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+            <MenuItem dense onClick={handleEditModalOpen}>
+              Edit
+            </MenuItem>
+            <MenuItem dense onClick={handleCreateDuplicate}>
+              Duplicate
+            </MenuItem>
+            <MenuItem dense onClick={handleDelete}>
+              Delete
+            </MenuItem>
           </Menu>
 
           <CardContent

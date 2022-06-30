@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
-import FilterView from "../components/Dashboard/FilterView/FilterView";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
+import OrderFilterView from "../components/Dashboard/OrderFilterView";
+import { NOTES_ORDER_BY } from "../helpers/models/note_order";
 import {
   getNoteItem,
   updateNotesOrder,
@@ -19,8 +20,10 @@ export default function Dashboard() {
   // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
-  const [orderedNotesID, setOrderedNotesID] = useState([]);
-  const [notesOrderBy, setNotesOrderBy] = useState("latest");
+  const [notesOrder, setNotesOrder] = useState({
+    orderedNotesID: [],
+    orderBy: NOTES_ORDER_BY.DEFAULT,
+  });
   // These categories will be used to filter the notes
   const [filterCategories, setFilterCategories] = useState([]);
   // Search Bar
@@ -28,11 +31,11 @@ export default function Dashboard() {
   // Hide notes while the modal is open
   const [notesHidden, setNotesHidden] = useState(false);
 
-  const [filterViewOpen, setFilterViewOpen] = useState(false);
+  const [orderFilterViewOpen, setOrderFilterViewOpen] = useState(false);
 
   useEffect(() => {
-    mutateOrder({ orderedNotesID, notesOrderBy });
-  }, [notesOrderBy, orderedNotesID]);
+    mutateOrder({ notesOrder });
+  }, [notesOrder]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
@@ -41,8 +44,10 @@ export default function Dashboard() {
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
       if (noteItem) {
-        setOrderedNotesID(noteItem.ordered_notes_id);
-        setNotesOrderBy(noteItem.notes_order_by || "latest");
+        setNotesOrder({
+          orderedNotesID: noteItem.notes_order?.ordered_notes_id || [],
+          orderBy: noteItem.notes_order?.order_by || NOTES_ORDER_BY.DEFAULT,
+        });
         setNoteCollection(noteItem.notes.reverse()); // Reverse the notes order, to show the newest first.
         setCategoriesCollection(noteItem.categories);
       }
@@ -81,33 +86,33 @@ export default function Dashboard() {
         categoriesCollection={categoriesCollection}
         searchValue={searchValue}
         noteStatus={noteStatus}
-        filterViewOpen={filterViewOpen}
+        orderFilterViewOpen={orderFilterViewOpen}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
         setSearchValue={setSearchValue}
         setNotesHidden={setNotesHidden}
-        setFilterViewOpen={setFilterViewOpen}
+        setOrderFilterViewOpen={setOrderFilterViewOpen}
       />
-      {filterViewOpen && (
-        <FilterView
+      {orderFilterViewOpen && (
+        <OrderFilterView
+          notesOrder={notesOrder}
           categoriesCollection={categoriesCollection}
           filterCategories={filterCategories}
+          setNotesOrder={setNotesOrder}
           setFilterCategories={setFilterCategories}
         />
       )}
       <NotesTimeline
         noteCollection={noteCollection}
         categoriesCollection={categoriesCollection}
-        orderedNotesID={orderedNotesID}
-        notesOrderBy={notesOrderBy}
+        notesOrder={notesOrder}
         filterCategories={filterCategories}
         notesHidden={notesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
-        setOrderedNotesID={setOrderedNotesID}
-        setNotesOrderBy={setNotesOrderBy}
+        setNotesOrder={setNotesOrder}
         setNotesHidden={setNotesHidden}
       />
     </Box>

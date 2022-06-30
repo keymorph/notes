@@ -16,6 +16,7 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { NOTES_ORDER_BY } from "../../../helpers/models/note_order";
 import {
   getCategoryColor,
   getCategoryName,
@@ -31,16 +32,14 @@ import SortableItem from "./Sortable/SortableItem";
 export default function NotesTimeline({
   noteCollection,
   categoriesCollection,
-  orderedNotesID,
-  notesOrderBy,
+  notesOrder,
   notesHidden,
   filterCategories,
   searchValue,
   noteStatus,
   setNoteCollection,
   setCategoriesCollection,
-  setOrderedNotesID,
-  setNotesOrderBy,
+  setNotesOrder,
   setNotesHidden,
 }) {
   //#region Hooks
@@ -76,20 +75,22 @@ export default function NotesTimeline({
     // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
-      setOrderedNotesID((prev) => {
+      setNotesOrder((prev) => {
         const oldIndex = active.data.current.sortable.index;
         const newIndex = over.data.current.sortable.index;
 
         const newOrderedNotesID = swapOrderedNotesID(
           orderedNotesCollection,
-          prev,
+          prev.orderedNotesID,
           "custom",
           oldIndex,
           newIndex
         );
-        setNotesOrderBy("custom");
 
-        return newOrderedNotesID;
+        return {
+          orderedNotesID: newOrderedNotesID,
+          orderBy: NOTES_ORDER_BY.CUSTOM,
+        };
       });
     }
     setActiveId(null);
@@ -102,8 +103,9 @@ export default function NotesTimeline({
   // Order and filter notes
   const orderedNotesCollection = getOrderedNotesCollection(
     noteCollection,
-    orderedNotesID,
-    notesOrderBy
+    categoriesCollection,
+    notesOrder.orderedNotesID,
+    notesOrder.orderBy
   );
   const filteredNotesCollection = getFilteredNotesCollection(
     orderedNotesCollection,
