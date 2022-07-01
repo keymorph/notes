@@ -5,13 +5,11 @@ const replaceOrder = async (req, res) => {
   const noteItemPatchOperation = [
     {
       op: "add", // Add replaces the entire object if it already exists or creates a new one if it doesn't
-      path: `/notes_order/ordered_notes_id`,
-      value: req.body.notesOrder.orderedNotesID,
-    },
-    {
-      op: "add",
-      path: `/notes_order/order_by`,
-      value: req.body.notesOrder.orderBy,
+      path: `/notes_order`,
+      value: {
+        ordered_notes_id: req.body.notesOrder.orderedNotesID,
+        order_by: req.body.notesOrder.orderBy,
+      },
     },
   ];
 

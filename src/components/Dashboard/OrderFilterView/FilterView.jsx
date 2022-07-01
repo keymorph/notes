@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
+import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
 import { variantFadeStagger } from "../../../styles/transitions/definitions";
 
 export default function FilterView({
@@ -115,14 +116,19 @@ export default function FilterView({
         placeholder={"Search Category..."}
         fullWidth
         onChange={handleCategorySearch}
-        sx={{ maxWidth: "24rem" }}
+        inputProps={{
+          maxLength: CATEGORY_NAME_CHAR_LIMIT,
+        }}
+        sx={{ maxWidth: "20rem", mt: "0.5rem", alignSelf: "center" }}
       />
       <Box
         display={"flex"}
-        gap={"0.5em"}
-        pt={"1em"}
+        gap={"0.5rem"}
+        pt={"1rem"}
         flexWrap={"wrap"}
-        minWidth={"24rem"}
+        minWidth={isMobile ? "100%" : "24rem"}
+        height={"8rem"}
+        overflow={"scroll"}
       >
         <AnimatePresence>{categoryChips}</AnimatePresence>
       </Box>

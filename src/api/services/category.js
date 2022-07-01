@@ -1,5 +1,5 @@
 import { notes } from "../models/database";
-import { createNoteItemIfNotExists } from "./helper";
+import { createNoteItemIfNotExists } from "./note-helper";
 
 const replaceCategory = async (req, res) => {
   const noteItem = await createNoteItemIfNotExists(req.headers.user_id).catch(

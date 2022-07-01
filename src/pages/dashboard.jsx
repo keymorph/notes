@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "react-query";
 import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
 import OrderFilterView from "../components/Dashboard/OrderFilterView";
-import { NOTES_ORDER_BY } from "../helpers/models/note_order";
+import { NOTES_ORDER_BY } from "../helpers/models/note-order";
 import {
   getNoteItem,
   updateNotesOrder,

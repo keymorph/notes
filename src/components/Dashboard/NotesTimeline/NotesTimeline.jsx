@@ -16,7 +16,7 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { NOTES_ORDER_BY } from "../../../helpers/models/note_order";
+import { NOTES_ORDER_BY } from "../../../helpers/models/note-order";
 import {
   getCategoryColor,
   getCategoryName,

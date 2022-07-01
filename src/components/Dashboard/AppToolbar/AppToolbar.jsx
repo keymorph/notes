@@ -95,6 +95,7 @@ export default function AppToolbar({
       setNoteCollection={setNoteCollection}
       modalOpen={manageCategoriesModalOpen}
       handleModalClose={handleManageCategoriesModalClose}
+      isMobile={isMobile}
     />
   );
   const moreMenu = (

@@ -1,5 +1,5 @@
 import {notes} from "../models/database.js";
-import {createNoteItemIfNotExists} from "./helper";
+import {createNoteItemIfNotExists} from "./note-helper";
 
 // Category object
 // {

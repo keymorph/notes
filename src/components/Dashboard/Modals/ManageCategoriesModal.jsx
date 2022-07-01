@@ -33,6 +33,7 @@ export default function ManageCategoriesModal({
   categoriesCollection,
   setCategoriesCollection,
   setNoteCollection,
+  isMobile,
 }) {
   //#region Hooks
   const [inputCategoryName, setInputCategoryName] = useState("");
@@ -233,8 +234,8 @@ export default function ManageCategoriesModal({
             direction={"column"}
             spacing={2}
             py={"1em"}
-            px={"1.5em"}
-            overflow={"scroll"}
+            pr={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
+            overflow={["hidden", "scroll"]}
             height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
           >
             <AnimatePresence>
