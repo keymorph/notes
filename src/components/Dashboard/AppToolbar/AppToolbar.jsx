@@ -70,6 +70,24 @@ export default function AppToolbar({
   const handleManageCategoriesModalClose = () => {
     setManageCategoriesModalOpen(false);
   };
+
+  const handleOrderFilterViewChange = () => {
+    // If the Order/Filter View is closed and the user is not at the top of the page, scroll to the top and open it
+    // Otherwise just open/close without scrolling and without timeout
+    if (!orderFilterViewOpen && window.scrollY > 0) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+      // Wait for the scroll to finish before opening the Order/Filter View
+      setTimeout(() => {
+        setOrderFilterViewOpen(true);
+      }, 400);
+    } else {
+      setOrderFilterViewOpen(!orderFilterViewOpen);
+    }
+  };
   //#endregion
 
   //#region Render Components
@@ -147,7 +165,7 @@ export default function AppToolbar({
             <>
               <IconButton
                 size={"small"}
-                onClick={() => setOrderFilterViewOpen(!orderFilterViewOpen)}
+                onClick={handleOrderFilterViewChange}
                 color={orderFilterViewOpen ? "primary" : "inherit"}
               >
                 <FilterAltOutlined />

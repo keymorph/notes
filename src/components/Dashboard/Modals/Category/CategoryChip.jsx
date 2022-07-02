@@ -201,7 +201,7 @@ export default function CategoryChip({
       <AnimatePresence>
         {isPaletteOpen && (
           <PopIn>
-            <Stack direction={"row"} py={"1em"} overflow={["auto", "hidden"]}>
+            <Stack direction={"row"} py={"1em"} overflow={"scroll"}>
               <AnimatePresence>
                 {categoryColors.map((color, index) => (
                   <motion.div

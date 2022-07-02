@@ -76,6 +76,7 @@ export default function NoteActionModal({
       // Reflect the database changes on the front-end
       setNoteCollection(data.noteItem.notes.reverse());
       setCategoriesCollection(data.noteItem.categories);
+      setIsCategoryNew(false); // Reset the flag. If a new category was created, it is not new anymore
     },
     onError: (error) => {
       console.error(error.message);

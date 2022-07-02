@@ -6,21 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/oauth-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/oauth-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/services/category.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/category.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/services/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/note-helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/services/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/note.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/services/notes-order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/notes-order.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/FilterView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/FilterView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/OrderView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/OrderView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/input-limits.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/input-limits.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/models/note_order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/models/note-order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/notes/order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/notes/order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +263,8 @@
       <workItem from="1656465245136" duration="6787000" />
       <workItem from="1656541124256" duration="17705000" />
       <workItem from="1656627272141" duration="2000" />
-      <workItem from="1656641102679" duration="5956000" />
+      <workItem from="1656641102679" duration="8520000" />
+      <workItem from="1656706864100" duration="3383000" />
     </task>
     <servers />
   </component>

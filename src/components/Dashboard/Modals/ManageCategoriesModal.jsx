@@ -235,7 +235,7 @@ export default function ManageCategoriesModal({
             spacing={2}
             py={"1em"}
             pr={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
-            overflow={["hidden", "scroll"]}
+            overflow={"scroll"}
             height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
           >
             <AnimatePresence>
