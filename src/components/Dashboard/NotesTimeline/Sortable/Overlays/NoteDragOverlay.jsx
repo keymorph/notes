@@ -48,6 +48,7 @@ export default function NoteDragOverlay({
           ) : null}
 
           <IconButton
+            size={"small"}
             aria-label="Note settings"
             sx={{ m: 0.5, ml: "auto", height: "1em" }}
           >

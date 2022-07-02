@@ -1,6 +1,6 @@
 export const modalCard = {
   position: "fixed",
-  top: "20vh",
+  top: "15vh",
   mx: "auto",
   padding: "1em",
   left: 0,

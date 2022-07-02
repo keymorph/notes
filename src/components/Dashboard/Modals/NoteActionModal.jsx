@@ -1,4 +1,8 @@
-import { Close, Restore } from "@mui/icons-material";
+import {
+  CloseOutlined,
+  EditOutlined,
+  RestoreOutlined,
+} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -10,6 +14,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Zoom,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
@@ -28,7 +33,14 @@ import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";
 
+export const NOTE_ACTIONS = {
+  VIEW: "VIEW",
+  CREATE: "CREATE",
+  EDIT: "EDIT",
+};
+
 export default function NoteActionModal({
+  action,
   noteID,
   title,
   description,
@@ -37,13 +49,15 @@ export default function NoteActionModal({
   categoriesCollection,
   setNoteCollection,
   setCategoriesCollection,
-  action,
   modalOpen,
   handleModalClose,
 }) {
   //#region Hooks
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Tracks any changes to the current action being performed (edit, create, view, etc)
+  const [currentAction, setCurrentAction] = useState(action);
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
@@ -55,12 +69,13 @@ export default function NoteActionModal({
   const [isCategoryNew, setIsCategoryNew] = useState(false);
 
   useEffect(() => {
+    setCurrentAction(action);
     setNewTitle(title);
     setNewDescription(description);
     setNewCategoryName(categoryName);
     setNewCategoryColor(categoryColor);
     setDisplayCategoryChip(!!categoryName);
-  }, [title, description, categoryName, categoryColor]);
+  }, [action, title, description, categoryName, categoryColor]);
   //#endregion
 
   const titleError = newTitle.trim() === "";
@@ -106,6 +121,7 @@ export default function NoteActionModal({
   //#region Helper Functions
   // Reset modal values is used when creating a note
   const resetModalValues = () => {
+    setCurrentAction(action);
     setNewTitle(title);
     setNewDescription(description);
     setNewCategoryName(categoryName);
@@ -116,6 +132,10 @@ export default function NoteActionModal({
   //#endregion
 
   //#region Handlers
+  const handleActionChange = (newAction) => {
+    setCurrentAction(newAction);
+  };
+
   const handleCreateNote = () => {
     const newNote = {
       title: `${newTitle.trim()}`,
@@ -160,15 +180,15 @@ export default function NoteActionModal({
   };
 
   const handleBeforeModalClose = (event, reason) => {
-    if (reason === "closeModal") {
+    if (reason === "closeModal" || !valuesChanged) {
       handleModalClose();
       setTimeout(() => {
         resetModalValues();
       }, 500); // Don't immediately reset the values till the closing animation is complete
     } else {
-      if (action === "edit") {
+      if (currentAction === NOTE_ACTIONS.EDIT) {
         handleEditNote();
-      } else if (action === "create") {
+      } else if (currentAction === NOTE_ACTIONS.CREATE) {
         handleModalClose();
       }
     }
@@ -190,25 +210,45 @@ export default function NoteActionModal({
               variant="h5"
               color={"primary"}
             >
-              {action === "edit" && "Edit Note"}
-              {action === "create" && "Create a Note"}
+              {currentAction === NOTE_ACTIONS.VIEW && "Viewing Note"}
+              {currentAction === NOTE_ACTIONS.EDIT && "Editing Note"}
+              {currentAction === NOTE_ACTIONS.CREATE && "Creating a Note"}
             </Typography>
-            <IconButton
-              disabled={!valuesChanged}
-              onClick={resetModalValues}
-              sx={{ ml: "auto", transition: "all 0.2s ease-in-out" }}
-            >
-              <Restore />
-            </IconButton>
-            <IconButton
-              onClick={(event) => handleBeforeModalClose(event, "closeModal")}
-              edge="end"
-            >
-              <Close />
-            </IconButton>
+            <Box display={"flex"} flexDirection={"row"} ml={"auto"}>
+              <Zoom in={currentAction === NOTE_ACTIONS.VIEW}>
+                <IconButton
+                  size={"small"}
+                  onClick={() => handleActionChange(NOTE_ACTIONS.EDIT)}
+                  sx={{ mr: "-2.2rem" }}
+                >
+                  <EditOutlined />
+                </IconButton>
+              </Zoom>
+              <Zoom in={currentAction !== NOTE_ACTIONS.VIEW}>
+                <div>
+                  <IconButton
+                    size={"small"}
+                    disabled={!valuesChanged}
+                    onClick={resetModalValues}
+                    sx={{ transition: "all 0.2s ease-in-out" }}
+                  >
+                    <RestoreOutlined />
+                  </IconButton>
+                </div>
+              </Zoom>
+
+              <IconButton
+                size={"small"}
+                onClick={(event) => handleBeforeModalClose(event, "closeModal")}
+                edge="end"
+              >
+                <CloseOutlined />
+              </IconButton>
+            </Box>
           </Box>
 
           <TextField
+            disabled={currentAction === NOTE_ACTIONS.VIEW}
             required
             id="outlined-required"
             label="Title"
@@ -221,23 +261,23 @@ export default function NoteActionModal({
           />
 
           <TextField
+            disabled={currentAction === NOTE_ACTIONS.VIEW}
             id="outlined-multiline-static"
             label="Description"
             value={newDescription}
             multiline
-            rows={isMobile ? 6 : 8}
+            rows={isMobile ? 8 : 12}
             sx={{ mb: 2 }}
             inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
             onChange={(event) => setNewDescription(event.target.value)}
           />
 
           {/* Display either the category chip or the search category component based on the user intended action */}
-          {displayCategoryChip ? (
+          {displayCategoryChip && (
             <motion.div
               variants={variantFadeSlideUpSlow}
               initial={"hidden"}
               animate={"visible"}
-              exit={"hidden"}
             >
               <CategoryChip
                 categoryName={newCategoryName}
@@ -246,34 +286,48 @@ export default function NoteActionModal({
                 setCategoryColor={setNewCategoryColor}
                 categoryCollection={categoriesCollection}
                 enableEdit={isCategoryNew} // Enable edit if category is new
-                onDelete={handleCategoryChipDelete}
+                onDelete={
+                  currentAction !== NOTE_ACTIONS.VIEW
+                    ? handleCategoryChipDelete
+                    : null
+                }
               />
             </motion.div>
-          ) : (
-            <SearchCategory
-              categoriesCollection={categoriesCollection}
-              categoryName={newCategoryName}
-              setCategoryName={setNewCategoryName}
-              setCategoryColor={setNewCategoryColor}
-              setIsCategoryNew={setIsCategoryNew}
-              setDisplayCategoryChip={setDisplayCategoryChip}
-            />
           )}
-          <LoadingButton
-            loading={editStatus === "loading" || createStatus === "loading"}
-            variant="contained"
-            size="small"
-            disabled={titleError || !valuesChanged} // Disable button if required title field is empty
-            onClick={action === "edit" ? handleEditNote : handleCreateNote}
-            sx={{
-              border: "1px",
-              mt: 2,
-              ml: "auto",
-            }}
-          >
-            {action === "edit" && "Save"}
-            {action === "create" && "Create"}
-          </LoadingButton>
+          {(currentAction === NOTE_ACTIONS.CREATE ||
+            currentAction === NOTE_ACTIONS.EDIT) && (
+            <>
+              {!displayCategoryChip && (
+                <SearchCategory
+                  categoriesCollection={categoriesCollection}
+                  categoryName={newCategoryName}
+                  setCategoryName={setNewCategoryName}
+                  setCategoryColor={setNewCategoryColor}
+                  setIsCategoryNew={setIsCategoryNew}
+                  setDisplayCategoryChip={setDisplayCategoryChip}
+                />
+              )}
+              <LoadingButton
+                loading={editStatus === "loading" || createStatus === "loading"}
+                variant="contained"
+                size="small"
+                disabled={titleError || !valuesChanged} // Disable button if required title field is empty
+                onClick={
+                  currentAction === NOTE_ACTIONS.EDIT
+                    ? handleEditNote
+                    : handleCreateNote
+                }
+                sx={{
+                  border: "1px",
+                  mt: 2,
+                  ml: "auto",
+                }}
+              >
+                {currentAction === NOTE_ACTIONS.EDIT && "Save"}
+                {currentAction === NOTE_ACTIONS.CREATE && "Create"}
+              </LoadingButton>
+            </>
+          )}
         </Card>
       </Grow>
     </Modal>

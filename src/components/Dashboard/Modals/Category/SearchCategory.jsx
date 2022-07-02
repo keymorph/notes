@@ -74,6 +74,7 @@ export default function SearchCategory({
           <InputAdornment position="end">
             <Tooltip title="Add Category" placement="top" arrow>
               <IconButton
+                size={"small"}
                 onClick={handleAddCategory}
                 sx={adornmentButtonTransition}
                 disabled={!isCategoryValid}

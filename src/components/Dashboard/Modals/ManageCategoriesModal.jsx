@@ -194,6 +194,7 @@ export default function ManageCategoriesModal({
               Manage Categories
             </Typography>
             <IconButton
+              size={"small"}
               disabled={!categoriesChanged}
               onClick={resetModalValues}
               sx={{ ml: "auto", transition: "all 0.2s ease-in-out" }}
@@ -201,6 +202,7 @@ export default function ManageCategoriesModal({
               <Restore />
             </IconButton>
             <IconButton
+              size={"small"}
               onClick={(event) => handleBeforeModalClose(event, "closeModal")}
               edge="end"
             >
@@ -216,6 +218,7 @@ export default function ManageCategoriesModal({
               <InputAdornment position="end">
                 <Tooltip title="Add Category" placement="top" arrow>
                   <IconButton
+                    size={"small"}
                     onClick={handleCreateCategory}
                     sx={adornmentButtonTransition}
                     disabled={!isCategoryNew}

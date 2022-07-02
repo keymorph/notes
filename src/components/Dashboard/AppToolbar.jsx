@@ -14,7 +14,7 @@ import { useState } from "react";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
-import NoteActionModal from "./Modals/NoteActionModal";
+import NoteActionModal, { NOTE_ACTIONS } from "./Modals/NoteActionModal";
 
 export default function AppToolbar({
   noteCollection,
@@ -85,7 +85,7 @@ export default function AppToolbar({
   //#region Render Components
   const noteActionModal = (
     <NoteActionModal
-      action={"create"}
+      action={NOTE_ACTIONS.CREATE}
       title={""}
       description={""}
       categoryName={""}

@@ -20,7 +20,7 @@ import {
   deleteNote,
 } from "../../../helpers/requests/note-requests";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
-import NoteActionModal from "../Modals/NoteActionModal";
+import NoteActionModal, { NOTE_ACTIONS } from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
   width: "300px",
@@ -49,6 +49,7 @@ export default function Note({
   //#region Hooks
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState(NOTE_ACTIONS.VIEW);
   const [hideNote, setHideNote] = useState(false);
 
   //#region Query Handling Hooks
@@ -85,12 +86,24 @@ export default function Note({
 
   //#region Handlers
   const handleEditModalOpen = () => {
+    if (modalAction !== NOTE_ACTIONS.EDIT) {
+      setModalAction(NOTE_ACTIONS.EDIT);
+    }
     setMoreMenuAnchorEl(null); // Close the more menu
     setModalOpen(true);
     setHideNote(true);
   };
 
-  const handleEditModalClose = () => {
+  const handleViewModalOpen = () => {
+    if (modalAction !== NOTE_ACTIONS.VIEW) {
+      setModalAction(NOTE_ACTIONS.VIEW);
+    }
+    setMoreMenuAnchorEl(null); // Close the more menu
+    setModalOpen(true);
+    setHideNote(true);
+  };
+
+  const handleActionModalClose = () => {
     setModalOpen(false);
     setMoreMenuAnchorEl(null);
     setHideNote(false);
@@ -143,9 +156,9 @@ export default function Note({
         categoriesCollection={categoriesCollection}
         setCategoriesCollection={setCategoriesCollection}
         setNoteCollection={setNoteCollection}
-        action={"edit"}
+        action={modalAction}
         modalOpen={modalOpen}
-        handleModalClose={handleEditModalClose}
+        handleModalClose={handleActionModalClose}
       />
 
       <Grow in={!hideNote}>
@@ -165,6 +178,7 @@ export default function Note({
             ) : null}
 
             <IconButton
+              size={"small"}
               sx={{ m: 0.5, ml: "auto", height: "1em" }}
               onClick={handleMoreMenuClick}
             >
@@ -189,7 +203,7 @@ export default function Note({
           </Menu>
 
           <CardContent
-            onClick={handleEditModalOpen}
+            onClick={handleViewModalOpen}
             sx={{
               userSelect: "text",
               height: "100%",
