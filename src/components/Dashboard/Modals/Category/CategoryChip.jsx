@@ -22,7 +22,7 @@ import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
 import {
   adornmentButtonTransition,
   variantFadeSlideDownSlow,
-} from "../../../../styles/transitions/definitions";
+} from "../../../../styles/animations/definitions";
 import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 
@@ -89,7 +89,7 @@ export default function CategoryChip({
     <>
       <Chip
         icon={
-          <Tooltip title="Change Color" placement="top" arrow>
+          <Tooltip title="Change Color" placement="top">
             <IconButton
               size={"small"}
               disabled={!enableEdit}

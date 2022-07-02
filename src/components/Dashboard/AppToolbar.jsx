@@ -11,10 +11,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import ManageCategoriesModal from "../Modals/ManageCategoriesModal";
-import NoteActionModal from "../Modals/NoteActionModal";
 
-import ToolbarSearch from "./ToolbarSearch";
+import ToolbarSearch from "./AppToolbar/ToolbarSearch";
+import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
+import NoteActionModal from "./Modals/NoteActionModal";
 
 export default function AppToolbar({
   noteCollection,

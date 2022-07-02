@@ -8,7 +8,7 @@ import Head from "next/head";
 import React, {useEffect, useMemo, useState} from "react";
 import {QueryClient, QueryClientProvider} from "react-query";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/Navbar";
 
 import {darkTheme, lightTheme} from "../styles/themes/theme";
 

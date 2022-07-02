@@ -22,8 +22,8 @@ import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
+import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
-import { variantFadeSlideUpSlow } from "../../../styles/transitions/definitions";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import CategoryChip from "./Category/CategoryChip";
 import SearchCategory from "./Category/SearchCategory";

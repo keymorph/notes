@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
-import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
-import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
+import AppToolbar from "../components/Dashboard/AppToolbar";
+import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterView from "../components/Dashboard/OrderFilterView";
 import { NOTES_ORDER_BY } from "../helpers/models/note-order";
 import {

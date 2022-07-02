@@ -108,6 +108,14 @@ export const darkTheme = createTheme(
           },
         },
       },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            backgroundColor: "#000000" + hexTransparency,
+            color: "#FFFFFF",
+          },
+        },
+      },
     },
   },
   commonThemeConfig
@@ -150,6 +158,14 @@ export const lightTheme = createTheme(
         styleOverrides: {
           paper: {
             background: "#FFFFFF" + hexTransparency,
+          },
+        },
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            backgroundColor: "#FFFFFF" + hexTransparency,
+            color: "#000000",
           },
         },
       },

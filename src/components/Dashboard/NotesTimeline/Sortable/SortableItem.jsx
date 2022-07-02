@@ -1,7 +1,7 @@
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import {motion} from "framer-motion";
-import {spring, variantFadeStagger,} from "../../../../styles/transitions/definitions";
+import {spring, variantFadeStagger,} from "../../../../styles/animations/definitions";
 import Note from "../Note/Note";
 
 /**

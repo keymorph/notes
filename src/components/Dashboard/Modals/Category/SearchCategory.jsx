@@ -13,7 +13,7 @@ import {
   adornmentButtonTransition,
   springShort,
   variantFadeSlideDown,
-} from "../../../../styles/transitions/definitions";
+} from "../../../../styles/animations/definitions";
 import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 import CategoryChip from "./CategoryChip";

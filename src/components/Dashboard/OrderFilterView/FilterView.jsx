@@ -11,7 +11,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
-import { variantFadeStagger } from "../../../styles/transitions/definitions";
+import { variantFadeStagger } from "../../../styles/animations/definitions";
 
 export default function FilterView({
   categoriesCollection,

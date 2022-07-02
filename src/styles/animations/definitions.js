@@ -1,10 +1,10 @@
-//#region CSS TRANSITIONS
+//#region CSS Transitions
 export const adornmentButtonTransition = {
   transition: "all 0.2s ease-in-out",
 };
 //#endregion
 
-//#region SPRING TRANSITIONS
+//#region Spring Transitions
 export const springDefault = {
   type: "spring",
   stiffness: 700,
@@ -32,7 +32,7 @@ export const springShortest = {
 };
 //#endregion
 
-//#region VARIANTS
+//#region Variants
 export const variantFade = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -71,5 +71,4 @@ export const variantFadeSlideUpSlow = {
   hidden: { opacity: 0, y: 20, transition: springShort },
   visible: { opacity: 1, y: 0, transition: spring },
 };
-export const variantFadeHeight = {};
 //#endregion
