@@ -10,7 +10,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
@@ -24,7 +24,6 @@ export default function AppToolbar({
   orderFilterViewOpen,
   setNoteCollection,
   setCategoriesCollection,
-  setNotesHidden,
   setSearchValue,
   setOrderFilterViewOpen,
   setOrderViewOpen,
@@ -39,15 +38,6 @@ export default function AppToolbar({
     useState(false);
 
   const [searching, setSearching] = useState(false);
-
-  // Hide notes while the modal is open
-  useEffect(() => {
-    if (createNoteModalOpen || manageCategoriesModalOpen) {
-      setNotesHidden(true);
-    } else {
-      setNotesHidden(false);
-    }
-  }, [createNoteModalOpen, manageCategoriesModalOpen]);
 
   //#endregion
 

@@ -5,22 +5,22 @@ import {
   CardContent,
   Chip,
   Divider,
-  Fade,
+  Grow,
   IconButton,
   Menu,
   MenuItem,
   styled,
   Typography,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMutation } from "react-query";
 
 import {
   createNote,
   deleteNote,
-} from "../../../../helpers/requests/note-requests";
-import { getOrCreateCategoryId } from "../../../../utils/id-utils";
-import NoteActionModal from "../../Modals/NoteActionModal";
+} from "../../../helpers/requests/note-requests";
+import { getOrCreateCategoryId } from "../../../utils/id-utils";
+import NoteActionModal from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
   width: "300px",
@@ -42,8 +42,6 @@ export default function Note({
   noteCollection,
   setNoteCollection,
   setCategoriesCollection,
-  notesHidden,
-  setNotesHidden,
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
@@ -51,14 +49,7 @@ export default function Note({
   //#region Hooks
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (modalOpen) {
-      setNotesHidden(true);
-    } else {
-      setNotesHidden(false);
-    }
-  }, [modalOpen]);
+  const [hideNote, setHideNote] = useState(false);
 
   //#region Query Handling Hooks
   const { mutate: mutateDelete, status: deleteStatus } = useMutation(
@@ -96,11 +87,13 @@ export default function Note({
   const handleEditModalOpen = () => {
     setMoreMenuAnchorEl(null); // Close the more menu
     setModalOpen(true);
+    setHideNote(true);
   };
 
   const handleEditModalClose = () => {
     setModalOpen(false);
     setMoreMenuAnchorEl(null);
+    setHideNote(false);
   };
 
   const ref = useRef(null);
@@ -155,7 +148,7 @@ export default function Note({
         handleModalClose={handleEditModalClose}
       />
 
-      <Fade in={!notesHidden}>
+      <Grow in={!hideNote}>
         <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
           <Box
             sx={{
@@ -214,7 +207,7 @@ export default function Note({
             <Typography variant="body2">{description}</Typography>
           </CardContent>
         </NoteCard>
-      </Fade>
+      </Grow>
     </Box>
   );
 }

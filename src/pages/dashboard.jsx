@@ -28,8 +28,6 @@ export default function Dashboard() {
   const [filterCategories, setFilterCategories] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
-  // Hide notes while the modal is open
-  const [notesHidden, setNotesHidden] = useState(false);
 
   const [orderFilterViewOpen, setOrderFilterViewOpen] = useState(false);
 
@@ -90,7 +88,6 @@ export default function Dashboard() {
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
         setSearchValue={setSearchValue}
-        setNotesHidden={setNotesHidden}
         setOrderFilterViewOpen={setOrderFilterViewOpen}
       />
       {orderFilterViewOpen && (
@@ -107,13 +104,11 @@ export default function Dashboard() {
         categoriesCollection={categoriesCollection}
         notesOrder={notesOrder}
         filterCategories={filterCategories}
-        notesHidden={notesHidden}
         searchValue={searchValue}
         noteStatus={noteStatus}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
         setNotesOrder={setNotesOrder}
-        setNotesHidden={setNotesHidden}
       />
     </Box>
   ) : (

@@ -1,8 +1,8 @@
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import {motion} from "framer-motion";
-import {spring, variantFadeStagger,} from "../../../../styles/animations/definitions";
-import Note from "../Note/Note";
+import {spring, variantFadeStagger,} from "../../../styles/animations/definitions";
+import Note from "./Note";
 
 /**
  * Wraps an item and makes it draggable in a sortable context
@@ -13,7 +13,7 @@ import Note from "../Note/Note";
  * @param rest - rest of the props for the item being wrapped
  * @returns {JSX.Element}
  */
-export default function SortableItem({ index, isDraggingMode, ...rest }) {
+export default function SortableNote({ index, isDraggingMode, ...rest }) {
   const {
     attributes,
     listeners,

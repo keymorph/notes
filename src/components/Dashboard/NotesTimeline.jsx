@@ -27,20 +27,18 @@ import {
   swapOrderedNotesID,
 } from "../../helpers/notes/order";
 import { spring } from "../../styles/animations/definitions";
-import SortableItem from "./NotesTimeline/Sortable/SortableItem";
+import SortableNote from "./NotesTimeline/SortableNote";
 
 export default function NotesTimeline({
   noteCollection,
   categoriesCollection,
   notesOrder,
-  notesHidden,
   filterCategories,
   searchValue,
   noteStatus,
   setNoteCollection,
   setCategoriesCollection,
   setNotesOrder,
-  setNotesHidden,
 }) {
   //#region Hooks
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
@@ -167,7 +165,7 @@ export default function NotesTimeline({
           {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
           <AnimatePresence>
             {filteredNotesCollection.map((note, index) => (
-              <SortableItem
+              <SortableNote
                 key={note.id}
                 noteID={note.id}
                 isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
@@ -188,8 +186,6 @@ export default function NotesTimeline({
                 categoriesCollection={categoriesCollection}
                 setNoteCollection={setNoteCollection}
                 setCategoriesCollection={setCategoriesCollection}
-                notesHidden={notesHidden}
-                setNotesHidden={setNotesHidden}
               />
             ))}
           </AnimatePresence>
