@@ -1,8 +1,8 @@
-import { FilterAltOutlined, MoreVert } from "@mui/icons-material";
+import { Add, FilterAltOutlined, MoreVert } from "@mui/icons-material";
 import {
   AppBar,
-  Box,
   Button,
+  Fade,
   IconButton,
   Menu,
   MenuItem,
@@ -37,6 +37,8 @@ export default function AppToolbar({
   const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
   const [manageCategoriesModalOpen, setManageCategoriesModalOpen] =
     useState(false);
+
+  const [searching, setSearching] = useState(false);
 
   // Hide notes while the modal is open
   useEffect(() => {
@@ -136,14 +138,7 @@ export default function AppToolbar({
         boxShadow: "none",
       }}
     >
-      <Toolbar
-        disableGutters
-        variant={"dense"}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <Toolbar disableGutters variant={"dense"} sx={{ mx: "0.5rem" }}>
         {/* The dom order doesn't matter for these components and as such they are grouped together */}
         {noteStatus !== "loading" && (
           <>
@@ -153,57 +148,54 @@ export default function AppToolbar({
           </>
         )}
 
-        <Box
-          display={"flex"}
-          gap={"0.3em"}
-          alignItems={"center"}
-          ml={"0.5em"}
-          mr={"auto"}
-        >
-          {/* Only display the search bar and filter if there are notes */}
-          {noteCollection.length > 0 && (
-            <>
-              <IconButton
-                size={"small"}
-                onClick={handleOrderFilterViewChange}
-                color={orderFilterViewOpen ? "primary" : "inherit"}
-              >
-                <FilterAltOutlined />
-              </IconButton>
-              <ToolbarSearch
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
-            </>
-          )}
-        </Box>
+        {/* Only display the search bar and filter if there are notes */}
+        {noteCollection.length > 0 && (
+          <>
+            <IconButton
+              size={"small"}
+              onClick={handleOrderFilterViewChange}
+              color={orderFilterViewOpen ? "primary" : "inherit"}
+            >
+              <FilterAltOutlined />
+            </IconButton>
+            <ToolbarSearch
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              searching={searching}
+              setSearching={setSearching}
+            />
+          </>
+        )}
 
-        <Box display={"flex"} gap={"0.3em"} alignItems={"center"} mr={"0.75em"}>
+        {/* If on desktop or when not searching, the add note button (with text) will be visible */}
+        <Fade in={!isMobile || !searching} unmountOnExit exit={false}>
           <Button
             color={createNoteModalOpen ? "primary" : "inherit"}
-            variant={"text"}
+            variant={"outlined"}
             size={"small"}
             sx={{
-              ml: "0.3em",
-              minWidth: "6em",
+              ml: "auto",
+              minWidth: "7rem",
             }}
-            // startIcon={<Add />}
+            startIcon={<Add />}
             onClick={handleCreateNoteModalOpen}
           >
-            {isMobile ? "Add Note" : "Add Note"}
+            Add Note
           </Button>
-          {/*<IconButton onClick={handleCreateNoteModalOpen} sx={{ ml: "0.3em" }}>*/}
-          {/*  <Add />*/}
-          {/*</IconButton>*/}
-          <IconButton
-            size={"small"}
-            sx={{ ml: "-0.5rem" }}
-            onClick={handleMoreMenuClick}
-            color={moreMenuAnchorEl ? "primary" : "inherit"}
-          >
-            <MoreVert />
+        </Fade>
+        {/* If on mobile, the add note button will collapse when searching */}
+        <Fade in={isMobile && searching} unmountOnExit exit={false}>
+          <IconButton onClick={handleCreateNoteModalOpen} size={"small"}>
+            <Add />
           </IconButton>
-        </Box>
+        </Fade>
+        <IconButton
+          size={"small"}
+          onClick={handleMoreMenuClick}
+          color={moreMenuAnchorEl ? "primary" : "inherit"}
+        >
+          <MoreVert />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
