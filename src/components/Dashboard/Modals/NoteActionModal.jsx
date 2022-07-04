@@ -39,6 +39,15 @@ export const NOTE_ACTIONS = {
   EDIT: "EDIT",
 };
 
+const DESCRIPTION_ROWS = {
+  TINY: 4,
+  SMALL: 8,
+  MEDIUM: 12,
+  LARGE: 16,
+  HUGE: 20,
+  GIGANTIC: 24,
+};
+
 export default function NoteActionModal({
   action,
   noteID,
@@ -55,6 +64,7 @@ export default function NoteActionModal({
   //#region Hooks
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down("380"));
 
   // Tracks any changes to the current action being performed (edit, create, view, etc)
   const [currentAction, setCurrentAction] = useState(action);
@@ -78,12 +88,36 @@ export default function NoteActionModal({
   }, [action, title, description, categoryName, categoryColor]);
   //#endregion
 
+  //#region Derived State Variables
+  // Short variable names for the current action being performed
+  const isViewing = currentAction === NOTE_ACTIONS.VIEW;
+  const isEditing = currentAction === NOTE_ACTIONS.EDIT;
+  const isCreating = currentAction === NOTE_ACTIONS.CREATE;
+  // Input validation
   const titleError = newTitle.trim() === "";
   const valuesChanged =
     newTitle.trim() !== title ||
     newDescription.trim() !== description ||
     newCategoryName.trim() !== categoryName ||
     newCategoryColor !== categoryColor;
+  //
+  let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
+  let minDescriptionRows = DESCRIPTION_ROWS.TINY;
+  if (isSmallMobile) {
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.MEDIUM
+      : DESCRIPTION_ROWS.SMALL;
+  } else if (isMobile) {
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.LARGE
+      : DESCRIPTION_ROWS.MEDIUM;
+  } else {
+    minDescriptionRows = DESCRIPTION_ROWS.SMALL;
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.HUGE
+      : DESCRIPTION_ROWS.LARGE;
+  }
+  //#endregion
 
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
@@ -269,7 +303,8 @@ export default function NoteActionModal({
             label={currentAction !== NOTE_ACTIONS.VIEW ? "Description" : ""}
             value={newDescription}
             multiline
-            rows={isMobile ? 8 : 12}
+            minRows={minDescriptionRows}
+            maxRows={maxDescriptionRows}
             sx={{ mb: 2 }}
             inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
             onChange={(event) => setNewDescription(event.target.value)}
@@ -297,40 +332,40 @@ export default function NoteActionModal({
               />
             </motion.div>
           )}
-          {(currentAction === NOTE_ACTIONS.CREATE ||
-            currentAction === NOTE_ACTIONS.EDIT) && (
-            <>
-              {!displayCategoryChip && (
-                <SearchCategory
-                  categoriesCollection={categoriesCollection}
-                  categoryName={newCategoryName}
-                  setCategoryName={setNewCategoryName}
-                  setCategoryColor={setNewCategoryColor}
-                  setIsCategoryNew={setIsCategoryNew}
-                  setDisplayCategoryChip={setDisplayCategoryChip}
-                />
-              )}
-              <LoadingButton
-                loading={editStatus === "loading" || createStatus === "loading"}
-                variant="contained"
-                size="small"
-                disabled={titleError || !valuesChanged} // Disable button if required title field is empty
-                onClick={
-                  currentAction === NOTE_ACTIONS.EDIT
-                    ? handleEditNote
-                    : handleCreateNote
-                }
-                sx={{
-                  border: "1px",
-                  mt: 2,
-                  ml: "auto",
-                }}
-              >
-                {currentAction === NOTE_ACTIONS.EDIT && "Save"}
-                {currentAction === NOTE_ACTIONS.CREATE && "Create"}
-              </LoadingButton>
-            </>
+          {!displayCategoryChip && (isCreating || isEditing) && (
+            <motion.div
+              variants={variantFadeSlideUpSlow}
+              initial={"hidden"}
+              animate={"visible"}
+            >
+              <SearchCategory
+                categoriesCollection={categoriesCollection}
+                categoryName={newCategoryName}
+                setCategoryName={setNewCategoryName}
+                setCategoryColor={setNewCategoryColor}
+                setIsCategoryNew={setIsCategoryNew}
+                setDisplayCategoryChip={setDisplayCategoryChip}
+              />
+            </motion.div>
           )}
+
+          <Zoom in={isCreating || isEditing} unmountOnExit>
+            <LoadingButton
+              loading={editStatus === "loading" || createStatus === "loading"}
+              variant="contained"
+              size="small"
+              disabled={titleError || !valuesChanged} // Disable button if required title field is empty
+              onClick={isEditing ? handleEditNote : handleCreateNote}
+              sx={{
+                border: "1px",
+                mt: 2,
+                ml: "auto",
+              }}
+            >
+              {isEditing && "Save"}
+              {isCreating && "Create"}
+            </LoadingButton>
+          </Zoom>
         </Card>
       </Grow>
     </Modal>

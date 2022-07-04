@@ -23,9 +23,8 @@ import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import NoteActionModal, { NOTE_ACTIONS } from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
-  width: "300px",
-  minHeight: "300px",
-  maxHeight: "400px",
+  width: "20rem",
+  height: "22rem",
   overflowWrap: "break-word",
   margin: "5px",
   transition: "opacity 0.2s ease-in-out",
@@ -215,10 +214,20 @@ export default function Note({
             <Typography variant="body1" title="Title Name" noWrap>
               {title}
             </Typography>
-
             <Divider />
-
-            <Typography variant="body2">{description}</Typography>
+            <Typography
+              variant="body2"
+              title={"Description"}
+              sx={{
+                display: "-webkit-box",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                WebkitLineClamp: "14",
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {description}
+            </Typography>
           </CardContent>
         </NoteCard>
       </Grow>

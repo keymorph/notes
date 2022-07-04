@@ -87,6 +87,7 @@ export default function SearchCategory({
         inputProps={{
           maxLength: CATEGORY_NAME_CHAR_LIMIT,
         }}
+        fullWidth
       />
       {/* Display category results below the search input */}
       <AnimatePresence>

@@ -8,7 +8,7 @@ export const modalCard = {
   display: "flex",
   flexDirection: "column",
   width: "90%",
-  minWidth: "16rem",
-  maxWidth: "32rem",
+  minWidth: "18rem",
+  maxWidth: "36rem",
   borderRadius: "0.8em",
 };

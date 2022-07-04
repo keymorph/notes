@@ -8,7 +8,7 @@ export const NOTE_TITLE_CHAR_LIMIT = 100;
  * Note Content Character Limit
  * @type {number}
  */
-export const NOTE_DESCRIPTION_CHAR_LIMIT = 1000;
+export const NOTE_DESCRIPTION_CHAR_LIMIT = 5000;
 
 /**
  * Category Name Character Limit

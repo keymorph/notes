@@ -156,10 +156,10 @@ export default function NotesTimeline({
         {/*  ) : null}*/}
         {/*</DragOverlay>*/}
         <Box
-          p="1.5em"
+          p="1rem"
           display="grid"
-          gap="2em"
-          gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+          gap="2rem"
+          gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
           justifyItems="center"
         >
           {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
