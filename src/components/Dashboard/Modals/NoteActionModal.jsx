@@ -107,7 +107,7 @@ export default function NoteActionModal({
         setNoteCollection(data.noteItem.notes.reverse());
         setCategoriesCollection(data.noteItem.categories);
         setTimeout(() => {
-          resetModalValues(); // Don't immediately reset the values till the closing animation is complete
+          handleResetModalValues(); // Don't immediately reset the values till the closing animation is complete
         }, 500);
       },
       onError: (error) => {
@@ -120,8 +120,11 @@ export default function NoteActionModal({
 
   //#region Helper Functions
   // Reset modal values is used when creating a note
-  const resetModalValues = () => {
-    setCurrentAction(action);
+  // If keepCurrentAction is true, it means that we don't want to reset the current action (e.g. when resetting the values)
+  const handleResetModalValues = (keepCurrentAction = false) => {
+    if (!keepCurrentAction) {
+      setCurrentAction(action);
+    }
     setNewTitle(title);
     setNewDescription(description);
     setNewCategoryName(categoryName);
@@ -183,7 +186,7 @@ export default function NoteActionModal({
     if (reason === "closeModal" || !valuesChanged) {
       handleModalClose();
       setTimeout(() => {
-        resetModalValues();
+        handleResetModalValues();
       }, 500); // Don't immediately reset the values till the closing animation is complete
     } else {
       if (currentAction === NOTE_ACTIONS.EDIT) {
@@ -229,7 +232,7 @@ export default function NoteActionModal({
                   <IconButton
                     size={"small"}
                     disabled={!valuesChanged}
-                    onClick={resetModalValues}
+                    onClick={() => handleResetModalValues(true)}
                     sx={{ transition: "all 0.2s ease-in-out" }}
                   >
                     <RestoreOutlined />
@@ -251,7 +254,7 @@ export default function NoteActionModal({
             disabled={currentAction === NOTE_ACTIONS.VIEW}
             required
             id="outlined-required"
-            label="Title"
+            label={currentAction !== NOTE_ACTIONS.VIEW ? "Title" : ""}
             value={newTitle}
             sx={{ my: "1em" }}
             inputProps={{
@@ -263,7 +266,7 @@ export default function NoteActionModal({
           <TextField
             disabled={currentAction === NOTE_ACTIONS.VIEW}
             id="outlined-multiline-static"
-            label="Description"
+            label={currentAction !== NOTE_ACTIONS.VIEW ? "Description" : ""}
             value={newDescription}
             multiline
             rows={isMobile ? 8 : 12}
