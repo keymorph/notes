@@ -13,7 +13,7 @@
 > **End Date:** --  
 > **Links:** https://jotfox.keymorph.com/
 
-:busts_in_silhouette: **CONTRIBUTING FOURSCRIPTERS:**
+:busts_in_silhouette: **CONTRIBUTING KEYMORPHERS:**
 
 - [Dante Edmonson](https://www.linkedin.com/in/dante-edmonson-38823518a/)
 - [Evan C. Navarro](https://www.linkedin.com/in/evancnavarro/)
