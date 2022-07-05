@@ -22,7 +22,7 @@ export default function OrderView({ notesOrder, setNotesOrder, isMobile }) {
 
   return (
     <Box>
-      <Typography variant="h6">Order By</Typography>
+      <Typography variant="h6">Order By:</Typography>
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"

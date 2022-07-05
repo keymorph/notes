@@ -46,12 +46,13 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   const isUserLoggedIn = sessionStatus === "authenticated";
   const dropdownOpen = Boolean(anchorEl);
   const profileName = isUserLoggedIn
-    ? session.user.name || session.user.email.split("@")[0]
+    ? session.user.name || session.user.email?.split("@")[0]
     : "";
 
   return (
     <>
       <Button
+        color={dropdownOpen ? "primary" : "inherit"}
         aria-label="Profile options"
         size="small"
         disabled={!isUserLoggedIn}
@@ -98,10 +99,10 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
           </div>
         </Tooltip>
         <MenuItem dense onClick={handleDarkModeToggle} sx={{ gap: "0.5em" }}>
-          <Zoom in={darkMode}>
+          <Zoom in={darkMode} appear={false}>
             <LightModeOutlined sx={{ mr: "-2rem" }} />
           </Zoom>
-          <Zoom in={!darkMode}>
+          <Zoom in={!darkMode} appear={false}>
             <DarkModeOutlined />
           </Zoom>
           Switch to {darkMode ? "Light" : "Dark"}

@@ -28,6 +28,7 @@ export default function OrderFilterView({
         sx={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
+          backgroundColor: "background.appBar",
           gap: "1rem",
           borderRadius: "0",
           px: "1rem",

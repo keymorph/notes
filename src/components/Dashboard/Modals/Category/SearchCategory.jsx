@@ -14,7 +14,10 @@ import {
   springShort,
   variantFadeSlideDown,
 } from "../../../../styles/animations/definitions";
-import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
+import {
+  doesCategoryExist,
+  getValidCategoryName,
+} from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 import CategoryChip from "./CategoryChip";
 
@@ -35,7 +38,7 @@ export default function SearchCategory({
   const isCategoryValid = newCategoryName.trim() !== "" && !categoryExists;
 
   const handleCategorySearch = (e) => {
-    const searchValue = e.target.value;
+    const searchValue = getValidCategoryName(e.target.value);
     setNewCategoryName(searchValue);
 
     setFilteredCategories(

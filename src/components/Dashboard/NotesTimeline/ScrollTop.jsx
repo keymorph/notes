@@ -29,9 +29,9 @@ export default function ScrollTop() {
         sx={{ position: "fixed", bottom: 16, left: 8 }}
       >
         <Fab
-          color="primary"
           size="small"
           aria-label="scroll back to top"
+          variant={"circular"}
           sx={{
             transition: "all 0.3s ease-in-out",
             "&:hover": {
@@ -44,7 +44,10 @@ export default function ScrollTop() {
             },
           }}
         >
-          <KeyboardArrowUpIcon fontSize="large" />
+          <KeyboardArrowUpIcon
+            fontSize="large"
+            sx={{ color: "background.appBar" }}
+          />
         </Fab>
       </Box>
     </Zoom>

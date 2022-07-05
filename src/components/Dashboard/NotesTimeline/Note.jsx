@@ -167,22 +167,26 @@ export default function Note({
               backgroundColor: categoryColor
                 ? `category.${categoryColor}`
                 : `category.none`,
-              display: "flex",
-              position: "relative",
             }}
           >
-            {/* If category exists, show the name */}
-            {categoryName ? (
-              <Chip label={categoryName} sx={{ m: 0.5, height: "2em" }} />
-            ) : null}
+            <Box display="flex" alignItems="center" mx={"0.5rem"}>
+              {/* If category exists, show the name */}
+              {categoryName ? (
+                <Chip
+                  label={categoryName}
+                  sx={{ my: "0.3rem", height: "1.25rem" }}
+                  size={"small"}
+                />
+              ) : null}
 
-            <IconButton
-              size={"small"}
-              sx={{ m: 0.5, ml: "auto", height: "1em" }}
-              onClick={handleMoreMenuClick}
-            >
-              <MoreHoriz />
-            </IconButton>
+              <IconButton
+                size={"small"}
+                sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
+                onClick={handleMoreMenuClick}
+              >
+                <MoreHoriz />
+              </IconButton>
+            </Box>
           </Box>
           {/* Note Action Menu that triggers  */}
           <Menu
@@ -207,14 +211,19 @@ export default function Note({
               userSelect: "text",
               height: "100%",
               cursor: "pointer",
-              py: 0.5,
-              px: 1,
+              pb: "1rem",
+              px: "1rem",
             }}
           >
-            <Typography variant="body1" title="Title Name" noWrap>
+            <Typography
+              variant="h5"
+              title="Title Name"
+              fontWeight={"bold"}
+              noWrap
+            >
               {title}
             </Typography>
-            <Divider />
+            <Divider sx={{ my: "0.5em" }} />
             <Typography
               variant="body2"
               title={"Description"}
@@ -222,7 +231,7 @@ export default function Note({
                 display: "-webkit-box",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                WebkitLineClamp: "14",
+                WebkitLineClamp: "12",
                 WebkitBoxOrient: "vertical",
               }}
             >

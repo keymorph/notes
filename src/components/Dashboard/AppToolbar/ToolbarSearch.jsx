@@ -23,7 +23,11 @@ export default function ToolbarSearch({
   return (
     <>
       <Fade in={!searching} unmountOnExit exit={false}>
-        <IconButton onClick={handleSearchToggle} size={"small"}>
+        <IconButton
+          onClick={handleSearchToggle}
+          size={"small"}
+          color={"inherit"}
+        >
           <SearchIcon />
         </IconButton>
       </Fade>

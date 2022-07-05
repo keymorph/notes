@@ -58,7 +58,7 @@ export default function App({
                 maxWidth={false} // Remove default max width
                 disableGutters
                 sx={{
-                  background: darkMode ? "#002081" : "#0056B0",
+                  background: darkMode ? "#0d0e16" : "#B3B2B8",
                   minHeight: "100vh",
                   height: "100%",
                 }}

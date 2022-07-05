@@ -288,7 +288,7 @@ export default function NoteActionModal({
             disabled={currentAction === NOTE_ACTIONS.VIEW}
             required
             id="outlined-required"
-            label={currentAction !== NOTE_ACTIONS.VIEW ? "Title" : ""}
+            label={"Title"}
             value={newTitle}
             sx={{ my: "1em" }}
             inputProps={{
@@ -300,7 +300,7 @@ export default function NoteActionModal({
           <TextField
             disabled={currentAction === NOTE_ACTIONS.VIEW}
             id="outlined-multiline-static"
-            label={currentAction !== NOTE_ACTIONS.VIEW ? "Description" : ""}
+            label={"Description"}
             value={newDescription}
             multiline
             minRows={minDescriptionRows}

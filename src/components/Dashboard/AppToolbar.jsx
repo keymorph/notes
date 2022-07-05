@@ -1,4 +1,9 @@
-import { Add, FilterAltOutlined, MoreVert } from "@mui/icons-material";
+import {
+  Add,
+  FilterAlt,
+  FilterAltOutlined,
+  MoreVert,
+} from "@mui/icons-material";
 import {
   AppBar,
   Button,
@@ -26,7 +31,6 @@ export default function AppToolbar({
   setCategoriesCollection,
   setSearchValue,
   setOrderFilterViewOpen,
-  setOrderViewOpen,
 }) {
   //#region Hooks
   const theme = useTheme();
@@ -126,6 +130,7 @@ export default function AppToolbar({
       position={"sticky"}
       sx={{
         boxShadow: "none",
+        backgroundColor: "background.appBar",
       }}
     >
       <Toolbar disableGutters variant={"dense"} sx={{ mx: "0.5rem" }}>
@@ -146,7 +151,7 @@ export default function AppToolbar({
               onClick={handleOrderFilterViewChange}
               color={orderFilterViewOpen ? "primary" : "inherit"}
             >
-              <FilterAltOutlined />
+              {orderFilterViewOpen ? <FilterAlt /> : <FilterAltOutlined />}
             </IconButton>
             <ToolbarSearch
               searchValue={searchValue}

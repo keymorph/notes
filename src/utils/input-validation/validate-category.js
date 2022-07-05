@@ -14,3 +14,16 @@ export function doesCategoryExist(categoryName, categoryCollection) {
   }
   return false;
 }
+
+/**
+ * Returns a clean and formatted category name.
+ *
+ * @param {string} categoryName
+ */
+export function getValidCategoryName(categoryName) {
+  // Only accept alpha-numeric characters and spaces
+  return categoryName
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}

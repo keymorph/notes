@@ -38,7 +38,12 @@ export default function FilterView({
     const isSelected = filterCategories.find(
       (filterCategory) => filterCategory.id === category.id
     );
-    const chipColor = isSelected ? "primary" : "paper";
+    const backgroundColor = isSelected
+      ? `category.${category.color}`
+      : "transparent";
+    const textColor = isSelected ? "text.primary" : "text.secondary";
+
+    console.log("backgroundColor", backgroundColor);
 
     return (
       <motion.div
@@ -53,24 +58,38 @@ export default function FilterView({
       >
         <Chip
           label={
-            <Box display={"flex"} justifyContent={"space-between"}>
+            <Box
+              display={"flex"}
+              justifyContent={"space-between"}
+              sx={{ overflowX: "hidden" }}
+            >
+              {isSelected && (
+                <Check
+                  sx={{
+                    color: textColor,
+                    display: "flex",
+                    transition: "all 0.2s ease-in-out",
+                    mr: "0.5rem",
+                  }}
+                />
+              )}
               <Typography
-                color={chipColor}
+                color={textColor}
                 sx={{ transition: "all 0.2s ease-in-out" }}
               >
                 {category.name}
               </Typography>
-              <Check
-                color={chipColor}
-                sx={{
-                  display: "flex",
-                  transition: "all 0.2s ease-in-out",
-                }}
-              />
             </Box>
           }
           onClick={() => handleCategorySelect(category.id)}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            "&:focus": {
+              backgroundColor: `black`,
+            },
+            backgroundColor: backgroundColor,
+            border: `1px solid ${textColor}`,
+          }}
           variant={"outlined"}
           size={isMobile ? "small" : "medium"}
         />
@@ -111,7 +130,7 @@ export default function FilterView({
 
   return (
     <Box>
-      <Typography variant="h6">Filter By Category</Typography>
+      <Typography variant="h6">Filter By Category:</Typography>
       <Input
         placeholder={"Search Category..."}
         fullWidth
@@ -127,18 +146,23 @@ export default function FilterView({
         pt={"1rem"}
         flexWrap={"wrap"}
         minWidth={isMobile ? "100%" : "24rem"}
-        height={"8rem"}
+        maxHeight={"8rem"}
         overflow={"scroll"}
       >
         <AnimatePresence>{categoryChips}</AnimatePresence>
+        {noCategoriesDisplayed && (
+          <Grow in>
+            <Typography
+              textAlign={"center"}
+              variant="body1"
+              display={"flex"}
+              justifyContent={"center"}
+            >
+              No categories to display.
+            </Typography>
+          </Grow>
+        )}
       </Box>
-      {noCategoriesDisplayed && (
-        <Grow in>
-          <Typography textAlign={"center"} variant="body1">
-            No categories to display
-          </Typography>
-        </Grow>
-      )}
     </Box>
   );
 }
