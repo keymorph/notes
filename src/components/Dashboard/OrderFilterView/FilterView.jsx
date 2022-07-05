@@ -43,8 +43,6 @@ export default function FilterView({
       : "transparent";
     const textColor = isSelected ? "text.primary" : "text.secondary";
 
-    console.log("backgroundColor", backgroundColor);
-
     return (
       <motion.div
         key={category.id}
@@ -58,11 +56,7 @@ export default function FilterView({
       >
         <Chip
           label={
-            <Box
-              display={"flex"}
-              justifyContent={"space-between"}
-              sx={{ overflowX: "hidden" }}
-            >
+            <Box display={"flex"} justifyContent={"space-between"}>
               {isSelected && (
                 <Check
                   sx={{
@@ -85,7 +79,7 @@ export default function FilterView({
           sx={{
             cursor: "pointer",
             "&:focus": {
-              backgroundColor: `black`,
+              backgroundColor: backgroundColor,
             },
             backgroundColor: backgroundColor,
             border: `1px solid ${textColor}`,
@@ -126,8 +120,6 @@ export default function FilterView({
   };
   //#endregion
 
-  console.log(filterCategories);
-
   return (
     <Box>
       <Typography variant="h6">Filter By Category:</Typography>
@@ -148,16 +140,12 @@ export default function FilterView({
         minWidth={isMobile ? "100%" : "24rem"}
         maxHeight={"8rem"}
         overflow={"scroll"}
+        sx={{ overflowX: "hidden" }}
       >
         <AnimatePresence>{categoryChips}</AnimatePresence>
         {noCategoriesDisplayed && (
           <Grow in>
-            <Typography
-              textAlign={"center"}
-              variant="body1"
-              display={"flex"}
-              justifyContent={"center"}
-            >
+            <Typography textAlign={"center"} variant="body1">
               No categories to display.
             </Typography>
           </Grow>

@@ -47,7 +47,7 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   const dropdownOpen = Boolean(anchorEl);
   const profileName = isUserLoggedIn
     ? session.user.name || session.user.email?.split("@")[0]
-    : "";
+    : "Guest";
 
   return (
     <>
