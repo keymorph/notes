@@ -18,7 +18,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { NOTES_ORDER_BY } from "../../helpers/models/note-order";
 import {
-  getCategoryColor,
+  getCategoryColorName,
   getCategoryName,
 } from "../../helpers/notes/category";
 import { getFilteredNotesCollection } from "../../helpers/notes/filter";
@@ -177,7 +177,7 @@ export default function NotesTimeline({
                   note.category_id,
                   categoriesCollection
                 )}
-                categoryColor={getCategoryColor(
+                categoryColor={getCategoryColorName(
                   note.category_id,
                   categoriesCollection
                 )}

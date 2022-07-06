@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 }
 
 /*
-  Category controllers
+  SharedComponents controllers
 */
 async function update(req, res) {
   return await categoryService.update(req, res);

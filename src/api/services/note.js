@@ -1,7 +1,7 @@
 import {notes} from "../models/database.js";
 import {createNoteItemIfNotExists} from "./note-helper";
 
-// Category object
+// SharedComponents object
 // {
 //   category_name: "Chicken",
 //   color: "Yellow"
@@ -27,7 +27,7 @@ const createNote = async (req, res) => {
     id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
     created_at: Math.round(Date.now() / 1000), // Seconds since Unix epoch
   };
-  // Category object to be created if it doesn't exist
+  // SharedComponents object to be created if it doesn't exist
   const newCategoryDef = {
     id: req.body.category.id,
     name: req.body.category.name,

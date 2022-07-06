@@ -30,8 +30,8 @@ import {
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
-import CategoryChooser from "./Category/CategoryChooser";
 import EditableCategoryChip from "./Category/EditableCategoryChip";
+import SelectOrAddCategory from "./Category/SelectOrAddCategory";
 
 export const NOTE_ACTIONS = {
   VIEW: "VIEW",
@@ -341,7 +341,7 @@ export default function NoteActionModal({
               initial={"hidden"}
               animate={"visible"}
             >
-              <CategoryChooser
+              <SelectOrAddCategory
                 categoriesCollection={categoriesCollection}
                 categoryName={newCategoryName}
                 setCategoryName={setNewCategoryName}

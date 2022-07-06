@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
+import { getPaletteCategoryColorName } from "../../../helpers/notes/category";
 
 import {
   createNote,
@@ -164,9 +165,9 @@ export default function Note({
         <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
           <Box
             sx={{
-              backgroundColor: categoryColor
-                ? `category.${categoryColor}`
-                : `category.none`,
+              backgroundColor: `${getPaletteCategoryColorName(
+                categoryColor
+              )}.main`,
             }}
           >
             <Box display="flex" alignItems="center" mx={"0.5rem"}>

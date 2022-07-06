@@ -1,17 +1,8 @@
-import { Check } from "@mui/icons-material";
-import {
-  Box,
-  Chip,
-  Grow,
-  Input,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
+import { Box, Grow, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
-import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
-import { variantFadeStagger } from "../../../styles/animations/definitions";
+import CategoryChip from "../SharedComponents/CategoryChip";
+import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 
 export default function FilterView({
   categoriesCollection,
@@ -26,7 +17,6 @@ export default function FilterView({
   const [noCategoriesDisplayed, setNoCategoriesDisplayed] = useState(false);
   //#endregion
 
-  // S
   const filteredCategories = categoriesCollection.filter((category) => {
     return (
       category.name !== "" &&
@@ -38,56 +28,18 @@ export default function FilterView({
     const isSelected = filterCategories.find(
       (filterCategory) => filterCategory.id === category.id
     );
-    const backgroundColor = isSelected
-      ? `category.${category.color}`
-      : "transparent";
-    const textColor = isSelected ? "text.primary" : "text.secondary";
 
     return (
-      <motion.div
+      <CategoryChip
         key={category.id}
-        layout
-        variants={variantFadeStagger}
-        whileTap={{ scale: 0.95 }}
-        custom={index}
-        initial={"hidden"}
-        animate={"visible"}
-        exit={"hidden"}
-      >
-        <Chip
-          label={
-            <Box display={"flex"} justifyContent={"space-between"}>
-              {isSelected && (
-                <Check
-                  sx={{
-                    color: textColor,
-                    display: "flex",
-                    transition: "all 0.2s ease-in-out",
-                    mr: "0.5rem",
-                  }}
-                />
-              )}
-              <Typography
-                color={textColor}
-                sx={{ transition: "all 0.2s ease-in-out" }}
-              >
-                {category.name}
-              </Typography>
-            </Box>
-          }
-          onClick={() => handleCategorySelect(category.id)}
-          sx={{
-            cursor: "pointer",
-            "&:focus": {
-              backgroundColor: backgroundColor,
-            },
-            backgroundColor: backgroundColor,
-            border: `1px solid ${textColor}`,
-          }}
-          variant={"outlined"}
-          size={isMobile ? "small" : "medium"}
-        />
-      </motion.div>
+        index={index}
+        name={category.name}
+        color={category.color}
+        selected={isSelected}
+        selectable
+        size={isMobile ? "small" : "medium"}
+        onClick={() => handleCategorySelect(category.id)}
+      />
     );
   });
 
@@ -101,11 +53,6 @@ export default function FilterView({
   }
 
   //#region Handlers
-  const handleCategorySearch = (event) => {
-    const searchValue = event.target.value;
-    setSearchValue(searchValue);
-  };
-
   const handleCategorySelect = (categoryID) => {
     if (filterCategories.find((category) => category.id === categoryID)) {
       setFilterCategories((prev) =>
@@ -123,13 +70,10 @@ export default function FilterView({
   return (
     <Box>
       <Typography variant="h6">Filter By Category:</Typography>
-      <Input
-        placeholder={"Search Category..."}
+      <CategorySearchInput
+        categoryName={searchValue}
+        setCategoryName={setSearchValue}
         fullWidth
-        onChange={handleCategorySearch}
-        inputProps={{
-          maxLength: CATEGORY_NAME_CHAR_LIMIT,
-        }}
         sx={{ maxWidth: "20rem", mt: "0.5rem", alignSelf: "center" }}
       />
       <Box
@@ -139,7 +83,6 @@ export default function FilterView({
         flexWrap={"wrap"}
         minWidth={isMobile ? "100%" : "24rem"}
         maxHeight={"8rem"}
-        overflow={"scroll"}
         sx={{ overflowX: "hidden" }}
       >
         <AnimatePresence>{categoryChips}</AnimatePresence>

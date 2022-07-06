@@ -5,6 +5,77 @@ const transparency = {
   contrastText: "DE",
 };
 
+export const categoryColors = {
+  dark: {
+    categoryNone: {
+      main: "#2c3042" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryPurple: {
+      main: "#322E65" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryBlue: {
+      main: "#2E4165" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryTeal: {
+      main: "#2B6259" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryGreen: {
+      main: "#2D6434" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryYellow: {
+      main: "#65652D" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryOrange: {
+      main: "#654B2E" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+    categoryRed: {
+      main: "#652D2F" + transparency.default,
+      contrastText: "#FFFFFF" + transparency.contrastText,
+    },
+  },
+  light: {
+    categoryNone: {
+      main: "#CFD1D7" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryPurple: {
+      main: "#A09CD6" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryBlue: {
+      main: "#9CB6D6" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryTeal: {
+      main: "#9CD6CC" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryGreen: {
+      main: "#9CD6A2" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryYellow: {
+      main: "#D5D69C" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryOrange: {
+      main: "#D6BB9C" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+    categoryRed: {
+      main: "#D69C9C" + transparency.default,
+      contrastText: "#000000" + transparency.contrastText,
+    },
+  },
+};
+
 // Shared theme configuration for all themes
 const commonThemeConfig = {
   // Per Component Theme Style Overrides
@@ -99,19 +170,16 @@ export const darkTheme = createTheme(
       neutral: {
         main: "#F5F3FE",
       },
+      chipNeutral: {
+        main: "#9997a1",
+        contrastText: "#1F1F1F",
+      },
+
       background: {
         appBar: "#171824" + transparency.default,
       },
-      category: {
-        none: "#2c3042" + transparency.default,
-        purple: "#322E65" + transparency.default,
-        blue: "#2E4165" + transparency.default,
-        teal: "#2B6259" + transparency.default,
-        green: "#2D6434" + transparency.default,
-        yellow: "#65652D" + transparency.default,
-        orange: "#654B2E" + transparency.default,
-        red: "#652D2F" + transparency.default,
-      },
+
+      ...categoryColors.dark,
     },
 
     // Per Component Theme Style Overrides
@@ -174,19 +242,15 @@ export const lightTheme = createTheme(
       neutral: {
         main: "#120E1A",
       },
+      chipNeutral: {
+        main: "#6f6a75",
+        contrastText: "#FFFFFF",
+      },
       background: {
         appBar: "#D6D6DA" + transparency.default,
       },
-      category: {
-        none: "#CFD1D7" + transparency.default,
-        purple: "#A09CD6" + transparency.default,
-        blue: "#9CB6D6" + transparency.default,
-        teal: "#9CD6CC" + transparency.default,
-        green: "#9CD6A2" + transparency.default,
-        yellow: "#D5D69C" + transparency.default,
-        orange: "#D6BB9C" + transparency.default,
-        red: "#D69C9C" + transparency.default,
-      },
+
+      ...categoryColors.light,
     },
 
     // Per Component Theme Style Overrides

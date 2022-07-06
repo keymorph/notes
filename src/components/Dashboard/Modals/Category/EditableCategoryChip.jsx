@@ -18,10 +18,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
+import { getPaletteCategoryColorName } from "../../../../helpers/notes/category";
 import {
   adornmentButtonTransition,
   variantFadeSlideDownSlow,
 } from "../../../../styles/animations/definitions";
+import { categoryColors as categoryColorsDef } from "../../../../styles/themes/theme";
 import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 
@@ -49,8 +51,6 @@ export default function EditableCategoryChip({
     setNewCategoryName(categoryName);
   }, [categoryName]);
   //#endregion
-
-  const categoryColors = Object.keys(theme.palette.category);
 
   //#region Handlers
   const handleOpenPopper = () => {
@@ -84,20 +84,27 @@ export default function EditableCategoryChip({
   };
   //#endregion
 
+  const color = getPaletteCategoryColorName(categoryColor);
+
+  const categoryColors = Object.keys(
+    theme.palette.mode === "dark"
+      ? categoryColorsDef.dark
+      : categoryColorsDef.light
+  );
+
   return (
     <>
       <Chip
         icon={
           <IconButton
+            color={color}
             size={"small"}
             disabled={!enableEdit}
             onClick={handleOpenPopper}
           >
             <Circle
               sx={{
-                color: categoryColor
-                  ? `category.${categoryColor}`
-                  : "category.none",
+                color: `${getPaletteCategoryColorName(categoryColor)}.main`,
                 transition: "color 0.2s ease-in-out",
               }}
             />
@@ -180,9 +187,7 @@ export default function EditableCategoryChip({
                     exit={"hidden"}
                   >
                     <IconButton
-                      sx={{
-                        color: `category.${color}`,
-                      }}
+                      color={color}
                       size={"small"}
                       onClick={() => {
                         setCategoryColor(color);
