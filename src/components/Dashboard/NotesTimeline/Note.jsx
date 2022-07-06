@@ -180,6 +180,7 @@ export default function Note({
               ) : null}
 
               <IconButton
+                color={"neutral"}
                 size={"small"}
                 sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
                 onClick={handleMoreMenuClick}

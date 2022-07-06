@@ -11,7 +11,6 @@ import {
   IconButton,
   Input,
   Stack,
-  Tooltip,
   useTheme,
   Zoom,
 } from "@mui/material";
@@ -26,7 +25,7 @@ import {
 import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 
-export default function CategoryChip({
+export default function EditableCategoryChip({
   categoryName,
   categoryColor,
   setCategoryName = null,
@@ -89,22 +88,20 @@ export default function CategoryChip({
     <>
       <Chip
         icon={
-          <Tooltip title="Change Color" placement="top">
-            <IconButton
-              size={"small"}
-              disabled={!enableEdit}
-              onClick={handleOpenPopper}
-            >
-              <Circle
-                sx={{
-                  color: categoryColor
-                    ? `category.${categoryColor}`
-                    : "category.none",
-                  transition: "color 0.2s ease-in-out",
-                }}
-              />
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            size={"small"}
+            disabled={!enableEdit}
+            onClick={handleOpenPopper}
+          >
+            <Circle
+              sx={{
+                color: categoryColor
+                  ? `category.${categoryColor}`
+                  : "category.none",
+                transition: "color 0.2s ease-in-out",
+              }}
+            />
+          </IconButton>
         }
         label={
           <Box display={"flex"} flexDirection={"row"} width={"100%"}>
@@ -127,69 +124,39 @@ export default function CategoryChip({
             {/* Only enable edit/save buttons when enableEdit is true */}
             {enableEdit && (
               <IconButton
+                color={"neutral"}
                 size={"small"}
                 onClick={handleSetEditMode}
                 disabled={editMode && disableSave}
                 sx={adornmentButtonTransition}
               >
-                <div style={{ width: "1em", height: "1em" }}>
-                  <Zoom in={!editMode} unmountOnExit>
-                    <EditOutlined
-                      sx={{
-                        position: "absolute",
-                        top: "0.15em",
-                        left: "0.1em",
-                      }}
-                    />
-                  </Zoom>
-                  <Zoom in={editMode} unmountOnExit>
-                    <CheckCircleOutline
-                      sx={{
-                        position: "absolute",
-                        top: "0.15em",
-                        left: "0.1em",
-                      }}
-                    />
-                  </Zoom>
-                </div>
+                <Zoom in={!editMode} appear={false} unmountOnExit exit={false}>
+                  <EditOutlined />
+                </Zoom>
+                <Zoom in={editMode} appear={false} unmountOnExit exit={false}>
+                  <CheckCircleOutline />
+                </Zoom>
               </IconButton>
             )}
           </Box>
         }
         deleteIcon={
-          <Tooltip
-            title={enableEdit ? "Delete Category" : "Remove Category from Note"}
-            placement="top"
-            arrow
-          >
-            <IconButton size={"small"}>
-              {/* If the category has both enableEdit, then it is in an editable context and
+          <IconButton size={"small"} color={"neutral"}>
+            {/* If the category has both enableEdit, then it is in an editable context and
               as such it should display the icon indicating that the category can be deleted. */}
-              <Zoom in={enableEdit} unmountOnExit>
-                <div>
-                  <DeleteOutline
-                    color={"action"}
-                    sx={{
-                      display: "flex",
-                      "&:hover": {
-                        color: "error.main",
-                      },
-                      transition: "all 0.2s ease-in-out",
-                    }}
-                  />
-                </div>
-              </Zoom>
-              <Zoom in={!enableEdit} unmountOnExit>
-                <HighlightOff />
-              </Zoom>
-            </IconButton>
-          </Tooltip>
+            <Zoom in={enableEdit} appear={false} unmountOnExit>
+              <DeleteOutline />
+            </Zoom>
+            <Zoom in={!enableEdit} appear={false} unmountOnExit>
+              <HighlightOff />
+            </Zoom>
+          </IconButton>
         }
         sx={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "start",
-          height: "3em",
+          height: "2.5rem",
           width: "100%",
           ...chipStyles,
         }}
@@ -234,7 +201,7 @@ export default function CategoryChip({
   );
 }
 
-CategoryChip.propTypes = {
+EditableCategoryChip.propTypes = {
   label: PropTypes.string,
   categoryName: PropTypes.string,
   categoryColor: PropTypes.string,

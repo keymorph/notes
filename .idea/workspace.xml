@@ -6,8 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/FilterView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterView/FilterView.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChip.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/EditableCategoryChip.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/SearchCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/Category/CategoryChooser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/ManageCategoriesModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Modals/NoteActionModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/Overlays/NoteDragOverlay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Sortable/Overlays/NoteDragOverlay.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar/ProfileDropdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/ProfileDropdown.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/animations/definitions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/animations/definitions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/themes/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/themes/theme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +277,9 @@
       <workItem from="1656641102679" duration="8520000" />
       <workItem from="1656706864100" duration="29133000" />
       <workItem from="1656880667485" duration="17390000" />
-      <workItem from="1656949014532" duration="26695000" />
+      <workItem from="1656949014532" duration="27829000" />
+      <workItem from="1657056031456" duration="12000" />
+      <workItem from="1657056053898" duration="12652000" />
     </task>
     <servers />
   </component>

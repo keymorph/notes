@@ -30,8 +30,8 @@ import {
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
-import CategoryChip from "./Category/CategoryChip";
-import SearchCategory from "./Category/SearchCategory";
+import CategoryChooser from "./Category/CategoryChooser";
+import EditableCategoryChip from "./Category/EditableCategoryChip";
 
 export const NOTE_ACTIONS = {
   VIEW: "VIEW",
@@ -254,6 +254,7 @@ export default function NoteActionModal({
             <Box display={"flex"} flexDirection={"row"} ml={"auto"}>
               <Zoom in={currentAction === NOTE_ACTIONS.VIEW}>
                 <IconButton
+                  color={"neutral"}
                   size={"small"}
                   onClick={() => handleActionChange(NOTE_ACTIONS.EDIT)}
                   sx={{ mr: "-2.2rem" }}
@@ -264,6 +265,7 @@ export default function NoteActionModal({
               <Zoom in={currentAction !== NOTE_ACTIONS.VIEW}>
                 <div>
                   <IconButton
+                    color={"neutral"}
                     size={"small"}
                     disabled={!valuesChanged}
                     onClick={() => handleResetModalValues(true)}
@@ -275,6 +277,7 @@ export default function NoteActionModal({
               </Zoom>
 
               <IconButton
+                color={"neutral"}
                 size={"small"}
                 onClick={(event) => handleBeforeModalClose(event, "closeModal")}
                 edge="end"
@@ -317,7 +320,7 @@ export default function NoteActionModal({
               initial={"hidden"}
               animate={"visible"}
             >
-              <CategoryChip
+              <EditableCategoryChip
                 categoryName={newCategoryName}
                 categoryColor={newCategoryColor}
                 setCategoryName={setNewCategoryName}
@@ -338,7 +341,7 @@ export default function NoteActionModal({
               initial={"hidden"}
               animate={"visible"}
             >
-              <SearchCategory
+              <CategoryChooser
                 categoriesCollection={categoriesCollection}
                 categoryName={newCategoryName}
                 setCategoryName={setNewCategoryName}

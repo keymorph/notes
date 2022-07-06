@@ -149,7 +149,7 @@ export default function AppToolbar({
             <IconButton
               size={"small"}
               onClick={handleOrderFilterViewChange}
-              color={orderFilterViewOpen ? "primary" : "inherit"}
+              color={orderFilterViewOpen ? "primary" : "neutral"}
             >
               {orderFilterViewOpen ? <FilterAlt /> : <FilterAltOutlined />}
             </IconButton>
@@ -163,9 +163,14 @@ export default function AppToolbar({
         )}
 
         {/* If on desktop or when not searching, the add note button (with text) will be visible */}
-        <Fade in={!isMobile || !searching} unmountOnExit exit={false}>
+        <Fade
+          in={!isMobile || !searching}
+          unmountOnExit
+          appear={false}
+          exit={false}
+        >
           <Button
-            color={createNoteModalOpen ? "primary" : "inherit"}
+            color={createNoteModalOpen ? "primary" : "neutral"}
             variant={"outlined"}
             size={"small"}
             sx={{
@@ -179,15 +184,24 @@ export default function AppToolbar({
           </Button>
         </Fade>
         {/* If on mobile, the add note button will collapse when searching */}
-        <Fade in={isMobile && searching} unmountOnExit exit={false}>
-          <IconButton onClick={handleCreateNoteModalOpen} size={"small"}>
+        <Fade
+          in={isMobile && searching}
+          unmountOnExit
+          appear={false}
+          exit={false}
+        >
+          <IconButton
+            color={"neutral"}
+            onClick={handleCreateNoteModalOpen}
+            size={"small"}
+          >
             <Add />
           </IconButton>
         </Fade>
         <IconButton
           size={"small"}
           onClick={handleMoreMenuClick}
-          color={moreMenuAnchorEl ? "primary" : "inherit"}
+          color={moreMenuAnchorEl ? "primary" : "neutral"}
         >
           <MoreVert />
         </IconButton>

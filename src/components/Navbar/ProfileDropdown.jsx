@@ -52,7 +52,7 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   return (
     <>
       <Button
-        color={dropdownOpen ? "primary" : "inherit"}
+        color={dropdownOpen ? "primary" : "neutral"}
         aria-label="Profile options"
         size="small"
         disabled={!isUserLoggedIn}

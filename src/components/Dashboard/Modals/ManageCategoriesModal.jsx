@@ -9,7 +9,6 @@ import {
   InputAdornment,
   Modal,
   Stack,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +24,7 @@ import {
 import { modalCard } from "../../../styles/components/modal";
 import { getOrCreateCategoryId } from "../../../utils/id-utils";
 import { doesCategoryExist } from "../../../utils/input-validation/validate-category";
-import CategoryChip from "./Category/CategoryChip";
+import EditableCategoryChip from "./Category/EditableCategoryChip";
 
 export default function ManageCategoriesModal({
   modalOpen,
@@ -194,6 +193,7 @@ export default function ManageCategoriesModal({
               Manage Categories
             </Typography>
             <IconButton
+              color={"neutral"}
               size={"small"}
               disabled={!categoriesChanged}
               onClick={resetModalValues}
@@ -202,6 +202,7 @@ export default function ManageCategoriesModal({
               <Restore />
             </IconButton>
             <IconButton
+              color={"neutral"}
               size={"small"}
               onClick={(event) => handleBeforeModalClose(event, "closeModal")}
               edge="end"
@@ -216,16 +217,15 @@ export default function ManageCategoriesModal({
             onKeyUp={(e) => e.key === "Enter" && handleCreateCategory()}
             endAdornment={
               <InputAdornment position="end">
-                <Tooltip title="Add Category" placement="top" arrow>
-                  <IconButton
-                    size={"small"}
-                    onClick={handleCreateCategory}
-                    sx={adornmentButtonTransition}
-                    disabled={!isCategoryNew}
-                  >
-                    <AddCircleOutline />
-                  </IconButton>
-                </Tooltip>
+                <IconButton
+                  color={"neutral"}
+                  size={"small"}
+                  onClick={handleCreateCategory}
+                  sx={adornmentButtonTransition}
+                  disabled={!isCategoryNew}
+                >
+                  <AddCircleOutline />
+                </IconButton>
               </InputAdornment>
             }
             inputProps={{
@@ -253,7 +253,7 @@ export default function ManageCategoriesModal({
                   animate={"visible"}
                   exit={"hidden"}
                 >
-                  <CategoryChip
+                  <EditableCategoryChip
                     categoryName={category.name}
                     categoryColor={category.color}
                     setCategoryName={(categoryName) =>

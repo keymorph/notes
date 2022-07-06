@@ -24,9 +24,9 @@ export default function ToolbarSearch({
     <>
       <Fade in={!searching} unmountOnExit exit={false}>
         <IconButton
+          color={"neutral"}
           onClick={handleSearchToggle}
           size={"small"}
-          color={"inherit"}
         >
           <SearchIcon />
         </IconButton>

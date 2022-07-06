@@ -1,7 +1,9 @@
-import {createTheme} from "@mui/material/styles"; // 70% Hex transparency value to append at the end of colors
+import { createTheme } from "@mui/material/styles"; // 70% Hex transparency value to append at the end of colors
 
-// 70% Hex transparency value to append at the end of colors
-const hexTransparency = "E0";
+const transparency = {
+  default: "D9",
+  contrastText: "DE",
+};
 
 // Shared theme configuration for all themes
 const commonThemeConfig = {
@@ -78,52 +80,60 @@ export const darkTheme = createTheme(
   {
     palette: {
       mode: "dark",
+      // All other color variants like light, dark and contrastText are automatically calculated based on the main color
       primary: {
-        main: "#AFA2ED",
-        contrastText: "#FFF",
+        main: "#C7BCF6",
+      },
+      error: {
+        main: "#ff5b52",
+      },
+      warning: {
+        main: "#F1C64D",
+      },
+      info: {
+        main: "#95EEF1",
+      },
+      success: {
+        main: "#8CEA94",
+      },
+      neutral: {
+        main: "#F5F3FE",
       },
       background: {
-        appBar: "#171824" + hexTransparency,
+        appBar: "#171824" + transparency.default,
       },
       category: {
-        none: "#2c3042" + hexTransparency,
-        purple: "#322E65" + hexTransparency,
-        blue: "#2E4165" + hexTransparency,
-        teal: "#2B6259" + hexTransparency,
-        green: "#2D6434" + hexTransparency,
-        yellow: "#65652D" + hexTransparency,
-        orange: "#654B2E" + hexTransparency,
-        red: "#652D2F" + hexTransparency,
+        none: "#2c3042" + transparency.default,
+        purple: "#322E65" + transparency.default,
+        blue: "#2E4165" + transparency.default,
+        teal: "#2B6259" + transparency.default,
+        green: "#2D6434" + transparency.default,
+        yellow: "#65652D" + transparency.default,
+        orange: "#654B2E" + transparency.default,
+        red: "#652D2F" + transparency.default,
       },
     },
 
     // Per Component Theme Style Overrides
     components: {
-      MuiButton: {
-        styleOverrides: {
-          contained: {
-            backgroundColor: "#7E5ACB",
-          },
-        },
-      },
       MuiAppBar: {
         styleOverrides: {
           root: {
-            background: "#1d2133" + hexTransparency,
+            background: "#1d2133" + transparency.default,
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            background: "#1d2133" + hexTransparency,
+            background: "#1d2133" + transparency.default,
           },
         },
       },
       MuiPopover: {
         styleOverrides: {
           paper: {
-            background: "#2a2f49" + hexTransparency,
+            background: "#2a2f49" + transparency.default,
             boxShadow: "0px 0.4em 0.8em rgba(0, 0, 0, 0.4)",
           },
         },
@@ -131,7 +141,7 @@ export const darkTheme = createTheme(
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: "#2a2f49" + hexTransparency,
+            backgroundColor: "#2a2f49" + transparency.default,
             color: "#FFFFFF",
             boxShadow: "0px 0.4em 0.8em rgba(0, 0, 0, 0.4)",
           },
@@ -146,60 +156,66 @@ export const lightTheme = createTheme(
   {
     palette: {
       mode: "light",
-
       primary: {
         main: "#413A7E",
-        contrastText: "#000",
+      },
+      error: {
+        main: "#942727",
+      },
+      warning: {
+        main: "#917111",
+      },
+      info: {
+        main: "#326264",
+      },
+      success: {
+        main: "#245C2D",
+      },
+      neutral: {
+        main: "#120E1A",
       },
       background: {
-        appBar: "#D6D6DA" + hexTransparency,
+        appBar: "#D6D6DA" + transparency.default,
       },
       category: {
-        none: "#CFD1D7",
-        purple: "#A09CD6",
-        blue: "#9CB6D6",
-        teal: "#9CD6CC",
-        green: "#9CD6A2",
-        yellow: "#D5D69C",
-        orange: "#D6BB9C",
-        red: "#D69C9C",
+        none: "#CFD1D7" + transparency.default,
+        purple: "#A09CD6" + transparency.default,
+        blue: "#9CB6D6" + transparency.default,
+        teal: "#9CD6CC" + transparency.default,
+        green: "#9CD6A2" + transparency.default,
+        yellow: "#D5D69C" + transparency.default,
+        orange: "#D6BB9C" + transparency.default,
+        red: "#D69C9C" + transparency.default,
       },
     },
 
     // Per Component Theme Style Overrides
     components: {
-      MuiButton: {
-        styleOverrides: {
-          contained: {
-            backgroundColor: "#7E5ACB",
-          },
-        },
-      },
       MuiAppBar: {
         styleOverrides: {
           root: {
-            background: "#F2F3F5" + hexTransparency,
+            background: "#F2F3F5" + transparency.default,
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            background: "#F2F3F5" + hexTransparency,
+            background: "#F2F3F5" + transparency.default,
           },
         },
       },
       MuiPopover: {
         styleOverrides: {
           paper: {
-            background: "#FFFFFF" + hexTransparency,
+            background: "#FFFFFF" + transparency.default,
           },
         },
       },
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: "#FFFFFF" + hexTransparency,
+            backgroundColor: "#FFFFFF" + transparency.default,
             color: "#000000",
             boxShadow: "0px 0.4em 0.8em rgba(0, 0, 0, 0.25)",
           },

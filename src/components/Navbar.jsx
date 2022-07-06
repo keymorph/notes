@@ -18,7 +18,7 @@ export default function Navbar({ darkMode, handleDarkModeToggle }) {
         <Box display={"flex"} gap={"0.5rem"} alignItems={"center"}>
           <KeyIcon color="primary" fontSize="large" />
           <Divider orientation={"vertical"} sx={{ height: "1.5rem" }} />
-          <Typography variant="h6" color="paper">
+          <Typography variant="h6" color={"text.primary"}>
             Notes
           </Typography>
         </Box>

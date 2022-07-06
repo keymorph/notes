@@ -12,22 +12,22 @@ export const springDefault = {
 };
 export const spring = {
   type: "spring",
-  bounce: 0.3,
-  duration: 0.7,
+  bounce: 0.2,
+  duration: 0.6,
 };
 export const springShort = {
   type: "spring",
-  bounce: 0.3,
+  bounce: 0.25,
   duration: 0.5,
 };
 export const springShorter = {
   type: "spring",
-  bounce: 0.3,
+  bounce: 0.25,
   duration: 0.4,
 };
 export const springShortest = {
   type: "spring",
-  bounce: 0.3,
+  bounce: 0.25,
   duration: 0.2,
 };
 //#endregion

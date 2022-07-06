@@ -1,11 +1,5 @@
 import { AddCircleOutline } from "@mui/icons-material";
-import {
-  IconButton,
-  Input,
-  InputAdornment,
-  Stack,
-  Tooltip,
-} from "@mui/material";
+import { IconButton, Input, InputAdornment, Stack } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
@@ -19,9 +13,9 @@ import {
   getValidCategoryName,
 } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
-import CategoryChip from "./CategoryChip";
+import EditableCategoryChip from "./EditableCategoryChip";
 
-export default function SearchCategory({
+export default function CategoryChooser({
   categoriesCollection,
   categoryName,
   setCategoryName,
@@ -75,16 +69,15 @@ export default function SearchCategory({
         onKeyUp={(e) => e.key === "Enter" && handleAddCategory()}
         endAdornment={
           <InputAdornment position="end">
-            <Tooltip title="Add Category" placement="top" arrow>
-              <IconButton
-                size={"small"}
-                onClick={handleAddCategory}
-                sx={adornmentButtonTransition}
-                disabled={!isCategoryValid}
-              >
-                <AddCircleOutline />
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              color={"neutral"}
+              size={"small"}
+              onClick={handleAddCategory}
+              sx={adornmentButtonTransition}
+              disabled={!isCategoryValid}
+            >
+              <AddCircleOutline />
+            </IconButton>
           </InputAdornment>
         }
         inputProps={{
@@ -114,7 +107,7 @@ export default function SearchCategory({
                     animate={"visible"}
                     exit={"hidden"}
                   >
-                    <CategoryChip
+                    <EditableCategoryChip
                       categoryName={category.name}
                       categoryColor={category.color}
                       onSelect={() =>
