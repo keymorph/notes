@@ -17,10 +17,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { MODAL_ACTIONS } from "../../helpers/models/modals";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
-import NoteActionModal, { NOTE_ACTIONS } from "./Modals/NoteActionModal";
+import NoteActionModal from "./Modals/NoteActionModal";
 import CustomTooltip from "./SharedComponents/CustomTooltip";
 
 export default function AppToolbar({
@@ -102,7 +103,7 @@ export default function AppToolbar({
   //#region Render Components
   const noteActionModal = (
     <NoteActionModal
-      action={NOTE_ACTIONS.CREATE}
+      action={MODAL_ACTIONS.CREATE_NOTE}
       title={""}
       description={""}
       categoryName={""}
@@ -208,7 +209,7 @@ export default function AppToolbar({
             appear={false}
           >
             <IconButton
-              color={"neutral"}
+              color={createNoteModalOpen ? "primary" : "neutral"}
               onClick={handleCreateNoteModalOpen}
               size={"small"}
             >

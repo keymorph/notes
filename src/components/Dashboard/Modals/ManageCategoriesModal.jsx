@@ -1,17 +1,9 @@
-import { Close, Restore } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Card,
-  Grow,
-  IconButton,
-  Modal,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Card, Grow, Modal, Stack, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
+import { MODAL_ACTIONS } from "../../../helpers/models/modals";
 import {
   doCategoryNamesCollide,
   doesCategoryExist,
@@ -24,8 +16,8 @@ import {
 } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
-import CustomTooltip from "../SharedComponents/CustomTooltip";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
+import Titlebar from "./Components/Titlebar";
 
 export default function ManageCategoriesModal({
   modalOpen,
@@ -172,40 +164,13 @@ export default function ManageCategoriesModal({
     <Modal open={modalOpen} onClose={handleModalClose} closeAfterTransition>
       <Grow in={modalOpen}>
         <Card sx={modalCard}>
-          <Box display={"flex"}>
-            <Typography
-              display={"flex"}
-              alignSelf={"center"}
-              variant="h5"
-              color={"primary"}
-            >
-              Manage Categories
-            </Typography>
-            <Box display={"flex"} ml={"auto"}>
-              <CustomTooltip title={"Revert changes"}>
-                <IconButton
-                  color={"neutral"}
-                  size={"small"}
-                  disabled={!categoriesChanged}
-                  onClick={resetModalValues}
-                  sx={{ transition: "all 0.2s ease-in-out" }}
-                >
-                  <Restore />
-                </IconButton>
-              </CustomTooltip>
-              <CustomTooltip title={"Close dialog"}>
-                <IconButton
-                  color={"neutral"}
-                  size={"small"}
-                  onClick={(event) =>
-                    handleBeforeModalClose(event, "closeModal")
-                  }
-                >
-                  <Close />
-                </IconButton>
-              </CustomTooltip>
-            </Box>
-          </Box>
+          <Titlebar
+            action={MODAL_ACTIONS.EDIT}
+            title={"Manage Categories"}
+            disableRevert={!categoriesChanged}
+            onClose={handleBeforeModalClose}
+            onRevert={resetModalValues}
+          />
           <CategorySearchInput
             categoryName={inputCategoryName}
             setCategoryName={setInputCategoryName}

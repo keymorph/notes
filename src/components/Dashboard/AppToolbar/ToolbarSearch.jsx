@@ -9,10 +9,12 @@ export default function ToolbarSearch({
 }) {
   //#region Handlers
   const handleSearchToggle = () => {
-    // Add a small timeout in case the user presses the add icon button (else it dismounts and it cannot be pressed)
-    setTimeout(() => {
-      setSearching((searching) => !searching);
-    }, 10);
+    if (searchValue.trim() === "") {
+      // Add a small timeout in case the user presses the add icon button (else it dismounts and it cannot be pressed)
+      setTimeout(() => {
+        setSearching((searching) => !searching);
+      }, 10);
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -32,7 +34,6 @@ export default function ToolbarSearch({
           }}
         />
       }
-      autoFocus={searching}
       placeholder="Search…"
       value={searchValue}
       onFocus={handleSearchToggle}

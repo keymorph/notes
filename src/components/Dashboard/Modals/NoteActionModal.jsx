@@ -1,17 +1,9 @@
-import {
-  CloseOutlined,
-  EditOutlined,
-  RestoreOutlined,
-} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Card,
   Grow,
-  IconButton,
   Modal,
   TextField,
-  Typography,
   useMediaQuery,
   useTheme,
   Zoom,
@@ -23,6 +15,7 @@ import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
   NOTE_TITLE_CHAR_LIMIT,
 } from "../../../constants/input-limits";
+import { MODAL_ACTIONS } from "../../../helpers/models/modals";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -36,12 +29,7 @@ import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
-
-export const NOTE_ACTIONS = {
-  VIEW: "VIEW",
-  CREATE: "CREATE",
-  EDIT: "EDIT",
-};
+import Titlebar from "./Components/Titlebar";
 
 const DESCRIPTION_ROWS = {
   TINY: 4,
@@ -196,9 +184,9 @@ export default function NoteActionModal({
         handleResetModalValues();
       }, 500); // Don't immediately reset the values till the closing animation is complete
     } else {
-      if (currentAction === NOTE_ACTIONS.EDIT) {
+      if (currentAction === MODAL_ACTIONS.EDIT) {
         handleEditNote();
-      } else if (currentAction === NOTE_ACTIONS.CREATE) {
+      } else if (currentAction === MODAL_ACTIONS.CREATE_NOTE) {
         handleModalClose();
       }
     }
@@ -207,9 +195,9 @@ export default function NoteActionModal({
 
   //#region Derived State Variables
   // Short variable names for the current action being performed
-  const isViewing = currentAction === NOTE_ACTIONS.VIEW;
-  const isEditing = currentAction === NOTE_ACTIONS.EDIT;
-  const isCreating = currentAction === NOTE_ACTIONS.CREATE;
+  const isViewing = currentAction === MODAL_ACTIONS.VIEW;
+  const isEditing = currentAction === MODAL_ACTIONS.EDIT;
+  const isCreating = currentAction === MODAL_ACTIONS.CREATE_NOTE;
   // Description textarea row count
   let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
   let minDescriptionRows = DESCRIPTION_ROWS.TINY;
@@ -260,55 +248,21 @@ export default function NoteActionModal({
     >
       <Grow in={modalOpen}>
         <Card sx={modalCard}>
-          <Box display={"flex"}>
-            <Typography
-              display={"flex"}
-              alignSelf={"center"}
-              variant="h5"
-              color={"primary"}
-            >
-              {currentAction === NOTE_ACTIONS.VIEW && "Viewing Note"}
-              {currentAction === NOTE_ACTIONS.EDIT && "Editing Note"}
-              {currentAction === NOTE_ACTIONS.CREATE && "Creating a Note"}
-            </Typography>
-            <Box display={"flex"} flexDirection={"row"} ml={"auto"}>
-              <Zoom in={currentAction === NOTE_ACTIONS.VIEW}>
-                <IconButton
-                  color={"neutral"}
-                  size={"small"}
-                  onClick={() => handleActionChange(NOTE_ACTIONS.EDIT)}
-                  sx={{ mr: "-2.2rem" }}
-                >
-                  <EditOutlined />
-                </IconButton>
-              </Zoom>
-              <Zoom in={currentAction !== NOTE_ACTIONS.VIEW}>
-                <div>
-                  <IconButton
-                    color={"neutral"}
-                    size={"small"}
-                    disabled={!valuesChanged}
-                    onClick={() => handleResetModalValues(true)}
-                    sx={{ transition: "all 0.2s ease-in-out" }}
-                  >
-                    <RestoreOutlined />
-                  </IconButton>
-                </div>
-              </Zoom>
-
-              <IconButton
-                color={"neutral"}
-                size={"small"}
-                onClick={(event) => handleBeforeModalClose(event, "closeModal")}
-                edge="end"
-              >
-                <CloseOutlined />
-              </IconButton>
-            </Box>
-          </Box>
+          <Titlebar
+            action={currentAction}
+            title={
+              (isViewing && "Viewing Note") ||
+              (isEditing && "Editing Note") ||
+              (isCreating && "Creating a Note")
+            }
+            disableRevert={!valuesChanged}
+            onClose={handleBeforeModalClose}
+            onActionChange={handleActionChange}
+            onRevert={handleResetModalValues}
+          />
 
           <TextField
-            disabled={currentAction === NOTE_ACTIONS.VIEW}
+            disabled={currentAction === MODAL_ACTIONS.VIEW}
             required
             id="outlined-required"
             label={"Title"}
@@ -321,7 +275,7 @@ export default function NoteActionModal({
           />
 
           <TextField
-            disabled={currentAction === NOTE_ACTIONS.VIEW}
+            disabled={currentAction === MODAL_ACTIONS.VIEW}
             id="outlined-multiline-static"
             label={"Description"}
             value={newDescription}
@@ -348,7 +302,7 @@ export default function NoteActionModal({
                 categoryCollection={modifiedCategoriesCollection}
                 enableEdit={isCategoryNew} // Enable edit if category is new
                 onDelete={
-                  currentAction !== NOTE_ACTIONS.VIEW
+                  currentAction !== MODAL_ACTIONS.VIEW
                     ? handleCategoryChipDelete
                     : null
                 }

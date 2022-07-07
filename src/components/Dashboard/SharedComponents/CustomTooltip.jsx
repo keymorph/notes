@@ -5,7 +5,7 @@ export default function CustomTooltip({
   followCursor = true,
   placement = "top",
   flexItem = false,
-  disabledButton = false, // Whether the tooltip is for a disabled button
+  disableableButton = false, // Whether the tooltip is for a disabled button
   children,
 }) {
   return (
@@ -15,7 +15,7 @@ export default function CustomTooltip({
       followCursor={followCursor}
       placement={placement}
     >
-      {disabledButton ? (
+      {disableableButton ? (
         <span
           style={
             flexItem

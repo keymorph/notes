@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
+import { MODAL_ACTIONS } from "../../../helpers/models/modals";
 import {
   getOrCreateCategoryID,
   getPaletteCategoryColorName,
@@ -23,7 +24,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
-import NoteActionModal, { NOTE_ACTIONS } from "../Modals/NoteActionModal";
+import NoteActionModal from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
   width: "20rem",
@@ -51,7 +52,7 @@ export default function Note({
   //#region Hooks
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalAction, setModalAction] = useState(NOTE_ACTIONS.VIEW);
+  const [modalAction, setModalAction] = useState(MODAL_ACTIONS.VIEW);
   const [hideNote, setHideNote] = useState(false);
 
   //#region Query Handling Hooks
@@ -88,8 +89,8 @@ export default function Note({
 
   //#region Handlers
   const handleEditModalOpen = () => {
-    if (modalAction !== NOTE_ACTIONS.EDIT) {
-      setModalAction(NOTE_ACTIONS.EDIT);
+    if (modalAction !== MODAL_ACTIONS.EDIT) {
+      setModalAction(MODAL_ACTIONS.EDIT);
     }
     setMoreMenuAnchorEl(null); // Close the more menu
     setModalOpen(true);
@@ -97,8 +98,8 @@ export default function Note({
   };
 
   const handleViewModalOpen = () => {
-    if (modalAction !== NOTE_ACTIONS.VIEW) {
-      setModalAction(NOTE_ACTIONS.VIEW);
+    if (modalAction !== MODAL_ACTIONS.VIEW) {
+      setModalAction(MODAL_ACTIONS.VIEW);
     }
     setMoreMenuAnchorEl(null); // Close the more menu
     setModalOpen(true);

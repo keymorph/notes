@@ -90,7 +90,7 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
         open={dropdownOpen}
         onClose={() => setAnchorEl(null)}
       >
-        <CustomTooltip title={"Coming soon™"} disabledButton>
+        <CustomTooltip title={"Coming soon™"} disableableButton>
           <MenuItem disabled dense sx={{ gap: "0.5em" }}>
             <ManageAccountsOutlined />
             Profile Settings
