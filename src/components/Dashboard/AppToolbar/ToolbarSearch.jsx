@@ -1,6 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Fade, OutlinedInput } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import { OutlinedInput } from "@mui/material";
 
 export default function ToolbarSearch({
   setSearchValue,
@@ -10,9 +9,10 @@ export default function ToolbarSearch({
 }) {
   //#region Handlers
   const handleSearchToggle = () => {
-    if (!searchValue) {
+    // Add a small timeout in case the user presses the add icon button (else it dismounts and it cannot be pressed)
+    setTimeout(() => {
       setSearching((searching) => !searching);
-    }
+    }, 10);
   };
 
   const handleSearchChange = (event) => {
@@ -21,32 +21,31 @@ export default function ToolbarSearch({
   //#endregion
 
   return (
-    <>
-      <Fade in={!searching} unmountOnExit exit={false}>
-        <IconButton
-          color={"neutral"}
-          onClick={handleSearchToggle}
-          size={"small"}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Fade>
-      <Fade in={searching} unmountOnExit exit={false}>
-        <OutlinedInput
-          autoFocus={searching}
-          placeholder="Search…"
-          value={searchValue}
-          onBlur={handleSearchToggle}
-          fullWidth
+    <OutlinedInput
+      startAdornment={
+        <SearchIcon
+          fontSize={searching ? "medium" : "small"}
           sx={{
-            borderRadius: 20,
-            mx: "0.5rem",
-            height: "2rem",
-            maxWidth: "28rem",
+            transition: "all 0.2s ease-in-out",
+            mr: "0.25rem",
+            ml: "-0.25rem",
           }}
-          onChange={handleSearchChange}
         />
-      </Fade>
-    </>
+      }
+      autoFocus={searching}
+      placeholder="Search…"
+      value={searchValue}
+      onFocus={handleSearchToggle}
+      onBlur={handleSearchToggle}
+      fullWidth
+      sx={{
+        borderRadius: 20,
+        mx: "0.5rem",
+        height: "2rem",
+        maxWidth: searching ? "24rem" : "8rem",
+        transition: "all 0.2s ease-in-out",
+      }}
+      onChange={handleSearchChange}
+    />
   );
 }

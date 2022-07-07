@@ -6,6 +6,7 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
+  Box,
   Button,
   Fade,
   IconButton,
@@ -15,7 +16,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
@@ -42,6 +43,17 @@ export default function AppToolbar({
     useState(false);
 
   const [searching, setSearching] = useState(false);
+  const [shouldDisplayBigAddButton, setShouldDisplayBigAddButton] =
+    useState(true);
+
+  useEffect(() => {
+    // Delay the display of the big add note button to avoid it cutting in front of the searchbar animation
+    if (isMobile) {
+      setTimeout(() => {
+        setShouldDisplayBigAddButton((prev) => !prev);
+      }, 200);
+    }
+  }, [searching]);
 
   //#endregion
 
@@ -162,49 +174,50 @@ export default function AppToolbar({
           </>
         )}
 
-        {/* If on desktop or when not searching, the add note button (with text) will be visible */}
-        <Fade
-          in={!isMobile || !searching}
-          unmountOnExit
-          appear={false}
-          exit={false}
-        >
-          <Button
-            color={createNoteModalOpen ? "primary" : "neutral"}
-            variant={"outlined"}
-            size={"small"}
-            sx={{
-              ml: "auto",
-              minWidth: "7rem",
-            }}
-            startIcon={<Add />}
-            onClick={handleCreateNoteModalOpen}
+        <Box display={"flex"} ml={"auto"}>
+          {/* If on desktop or when not searching, the add note button (with text) will be visible */}
+          <Fade
+            in={(!isMobile || !searching) && shouldDisplayBigAddButton}
+            unmountOnExit
+            appear={false}
+            exit={false}
           >
-            Add Note
-          </Button>
-        </Fade>
-        {/* If on mobile, the add note button will collapse when searching */}
-        <Fade
-          in={isMobile && searching}
-          unmountOnExit
-          appear={false}
-          exit={false}
-        >
+            <Button
+              color={createNoteModalOpen ? "primary" : "neutral"}
+              variant={"outlined"}
+              size={"small"}
+              sx={{
+                minWidth: "7rem",
+              }}
+              startIcon={<Add />}
+              onClick={handleCreateNoteModalOpen}
+            >
+              Add Note
+            </Button>
+          </Fade>
+          {/* If on mobile, the add note button will collapse when searching */}
+          <Fade
+            in={isMobile && searching}
+            timeout={{ enter: 200, exit: 200 }}
+            unmountOnExit
+            appear={false}
+          >
+            <IconButton
+              color={"neutral"}
+              onClick={handleCreateNoteModalOpen}
+              size={"small"}
+            >
+              <Add />
+            </IconButton>
+          </Fade>
           <IconButton
-            color={"neutral"}
-            onClick={handleCreateNoteModalOpen}
             size={"small"}
+            onClick={handleMoreMenuClick}
+            color={moreMenuAnchorEl ? "primary" : "neutral"}
           >
-            <Add />
+            <MoreVert />
           </IconButton>
-        </Fade>
-        <IconButton
-          size={"small"}
-          onClick={handleMoreMenuClick}
-          color={moreMenuAnchorEl ? "primary" : "neutral"}
-        >
-          <MoreVert />
-        </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
