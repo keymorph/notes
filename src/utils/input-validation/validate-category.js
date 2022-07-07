@@ -2,12 +2,12 @@
  * Returns true if category exists. Performs a Case-insensitive check
  *
  * @param {string} categoryName
- * @param {Object} categoryCollection
+ * @param {Object} categoriesCollection
  * @returns {boolean}
  */
-export function doesCategoryExist(categoryName, categoryCollection) {
-  if (categoryCollection.length > 0) {
-    return categoryCollection.find(
+export function doesCategoryExist(categoryName, categoriesCollection) {
+  if (categoriesCollection.length > 0) {
+    return categoriesCollection.find(
       (category) =>
         category.name.toLowerCase() === categoryName.trim().toLowerCase()
     );
@@ -16,7 +16,20 @@ export function doesCategoryExist(categoryName, categoryCollection) {
 }
 
 /**
- * Returns a clean and formatted category name.
+ * Returns true if a category name is the same as another category in the collection
+ *
+ * @param {Object} categoriesCollection
+ * @returns {boolean}
+ */
+export function doCategoryNamesCollide(categoriesCollection) {
+  let categoryNames = categoriesCollection.map((category) => category.name);
+  return categoryNames.some((categoryName, index) => {
+    return categoryNames.indexOf(categoryName) !== index;
+  });
+}
+
+/**
+ * Returns a clean and formatted category name
  *
  * @param {string} categoryName
  */

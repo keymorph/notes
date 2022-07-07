@@ -1,12 +1,10 @@
-import { AddCircleOutline, Close, Restore } from "@mui/icons-material";
+import { Close, Restore } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Card,
   Grow,
   IconButton,
-  Input,
-  InputAdornment,
   Modal,
   Stack,
   Typography,
@@ -14,16 +12,19 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
 import { updateCategories } from "../../../helpers/requests/category-requests";
 import {
-  adornmentButtonTransition,
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
-import { getOrCreateCategoryId } from "../../../utils/id-utils";
-import { doesCategoryExist } from "../../../utils/input-validation/validate-category";
+import { getOrCreateCategoryID } from "../../../utils/id-utils";
+import {
+  doCategoryNamesCollide,
+  doesCategoryExist,
+} from "../../../utils/input-validation/validate-category";
+import CategorySearchInput from "../SharedComponents/CategorySearchInput";
+import CustomTooltip from "../SharedComponents/CustomTooltip";
 import EditableCategoryChip from "./Category/EditableCategoryChip";
 
 export default function ManageCategoriesModal({
@@ -74,7 +75,7 @@ export default function ManageCategoriesModal({
   // From the filtered categories, filter out the ones that don't match the inputCategoryName if it's not empty
   const filteredCategories = modifiedCategories.filter(
     (category) =>
-      !!category.name.trim() &&
+      category.id !== 0 &&
       (inputCategoryName === "" ||
         category.name
           .toLowerCase()
@@ -103,25 +104,19 @@ export default function ManageCategoriesModal({
     mutateUpdate({ categories: modifiedCategories });
   };
 
-  const handleCategorySearch = (e) => {
-    setInputCategoryName(e.target.value);
-  };
-
   // Change the previous name of the category to the new one
   const handleRenameCategory = (
     categoryId,
     prevCategoryName,
     newCategoryName
   ) => {
-    if (prevCategoryName !== newCategoryName) {
-      setModifiedCategories((prevCategories) =>
-        prevCategories.map((category) =>
-          category.id === categoryId
-            ? { ...category, name: newCategoryName }
-            : category
-        )
-      );
-    }
+    setModifiedCategories((prevCategories) =>
+      prevCategories.map((category) =>
+        category.id === categoryId
+          ? { ...category, name: newCategoryName }
+          : category
+      )
+    );
   };
 
   const handleRecolorCategory = (
@@ -141,16 +136,10 @@ export default function ManageCategoriesModal({
   };
 
   const handleCreateCategory = () => {
-    console.log("input", inputCategoryName);
     if (isCategoryNew) {
-      console.log(
-        "id: ",
-        getOrCreateCategoryId(modifiedCategories, inputCategoryName)
-      );
-      console.log("name: ", inputCategoryName);
       setModifiedCategories((prevCategories) => [
         {
-          id: getOrCreateCategoryId(prevCategories, inputCategoryName),
+          id: getOrCreateCategoryID(prevCategories, inputCategoryName),
           name: inputCategoryName,
           color: "none",
           note_count: 0,
@@ -192,52 +181,43 @@ export default function ManageCategoriesModal({
             >
               Manage Categories
             </Typography>
-            <IconButton
-              color={"neutral"}
-              size={"small"}
-              disabled={!categoriesChanged}
-              onClick={resetModalValues}
-              sx={{ ml: "auto", transition: "all 0.2s ease-in-out" }}
-            >
-              <Restore />
-            </IconButton>
-            <IconButton
-              color={"neutral"}
-              size={"small"}
-              onClick={(event) => handleBeforeModalClose(event, "closeModal")}
-              edge="end"
-            >
-              <Close />
-            </IconButton>
-          </Box>
-          <Input
-            placeholder="Search or add a category"
-            value={inputCategoryName}
-            onChange={handleCategorySearch}
-            onKeyUp={(e) => e.key === "Enter" && handleCreateCategory()}
-            endAdornment={
-              <InputAdornment position="end">
+            <Box display={"flex"} ml={"auto"}>
+              <CustomTooltip title={"Revert changes"}>
                 <IconButton
                   color={"neutral"}
                   size={"small"}
-                  onClick={handleCreateCategory}
-                  sx={adornmentButtonTransition}
-                  disabled={!isCategoryNew}
+                  disabled={!categoriesChanged}
+                  onClick={resetModalValues}
+                  sx={{ transition: "all 0.2s ease-in-out" }}
                 >
-                  <AddCircleOutline />
+                  <Restore />
                 </IconButton>
-              </InputAdornment>
-            }
-            inputProps={{
-              maxLength: CATEGORY_NAME_CHAR_LIMIT,
-            }}
-            sx={{ my: "1em" }}
+              </CustomTooltip>
+              <CustomTooltip title={"Close dialog"}>
+                <IconButton
+                  color={"neutral"}
+                  size={"small"}
+                  onClick={(event) =>
+                    handleBeforeModalClose(event, "closeModal")
+                  }
+                >
+                  <Close />
+                </IconButton>
+              </CustomTooltip>
+            </Box>
+          </Box>
+          <CategorySearchInput
+            categoryName={inputCategoryName}
+            setCategoryName={setInputCategoryName}
+            categoryExists={!isCategoryNew}
+            onCreate={handleCreateCategory}
+            sx={{ my: "1rem" }}
           />
           <Stack
             direction={"column"}
             spacing={2}
             py={"1em"}
-            pr={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
+            px={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
             overflow={"scroll"}
             height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
           >
@@ -293,7 +273,9 @@ export default function ManageCategoriesModal({
             loading={updateStatus === "loading"}
             variant="contained"
             size="small"
-            disabled={!categoriesChanged}
+            disabled={
+              !categoriesChanged || doCategoryNamesCollide(modifiedCategories)
+            }
             onClick={handleSaveCategories}
             sx={{
               border: "1px",

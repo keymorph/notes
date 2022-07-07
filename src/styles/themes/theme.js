@@ -86,6 +86,7 @@ const commonThemeConfig = {
           color: theme.palette.primary.contrastText,
           border: 0,
           borderRadius: 20,
+          transition: "all 0.2s ease-in-out",
         }),
       },
     },
@@ -93,6 +94,7 @@ const commonThemeConfig = {
       styleOverrides: {
         root: {
           borderRadius: 20,
+          transition: "all 0.2s ease-in-out",
         },
       },
     },
@@ -169,17 +171,18 @@ export const darkTheme = createTheme(
       },
       neutral: {
         main: "#F5F3FE",
+        contrastText: "#000000",
       },
+
+      ...categoryColors.dark,
+
       chipNeutral: {
         main: "#9997a1",
         contrastText: "#1F1F1F",
       },
-
       background: {
         appBar: "#171824" + transparency.default,
       },
-
-      ...categoryColors.dark,
     },
 
     // Per Component Theme Style Overrides
@@ -241,7 +244,11 @@ export const lightTheme = createTheme(
       },
       neutral: {
         main: "#120E1A",
+        contrastText: "#FFFFFF",
       },
+
+      ...categoryColors.light,
+
       chipNeutral: {
         main: "#6f6a75",
         contrastText: "#FFFFFF",
@@ -249,8 +256,6 @@ export const lightTheme = createTheme(
       background: {
         appBar: "#D6D6DA" + transparency.default,
       },
-
-      ...categoryColors.light,
     },
 
     // Per Component Theme Style Overrides

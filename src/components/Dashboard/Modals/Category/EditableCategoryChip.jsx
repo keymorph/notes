@@ -1,31 +1,25 @@
+import { Circle, DeleteOutline, HighlightOff } from "@mui/icons-material";
 import {
-  CheckCircleOutline,
-  Circle,
-  DeleteOutline,
-  EditOutlined,
-  HighlightOff,
-} from "@mui/icons-material";
-import {
-  Box,
   Chip,
   IconButton,
   Input,
   Stack,
+  Typography,
   useTheme,
-  Zoom,
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
-import { getPaletteCategoryColorName } from "../../../../helpers/notes/category";
 import {
-  adornmentButtonTransition,
-  variantFadeSlideDownSlow,
-} from "../../../../styles/animations/definitions";
+  getCategoryColorFromPalette,
+  getPaletteCategoryColorName,
+  isCategoryNameUnique,
+} from "../../../../helpers/notes/category";
+import { variantFadeSlideDownSlow } from "../../../../styles/animations/definitions";
 import { categoryColors as categoryColorsDef } from "../../../../styles/themes/theme";
-import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
+import { getValidCategoryName } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
+import CustomTooltip from "../../SharedComponents/CustomTooltip";
 
 export default function EditableCategoryChip({
   categoryName,
@@ -40,131 +34,101 @@ export default function EditableCategoryChip({
 }) {
   //#region Hooks
   const theme = useTheme();
-  const [newCategoryName, setNewCategoryName] = useState(categoryName);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
-  // Determines if the category name is being edited (only used when enableEdit is true)
-  const [editMode, setEditMode] = useState(false);
-  // Disables the save functionality when editing the category
-  const [disableSave, setDisableSave] = useState(false);
-
-  useEffect(() => {
-    setNewCategoryName(categoryName);
-  }, [categoryName]);
   //#endregion
 
   //#region Handlers
-  const handleOpenPopper = () => {
+  const handlePaletteOpen = () => {
     setIsPaletteOpen((isPaletteOpen) => !isPaletteOpen);
   };
 
   const handleCategoryNameChange = (e) => {
-    const newCategoryName = e.target.value;
-    setNewCategoryName(newCategoryName);
-
-    const categoryExists = doesCategoryExist(
-      newCategoryName,
-      categoryCollection
-    );
-
-    if (newCategoryName.trim() === "" || categoryExists) {
-      setDisableSave(true);
-    } else {
-      setDisableSave(false);
-    }
-  };
-
-  const handleSetEditMode = () => {
-    setIsPaletteOpen(false);
-    setEditMode((editMode) => {
-      if (editMode) {
-        setCategoryName(newCategoryName.trim());
-      }
-      return !editMode;
-    });
+    const newCategoryName = getValidCategoryName(e.target.value);
+    setCategoryName(newCategoryName);
   };
   //#endregion
 
-  const color = getPaletteCategoryColorName(categoryColor);
+  const invalidCategoryName =
+    categoryName === "" ||
+    !isCategoryNameUnique(categoryName, categoryCollection);
 
   const categoryColors = Object.keys(
     theme.palette.mode === "dark"
       ? categoryColorsDef.dark
       : categoryColorsDef.light
   );
+  const color = getPaletteCategoryColorName(categoryColor);
 
   return (
     <>
       <Chip
+        color={invalidCategoryName ? "error" : "chipNeutral"}
         icon={
-          <IconButton
-            color={color}
-            size={"small"}
-            disabled={!enableEdit}
-            onClick={handleOpenPopper}
+          <CustomTooltip
+            title={
+              isPaletteOpen
+                ? "Close category color palette"
+                : "Open category color palette"
+            }
           >
-            <Circle
-              sx={{
-                color: `${getPaletteCategoryColorName(categoryColor)}.main`,
-                transition: "color 0.2s ease-in-out",
-              }}
-            />
-          </IconButton>
+            <IconButton
+              size={"small"}
+              disabled={!enableEdit}
+              onClick={handlePaletteOpen}
+            >
+              <Circle
+                color={color}
+                sx={{
+                  fontSize: "1.75rem",
+                  transition: "color 0.2s ease-in-out",
+                }}
+              />
+            </IconButton>
+          </CustomTooltip>
         }
         label={
-          <Box display={"flex"} flexDirection={"row"} width={"100%"}>
+          enableEdit ? (
             <Input
-              value={newCategoryName}
-              disabled={!editMode}
+              placeholder={"Enter the category name..."}
+              value={categoryName}
               disableUnderline
               fullWidth
               inputProps={{
                 maxLength: CATEGORY_NAME_CHAR_LIMIT,
               }}
               sx={{
-                width: "100% !important",
                 overflow: "hidden",
                 mr: "auto !important",
                 "&.Mui-disabled": { pointerEvents: "none" },
               }}
               onChange={handleCategoryNameChange}
             />
-            {/* Only enable edit/save buttons when enableEdit is true */}
-            {enableEdit && (
-              <IconButton
-                color={"neutral"}
-                size={"small"}
-                onClick={handleSetEditMode}
-                disabled={editMode && disableSave}
-                sx={adornmentButtonTransition}
-              >
-                <Zoom in={!editMode} appear={false} unmountOnExit exit={false}>
-                  <EditOutlined />
-                </Zoom>
-                <Zoom in={editMode} appear={false} unmountOnExit exit={false}>
-                  <CheckCircleOutline />
-                </Zoom>
-              </IconButton>
-            )}
-          </Box>
+          ) : (
+            <Typography variant={"body1"}>{categoryName}</Typography>
+          )
         }
         deleteIcon={
-          <IconButton size={"small"} color={"neutral"}>
+          <IconButton size={"small"}>
             {/* If the category has both enableEdit, then it is in an editable context and
               as such it should display the icon indicating that the category can be deleted. */}
-            <Zoom in={enableEdit} appear={false} unmountOnExit>
-              <DeleteOutline />
-            </Zoom>
-            <Zoom in={!enableEdit} appear={false} unmountOnExit>
-              <HighlightOff />
-            </Zoom>
+            <CustomTooltip
+              title={
+                enableEdit ? "Delete category" : "Remove category from note"
+              }
+            >
+              {enableEdit ? (
+                <DeleteOutline color={"chipNeutral"} />
+              ) : (
+                <HighlightOff color={"chipNeutral"} />
+              )}
+            </CustomTooltip>
           </IconButton>
         }
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "start",
-          height: "2.5rem",
           width: "100%",
+          px: "0.25rem",
+          height: "2.5rem",
+          transition: "all 0.2s ease-in-out",
           ...chipStyles,
         }}
         onDelete={onDelete}
@@ -190,7 +154,7 @@ export default function EditableCategoryChip({
                       color={color}
                       size={"small"}
                       onClick={() => {
-                        setCategoryColor(color);
+                        setCategoryColor(getCategoryColorFromPalette(color));
                       }}
                     >
                       <Circle fontSize={"large"} />
@@ -205,13 +169,3 @@ export default function EditableCategoryChip({
     </>
   );
 }
-
-EditableCategoryChip.propTypes = {
-  label: PropTypes.string,
-  categoryName: PropTypes.string,
-  categoryColor: PropTypes.string,
-  setNewCategoryName: PropTypes.func,
-  setNewCategoryColor: PropTypes.func,
-  onClick: PropTypes.func,
-  onDelete: PropTypes.func,
-};

@@ -20,7 +20,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
-import { getOrCreateCategoryId } from "../../../utils/id-utils";
+import { getOrCreateCategoryID } from "../../../utils/id-utils";
 import NoteActionModal, { NOTE_ACTIONS } from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({
@@ -126,7 +126,7 @@ export default function Note({
       title: title,
       description: description,
       category: {
-        id: getOrCreateCategoryId(categoriesCollection, categoryName),
+        id: getOrCreateCategoryID(categoriesCollection, categoryName),
         name: categoryName,
         color: categoryColor,
       },

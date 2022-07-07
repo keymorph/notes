@@ -29,7 +29,11 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
-import { getOrCreateCategoryId } from "../../../utils/id-utils";
+import {
+  createCategoryID,
+  getOrCreateCategoryID,
+} from "../../../utils/id-utils";
+import { doCategoryNamesCollide } from "../../../utils/input-validation/validate-category";
 import EditableCategoryChip from "./Category/EditableCategoryChip";
 import SelectOrAddCategory from "./Category/SelectOrAddCategory";
 
@@ -49,18 +53,18 @@ const DESCRIPTION_ROWS = {
 };
 
 export default function NoteActionModal({
-  action,
-  noteID,
-  title,
-  description,
-  categoryName,
-  categoryColor,
-  categoriesCollection,
-  setNoteCollection,
-  setCategoriesCollection,
-  modalOpen,
-  handleModalClose,
-}) {
+                                          action,
+                                          noteID,
+                                          title,
+                                          description,
+                                          categoryName,
+                                          categoryColor,
+                                          categoriesCollection,
+                                          setNoteCollection,
+                                          setCategoriesCollection,
+                                          modalOpen,
+                                          handleModalClose,
+                                        }) {
   //#region Hooks
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -88,40 +92,9 @@ export default function NoteActionModal({
   }, [action, title, description, categoryName, categoryColor]);
   //#endregion
 
-  //#region Derived State Variables
-  // Short variable names for the current action being performed
-  const isViewing = currentAction === NOTE_ACTIONS.VIEW;
-  const isEditing = currentAction === NOTE_ACTIONS.EDIT;
-  const isCreating = currentAction === NOTE_ACTIONS.CREATE;
-  // Input validation
-  const titleError = newTitle.trim() === "";
-  const valuesChanged =
-    newTitle.trim() !== title ||
-    newDescription.trim() !== description ||
-    newCategoryName.trim() !== categoryName ||
-    newCategoryColor !== categoryColor;
-  //
-  let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
-  let minDescriptionRows = DESCRIPTION_ROWS.TINY;
-  if (isSmallMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.MEDIUM
-      : DESCRIPTION_ROWS.SMALL;
-  } else if (isMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.LARGE
-      : DESCRIPTION_ROWS.MEDIUM;
-  } else {
-    minDescriptionRows = DESCRIPTION_ROWS.SMALL;
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.HUGE
-      : DESCRIPTION_ROWS.LARGE;
-  }
-  //#endregion
-
   //#region Query Handling Hooks
-  const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
-    onSuccess: ({ data }) => {
+  const {mutate: mutateEdit, status: editStatus} = useMutation(updateNote, {
+    onSuccess: ({data}) => {
       // Reflect the database changes on the front-end
       setNoteCollection(data.noteItem.notes.reverse());
       setCategoriesCollection(data.noteItem.categories);
@@ -132,10 +105,10 @@ export default function NoteActionModal({
     },
   });
 
-  const { mutate: mutateCreate, status: createStatus } = useMutation(
+  const {mutate: mutateCreate, status: createStatus} = useMutation(
     createNote,
     {
-      onSuccess: ({ data }) => {
+      onSuccess: ({data}) => {
         handleModalClose();
         // Reflect the database changes on the front-end
         setNoteCollection(data.noteItem.notes.reverse());
@@ -178,7 +151,7 @@ export default function NoteActionModal({
       title: `${newTitle.trim()}`,
       description: `${newDescription.trim()}`,
       category: {
-        id: getOrCreateCategoryId(categoriesCollection, newCategoryName.trim()),
+        id: getOrCreateCategoryID(categoriesCollection, newCategoryName.trim()),
         name: `${newCategoryName.trim()}`,
         color: `${newCategoryColor || "none"}`,
       },
@@ -195,7 +168,7 @@ export default function NoteActionModal({
         title: `${newTitle.trim()}`,
         description: `${newDescription.trim()}`,
         category: {
-          id: getOrCreateCategoryId(
+          id: getOrCreateCategoryID(
             categoriesCollection,
             newCategoryName.trim()
           ),
@@ -232,6 +205,53 @@ export default function NoteActionModal({
   };
   //#endregion
 
+  //#region Derived State Variables
+  // Short variable names for the current action being performed
+  const isViewing = currentAction === NOTE_ACTIONS.VIEW;
+  const isEditing = currentAction === NOTE_ACTIONS.EDIT;
+  const isCreating = currentAction === NOTE_ACTIONS.CREATE;
+  // Description textarea row count
+  let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
+  let minDescriptionRows = DESCRIPTION_ROWS.TINY;
+  if (isSmallMobile) {
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.MEDIUM
+      : DESCRIPTION_ROWS.SMALL;
+  } else if (isMobile) {
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.LARGE
+      : DESCRIPTION_ROWS.MEDIUM;
+  } else {
+    minDescriptionRows = DESCRIPTION_ROWS.SMALL;
+    maxDescriptionRows = isViewing
+      ? DESCRIPTION_ROWS.HUGE
+      : DESCRIPTION_ROWS.LARGE;
+  }
+  // modified categories collection with the new category
+  let modifiedCategoriesCollection = [...categoriesCollection];
+  if (isCategoryNew) {
+    modifiedCategoriesCollection = [
+      ...modifiedCategoriesCollection,
+      {
+        id: createCategoryID(categoriesCollection),
+        name: newCategoryName,
+        color: newCategoryColor,
+      },
+    ];
+  }
+  // Input validation
+  const titleError = newTitle.trim() === "";
+  const valuesChanged =
+    newTitle.trim() !== title ||
+    newDescription.trim() !== description ||
+    newCategoryName.trim() !== categoryName ||
+    newCategoryColor !== categoryColor;
+  const saveDisabled =
+    titleError ||
+    !valuesChanged ||
+    doCategoryNamesCollide(modifiedCategoriesCollection);
+  //#endregion
+
   return (
     <Modal
       open={modalOpen}
@@ -257,9 +277,9 @@ export default function NoteActionModal({
                   color={"neutral"}
                   size={"small"}
                   onClick={() => handleActionChange(NOTE_ACTIONS.EDIT)}
-                  sx={{ mr: "-2.2rem" }}
+                  sx={{mr: "-2.2rem"}}
                 >
-                  <EditOutlined />
+                  <EditOutlined/>
                 </IconButton>
               </Zoom>
               <Zoom in={currentAction !== NOTE_ACTIONS.VIEW}>
@@ -269,9 +289,9 @@ export default function NoteActionModal({
                     size={"small"}
                     disabled={!valuesChanged}
                     onClick={() => handleResetModalValues(true)}
-                    sx={{ transition: "all 0.2s ease-in-out" }}
+                    sx={{transition: "all 0.2s ease-in-out"}}
                   >
-                    <RestoreOutlined />
+                    <RestoreOutlined/>
                   </IconButton>
                 </div>
               </Zoom>
@@ -282,7 +302,7 @@ export default function NoteActionModal({
                 onClick={(event) => handleBeforeModalClose(event, "closeModal")}
                 edge="end"
               >
-                <CloseOutlined />
+                <CloseOutlined/>
               </IconButton>
             </Box>
           </Box>
@@ -293,7 +313,7 @@ export default function NoteActionModal({
             id="outlined-required"
             label={"Title"}
             value={newTitle}
-            sx={{ my: "1em" }}
+            sx={{my: "1em"}}
             inputProps={{
               maxLength: NOTE_TITLE_CHAR_LIMIT,
             }}
@@ -308,8 +328,8 @@ export default function NoteActionModal({
             multiline
             minRows={minDescriptionRows}
             maxRows={maxDescriptionRows}
-            sx={{ mb: 2 }}
-            inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
+            sx={{mb: 2}}
+            inputProps={{maxLength: NOTE_DESCRIPTION_CHAR_LIMIT}}
             onChange={(event) => setNewDescription(event.target.value)}
           />
 
@@ -325,7 +345,7 @@ export default function NoteActionModal({
                 categoryColor={newCategoryColor}
                 setCategoryName={setNewCategoryName}
                 setCategoryColor={setNewCategoryColor}
-                categoryCollection={categoriesCollection}
+                categoryCollection={modifiedCategoriesCollection}
                 enableEdit={isCategoryNew} // Enable edit if category is new
                 onDelete={
                   currentAction !== NOTE_ACTIONS.VIEW
@@ -357,7 +377,7 @@ export default function NoteActionModal({
               loading={editStatus === "loading" || createStatus === "loading"}
               variant="contained"
               size="small"
-              disabled={titleError || !valuesChanged} // Disable button if required title field is empty
+              disabled={saveDisabled} // Disable button if required title field is empty
               onClick={isEditing ? handleEditNote : handleCreateNote}
               sx={{
                 border: "1px",
