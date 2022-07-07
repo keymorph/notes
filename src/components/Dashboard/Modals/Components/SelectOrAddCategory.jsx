@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { doesCategoryExist } from "../../../../utils/input-validation/validate-category";
+import { doesCategoryExist } from "../../../../helpers/notes/category";
 import PopIn from "../../../Transitions/PopIn";
 import CategoryChip from "../../SharedComponents/CategoryChip";
 import CategorySearchInput from "../../SharedComponents/CategorySearchInput";

@@ -24,18 +24,18 @@ import {
   NOTE_TITLE_CHAR_LIMIT,
 } from "../../../constants/input-limits";
 import {
+  createCategoryID,
+  doCategoryNamesCollide,
+  getOrCreateCategoryID,
+} from "../../../helpers/notes/category";
+import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
-import {
-  createCategoryID,
-  getOrCreateCategoryID,
-} from "../../../utils/id-utils";
-import { doCategoryNamesCollide } from "../../../utils/input-validation/validate-category";
-import EditableCategoryChip from "./Category/EditableCategoryChip";
-import SelectOrAddCategory from "./Category/SelectOrAddCategory";
+import EditableCategoryChip from "./Components/EditableCategoryChip";
+import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 
 export const NOTE_ACTIONS = {
   VIEW: "VIEW",
@@ -53,18 +53,18 @@ const DESCRIPTION_ROWS = {
 };
 
 export default function NoteActionModal({
-                                          action,
-                                          noteID,
-                                          title,
-                                          description,
-                                          categoryName,
-                                          categoryColor,
-                                          categoriesCollection,
-                                          setNoteCollection,
-                                          setCategoriesCollection,
-                                          modalOpen,
-                                          handleModalClose,
-                                        }) {
+  action,
+  noteID,
+  title,
+  description,
+  categoryName,
+  categoryColor,
+  categoriesCollection,
+  setNoteCollection,
+  setCategoriesCollection,
+  modalOpen,
+  handleModalClose,
+}) {
   //#region Hooks
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -93,8 +93,8 @@ export default function NoteActionModal({
   //#endregion
 
   //#region Query Handling Hooks
-  const {mutate: mutateEdit, status: editStatus} = useMutation(updateNote, {
-    onSuccess: ({data}) => {
+  const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
+    onSuccess: ({ data }) => {
       // Reflect the database changes on the front-end
       setNoteCollection(data.noteItem.notes.reverse());
       setCategoriesCollection(data.noteItem.categories);
@@ -105,10 +105,10 @@ export default function NoteActionModal({
     },
   });
 
-  const {mutate: mutateCreate, status: createStatus} = useMutation(
+  const { mutate: mutateCreate, status: createStatus } = useMutation(
     createNote,
     {
-      onSuccess: ({data}) => {
+      onSuccess: ({ data }) => {
         handleModalClose();
         // Reflect the database changes on the front-end
         setNoteCollection(data.noteItem.notes.reverse());
@@ -277,9 +277,9 @@ export default function NoteActionModal({
                   color={"neutral"}
                   size={"small"}
                   onClick={() => handleActionChange(NOTE_ACTIONS.EDIT)}
-                  sx={{mr: "-2.2rem"}}
+                  sx={{ mr: "-2.2rem" }}
                 >
-                  <EditOutlined/>
+                  <EditOutlined />
                 </IconButton>
               </Zoom>
               <Zoom in={currentAction !== NOTE_ACTIONS.VIEW}>
@@ -289,9 +289,9 @@ export default function NoteActionModal({
                     size={"small"}
                     disabled={!valuesChanged}
                     onClick={() => handleResetModalValues(true)}
-                    sx={{transition: "all 0.2s ease-in-out"}}
+                    sx={{ transition: "all 0.2s ease-in-out" }}
                   >
-                    <RestoreOutlined/>
+                    <RestoreOutlined />
                   </IconButton>
                 </div>
               </Zoom>
@@ -302,7 +302,7 @@ export default function NoteActionModal({
                 onClick={(event) => handleBeforeModalClose(event, "closeModal")}
                 edge="end"
               >
-                <CloseOutlined/>
+                <CloseOutlined />
               </IconButton>
             </Box>
           </Box>
@@ -313,7 +313,7 @@ export default function NoteActionModal({
             id="outlined-required"
             label={"Title"}
             value={newTitle}
-            sx={{my: "1em"}}
+            sx={{ my: "1em" }}
             inputProps={{
               maxLength: NOTE_TITLE_CHAR_LIMIT,
             }}
@@ -328,8 +328,8 @@ export default function NoteActionModal({
             multiline
             minRows={minDescriptionRows}
             maxRows={maxDescriptionRows}
-            sx={{mb: 2}}
-            inputProps={{maxLength: NOTE_DESCRIPTION_CHAR_LIMIT}}
+            sx={{ mb: 2 }}
+            inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
             onChange={(event) => setNewDescription(event.target.value)}
           />
 

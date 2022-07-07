@@ -13,11 +13,11 @@ import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
 import {
   getCategoryColorFromPalette,
   getPaletteCategoryColorName,
+  getValidCategoryName,
   isCategoryNameUnique,
 } from "../../../../helpers/notes/category";
 import { variantFadeSlideDownSlow } from "../../../../styles/animations/definitions";
 import { categoryColors as categoryColorsDef } from "../../../../styles/themes/theme";
-import { getValidCategoryName } from "../../../../utils/input-validation/validate-category";
 import PopIn from "../../../Transitions/PopIn";
 import CustomTooltip from "../../SharedComponents/CustomTooltip";
 

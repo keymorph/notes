@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesModal from "./Modals/ManageCategoriesModal";
 import NoteActionModal, { NOTE_ACTIONS } from "./Modals/NoteActionModal";
+import CustomTooltip from "./SharedComponents/CustomTooltip";
 
 export default function AppToolbar({
   noteCollection,
@@ -50,7 +51,7 @@ export default function AppToolbar({
     // Delay the display of the big add note button to avoid it cutting in front of the searchbar animation
     if (isMobile) {
       setTimeout(() => {
-        setShouldDisplayBigAddButton((prev) => !prev);
+        setShouldDisplayBigAddButton(!searching);
       }, 200);
     }
   }, [searching]);
@@ -158,13 +159,17 @@ export default function AppToolbar({
         {/* Only display the search bar and filter if there are notes */}
         {noteCollection.length > 0 && (
           <>
-            <IconButton
-              size={"small"}
-              onClick={handleOrderFilterViewChange}
-              color={orderFilterViewOpen ? "primary" : "neutral"}
+            <CustomTooltip
+              title={orderFilterViewOpen ? "Close filters" : "Open filters"}
             >
-              {orderFilterViewOpen ? <FilterAlt /> : <FilterAltOutlined />}
-            </IconButton>
+              <IconButton
+                size={"small"}
+                onClick={handleOrderFilterViewChange}
+                color={orderFilterViewOpen ? "primary" : "neutral"}
+              >
+                {orderFilterViewOpen ? <FilterAlt /> : <FilterAltOutlined />}
+              </IconButton>
+            </CustomTooltip>
             <ToolbarSearch
               searchValue={searchValue}
               setSearchValue={setSearchValue}

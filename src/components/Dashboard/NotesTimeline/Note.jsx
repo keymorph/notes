@@ -14,13 +14,15 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
-import { getPaletteCategoryColorName } from "../../../helpers/notes/category";
+import {
+  getOrCreateCategoryID,
+  getPaletteCategoryColorName,
+} from "../../../helpers/notes/category";
 
 import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
-import { getOrCreateCategoryID } from "../../../utils/id-utils";
 import NoteActionModal, { NOTE_ACTIONS } from "../Modals/NoteActionModal";
 
 const NoteCard = styled(Card)({

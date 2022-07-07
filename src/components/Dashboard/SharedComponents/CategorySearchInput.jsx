@@ -1,8 +1,8 @@
 import { AddCircleOutline } from "@mui/icons-material";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
+import { getValidCategoryName } from "../../../helpers/notes/category";
 import { adornmentButtonTransition } from "../../../styles/animations/definitions";
-import { getValidCategoryName } from "../../../utils/input-validation/validate-category";
 import CustomTooltip from "./CustomTooltip";
 
 export default function CategorySearchInput({

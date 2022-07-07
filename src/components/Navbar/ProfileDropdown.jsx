@@ -14,13 +14,13 @@ import {
   Divider,
   Menu,
   MenuItem,
-  Tooltip,
   Typography,
   Zoom,
 } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
+import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
 
 export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   //#region Hooks
@@ -90,14 +90,12 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
         open={dropdownOpen}
         onClose={() => setAnchorEl(null)}
       >
-        <Tooltip title={"Coming soon™"} placement={"left"}>
-          <div>
-            <MenuItem disabled dense sx={{ gap: "0.5em" }}>
-              <ManageAccountsOutlined />
-              Profile Settings
-            </MenuItem>
-          </div>
-        </Tooltip>
+        <CustomTooltip title={"Coming soon™"} disabledButton>
+          <MenuItem disabled dense sx={{ gap: "0.5em" }}>
+            <ManageAccountsOutlined />
+            Profile Settings
+          </MenuItem>
+        </CustomTooltip>
         <MenuItem dense onClick={handleDarkModeToggle} sx={{ gap: "0.5em" }}>
           <Zoom in={darkMode} appear={false}>
             <LightModeOutlined sx={{ mr: "-2rem" }} />

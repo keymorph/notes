@@ -41,7 +41,7 @@ export default function ToolbarSearch({
       sx={{
         borderRadius: 20,
         mx: "0.5rem",
-        height: "2rem",
+        height: "2.25rem",
         maxWidth: searching ? "24rem" : "8rem",
         transition: "all 0.2s ease-in-out",
       }}

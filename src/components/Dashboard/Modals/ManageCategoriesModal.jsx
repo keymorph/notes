@@ -12,20 +12,20 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
+import {
+  doCategoryNamesCollide,
+  doesCategoryExist,
+  getOrCreateCategoryID,
+} from "../../../helpers/notes/category";
 import { updateCategories } from "../../../helpers/requests/category-requests";
 import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
 import { modalCard } from "../../../styles/components/modal";
-import { getOrCreateCategoryID } from "../../../utils/id-utils";
-import {
-  doCategoryNamesCollide,
-  doesCategoryExist,
-} from "../../../utils/input-validation/validate-category";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 import CustomTooltip from "../SharedComponents/CustomTooltip";
-import EditableCategoryChip from "./Category/EditableCategoryChip";
+import EditableCategoryChip from "./Components/EditableCategoryChip";
 
 export default function ManageCategoriesModal({
   modalOpen,
