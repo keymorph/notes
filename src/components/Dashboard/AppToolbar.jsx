@@ -162,6 +162,7 @@ export default function AppToolbar({
           <>
             <CustomTooltip
               title={orderFilterViewOpen ? "Close filters" : "Open filters"}
+              placement={"right"}
             >
               <IconButton
                 size={"small"}
@@ -216,13 +217,15 @@ export default function AppToolbar({
               <Add />
             </IconButton>
           </Fade>
-          <IconButton
-            size={"small"}
-            onClick={handleMoreMenuClick}
-            color={moreMenuAnchorEl ? "primary" : "neutral"}
-          >
-            <MoreVert />
-          </IconButton>
+          <CustomTooltip title={"More options"} placement={"left"}>
+            <IconButton
+              size={"small"}
+              onClick={handleMoreMenuClick}
+              color={moreMenuAnchorEl ? "primary" : "neutral"}
+            >
+              <MoreVert />
+            </IconButton>
+          </CustomTooltip>
         </Box>
       </Toolbar>
     </AppBar>

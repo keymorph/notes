@@ -25,6 +25,7 @@ import {
   deleteNote,
 } from "../../../helpers/requests/note-requests";
 import NoteActionModal from "../Modals/NoteActionModal";
+import CustomTooltip from "../SharedComponents/CustomTooltip";
 
 const NoteCard = styled(Card)({
   width: "20rem",
@@ -182,15 +183,16 @@ export default function Note({
                   size={"small"}
                 />
               ) : null}
-
-              <IconButton
-                color={"neutral"}
-                size={"small"}
-                sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
-                onClick={handleMoreMenuClick}
-              >
-                <MoreHoriz />
-              </IconButton>
+              <CustomTooltip title={"Note actions"}>
+                <IconButton
+                  color={"neutral"}
+                  size={"small"}
+                  sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
+                  onClick={handleMoreMenuClick}
+                >
+                  <MoreHoriz />
+                </IconButton>
+              </CustomTooltip>
             </Box>
           </Box>
           {/* Note Action Menu that triggers  */}
