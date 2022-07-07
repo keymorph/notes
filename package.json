@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -27,10 +27,10 @@
     "@testing-library/user-event": "^14.2.1",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
-    "framer-motion": "^6.3.16",
+    "framer-motion": "^6.4.2",
     "jsonwebtoken": "^8.5.1",
     "next": "^12.2.0",
-    "next-auth": "^4.8.0",
+    "next-auth": "^4.9.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
