@@ -107,7 +107,7 @@ export default function Note({
     setHideNote(true);
   };
 
-  const handleActionModalClose = () => {
+  const handleActionDialogClose = () => {
     setModalOpen(false);
     setMoreMenuAnchorEl(null);
     setHideNote(false);
@@ -161,8 +161,8 @@ export default function Note({
         setCategoriesCollection={setCategoriesCollection}
         setNoteCollection={setNoteCollection}
         action={modalAction}
-        modalOpen={modalOpen}
-        handleModalClose={handleActionModalClose}
+        dialogOpen={modalOpen}
+        handleDialogClose={handleActionDialogClose}
       />
 
       <Grow in={!hideNote}>

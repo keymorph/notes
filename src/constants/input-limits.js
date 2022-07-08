@@ -2,7 +2,7 @@
  * Note Title Character Limit
  * @type {number}
  */
-export const NOTE_TITLE_CHAR_LIMIT = 100;
+export const NOTE_TITLE_CHAR_LIMIT = 50;
 
 /**
  * Note Content Character Limit

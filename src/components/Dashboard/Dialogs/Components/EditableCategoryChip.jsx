@@ -65,7 +65,6 @@ export default function EditableCategoryChip({
         color={invalidCategoryName ? "error" : "chipNeutral"}
         icon={
           <IconButton
-            autoFocus={enableEdit}
             size={"small"}
             disabled={!enableEdit}
             onClick={handlePaletteOpen}

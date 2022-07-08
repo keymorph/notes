@@ -219,7 +219,7 @@ export default function NotesTimeline({
         {noNotesDisplayed && (
           <motion.div layout transition={spring}>
             <Grow in>
-              <Typography textAlign={"center"} variant="h5">
+              <Typography textAlign={"center"} variant="h5" mt={"2rem"}>
                 No notes found...
               </Typography>
             </Grow>
@@ -231,7 +231,7 @@ export default function NotesTimeline({
     // If no notes, display no notes message
     <motion.div layout transition={spring}>
       <Grow in>
-        <Typography variant={"h5"} textAlign={"center"}>
+        <Typography variant={"h5"} textAlign={"center"} mt={"2rem"}>
           No notes yet.
         </Typography>
       </Grow>

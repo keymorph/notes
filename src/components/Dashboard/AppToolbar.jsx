@@ -40,8 +40,8 @@ export default function AppToolbar({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
-  const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
-  const [manageCategoriesModalOpen, setManageCategoriesModalOpen] =
+  const [createNoteDialogOpen, setCreateNoteDialogOpen] = useState(false);
+  const [manageCategoriesDialogOpen, setManageCategoriesDialogOpen] =
     useState(false);
 
   const [searching, setSearching] = useState(false);
@@ -65,20 +65,20 @@ export default function AppToolbar({
   };
 
   const handleCreateNoteModalOpen = () => {
-    setCreateNoteModalOpen(true);
+    setCreateNoteDialogOpen(true);
   };
 
-  const handleCreateNoteModalClose = () => {
-    setCreateNoteModalOpen(false);
+  const handleCreateNoteDialogClose = () => {
+    setCreateNoteDialogOpen(false);
   };
 
   const handleManageCategoriesModalOpen = () => {
     setMoreMenuAnchorEl(null); // Close the more menu
-    setManageCategoriesModalOpen(true);
+    setManageCategoriesDialogOpen(true);
   };
 
   const handleManageCategoriesModalClose = () => {
-    setManageCategoriesModalOpen(false);
+    setManageCategoriesDialogOpen(false);
   };
 
   const handleOrderFilterViewChange = () => {
@@ -108,8 +108,8 @@ export default function AppToolbar({
       description={""}
       categoryName={""}
       categoryColor={"none"}
-      modalOpen={createNoteModalOpen}
-      handleModalClose={handleCreateNoteModalClose}
+      dialogOpen={createNoteDialogOpen}
+      handleDialogClose={handleCreateNoteDialogClose}
       noteCollection={noteCollection}
       setNoteCollection={setNoteCollection}
       categoriesCollection={categoriesCollection}
@@ -121,8 +121,8 @@ export default function AppToolbar({
       categoriesCollection={categoriesCollection}
       setCategoriesCollection={setCategoriesCollection}
       setNoteCollection={setNoteCollection}
-      modalOpen={manageCategoriesModalOpen}
-      handleModalClose={handleManageCategoriesModalClose}
+      dialogOpen={manageCategoriesDialogOpen}
+      handleDialogClose={handleManageCategoriesModalClose}
       isMobile={isMobile}
     />
   );
@@ -190,7 +190,7 @@ export default function AppToolbar({
             exit={false}
           >
             <Button
-              color={createNoteModalOpen ? "primary" : "neutral"}
+              color={createNoteDialogOpen ? "primary" : "neutral"}
               variant={"outlined"}
               size={"small"}
               sx={{
@@ -210,7 +210,7 @@ export default function AppToolbar({
             appear={false}
           >
             <IconButton
-              color={createNoteModalOpen ? "primary" : "neutral"}
+              color={createNoteDialogOpen ? "primary" : "neutral"}
               onClick={handleCreateNoteModalOpen}
               size={"small"}
             >

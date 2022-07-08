@@ -4,6 +4,7 @@ import { CATEGORY_NAME_CHAR_LIMIT } from "../../../constants/input-limits";
 import { getValidCategoryName } from "../../../helpers/notes/category";
 import { adornmentButtonTransition } from "../../../styles/animations/definitions";
 import CustomTooltip from "./CustomTooltip";
+import RemainingCharCount from "./RemainingCharCount";
 
 export default function CategorySearchInput({
   categoryName,
@@ -13,8 +14,7 @@ export default function CategorySearchInput({
   fullWidth = false,
   sx = {},
 }) {
-  const isCategoryValid = categoryName.trim() !== "" && !categoryExists;
-
+  //#region Handlers
   const handleCategorySearch = (e) => {
     setCategoryName(getValidCategoryName(e.target.value));
   };
@@ -24,6 +24,9 @@ export default function CategorySearchInput({
       onCreate();
     }
   };
+  //#endregion
+
+  const isCategoryValid = categoryName.trim() !== "" && !categoryExists;
 
   return (
     <Input
@@ -35,8 +38,15 @@ export default function CategorySearchInput({
       onKeyUp={(e) => e.key === "Enter" && handleAddCategory()}
       endAdornment={
         onCreate ? (
-          <CustomTooltip title={"Create a category with this name"}>
-            <InputAdornment position="end">
+          <InputAdornment position="end">
+            <RemainingCharCount
+              stringLength={categoryName.length}
+              characterLimit={CATEGORY_NAME_CHAR_LIMIT}
+            />
+            <CustomTooltip
+              title={"Create a category with this name"}
+              disableableButton
+            >
               <IconButton
                 color={"neutral"}
                 size={"small"}
@@ -46,8 +56,8 @@ export default function CategorySearchInput({
               >
                 <AddCircleOutline />
               </IconButton>
-            </InputAdornment>
-          </CustomTooltip>
+            </CustomTooltip>
+          </InputAdornment>
         ) : null
       }
       inputProps={{

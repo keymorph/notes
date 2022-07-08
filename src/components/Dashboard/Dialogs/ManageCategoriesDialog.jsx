@@ -20,8 +20,8 @@ import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";
 
 export default function ManageCategoriesDialog({
-  modalOpen,
-  handleModalClose,
+  dialogOpen,
+  handleDialogClose,
   categoriesCollection,
   setCategoriesCollection,
   setNoteCollection,
@@ -51,7 +51,7 @@ export default function ManageCategoriesDialog({
       onSuccess: ({ data }) => {
         setCategoriesCollection(data.noteItem.categories);
         setNoteCollection(data.noteItem.notes.reverse());
-        handleModalClose();
+        handleDialogClose();
       },
       onError: (error) => {
         console.error(error);
@@ -150,20 +150,20 @@ export default function ManageCategoriesDialog({
 
   const handleBeforeModalClose = (event, reason) => {
     if (reason === "closeModal") {
-      handleModalClose();
+      handleDialogClose();
       setTimeout(() => {
         resetModalValues();
       }, 250); // Don't immediately reset the values till the closing animation is complete
     } else {
-      handleModalClose();
+      handleDialogClose();
     }
   };
   //#endregion
 
   return (
     <Dialog
-      open={modalOpen}
-      onClose={handleModalClose}
+      open={dialogOpen}
+      onClose={handleDialogClose}
       TransitionComponent={Grow}
       closeAfterTransition
     >

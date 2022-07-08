@@ -28,6 +28,7 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { dialogCard } from "../../../styles/components/dialog";
+import RemainingCharCount from "../SharedComponents/RemainingCharCount";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 import Titlebar from "./Components/Titlebar";
@@ -51,8 +52,8 @@ export default function NoteActionDialog({
   categoriesCollection,
   setNoteCollection,
   setCategoriesCollection,
-  modalOpen,
-  handleModalClose,
+  dialogOpen,
+  handleDialogClose,
 }) {
   //#region Hooks
   const theme = useTheme();
@@ -84,7 +85,7 @@ export default function NoteActionDialog({
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
-      handleModalClose();
+      handleDialogClose();
       // Reflect the database changes on the front-end
       setNoteCollection(data.noteItem.notes.reverse());
       setCategoriesCollection(data.noteItem.categories);
@@ -99,7 +100,7 @@ export default function NoteActionDialog({
     createNote,
     {
       onSuccess: ({ data }) => {
-        handleModalClose();
+        handleDialogClose();
         // Reflect the database changes on the front-end
         setNoteCollection(data.noteItem.notes.reverse());
         setCategoriesCollection(data.noteItem.categories);
@@ -167,7 +168,7 @@ export default function NoteActionDialog({
       };
       mutateEdit(editedNote);
     } else {
-      handleModalClose();
+      handleDialogClose();
     }
   };
 
@@ -235,8 +236,8 @@ export default function NoteActionDialog({
 
   return (
     <Dialog
-      open={modalOpen}
-      onClose={handleModalClose}
+      open={dialogOpen}
+      onClose={handleDialogClose}
       TransitionComponent={Grow}
       TransitionProps={{ onExited: () => handleAfterModalClose() }}
       closeAfterTransition
@@ -250,7 +251,12 @@ export default function NoteActionDialog({
             (isCreating && "Creating a Note")
           }
           disableRevert={!valuesChanged}
-          onClose={handleModalClose}
+          onClose={() => {
+            handleDialogClose();
+            setTimeout(() => {
+              handleResetModalValues();
+            }, 250);
+          }}
           onActionChange={handleActionChange}
           onRevert={handleResetModalValues}
         />
@@ -262,6 +268,14 @@ export default function NoteActionDialog({
           label={"Title"}
           value={newTitle}
           sx={{ my: "1em" }}
+          InputProps={{
+            endAdornment: !isViewing && (
+              <RemainingCharCount
+                stringLength={newTitle.length}
+                characterLimit={NOTE_TITLE_CHAR_LIMIT}
+              />
+            ),
+          }}
           inputProps={{
             maxLength: NOTE_TITLE_CHAR_LIMIT,
           }}
