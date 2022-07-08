@@ -7,7 +7,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   rectSortingStrategy,
@@ -44,7 +44,7 @@ export default function NotesTimeline({
   //#region Hooks
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
 
-  const [activeId, setActiveID] = useState(null); // activeId used to track the active note being dragged
+  const [activeID, setActiveID] = useState(null); // activeID used to track the active note being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -142,9 +142,8 @@ export default function NotesTimeline({
     setNoNotesDisplayed(false);
   }
 
-  const draggedNote = noteCollection.find((note) => note.id === activeId);
-  const isFiltering =
-    memoizedNotesCollection.length !== categoriesCollection.length;
+  const draggedNote = noteCollection.find((note) => note.id === activeID);
+  const isFiltering = memoizedNotesCollection.length !== noteCollection.length;
 
   return noteStatus === "loading" ? (
     <Zoom in>
@@ -159,14 +158,14 @@ export default function NotesTimeline({
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       autoScroll
-      modifiers={[restrictToWindowEdges]}
+      modifiers={[restrictToParentElement]}
     >
       <SortableContext
         items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
         {/*<DragOverlay>*/}
-        {/*  {activeId ? (*/}
+        {/*  {activeID ? (*/}
         {/*    <NoteDragOverlay*/}
         {/*      title={draggedNote.title}*/}
         {/*      description={draggedNote.description}*/}
@@ -193,7 +192,8 @@ export default function NotesTimeline({
               <SortableNote
                 key={note.id}
                 noteID={note.id}
-                isDraggingMode={!!activeId} // If activeId is set, a note is being dragged
+                isDraggingMode={!!activeID} // If activeID is set, a note is being dragged
+                disableDrag={isFiltering}
                 index={index}
                 title={note.title}
                 description={note.description}

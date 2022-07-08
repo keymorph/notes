@@ -11,6 +11,7 @@ import {
   MenuItem,
   styled,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
@@ -32,7 +33,7 @@ const NoteCard = styled(Card)({
   height: "22rem",
   overflowWrap: "break-word",
   margin: "5px",
-  transition: "opacity 0.2s ease-in-out",
+  transition: "all 0.25s ease-in-out",
 });
 
 export default function Note({
@@ -51,6 +52,12 @@ export default function Note({
   isDragging,
 }) {
   //#region Hooks
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
+  const noteShadow = isDarkMode
+    ? "0rem 2rem 2rem rgba(0, 0, 0, 0.6)"
+    : "0rem 2rem 2rem rgba(0, 0, 0, 0.3)";
+
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState(MODAL_ACTIONS.VIEW);
@@ -166,86 +173,98 @@ export default function Note({
       />
 
       <Grow in={!hideNote}>
-        <NoteCard ref={ref} {...dragHandleListeners} {...dragHandleAttributes}>
-          <Box
+        <div>
+          <NoteCard
             sx={{
-              backgroundColor: `${getPaletteCategoryColorName(
-                categoryColor
-              )}.main`,
+              boxShadow: isDragging ? noteShadow : "",
+              transition: "all 0.25s ease-in-out",
             }}
+            ref={ref}
+            {...dragHandleListeners}
+            {...dragHandleAttributes}
           >
-            <Box display="flex" alignItems="center" mx={"0.5rem"}>
-              {/* If category exists, show the name */}
-              {categoryName ? (
-                <Chip
-                  label={categoryName}
-                  sx={{ my: "0.3rem", height: "1.25rem" }}
-                  size={"small"}
-                />
-              ) : null}
-              <CustomTooltip title={"Note actions"}>
-                <IconButton
-                  color={"neutral"}
-                  size={"small"}
-                  sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
-                  onClick={handleMoreMenuClick}
-                >
-                  <MoreHoriz />
-                </IconButton>
-              </CustomTooltip>
-            </Box>
-          </Box>
-          {/* Note Action Menu that triggers  */}
-          <Menu
-            anchorEl={moreMenuAnchorEl}
-            open={!!moreMenuAnchorEl}
-            onClose={() => setMoreMenuAnchorEl(null)}
-          >
-            <MenuItem dense onClick={handleEditModalOpen}>
-              Edit
-            </MenuItem>
-            <MenuItem dense onClick={handleCreateDuplicate}>
-              Duplicate
-            </MenuItem>
-            <MenuItem dense onClick={handleDelete}>
-              Delete
-            </MenuItem>
-          </Menu>
-
-          <CardContent
-            onClick={handleViewModalOpen}
-            sx={{
-              userSelect: "text",
-              height: "100%",
-              cursor: "pointer",
-              pb: "1rem",
-              px: "1rem",
-            }}
-          >
-            <Typography
-              variant="h5"
-              title="Title Name"
-              fontWeight={"bold"}
-              noWrap
-            >
-              {title}
-            </Typography>
-            <Divider sx={{ my: "0.5em" }} />
-            <Typography
-              variant="body2"
-              title={"Description"}
+            <Box
               sx={{
-                display: "-webkit-box",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                WebkitLineClamp: "12",
-                WebkitBoxOrient: "vertical",
+                cursor: isDragging ? "grabbing" : "inherit",
+                userSelect: "none",
+                backgroundColor: `${getPaletteCategoryColorName(
+                  categoryColor
+                )}.main`,
               }}
             >
-              {description}
-            </Typography>
-          </CardContent>
-        </NoteCard>
+              <Box display="flex" alignItems="center" mx={"0.5rem"}>
+                {/* If category exists, show the name */}
+                {categoryName ? (
+                  <Chip
+                    label={categoryName}
+                    sx={{ my: "0.3rem", height: "1.25rem" }}
+                    size={"small"}
+                  />
+                ) : null}
+                <CustomTooltip title={"Note actions"}>
+                  <IconButton
+                    color={"neutral"}
+                    size={"small"}
+                    sx={{ ml: "auto", my: "0.3rem", height: "1.25rem" }}
+                    onClick={handleMoreMenuClick}
+                  >
+                    <MoreHoriz />
+                  </IconButton>
+                </CustomTooltip>
+              </Box>
+            </Box>
+            {/* Note Action Menu that triggers  */}
+            <Menu
+              anchorEl={moreMenuAnchorEl}
+              open={!!moreMenuAnchorEl}
+              onClose={() => setMoreMenuAnchorEl(null)}
+            >
+              <MenuItem dense onClick={handleEditModalOpen}>
+                Edit
+              </MenuItem>
+              <MenuItem dense onClick={handleCreateDuplicate}>
+                Duplicate
+              </MenuItem>
+              <MenuItem dense onClick={handleDelete}>
+                Delete
+              </MenuItem>
+            </Menu>
+
+            <CardContent
+              onClick={handleViewModalOpen}
+              sx={{
+                cursor: isDragging ? "grabbing" : "pointer",
+                userSelect: "none",
+                height: "100%",
+                pb: "1rem",
+                px: "1rem",
+              }}
+            >
+              <Typography
+                variant="h5"
+                title="Title Name"
+                fontWeight={"bold"}
+                noWrap
+              >
+                {title}
+              </Typography>
+              <Divider sx={{ my: "0.5em" }} />
+              <Typography
+                variant="body2"
+                title={"Description"}
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  WebkitLineClamp: "12",
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                {description}
+              </Typography>
+            </CardContent>
+          </NoteCard>
+        </div>
       </Grow>
     </Box>
   );

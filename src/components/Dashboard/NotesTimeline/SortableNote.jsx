@@ -13,7 +13,12 @@ import Note from "./Note";
  * @param rest - rest of the props for the item being wrapped
  * @returns {JSX.Element}
  */
-export default function SortableNote({ index, isDraggingMode, ...rest }) {
+export default function SortableNote({
+  index,
+  isDraggingMode,
+  disableDrag,
+  ...rest
+}) {
   const {
     attributes,
     listeners,
@@ -27,6 +32,7 @@ export default function SortableNote({ index, isDraggingMode, ...rest }) {
       easing: "ease-out",
     },
     id: rest.noteID,
+    disabled: disableDrag,
   });
 
   return (
@@ -44,6 +50,8 @@ export default function SortableNote({ index, isDraggingMode, ...rest }) {
         layout={!isDraggingMode} // Only animate position changes when not dragging
         transition={spring}
         variants={variantFadeStagger}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: disableDrag ? 1 : 1.03 }}
         initial={"hidden"}
         animate={"visible"}
         exit={"hidden"}
