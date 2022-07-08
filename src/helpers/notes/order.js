@@ -18,6 +18,7 @@ function orderNotesCollectionByOrderBy(
       });
     case NOTES_ORDER_BY.CATEGORY_NAME:
       // Order notes by category name using the note property "category_id"
+      // If the note has no category, it will be displayed last
       return notesCollection.sort((a, b) => {
         const categoryA = categoriesCollection.find(
           (category) => category.id === a.category_id
@@ -25,10 +26,12 @@ function orderNotesCollectionByOrderBy(
         const categoryB = categoriesCollection.find(
           (category) => category.id === b.category_id
         );
-        if (categoryA && categoryB) {
-          return categoryA.name.localeCompare(categoryB.name);
+        if (categoryA.name === "") {
+          return 1;
+        } else if (categoryB.name === "") {
+          return -1;
         } else {
-          return 0;
+          return categoryA.name.localeCompare(categoryB.name);
         }
       });
     case NOTES_ORDER_BY.NOTE_TITLE:
