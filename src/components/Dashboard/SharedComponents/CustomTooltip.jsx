@@ -11,7 +11,7 @@ export default function CustomTooltip({
   return (
     <Tooltip
       title={title}
-      enterDelay={500}
+      enterDelay={750}
       followCursor={followCursor}
       placement={placement}
     >

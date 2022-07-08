@@ -9,13 +9,14 @@ import {
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import {
+  arrayMove,
   rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NOTES_ORDER_BY } from "../../helpers/models/note-order";
 import {
   getCategoryColorName,
@@ -24,7 +25,7 @@ import {
 import { getFilteredNotesCollection } from "../../helpers/notes/filter";
 import {
   getOrderedNotesCollection,
-  swapOrderedNotesID,
+  getUpdatedOrderedNotesID,
 } from "../../helpers/notes/order";
 import { spring } from "../../styles/animations/definitions";
 import SortableNote from "./NotesTimeline/SortableNote";
@@ -43,7 +44,7 @@ export default function NotesTimeline({
   //#region Hooks
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
 
-  const [activeId, setActiveId] = useState(null); // activeId used to track the active note being dragged
+  const [activeId, setActiveID] = useState(null); // activeId used to track the active note being dragged
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -60,12 +61,25 @@ export default function NotesTimeline({
       },
     })
   );
+
+  useEffect(() => {
+    if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
+      setNotesOrder((prev) => ({
+        ...prev,
+        orderedNotesID: getUpdatedOrderedNotesID(
+          prev.orderedNotesID,
+          noteCollection
+        ),
+      }));
+    }
+  }, [noteCollection]);
+
   //#endregion
 
   //#region Handlers
   // Sets the active note id when a note is being dragged
   const handleDragStart = (event) => {
-    setActiveId(event.active.id);
+    setActiveID(event.active.id);
   };
 
   // Swap the note indexes when a note is dropped after being dragged
@@ -73,53 +87,64 @@ export default function NotesTimeline({
     // over is null when the note is dropped onto itself
     // Therefore, if over is null nothing needs to be done
     if (over && active.id !== over.id) {
-      setNotesOrder((prev) => {
-        const oldIndex = active.data.current.sortable.index;
-        const newIndex = over.data.current.sortable.index;
+      const oldIndex = active.data.current.sortable.index;
+      const newIndex = over.data.current.sortable.index;
 
-        const newOrderedNotesID = swapOrderedNotesID(
-          orderedNotesCollection,
-          prev.orderedNotesID,
-          "custom",
+      setNotesOrder((prev) => {
+        // Swap the ordered notes ID. If the ordered IDs array is empty, noteCollection will be used.
+        const newOrderedNotesID = arrayMove(
+          prev.orderedNotesID.length > 0
+            ? prev.orderedNotesID
+            : noteCollection.map((note) => note.id),
           oldIndex,
           newIndex
         );
-
         return {
           orderedNotesID: newOrderedNotesID,
           orderBy: NOTES_ORDER_BY.CUSTOM,
         };
       });
     }
-    setActiveId(null);
+    setActiveID(null);
   };
   //#endregion
 
-  const draggedNote = noteCollection.find((note) => note.id === activeId);
-  const isFiltering = filterCategories.length !== categoriesCollection.length;
-
-  // Order and filter notes
-  const orderedNotesCollection = getOrderedNotesCollection(
+  // Order and filter notes and store the results in a memoized variable
+  // This avoids re-calculating the contents of the factory function on every re-render
+  const memoizedNotesCollection = useMemo(() => {
+    const orderedNotesCollection = getOrderedNotesCollection(
+      noteCollection,
+      categoriesCollection,
+      notesOrder.orderedNotesID,
+      notesOrder.orderBy
+    );
+    return getFilteredNotesCollection(
+      orderedNotesCollection,
+      categoriesCollection,
+      searchValue,
+      filterCategories
+    );
+  }, [
     noteCollection,
     categoriesCollection,
     notesOrder.orderedNotesID,
-    notesOrder.orderBy
-  );
-  const filteredNotesCollection = getFilteredNotesCollection(
-    orderedNotesCollection,
-    categoriesCollection,
+    notesOrder.orderBy,
     searchValue,
-    filterCategories
-  );
+    filterCategories,
+  ]);
 
   // If there are no searched categories, delay the display of the no categories message to avoid flicker
-  if (filteredNotesCollection.length === 0 && !noNotesDisplayed) {
+  if (memoizedNotesCollection.length === 0 && !noNotesDisplayed) {
     setTimeout(() => {
       setNoNotesDisplayed(true);
     }, 400);
-  } else if (filteredNotesCollection.length > 0 && noNotesDisplayed) {
+  } else if (memoizedNotesCollection.length > 0 && noNotesDisplayed) {
     setNoNotesDisplayed(false);
   }
+
+  const draggedNote = noteCollection.find((note) => note.id === activeId);
+  const isFiltering =
+    memoizedNotesCollection.length !== categoriesCollection.length;
 
   return noteStatus === "loading" ? (
     <Zoom in>
@@ -137,7 +162,7 @@ export default function NotesTimeline({
       modifiers={[restrictToWindowEdges]}
     >
       <SortableContext
-        items={filteredNotesCollection}
+        items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
         {/*<DragOverlay>*/}
@@ -156,7 +181,7 @@ export default function NotesTimeline({
         {/*  ) : null}*/}
         {/*</DragOverlay>*/}
         <Box
-          p="1rem"
+          p={["1rem", "2rem"]}
           display="grid"
           gap="2rem"
           gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
@@ -164,7 +189,7 @@ export default function NotesTimeline({
         >
           {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
           <AnimatePresence>
-            {filteredNotesCollection.map((note, index) => (
+            {memoizedNotesCollection.map((note, index) => (
               <SortableNote
                 key={note.id}
                 noteID={note.id}

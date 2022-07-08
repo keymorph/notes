@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
-import { MODAL_ACTIONS } from "../../../helpers/models/modals";
+import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   getOrCreateCategoryID,
   getPaletteCategoryColorName,
@@ -24,7 +24,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
-import NoteActionModal from "../Modals/NoteActionModal";
+import NoteActionDialog from "../Dialogs/NoteActionDialog";
 import CustomTooltip from "../SharedComponents/CustomTooltip";
 
 const NoteCard = styled(Card)({
@@ -151,7 +151,7 @@ export default function Note({
         display: "flex",
       }}
     >
-      <NoteActionModal
+      <NoteActionDialog
         noteID={noteID}
         title={title}
         description={description}

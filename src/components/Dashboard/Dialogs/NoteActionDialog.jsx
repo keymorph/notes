@@ -1,8 +1,9 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Card,
+  Dialog,
+  Fade,
   Grow,
-  Modal,
   TextField,
   useMediaQuery,
   useTheme,
@@ -15,7 +16,7 @@ import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
   NOTE_TITLE_CHAR_LIMIT,
 } from "../../../constants/input-limits";
-import { MODAL_ACTIONS } from "../../../helpers/models/modals";
+import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -26,7 +27,7 @@ import {
   updateNote,
 } from "../../../helpers/requests/note-requests";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
-import { modalCard } from "../../../styles/components/modal";
+import { dialogCard } from "../../../styles/components/dialog";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 import Titlebar from "./Components/Titlebar";
@@ -40,7 +41,7 @@ const DESCRIPTION_ROWS = {
   GIGANTIC: 24,
 };
 
-export default function NoteActionModal({
+export default function NoteActionDialog({
   action,
   noteID,
   title,
@@ -83,6 +84,7 @@ export default function NoteActionModal({
   //#region Query Handling Hooks
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
+      handleModalClose();
       // Reflect the database changes on the front-end
       setNoteCollection(data.noteItem.notes.reverse());
       setCategoriesCollection(data.noteItem.categories);
@@ -114,7 +116,7 @@ export default function NoteActionModal({
   //#endregion
 
   //#region Helper Functions
-  // Reset modal values is used when creating a note
+  // Reset modal values is used when creating or editing a note
   // If keepCurrentAction is true, it means that we don't want to reset the current action (e.g. when resetting the values)
   const handleResetModalValues = (keepCurrentAction = false) => {
     if (!keepCurrentAction) {
@@ -166,11 +168,13 @@ export default function NoteActionModal({
         tags: [],
       };
       mutateEdit(editedNote);
+    } else {
+      handleModalClose();
     }
-    handleModalClose();
   };
 
   const handleCategoryChipDelete = () => {
+    console.log("handleCategoryChipDelete");
     setNewCategoryName("");
     setNewCategoryColor("none");
     setDisplayCategoryChip(false);
@@ -241,80 +245,73 @@ export default function NoteActionModal({
   //#endregion
 
   return (
-    <Modal
+    <Dialog
       open={modalOpen}
       onClose={(event, reason) => handleBeforeModalClose(event, reason)}
+      TransitionComponent={Grow}
       closeAfterTransition
     >
-      <Grow in={modalOpen}>
-        <Card sx={modalCard}>
-          <Titlebar
-            action={currentAction}
-            title={
-              (isViewing && "Viewing Note") ||
-              (isEditing && "Editing Note") ||
-              (isCreating && "Creating a Note")
-            }
-            disableRevert={!valuesChanged}
-            onClose={handleBeforeModalClose}
-            onActionChange={handleActionChange}
-            onRevert={handleResetModalValues}
-          />
+      <Card sx={dialogCard}>
+        <Titlebar
+          action={currentAction}
+          title={
+            (isViewing && "Viewing Note") ||
+            (isEditing && "Editing Note") ||
+            (isCreating && "Creating a Note")
+          }
+          disableRevert={!valuesChanged}
+          onClose={handleBeforeModalClose}
+          onActionChange={handleActionChange}
+          onRevert={handleResetModalValues}
+        />
 
-          <TextField
-            disabled={currentAction === MODAL_ACTIONS.VIEW}
-            required
-            id="outlined-required"
-            label={"Title"}
-            value={newTitle}
-            sx={{ my: "1em" }}
-            inputProps={{
-              maxLength: NOTE_TITLE_CHAR_LIMIT,
-            }}
-            onChange={(event) => setNewTitle(event.target.value)}
-          />
+        <TextField
+          disabled={currentAction === MODAL_ACTIONS.VIEW}
+          required
+          id="outlined-required"
+          label={"Title"}
+          value={newTitle}
+          sx={{ my: "1em" }}
+          inputProps={{
+            maxLength: NOTE_TITLE_CHAR_LIMIT,
+          }}
+          onChange={(event) => setNewTitle(event.target.value)}
+        />
 
-          <TextField
-            disabled={currentAction === MODAL_ACTIONS.VIEW}
-            id="outlined-multiline-static"
-            label={"Description"}
-            value={newDescription}
-            multiline
-            minRows={minDescriptionRows}
-            maxRows={maxDescriptionRows}
-            sx={{ mb: 2 }}
-            inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
-            onChange={(event) => setNewDescription(event.target.value)}
-          />
+        <TextField
+          disabled={currentAction === MODAL_ACTIONS.VIEW}
+          id="outlined-multiline-static"
+          label={"Description"}
+          value={newDescription}
+          multiline
+          minRows={minDescriptionRows}
+          maxRows={maxDescriptionRows}
+          sx={{ mb: "1em" }}
+          inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
+          onChange={(event) => setNewDescription(event.target.value)}
+        />
 
-          {/* Display either the category chip or the search category component based on the user intended action */}
-          {displayCategoryChip && (
-            <motion.div
-              variants={variantFadeSlideUpSlow}
-              initial={"hidden"}
-              animate={"visible"}
-            >
-              <EditableCategoryChip
-                categoryName={newCategoryName}
-                categoryColor={newCategoryColor}
-                setCategoryName={setNewCategoryName}
-                setCategoryColor={setNewCategoryColor}
-                categoryCollection={modifiedCategoriesCollection}
-                enableEdit={isCategoryNew} // Enable edit if category is new
-                onDelete={
-                  currentAction !== MODAL_ACTIONS.VIEW
-                    ? handleCategoryChipDelete
-                    : null
-                }
-              />
-            </motion.div>
-          )}
-          {!displayCategoryChip && (isCreating || isEditing) && (
-            <motion.div
-              variants={variantFadeSlideUpSlow}
-              initial={"hidden"}
-              animate={"visible"}
-            >
+        {/* Display either the category chip or the search category component based on the user intended action */}
+        {displayCategoryChip && (
+          <motion.div
+            variants={variantFadeSlideUpSlow}
+            initial={"hidden"}
+            animate={"visible"}
+          >
+            <EditableCategoryChip
+              categoryName={newCategoryName}
+              categoryColor={newCategoryColor}
+              setCategoryName={setNewCategoryName}
+              setCategoryColor={setNewCategoryColor}
+              categoryCollection={modifiedCategoriesCollection}
+              enableEdit={isCategoryNew} // Enable edit if category is new
+              onDelete={!isViewing ? handleCategoryChipDelete : null}
+            />
+          </motion.div>
+        )}
+        {!displayCategoryChip && (isCreating || isEditing) && (
+          <Fade in>
+            <div>
               <SelectOrAddCategory
                 categoriesCollection={categoriesCollection}
                 categoryName={newCategoryName}
@@ -323,28 +320,28 @@ export default function NoteActionModal({
                 setIsCategoryNew={setIsCategoryNew}
                 setDisplayCategoryChip={setDisplayCategoryChip}
               />
-            </motion.div>
-          )}
+            </div>
+          </Fade>
+        )}
 
-          <Zoom in={isCreating || isEditing} unmountOnExit>
-            <LoadingButton
-              loading={editStatus === "loading" || createStatus === "loading"}
-              variant="contained"
-              size="small"
-              disabled={saveDisabled} // Disable button if required title field is empty
-              onClick={isEditing ? handleEditNote : handleCreateNote}
-              sx={{
-                border: "1px",
-                mt: 2,
-                ml: "auto",
-              }}
-            >
-              {isEditing && "Save"}
-              {isCreating && "Create"}
-            </LoadingButton>
-          </Zoom>
-        </Card>
-      </Grow>
-    </Modal>
+        <Zoom in={isCreating || isEditing} unmountOnExit>
+          <LoadingButton
+            loading={editStatus === "loading" || createStatus === "loading"}
+            variant="contained"
+            size="small"
+            disabled={saveDisabled} // Disable button if required title field is empty
+            onClick={isEditing ? handleEditNote : handleCreateNote}
+            sx={{
+              border: "1px",
+              mt: 2,
+              ml: "auto",
+            }}
+          >
+            {isEditing && "Save"}
+            {isCreating && "Create"}
+          </LoadingButton>
+        </Zoom>
+      </Card>
+    </Dialog>
   );
 }

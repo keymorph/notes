@@ -1,9 +1,9 @@
 import { LoadingButton } from "@mui/lab";
-import { Card, Grow, Modal, Stack, Typography } from "@mui/material";
+import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { MODAL_ACTIONS } from "../../../helpers/models/modals";
+import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   doCategoryNamesCollide,
   doesCategoryExist,
@@ -14,12 +14,12 @@ import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
-import { modalCard } from "../../../styles/components/modal";
+import { dialogCard } from "../../../styles/components/dialog";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";
 
-export default function ManageCategoriesModal({
+export default function ManageCategoriesDialog({
   modalOpen,
   handleModalClose,
   categoriesCollection,
@@ -161,97 +161,100 @@ export default function ManageCategoriesModal({
   //#endregion
 
   return (
-    <Modal open={modalOpen} onClose={handleModalClose} closeAfterTransition>
-      <Grow in={modalOpen}>
-        <Card sx={modalCard}>
-          <Titlebar
-            action={MODAL_ACTIONS.EDIT}
-            title={"Manage Categories"}
-            disableRevert={!categoriesChanged}
-            onClose={handleBeforeModalClose}
-            onRevert={resetModalValues}
-          />
-          <CategorySearchInput
-            categoryName={inputCategoryName}
-            setCategoryName={setInputCategoryName}
-            categoryExists={!isCategoryNew}
-            onCreate={handleCreateCategory}
-            sx={{ my: "1rem" }}
-          />
-          <Stack
-            direction={"column"}
-            spacing={2}
-            py={"1em"}
-            px={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
-            overflow={"scroll"}
-            height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
-          >
-            <AnimatePresence>
-              {filteredCategories.map((category, index) => (
-                <motion.div
-                  key={category.id}
-                  layout
-                  transition={springShort}
-                  variants={variantFadeSlideDownStagger}
-                  custom={index}
-                  initial={"hidden"}
-                  animate={"visible"}
-                  exit={"hidden"}
-                >
-                  <EditableCategoryChip
-                    categoryName={category.name}
-                    categoryColor={category.color}
-                    setCategoryName={(categoryName) =>
-                      handleRenameCategory(
-                        category.id,
-                        category.name,
-                        categoryName
-                      )
-                    }
-                    setCategoryColor={(categoryColor) =>
-                      handleRecolorCategory(
-                        category.id,
-                        category.color,
-                        categoryColor
-                      )
-                    }
-                    categoryCollection={modifiedCategories}
-                    enableEdit
-                    onDelete={() => handleDeleteCategory(category.id)}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-            {noCategoriesDisplayed && (
-              <Grow in>
-                <Typography
-                  textAlign={"center"}
-                  variant="body1"
-                  color={"primary"}
-                >
-                  No categories to display
-                </Typography>
-              </Grow>
-            )}
-          </Stack>
-          <LoadingButton
-            loading={updateStatus === "loading"}
-            variant="contained"
-            size="small"
-            disabled={
-              !categoriesChanged || doCategoryNamesCollide(modifiedCategories)
-            }
-            onClick={handleSaveCategories}
-            sx={{
-              border: "1px",
-              mt: 2,
-              ml: "auto",
-            }}
-          >
-            Save
-          </LoadingButton>
-        </Card>
-      </Grow>
-    </Modal>
+    <Dialog
+      open={modalOpen}
+      onClose={handleModalClose}
+      TransitionComponent={Grow}
+      closeAfterTransition
+    >
+      <Card sx={dialogCard}>
+        <Titlebar
+          action={MODAL_ACTIONS.EDIT}
+          title={"Manage Categories"}
+          disableRevert={!categoriesChanged}
+          onClose={handleBeforeModalClose}
+          onRevert={resetModalValues}
+        />
+        <CategorySearchInput
+          categoryName={inputCategoryName}
+          setCategoryName={setInputCategoryName}
+          categoryExists={!isCategoryNew}
+          onCreate={handleCreateCategory}
+          sx={{ my: "1rem" }}
+        />
+        <Stack
+          direction={"column"}
+          spacing={2}
+          py={"1em"}
+          px={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
+          overflow={"scroll"}
+          height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
+        >
+          <AnimatePresence>
+            {filteredCategories.map((category, index) => (
+              <motion.div
+                key={category.id}
+                layout
+                transition={springShort}
+                variants={variantFadeSlideDownStagger}
+                custom={index}
+                initial={"hidden"}
+                animate={"visible"}
+                exit={"hidden"}
+              >
+                <EditableCategoryChip
+                  categoryName={category.name}
+                  categoryColor={category.color}
+                  setCategoryName={(categoryName) =>
+                    handleRenameCategory(
+                      category.id,
+                      category.name,
+                      categoryName
+                    )
+                  }
+                  setCategoryColor={(categoryColor) =>
+                    handleRecolorCategory(
+                      category.id,
+                      category.color,
+                      categoryColor
+                    )
+                  }
+                  categoryCollection={modifiedCategories}
+                  enableEdit
+                  onDelete={() => handleDeleteCategory(category.id)}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {noCategoriesDisplayed && (
+            <Grow in>
+              <Typography
+                textAlign={"center"}
+                variant="body1"
+                color={"primary"}
+              >
+                No categories to display
+              </Typography>
+            </Grow>
+          )}
+        </Stack>
+        <LoadingButton
+          loading={updateStatus === "loading"}
+          variant="contained"
+          size="small"
+          disabled={
+            !categoriesChanged || doCategoryNamesCollide(modifiedCategories)
+          }
+          onClick={handleSaveCategories}
+          sx={{
+            border: "1px",
+            mt: 2,
+            ml: "auto",
+          }}
+        >
+          Save
+        </LoadingButton>
+      </Card>
+    </Dialog>
   );
 }

@@ -51,7 +51,7 @@ export default function SelectOrAddCategory({
   const isCategoryValid = newCategoryName.trim() !== "" && !categoryExists;
 
   return (
-    <>
+    <div>
       <CategorySearchInput
         categoryName={newCategoryName}
         setCategoryName={setNewCategoryName}
@@ -87,6 +87,6 @@ export default function SelectOrAddCategory({
           </PopIn>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }

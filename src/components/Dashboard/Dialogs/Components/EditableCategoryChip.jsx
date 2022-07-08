@@ -60,21 +60,22 @@ export default function EditableCategoryChip({
   const color = getPaletteCategoryColorName(categoryColor);
 
   return (
-    <>
+    <div>
       <Chip
         color={invalidCategoryName ? "error" : "chipNeutral"}
         icon={
-          <CustomTooltip
-            title={
-              isPaletteOpen
-                ? "Close category color palette"
-                : "Open category color palette"
-            }
+          <IconButton
+            autoFocus={enableEdit}
+            size={"small"}
+            disabled={!enableEdit}
+            onClick={handlePaletteOpen}
           >
-            <IconButton
-              size={"small"}
-              disabled={!enableEdit}
-              onClick={handlePaletteOpen}
+            <CustomTooltip
+              title={
+                isPaletteOpen
+                  ? "Close category color palette"
+                  : "Open category color palette"
+              }
             >
               <Circle
                 color={color}
@@ -83,8 +84,8 @@ export default function EditableCategoryChip({
                   transition: "color 0.2s ease-in-out",
                 }}
               />
-            </IconButton>
-          </CustomTooltip>
+            </CustomTooltip>
+          </IconButton>
         }
         label={
           enableEdit ? (
@@ -109,8 +110,7 @@ export default function EditableCategoryChip({
         }
         deleteIcon={
           <IconButton size={"small"}>
-            {/* If the category has both enableEdit, then it is in an editable context and
-              as such it should display the icon indicating that the category can be deleted. */}
+            {/* This tooltip is a children of button to prevent it from overriding the onClick event passed by the chip */}
             <CustomTooltip
               title={
                 enableEdit ? "Delete category" : "Remove category from note"
@@ -166,6 +166,6 @@ export default function EditableCategoryChip({
           </PopIn>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }
