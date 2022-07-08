@@ -6,6 +6,7 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Fade,
@@ -27,9 +28,10 @@ import CustomTooltip from "./SharedComponents/CustomTooltip";
 export default function AppToolbar({
   noteCollection,
   categoriesCollection,
+  filterCategories,
   searchValue,
   noteStatus,
-  orderFilterViewOpen,
+  orderFilterDropdownOpen,
   setNoteCollection,
   setCategoriesCollection,
   setSearchValue,
@@ -84,7 +86,7 @@ export default function AppToolbar({
   const handleOrderFilterViewChange = () => {
     // If the Order/Filter View is closed and the user is not at the top of the page, scroll to the top and open it
     // Otherwise just open/close without scrolling and without timeout
-    if (!orderFilterViewOpen && window.scrollY > 0) {
+    if (!orderFilterDropdownOpen && window.scrollY > 0) {
       window.scrollTo({
         top: 0,
         left: 0,
@@ -95,7 +97,7 @@ export default function AppToolbar({
         setOrderFilterViewOpen(true);
       }, 400);
     } else {
-      setOrderFilterViewOpen(!orderFilterViewOpen);
+      setOrderFilterViewOpen(!orderFilterDropdownOpen);
     }
   };
   //#endregion
@@ -156,20 +158,35 @@ export default function AppToolbar({
             {noteActionModal}
           </>
         )}
-
         {/* Only display the search bar and filter if there are notes */}
-        {noteCollection.length > 0 && (
-          <>
+        <Fade in={noteCollection.length > 0} unmountOnExit>
+          <Box display={"flex"}>
             <CustomTooltip
-              title={orderFilterViewOpen ? "Close filters" : "Open filters"}
+              title={
+                orderFilterDropdownOpen
+                  ? "Close filters dropdown"
+                  : "Open filters dropdown"
+              }
               placement={"right"}
             >
               <IconButton
                 size={"small"}
                 onClick={handleOrderFilterViewChange}
-                color={orderFilterViewOpen ? "primary" : "neutral"}
+                color={orderFilterDropdownOpen ? "primary" : "neutral"}
               >
-                {orderFilterViewOpen ? <FilterAlt /> : <FilterAltOutlined />}
+                <Badge
+                  color={"primary"}
+                  invisible={
+                    filterCategories.length === 0 || orderFilterDropdownOpen
+                  }
+                  variant={"dot"}
+                >
+                  {orderFilterDropdownOpen ? (
+                    <FilterAlt />
+                  ) : (
+                    <FilterAltOutlined />
+                  )}
+                </Badge>
               </IconButton>
             </CustomTooltip>
             <ToolbarSearch
@@ -178,9 +195,8 @@ export default function AppToolbar({
               searching={searching}
               setSearching={setSearching}
             />
-          </>
-        )}
-
+          </Box>
+        </Fade>
         <Box display={"flex"} ml={"auto"}>
           {/* If on desktop or when not searching, the add note button (with text) will be visible */}
           <Fade

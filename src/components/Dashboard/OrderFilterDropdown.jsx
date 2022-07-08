@@ -1,9 +1,9 @@
 import { Card, Divider, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
-import FilterView from "./OrderFilterView/FilterView";
-import OrderView from "./OrderFilterView/OrderView";
+import FilterView from "./OrderFilterDropdown/FilterView";
+import OrderView from "./OrderFilterDropdown/OrderView";
 
-export default function OrderFilterView({
+export default function OrderFilterDropdown({
   categoriesCollection,
   filterCategories,
   notesOrder,

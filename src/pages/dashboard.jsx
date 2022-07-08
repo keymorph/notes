@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
-import OrderFilterView from "../components/Dashboard/OrderFilterView";
+import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
 import { NOTES_ORDER_BY } from "../helpers/models/note-order";
 import {
   getNoteItem,
@@ -24,12 +24,12 @@ export default function Dashboard() {
     orderedNotesID: [],
     orderBy: NOTES_ORDER_BY.DEFAULT,
   });
-  // These categories will be used to filter the notes
+  // These categories will be used to filter the notes. If empty, no category filter will be applied
   const [filterCategories, setFilterCategories] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
-  const [orderFilterViewOpen, setOrderFilterViewOpen] = useState(false);
+  const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
 
   useEffect(() => {
     mutateOrder({ notesOrder });
@@ -82,16 +82,17 @@ export default function Dashboard() {
       <AppToolbar
         noteCollection={noteCollection}
         categoriesCollection={categoriesCollection}
+        filterCategories={filterCategories}
         searchValue={searchValue}
         noteStatus={noteStatus}
-        orderFilterViewOpen={orderFilterViewOpen}
+        orderFilterDropdownOpen={orderFilterDropdownOpen}
         setNoteCollection={setNoteCollection}
         setCategoriesCollection={setCategoriesCollection}
         setSearchValue={setSearchValue}
-        setOrderFilterViewOpen={setOrderFilterViewOpen}
+        setOrderFilterViewOpen={setOrderFilterDropdownOpen}
       />
-      {orderFilterViewOpen && (
-        <OrderFilterView
+      {orderFilterDropdownOpen && (
+        <OrderFilterDropdown
           notesOrder={notesOrder}
           categoriesCollection={categoriesCollection}
           filterCategories={filterCategories}
