@@ -41,7 +41,7 @@ export default function Titlebar({
           </Zoom>
         </CustomTooltip>
         <CustomTooltip title={"Revert changes"} disableableButton>
-          <Zoom in={action !== MODAL_ACTIONS.VIEW}>
+          <Zoom in={action !== MODAL_ACTIONS.VIEW} appear={false}>
             <div>
               <IconButton
                 color={"neutral"}

@@ -153,7 +153,7 @@ export default function ManageCategoriesDialog({
       handleModalClose();
       setTimeout(() => {
         resetModalValues();
-      }, 500); // Don't immediately reset the values till the closing animation is complete
+      }, 250); // Don't immediately reset the values till the closing animation is complete
     } else {
       handleModalClose();
     }

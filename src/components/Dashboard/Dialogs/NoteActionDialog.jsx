@@ -103,9 +103,7 @@ export default function NoteActionDialog({
         // Reflect the database changes on the front-end
         setNoteCollection(data.noteItem.notes.reverse());
         setCategoriesCollection(data.noteItem.categories);
-        setTimeout(() => {
-          handleResetModalValues(); // Don't immediately reset the values till the closing animation is complete
-        }, 500);
+        handleResetModalValues(); // Only reset on successful note creation
       },
       onError: (error) => {
         console.error(error.message);
@@ -181,18 +179,9 @@ export default function NoteActionDialog({
     setIsCategoryNew(false);
   };
 
-  const handleBeforeModalClose = (event, reason) => {
+  const handleAfterModalClose = (event = {}, reason = "") => {
     if (reason === "closeModal" || !valuesChanged) {
-      handleModalClose();
-      setTimeout(() => {
-        handleResetModalValues();
-      }, 500); // Don't immediately reset the values till the closing animation is complete
-    } else {
-      if (currentAction === MODAL_ACTIONS.EDIT) {
-        handleEditNote();
-      } else if (currentAction === MODAL_ACTIONS.CREATE_NOTE) {
-        handleModalClose();
-      }
+      handleResetModalValues();
     }
   };
   //#endregion
@@ -247,8 +236,9 @@ export default function NoteActionDialog({
   return (
     <Dialog
       open={modalOpen}
-      onClose={(event, reason) => handleBeforeModalClose(event, reason)}
+      onClose={handleModalClose}
       TransitionComponent={Grow}
+      TransitionProps={{ onExited: () => handleAfterModalClose() }}
       closeAfterTransition
     >
       <Card sx={dialogCard}>
@@ -260,7 +250,7 @@ export default function NoteActionDialog({
             (isCreating && "Creating a Note")
           }
           disableRevert={!valuesChanged}
-          onClose={handleBeforeModalClose}
+          onClose={handleModalClose}
           onActionChange={handleActionChange}
           onRevert={handleResetModalValues}
         />
