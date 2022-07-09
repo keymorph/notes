@@ -59,6 +59,7 @@ export default function SortableNote({
           dragHandleAttributes={attributes}
           dragHandleListeners={listeners}
           isDragging={isDragging}
+          disableDrag={disableDrag}
           {...rest}
         />
       </motion.div>

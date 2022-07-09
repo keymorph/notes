@@ -159,8 +159,8 @@ export default function AppToolbar({
           </>
         )}
         {/* Only display the search bar and filter if there are notes */}
-        <Fade in={noteCollection.length > 0} unmountOnExit>
-          <Box display={"flex"}>
+        {noteCollection.length > 0 && (
+          <>
             <CustomTooltip
               title={
                 orderFilterDropdownOpen
@@ -195,8 +195,8 @@ export default function AppToolbar({
               searching={searching}
               setSearching={setSearching}
             />
-          </Box>
-        </Fade>
+          </>
+        )}
         <Box display={"flex"} ml={"auto"}>
           {/* If on desktop or when not searching, the add note button (with text) will be visible */}
           <Fade

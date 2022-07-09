@@ -8,11 +8,11 @@ export default function ToolbarSearch({
   setSearching,
 }) {
   //#region Handlers
-  const handleSearchToggle = () => {
+  const handleSearchToggle = (isSearching) => {
     if (searchValue.trim() === "") {
       // Add a small timeout in case the user presses the add icon button (else it dismounts and it cannot be pressed)
       setTimeout(() => {
-        setSearching((searching) => !searching);
+        setSearching(isSearching);
       }, 10);
     }
   };
@@ -36,8 +36,8 @@ export default function ToolbarSearch({
       }
       placeholder="Search…"
       value={searchValue}
-      onFocus={handleSearchToggle}
-      onBlur={handleSearchToggle}
+      onFocus={() => handleSearchToggle(true)}
+      onBlur={() => handleSearchToggle(false)}
       fullWidth
       sx={{
         borderRadius: 20,

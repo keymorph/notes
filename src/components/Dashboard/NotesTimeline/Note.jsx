@@ -32,7 +32,6 @@ const NoteCard = styled(Card)({
   width: "20rem",
   height: "22rem",
   overflowWrap: "break-word",
-  margin: "5px",
   transition: "all 0.25s ease-in-out",
 });
 
@@ -50,6 +49,7 @@ export default function Note({
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
+  disableDrag,
 }) {
   //#region Hooks
   const theme = useTheme();
@@ -176,13 +176,8 @@ export default function Note({
         <div>
           <NoteCard
             sx={{
-              "&:hover": {
-                transform: "scale(1.01)",
-              },
-              "&:active": {
-                boxShadow: noteShadow,
-                transform: "scale(1.04)",
-              },
+              transform: isDragging ? "scale(1.04)" : "scale(1)",
+              boxShadow: !disableDrag && isDragging ? noteShadow : "none",
               transition: "all 0.25s ease-in-out",
             }}
             ref={ref}

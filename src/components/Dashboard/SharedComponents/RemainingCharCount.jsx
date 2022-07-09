@@ -10,7 +10,7 @@ export default function RemainingCharCount({
 
   return (
     <CustomTooltip title={"Remaining characters"}>
-      <Fade in={stringLength}>
+      <Fade in={stringLength !== 0}>
         <Typography
           variant={"subtitle2"}
           color={remainingCharCount > errorColorAt ? "text.secondary" : "error"}

@@ -180,7 +180,7 @@ export default function NotesTimeline({
         {/*  ) : null}*/}
         {/*</DragOverlay>*/}
         <Box
-          p={["1rem", "2rem"]}
+          p={["1.5rem", "2rem"]}
           display="grid"
           gap="2rem"
           gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
