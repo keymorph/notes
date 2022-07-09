@@ -4,10 +4,10 @@ import { getSession } from "next-auth/react";
 const session = await getSession();
 
 // Get the note item with all the notes from the database
-export async function getAllNotes() {
+export async function getNoteItem() {
   return await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
     headers: {
-      userid: session?.user.id,
+      user_id: session.user.id,
     },
   });
 }
@@ -16,7 +16,7 @@ export async function getAllNotes() {
 export async function deleteNote(data) {
   return await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, {
     headers: {
-      userid: session?.user.id,
+      user_id: session.user.id,
     },
     data,
   });
@@ -26,7 +26,7 @@ export async function deleteNote(data) {
 export async function createNote(data) {
   return await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, data, {
     headers: {
-      userid: session?.user.id,
+      user_id: session.user.id,
     },
   });
 }
@@ -35,7 +35,20 @@ export async function createNote(data) {
 export async function updateNote(data) {
   return await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/note`, data, {
     headers: {
-      userid: session?.user.id,
+      user_id: session.user.id,
     },
   });
+}
+
+// Put the new notes order in the database
+export async function updateNotesOrder(data) {
+  return await axios.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/note/order`,
+    data,
+    {
+      headers: {
+        user_id: session.user.id,
+      },
+    }
+  );
 }

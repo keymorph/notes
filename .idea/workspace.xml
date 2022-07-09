@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/requests/note-requests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/SharedComponents/RemainingCharCount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/SharedComponents/RemainingCharCount.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +39,41 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="notes-orderBy" />
+                    <option name="lastUsedInstant" value="1655512533" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1653707900" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="replace-drag-to-reorder" />
+                    <option name="lastUsedInstant" value="1652139733" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note/Note.jsx" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/NotesTimeline.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/ScrollTop.jsx" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/Navbar.jsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/pages/_app.jsx" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/pages/_document.jsx" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -65,24 +100,33 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/dev/CF+/careerfairplus-app&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files (x86)\\JetBrains\\WebStorm 2022.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\dev\Projects\notetakingapp\src\utils\api" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Auth" />
-      <recent name="C:\dev\Projects\notetakingapp\src\utils\input-validation" />
-      <recent name="C:\dev\Projects\notetakingapp\src\helpers\requests" />
-      <recent name="C:\dev\Projects\notetakingapp\src\pages\auth" />
+      <recent name="C:\dev\Projects\notetakingapp\src\helpers\models" />
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Modals\ModalComponents" />
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline" />
+      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard" />
+      <recent name="C:\dev\Projects\notetakingapp\src\components" />
     </key>
   </component>
   <component name="RunManager">
@@ -92,7 +136,7 @@
       <scripts>
         <script value="dev" />
       </scripts>
-      <node-interpreter value="project" />
+      <node-interpreter value="node" />
       <package-manager value="npm" />
       <envs />
       <method v="2" />
@@ -102,6 +146,10 @@
         <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../../../Program Files/Rust stable MSVC 1.60/bin" />
+    <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -141,11 +189,102 @@
       <workItem from="1650662717521" duration="82607000" />
       <workItem from="1650911853915" duration="19532000" />
       <workItem from="1650948204671" duration="1824000" />
+      <workItem from="1651209428450" duration="118000" />
+      <workItem from="1651252390299" duration="3020000" />
+      <workItem from="1651280574077" duration="707000" />
+      <workItem from="1651287665796" duration="655000" />
+      <workItem from="1651289602411" duration="105000" />
+      <workItem from="1651289719049" duration="361000" />
+      <workItem from="1651290092491" duration="196000" />
+      <workItem from="1651290302204" duration="97000" />
+      <workItem from="1651290444880" duration="504000" />
+      <workItem from="1651290963700" duration="95000" />
+      <workItem from="1651291068491" duration="467000" />
+      <workItem from="1651294596202" duration="1216000" />
+      <workItem from="1651341799189" duration="3686000" />
+      <workItem from="1651367198522" duration="35000" />
+      <workItem from="1651433932301" duration="5947000" />
+      <workItem from="1651505949445" duration="1214000" />
+      <workItem from="1651697700555" duration="7907000" />
+      <workItem from="1651757273104" duration="13000" />
+      <workItem from="1651764902369" duration="262000" />
+      <workItem from="1651880889443" duration="615000" />
+      <workItem from="1651890941318" duration="1386000" />
+      <workItem from="1651949116451" duration="1485000" />
+      <workItem from="1651996801273" duration="10587000" />
+      <workItem from="1652405042931" duration="1855000" />
+      <workItem from="1652572993678" duration="741000" />
+      <workItem from="1652574912318" duration="3442000" />
+      <workItem from="1652588239564" duration="1292000" />
+      <workItem from="1652589550173" duration="7137000" />
+      <workItem from="1652655017060" duration="6861000" />
+      <workItem from="1652733424201" duration="7155000" />
+      <workItem from="1652830462132" duration="14281000" />
+      <workItem from="1653001346454" duration="1511000" />
+      <workItem from="1653005839083" duration="1383000" />
+      <workItem from="1653446444708" duration="23000" />
+      <workItem from="1653446476214" duration="3933000" />
+      <workItem from="1653793422624" duration="242000" />
+      <workItem from="1653793750756" duration="836000" />
+      <workItem from="1653876478581" duration="4685000" />
+      <workItem from="1653899463501" duration="23504000" />
+      <workItem from="1654044934817" duration="16756000" />
+      <workItem from="1654120326136" duration="42000" />
+      <workItem from="1654120379637" duration="7919000" />
+      <workItem from="1654143765679" duration="7454000" />
+      <workItem from="1654207538132" duration="16134000" />
+      <workItem from="1654290653058" duration="6152000" />
+      <workItem from="1654300539671" duration="27431000" />
+      <workItem from="1654365259237" duration="42842000" />
+      <workItem from="1654457045660" duration="4157000" />
+      <workItem from="1654568995983" duration="769000" />
+      <workItem from="1654569836283" duration="62000" />
+      <workItem from="1654569925125" duration="11064000" />
+      <workItem from="1654636537042" duration="8493000" />
+      <workItem from="1654655917075" duration="2388000" />
+      <workItem from="1654807817256" duration="3265000" />
+      <workItem from="1654898145297" duration="9427000" />
+      <workItem from="1655063393794" duration="18000" />
+      <workItem from="1655063422123" duration="9433000" />
+      <workItem from="1655152411797" duration="4399000" />
+      <workItem from="1655245188164" duration="10537000" />
+      <workItem from="1655299456928" duration="9000" />
+      <workItem from="1655299965939" duration="14000" />
+      <workItem from="1655328825622" duration="18913000" />
+      <workItem from="1655431104260" duration="1056000" />
+      <workItem from="1655500759958" duration="56000" />
+      <workItem from="1655500827286" duration="14074000" />
+      <workItem from="1656073947104" duration="48000" />
+      <workItem from="1656074007874" duration="650000" />
+      <workItem from="1656090831411" duration="3421000" />
+      <workItem from="1656107857914" duration="1331000" />
+      <workItem from="1656123569014" duration="1271000" />
+      <workItem from="1656197447443" duration="928000" />
+      <workItem from="1656285632438" duration="595000" />
+      <workItem from="1656375502930" duration="2379000" />
+      <workItem from="1656465245136" duration="6787000" />
+      <workItem from="1656541124256" duration="17705000" />
+      <workItem from="1656627272141" duration="2000" />
+      <workItem from="1656641102679" duration="8520000" />
+      <workItem from="1656706864100" duration="29133000" />
+      <workItem from="1656880667485" duration="17390000" />
+      <workItem from="1656949014532" duration="27829000" />
+      <workItem from="1657056031456" duration="12000" />
+      <workItem from="1657056053898" duration="22209000" />
+      <workItem from="1657137878519" duration="21355000" />
+      <workItem from="1657225353809" duration="23451000" />
+      <workItem from="1657252451014" duration="1656000" />
+      <workItem from="1657311148982" duration="13270000" />
+      <workItem from="1657333456355" duration="694000" />
+      <workItem from="1657334670090" duration="2222000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="next.config.js" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

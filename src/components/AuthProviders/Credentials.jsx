@@ -36,11 +36,11 @@ export default function Credentials({ action }) {
   // Validation flags state
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
   // Error messages state
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
@@ -52,11 +52,8 @@ export default function Credentials({ action }) {
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
-    setPassword("");
     setConfirmPassword("");
-    setPasswordValid(true);
     setConfirmPasswordValid(true);
-    setPasswordError("");
     setConfirmPasswordError("");
     setSubmitButtonLoading(false);
   };
@@ -70,6 +67,7 @@ export default function Credentials({ action }) {
     const data = {
       email: email,
       password: password,
+      redirect: false,
     };
 
     // No need to redirect as next-auth handles that
@@ -241,13 +239,14 @@ export default function Credentials({ action }) {
           <CircularProgress size={24} sx={{ color: "background.paper" }} />
         }
         fullWidth
+        variant="contained"
         sx={{
           my: 3,
         }}
       >
-        {action === "login" && "login"}
-        {action === "register" && "register"}
-        {action === "forgot" && "Send Confirmation Code"}
+        {action === "login" && "LOGIN"}
+        {action === "register" && "REGISTER"}
+        {action === "forgot" && "SEND CONFIRMATION CODE"}
       </LoadingButton>
       {/* Display the respective footer link depending on the action */}
       <Collapse in={action === "register"}>

@@ -2,13 +2,13 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  reactStrictMode: true, // https://nextjs.org/docs/api-reference/next.config.js/react-strict-mode
+  reactStrictMode: true,
   webpack: (config) => {
-    config.experiments = {topLevelAwait: true, layers: true};
+    config.experiments = { topLevelAwait: true, layers: true };
     return config;
   },
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
 };
 

@@ -41,16 +41,9 @@ const AuthCard = styled(Card)({
 });
 
 export default function AuthPage() {
+  //#region Hooks
   const router = useRouter();
-  const URLQueries = router.query;
-  const action = sanitizeAction(URLQueries.action); // default to login
-
-  const { data: session, status: sessionStatus } = useSession();
-
-  // If the user is logged in, redirect to dashboard
-  if (session) {
-    router.replace("/dashboard");
-  }
+  const { status: sessionStatus } = useSession();
 
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [alertText, setAlertText] = useState("");
@@ -58,16 +51,24 @@ export default function AuthPage() {
   // Set the alertText and severity based on which is passed in the URL
   // If nothing is passed in the URL, set the alertText to empty string
   useEffect(() => {
-    if (URLQueries.error) {
+    if (router.query.error) {
       setAlertSeverity("error");
-      setAlertText(getAuthAlertText(URLQueries.error));
-    } else if (URLQueries.success) {
+      setAlertText(getAuthAlertText(router.query.error));
+    } else if (router.query.success) {
       setAlertSeverity("success");
-      setAlertText(getAuthAlertText(URLQueries.success));
+      setAlertText(getAuthAlertText(router.query.success));
     } else {
       setAlertText("");
     }
-  }, [URLQueries.error, URLQueries.success]);
+  }, [router.query.error, router.query.success]);
+  //#endregion
+
+  // If the user is logged in, redirect to dashboard
+  if (sessionStatus === "authenticated") {
+    router.replace("/dashboard");
+  }
+
+  const action = router.query.action ? router.query.action : "login";
 
   return (
     <AuthCard>

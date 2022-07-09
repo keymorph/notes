@@ -1,75 +1,129 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 
-import AppToolbar from "../components/Dashboard/AppToolbar/AppToolbar";
-import NotesTimeline from "../components/Dashboard/NotesTimeline/NotesTimeline";
-import { getAllNotes } from "../helpers/requests/note-requests";
+import AppToolbar from "../components/Dashboard/AppToolbar";
+import NotesTimeline from "../components/Dashboard/NotesTimeline";
+import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
+import { NOTES_ORDER_BY } from "../helpers/models/note-order";
+import {
+  getNoteItem,
+  updateNotesOrder,
+} from "../helpers/requests/note-requests";
 
 export default function Dashboard() {
+  //#region Hooks
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
-
-  // If the user is not logged in, redirect to the login page
-  if (!session && sessionStatus !== "loading") {
-    router.replace("/auth");
-  }
-
-  console.log(session);
-
+  // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categoriesCollection, setCategoriesCollection] = useState([]);
+  const [notesOrder, setNotesOrder] = useState({
+    orderedNotesID: [],
+    orderBy: NOTES_ORDER_BY.DEFAULT,
+  });
+  // These categories will be used to filter the notes. If empty, no category filter will be applied
+  const [filterCategories, setFilterCategories] = useState([]);
   // Search Bar
   const [searchValue, setSearchValue] = useState("");
 
-  // Query Handler
-  const { data: noteData, status: noteStatus } = useQuery(
-    ["get_notes"],
-    getAllNotes,
+  const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    mutateOrder({ notesOrder });
+  }, [notesOrder]);
+
+  //#region Query Handling Hooks
+  const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
+    onSuccess: ({ data }) => {
+      const noteItem = data.noteItem;
+      // Update the state only if the user has a noteItem in the container
+      // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
+      if (noteItem) {
+        setNotesOrder({
+          orderedNotesID: noteItem.notes_order?.ordered_notes_id || [],
+          orderBy: noteItem.notes_order?.order_by || NOTES_ORDER_BY.DEFAULT,
+        });
+        setNoteCollection(noteItem.notes.reverse()); // Reverse the notes order, to show the newest first.
+        setCategoriesCollection(noteItem.categories);
+      }
+    },
+    onError: (error) => {
+      console.error(error.message);
+    },
+    staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
+    enabled: sessionStatus === "authenticated", // Disable unless the user is logged in
+  });
+
+  // Changes and gets the order of notes in the database
+  const { mutate: mutateOrder, status: orderStatus } = useMutation(
+    updateNotesOrder,
     {
-      onSuccess: ({ data }) => {
-        const noteItem = data.noteItem;
-        // Update the state only if the user has a noteItem in the container
-        // Note: new users will not have a noteItem, but it will be created when the user creates their first note
-        if (noteItem) {
-          setNoteCollection(noteItem.notes.reverse()); // Reverse the note order, to show the newest first.
-          setCategories(noteItem.categories);
-        }
-      },
       onError: (error) => {
         console.error(error.message);
       },
-      staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     }
   );
+  //#endregion
+  //#endregion
+
+  // If the user is not logged in, redirect to the login page
+  if (sessionStatus === "unauthenticated") {
+    router.replace("/auth");
+  }
+
+  console.info("Notes Collection: ", noteCollection);
+  console.info("Categories Collection: ", categoriesCollection);
 
   return sessionStatus === "authenticated" ? (
     <Box>
       <AppToolbar
         noteCollection={noteCollection}
-        setNoteCollection={setNoteCollection}
-        categories={categories}
-        setCategories={setCategories}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
-      <NotesTimeline
-        noteCollection={noteCollection}
-        setNoteCollection={setNoteCollection}
-        categories={categories}
-        setCategories={setCategories}
+        categoriesCollection={categoriesCollection}
+        filterCategories={filterCategories}
         searchValue={searchValue}
         noteStatus={noteStatus}
+        orderFilterDropdownOpen={orderFilterDropdownOpen}
+        setNoteCollection={setNoteCollection}
+        setCategoriesCollection={setCategoriesCollection}
+        setSearchValue={setSearchValue}
+        setOrderFilterViewOpen={setOrderFilterDropdownOpen}
+      />
+      {orderFilterDropdownOpen && (
+        <OrderFilterDropdown
+          notesOrder={notesOrder}
+          categoriesCollection={categoriesCollection}
+          filterCategories={filterCategories}
+          setNotesOrder={setNotesOrder}
+          setFilterCategories={setFilterCategories}
+        />
+      )}
+      <NotesTimeline
+        noteCollection={noteCollection}
+        categoriesCollection={categoriesCollection}
+        notesOrder={notesOrder}
+        filterCategories={filterCategories}
+        searchValue={searchValue}
+        noteStatus={noteStatus}
+        setNoteCollection={setNoteCollection}
+        setCategoriesCollection={setCategoriesCollection}
+        setNotesOrder={setNotesOrder}
       />
     </Box>
   ) : (
     // While the user is being authenticated, show a loading indicator
     <Zoom in>
-      <Box sx={{ width: "100%" }}>
+      <Box width={"100%"}>
         <LinearProgress />
       </Box>
     </Zoom>
   );
+}
+
+// Get user session from the server-side
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return { props: { session } };
 }

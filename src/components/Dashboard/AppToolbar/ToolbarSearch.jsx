@@ -1,73 +1,52 @@
-import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputAdornment } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Zoom from "@mui/material/Zoom";
-import * as React from "react";
+import { OutlinedInput } from "@mui/material";
 
-export default function ToolbarSearch({ setSearchValue, searchValue }) {
-  // Clear search value when Escape key is pressed
-  const handleClearOnKeyPress = (event) => {
-    if (event.key === "Escape") {
-      setSearchValue("");
+export default function ToolbarSearch({
+  setSearchValue,
+  searchValue,
+  searching,
+  setSearching,
+}) {
+  //#region Handlers
+  const handleSearchToggle = (isSearching) => {
+    if (searchValue.trim() === "") {
+      // Add a small timeout in case the user presses the add icon button (else it dismounts and it cannot be pressed)
+      setTimeout(() => {
+        setSearching(isSearching);
+      }, 10);
     }
   };
 
-  const handleClear = () => {
-    setSearchValue("");
-  };
-
-  const handleOnChange = (event) => {
+  const handleSearchChange = (event) => {
     setSearchValue(event.target.value.trimStart().toLowerCase());
   };
+  //#endregion
 
   return (
     <OutlinedInput
+      startAdornment={
+        <SearchIcon
+          fontSize={searching ? "medium" : "small"}
+          sx={{
+            transition: "all 0.2s ease-in-out",
+            mr: "0.25rem",
+            ml: "-0.25rem",
+          }}
+        />
+      }
       placeholder="Search…"
       value={searchValue}
+      onFocus={() => handleSearchToggle(true)}
+      onBlur={() => handleSearchToggle(false)}
+      fullWidth
       sx={{
-        ml: 1,
         borderRadius: 20,
-        height: "2em",
-        minWidth: "120px",
-        maxWidth: "240px",
+        mx: "0.5rem",
+        height: "2.25rem",
+        maxWidth: searching ? "24rem" : "8rem",
+        transition: "all 0.2s ease-in-out",
       }}
-      onChange={handleOnChange}
-      onKeyUp={handleClearOnKeyPress} // Clear search value on Escape key press
-      startAdornment={
-        <InputAdornment position="start" sx={{ mr: 3 }}>
-          <Zoom in={searchValue !== ""}>
-            <IconButton
-              onClick={handleClear}
-              tabIndex={-1}
-              sx={{
-                position: "absolute",
-                left: 0,
-              }}
-            >
-              <CancelIcon
-                sx={{
-                  opacity: searchValue === "" ? 0.5 : 1,
-                  transition: "opacity 0.2s ease-in-out",
-                }}
-              />
-            </IconButton>
-          </Zoom>
-          <Zoom in={searchValue === ""}>
-            <IconButton
-              tabIndex={-1}
-              sx={{
-                position: "absolute",
-                left: 0,
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Zoom>
-        </InputAdornment>
-      }
-      variant="filled"
+      onChange={handleSearchChange}
     />
   );
 }

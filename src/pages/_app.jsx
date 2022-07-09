@@ -1,5 +1,5 @@
 /*
-  This component contains the shared components and providers that are used on all pages.
+  This component contains the shared Components and providers that are used on all pages.
 */
 import {Container, CssBaseline} from "@mui/material";
 import {ThemeProvider} from "@mui/material/styles";
@@ -8,9 +8,9 @@ import Head from "next/head";
 import React, {useEffect, useMemo, useState} from "react";
 import {QueryClient, QueryClientProvider} from "react-query";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/Navbar";
 
-import {ThemeDark, ThemeLight} from "../components/Themes/Theme";
+import {darkTheme, lightTheme} from "../styles/themes/theme";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ export default function App({
   }, []);
 
   // Set the theme palette based on the dark mode preference
-  const theme = useMemo(() => (darkMode ? ThemeDark : ThemeLight), [darkMode]);
+  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
 
   // Change the mode when this function is called
   // Store the preference in localStorage
@@ -49,7 +49,7 @@ export default function App({
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
-            {/* Allows Switching between dark and light modes for native components such as scrollbars*/}
+            {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
             <CssBaseline enableColorScheme />
             {/* While the page loads, don't display any content */}
             {/* This prevents the theme from changing after the page has loaded */}
@@ -58,9 +58,7 @@ export default function App({
                 maxWidth={false} // Remove default max width
                 disableGutters
                 sx={{
-                  background: darkMode
-                    ? "linear-gradient(45deg, #1f3091 30%, #0076D0 90%)"
-                    : "linear-gradient(45deg, #0076D0 30%, #00A0D0 90%)",
+                  background: darkMode ? "#0d0e16" : "#B3B2B8",
                   minHeight: "100vh",
                   height: "100%",
                 }}
