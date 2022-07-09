@@ -7,7 +7,6 @@
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +269,8 @@
       <workItem from="1657137878519" duration="21355000" />
       <workItem from="1657225353809" duration="23451000" />
       <workItem from="1657252451014" duration="1656000" />
-      <workItem from="1657311148982" duration="12670000" />
+      <workItem from="1657311148982" duration="13270000" />
+      <workItem from="1657333456355" duration="17000" />
     </task>
     <servers />
   </component>
