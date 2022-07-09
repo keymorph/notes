@@ -177,6 +177,12 @@ export default function Note({
           <NoteCard
             sx={{
               boxShadow: isDragging ? noteShadow : "",
+              "&:hover": {
+                transform: "scale(1.01)",
+              },
+              "&:active": {
+                transform: "scale(1.04)",
+              },
               transition: "all 0.25s ease-in-out",
             }}
             ref={ref}

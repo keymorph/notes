@@ -50,8 +50,6 @@ export default function SortableNote({
         layout={!isDraggingMode} // Only animate position changes when not dragging
         transition={spring}
         variants={variantFadeStagger}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: disableDrag ? 1 : 1.03 }}
         initial={"hidden"}
         animate={"visible"}
         exit={"hidden"}
