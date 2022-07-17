@@ -109,7 +109,7 @@ export default function NotesTimeline({
   };
   //#endregion
 
-  // Order and filter notes and store the results in a memoized variable
+  // Store the ordered and filtered notes in a memoized variable
   // This avoids re-calculating the contents of the factory function on every re-render
   const memoizedNotesCollection = useMemo(() => {
     const orderedNotesCollection = getOrderedNotesCollection(
