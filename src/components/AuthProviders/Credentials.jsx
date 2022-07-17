@@ -1,11 +1,8 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Collapse,
-  FormControlLabel,
-  Grid,
   Link as MUILink,
   TextField,
 } from "@mui/material";
@@ -215,21 +212,21 @@ export default function Credentials({ action }) {
         />
       </Collapse>
       {/* Display "Remember Me" and "Forgot Password?" for login only */}
-      <Collapse sx={{ width: "100%" }} in={action === "login"}>
-        <Grid container justifyContent="space-between">
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            checked={remember}
-            onChange={(event) => setRemember(event.target.checked)}
-          />
-          <Link href="/auth?action=forgot" passHref>
-            <MUILink sx={{ alignSelf: "center" }} variant="body2">
-              Forgot password?
-            </MUILink>
-          </Link>
-        </Grid>
-      </Collapse>
+      {/*<Collapse sx={{ width: "100%" }} in={action === "login"}>*/}
+      {/*  <Grid container justifyContent="space-between">*/}
+      {/*    <FormControlLabel*/}
+      {/*      control={<Checkbox value="remember" color="primary" />}*/}
+      {/*      label="Remember me"*/}
+      {/*      checked={remember}*/}
+      {/*      onChange={(event) => setRemember(event.target.checked)}*/}
+      {/*    />*/}
+      {/*    <Link href="/auth?action=forgot" passHref>*/}
+      {/*      <MUILink sx={{ alignSelf: "center" }} variant="body2">*/}
+      {/*        Forgot password?*/}
+      {/*      </MUILink>*/}
+      {/*    </Link>*/}
+      {/*  </Grid>*/}
+      {/*</Collapse>*/}
       {/* Loading button that displays the circular throbber whenever an action is being performed */}
       <LoadingButton
         type="submit"
