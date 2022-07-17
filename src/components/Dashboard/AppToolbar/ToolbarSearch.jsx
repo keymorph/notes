@@ -28,7 +28,7 @@ export default function ToolbarSearch({
         <SearchIcon
           fontSize={searching ? "medium" : "small"}
           sx={{
-            transition: "all 0.2s ease-in-out",
+            transition: "font-size 0.2s ease-in-out",
             mr: "0.25rem",
             ml: "-0.25rem",
           }}
@@ -44,7 +44,7 @@ export default function ToolbarSearch({
         mx: "0.5rem",
         height: "2.25rem",
         maxWidth: searching ? "24rem" : "8rem",
-        transition: "all 0.2s ease-in-out",
+        transition: "max-width 0.2s ease-in-out",
       }}
       onChange={handleSearchChange}
     />
