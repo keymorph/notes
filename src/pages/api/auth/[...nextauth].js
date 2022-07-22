@@ -3,13 +3,13 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import {createOAuthUserIfNotExists} from "../../../api/services/oauth-user";
+import { createOAuthUserIfNotExists } from "../../../api/services/oauth-user";
 
 /*
  *  NextAuth configuration
  *  All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled by NextAuth.js.
  */
-export default NextAuth({
+export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -71,4 +71,6 @@ export default NextAuth({
     signOut: "/auth",
     error: "/auth",
   },
-});
+};
+
+export default NextAuth(authOptions);

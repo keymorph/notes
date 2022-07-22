@@ -2,14 +2,15 @@
   /api/note endpoint for anything note related
 */
 
-import {unstable_getServerSession} from "next-auth";
-import noteService from "../../../api/services/note"; // Handle incoming requests
+import { unstable_getServerSession } from "next-auth";
+import noteService from "../../../api/services/note";
+import { authOptions } from "../auth/[...nextauth]";
 
 // Handle incoming requests
 export default async function handler(req, res) {
   // As per the Next-Auth docs, unstable_getServerSession must be used for performance reasons
   // https://next-auth.js.org/getting-started/client#getsession
-  const session = await unstable_getServerSession(req);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   console.log(session);
 
