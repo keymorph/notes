@@ -1,5 +1,5 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -120,10 +120,4 @@ export default function Dashboard() {
       </Box>
     </Zoom>
   );
-}
-
-// Get user session from the server-side
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  return { props: { session } };
 }

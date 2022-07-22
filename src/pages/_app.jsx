@@ -15,9 +15,9 @@ import {darkTheme, lightTheme} from "../styles/themes/theme";
 const queryClient = new QueryClient();
 
 export default function App({
-                              Component,
-                              pageProps: {session, ...pageProps},
-                            }) {
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [darkMode, setDarkMode] = useState(null);
   // Set the theme palette based on the dark mode preference
   const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
@@ -47,14 +47,14 @@ export default function App({
   return (
     <>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>JotFox - Note Taking App</title>
       </Head>
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
             {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
-            <CssBaseline enableColorScheme/>
+            <CssBaseline enableColorScheme />
             {/* While the page loads, don't display any content */}
             {/* This prevents the theme from changing after the page has loaded */}
             {darkMode !== null ? (
@@ -72,7 +72,7 @@ export default function App({
                 />
                 {/* Each page is rendered in Component */}
                 <Component {...pageProps} />
-                <ScrollTop/>
+                <ScrollTop />
               </Container>
             ) : null}
           </ThemeProvider>
