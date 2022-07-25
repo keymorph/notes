@@ -1,8 +1,8 @@
 import { LoadingButton } from "@mui/lab";
 import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "react-query";
 import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   doCategoryNamesCollide,

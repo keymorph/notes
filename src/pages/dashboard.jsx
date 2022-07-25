@@ -1,8 +1,8 @@
 import { Box, LinearProgress, Zoom } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
 
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";

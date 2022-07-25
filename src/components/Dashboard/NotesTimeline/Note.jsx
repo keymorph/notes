@@ -13,8 +13,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { useMutation } from "react-query";
 import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   getOrCreateCategoryID,

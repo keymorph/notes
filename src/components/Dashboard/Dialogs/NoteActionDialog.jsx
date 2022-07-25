@@ -9,9 +9,9 @@ import {
   useTheme,
   Zoom,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "react-query";
 import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
   NOTE_TITLE_CHAR_LIMIT,

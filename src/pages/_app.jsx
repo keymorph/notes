@@ -1,16 +1,16 @@
 /*
   This component contains the shared Components and providers that are used on all pages.
 */
-import {Container, CssBaseline} from "@mui/material";
-import {ThemeProvider} from "@mui/material/styles";
-import {SessionProvider} from "next-auth/react";
+import { Container, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import React, {useEffect, useMemo, useState} from "react";
-import {QueryClient, QueryClientProvider} from "react-query";
+import React, { useEffect, useMemo, useState } from "react";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar";
 
-import {darkTheme, lightTheme} from "../styles/themes/theme";
+import { darkTheme, lightTheme } from "../styles/themes/theme";
 
 const queryClient = new QueryClient();
 
