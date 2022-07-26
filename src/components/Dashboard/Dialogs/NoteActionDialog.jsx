@@ -173,7 +173,6 @@ export default function NoteActionDialog({
   };
 
   const handleCategoryChipDelete = () => {
-    console.log("handleCategoryChipDelete");
     setNewCategoryName("");
     setNewCategoryColor("none");
     setDisplayCategoryChip(false);
