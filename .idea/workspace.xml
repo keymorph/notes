@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AuthProviders/Credentials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -294,7 +292,7 @@
       <workItem from="1658527252907" duration="2104000" />
       <workItem from="1658724090519" duration="758000" />
       <workItem from="1658794398680" duration="8751000" />
-      <workItem from="1658890337910" duration="9012000" />
+      <workItem from="1658890337910" duration="9202000" />
     </task>
     <servers />
   </component>

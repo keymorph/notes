@@ -89,7 +89,7 @@ export default function AuthPage({ user, oauthProviders }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = unstable_getServerSession(
+  const session = await unstable_getServerSession(
     context.req,
     context.res,
     authOptions
@@ -97,7 +97,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      user: (await session?.user) || null,
+      user: session?.user || null,
       oauthProviders: await getProviders(),
     },
   };
