@@ -8,25 +8,12 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Credentials from "../components/AuthProviders/Credentials";
 import OAuth from "../components/AuthProviders/OAuth";
 import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
-
-const sanitizeAction = (action) => {
-  switch (action) {
-    case "login":
-      return action;
-    case "register":
-      return action;
-    case "forgot":
-      return action;
-    default:
-      return "login";
-  }
-};
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -40,10 +27,10 @@ const AuthCard = styled(Card)({
   transform: "translate(-50%, -50%)",
 });
 
-export default function AuthPage() {
+export default function AuthPage({ oauthProviders }) {
   //#region Hooks
   const router = useRouter();
-  const { status: sessionStatus } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [alertText, setAlertText] = useState("");
@@ -94,8 +81,18 @@ export default function AuthPage() {
         >
           Or
         </Typography>
-        <OAuth />
+        <OAuth providers={oauthProviders} />
       </Box>
     </AuthCard>
   );
+}
+
+export async function getServerSideProps(context) {
+  const oauthProviders = await getProviders();
+
+  return {
+    props: {
+      oauthProviders,
+    },
+  };
 }

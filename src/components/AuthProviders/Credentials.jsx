@@ -41,11 +41,13 @@ export default function Credentials({ action }) {
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
-  const submitButtonDisabled = !(
-    emailValid &&
-    passwordValid &&
-    confirmPasswordValid
-  );
+  const submitButtonDisabled =
+    !email ||
+    !emailValid ||
+    !password ||
+    !passwordValid ||
+    (action === "register" && !confirmPassword) ||
+    !confirmPasswordValid;
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {

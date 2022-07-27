@@ -1,24 +1,21 @@
 import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
 
-export default function OAuth() {
+export default function OAuth({ providers }) {
   const router = useRouter();
-  const providers = getProviders();
 
-  const handleGithubSignIn = async () => {
-    await signIn((await providers)["github"].id).catch(async (error) => {
-      console.error(error.message);
-      await router.push("/auth?error=Server Error :(");
-    });
-  };
-  const handleGoogleSignIn = async () => {
-    await signIn((await providers)["google"].id).catch(async (error) => {
-      console.error(error.message);
-      await router.push("/auth?error=Server Error :(");
-    });
+  const handleSignIn = async (provider) => {
+    await signIn((await providers)[provider].id)
+      .then(() => {
+        router.push("/dashboard");
+      })
+      .catch(async (error) => {
+        console.error(error.message);
+        await router.push("/auth?error=Server Error :(");
+      });
   };
 
   return (
@@ -29,14 +26,20 @@ export default function OAuth() {
       justifyContent="center"
       alignItems="center"
     >
-      <IconButton onClick={handleGoogleSignIn} color="primary">
+      <IconButton
+        onClick={() => handleSignIn(providers.google.id)}
+        color="primary"
+      >
         <Google sx={{ fontSize: 48 }} />
       </IconButton>
       <CustomTooltip
         title="Github sign in temporarily disabled :("
         disableableButton
       >
-        <IconButton disabled onClick={handleGithubSignIn} color="primary">
+        <IconButton
+          onClick={() => handleSignIn(providers.github.id)}
+          color="primary"
+        >
           <GitHub sx={{ fontSize: 48 }} />
         </IconButton>
       </CustomTooltip>
