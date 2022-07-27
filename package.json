@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,8 +18,8 @@
     "@emotion/styled": "^11.9.3",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "^5.0.0-alpha.91",
-    "@mui/material": "^5.9.1",
+    "@mui/lab": "^5.0.0-alpha.92",
+    "@mui/material": "^5.9.2",
     "@tanstack/react-query": "^4.0.10",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
@@ -30,9 +30,8 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.54.0",
     "sharp": "^0.30.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.0.0-rc.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.16.0",

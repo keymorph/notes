@@ -64,13 +64,14 @@ export const authOptions = {
       return session;
     },
   },
-  secret: process.env.NEXT_AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/dashboard",
+    signIn: "/auth?action=login",
     newUser: "/dashboard",
     signOut: "/auth",
     error: "/auth",
   },
+  debug: process.env.NODE_ENV === "development",
 };
 
 export default NextAuth(authOptions);

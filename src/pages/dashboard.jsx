@@ -1,9 +1,7 @@
-import { Box, LinearProgress, Zoom } from "@mui/material";
+import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
@@ -16,7 +14,7 @@ import {
 export default function Dashboard() {
   //#region Hooks
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
+
   // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
@@ -54,7 +52,6 @@ export default function Dashboard() {
       console.error(error.message);
     },
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
-    enabled: sessionStatus === "authenticated", // Disable unless the user is logged in
   });
 
   // Changes and gets the order of notes in the database
@@ -69,15 +66,10 @@ export default function Dashboard() {
   //#endregion
   //#endregion
 
-  // If the user is not logged in, redirect to the login page
-  if (sessionStatus === "unauthenticated") {
-    router.replace("/auth");
-  }
-
   console.info("Notes Collection: ", noteCollection);
   console.info("Categories Collection: ", categoriesCollection);
 
-  return sessionStatus === "authenticated" ? (
+  return (
     <Box>
       <AppToolbar
         noteCollection={noteCollection}
@@ -112,12 +104,5 @@ export default function Dashboard() {
         setNotesOrder={setNotesOrder}
       />
     </Box>
-  ) : (
-    // While the user is being authenticated, show a loading indicator
-    <Zoom in>
-      <Box width={"100%"}>
-        <LinearProgress />
-      </Box>
-    </Zoom>
   );
 }
