@@ -2,7 +2,6 @@ import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
 
 export default function OAuth({ providers }) {
   const router = useRouter();
@@ -32,17 +31,12 @@ export default function OAuth({ providers }) {
       >
         <Google sx={{ fontSize: 48 }} />
       </IconButton>
-      <CustomTooltip
-        title="Github sign in temporarily disabled :("
-        disableableButton
+      <IconButton
+        onClick={() => handleSignIn(providers.github.id)}
+        color="primary"
       >
-        <IconButton
-          onClick={() => handleSignIn(providers.github.id)}
-          color="primary"
-        >
-          <GitHub sx={{ fontSize: 48 }} />
-        </IconButton>
-      </CustomTooltip>
+        <GitHub sx={{ fontSize: 48 }} />
+      </IconButton>
     </Stack>
   );
 }
