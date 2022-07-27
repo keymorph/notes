@@ -8,12 +8,14 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { getProviders, useSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth";
+import { getProviders } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Credentials from "../components/AuthProviders/Credentials";
 import OAuth from "../components/AuthProviders/OAuth";
 import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -27,10 +29,9 @@ const AuthCard = styled(Card)({
   transform: "translate(-50%, -50%)",
 });
 
-export default function AuthPage({ oauthProviders }) {
+export default function AuthPage({ user, oauthProviders }) {
   //#region Hooks
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
 
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [alertText, setAlertText] = useState("");
@@ -51,7 +52,7 @@ export default function AuthPage({ oauthProviders }) {
   //#endregion
 
   // If the user is logged in, redirect to dashboard
-  if (sessionStatus === "authenticated") {
+  if (user) {
     router.replace("/dashboard");
   }
 
@@ -88,11 +89,16 @@ export default function AuthPage({ oauthProviders }) {
 }
 
 export async function getServerSideProps(context) {
-  const oauthProviders = await getProviders();
+  const session = unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
   return {
     props: {
-      oauthProviders,
+      user: (await session?.user) || null,
+      oauthProviders: await getProviders(),
     },
   };
 }
