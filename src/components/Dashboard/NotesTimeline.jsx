@@ -40,7 +40,6 @@ export default function NotesTimeline({
   setNoteCollection,
   setCategoriesCollection,
   setNotesOrder,
-  mutateOrder,
 }) {
   //#region Hooks
 
@@ -67,15 +66,13 @@ export default function NotesTimeline({
   useEffect(() => {
     if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
       setNotesOrder((prev) => {
-        const newNotesOrder = {
+        return {
           ...prev,
           orderedNotesID: getUpdatedOrderedNotesID(
             prev.orderedNotesID,
             noteCollection
           ),
         };
-        mutateOrder(newNotesOrder);
-        return newNotesOrder;
       });
     }
   }, [noteCollection]);

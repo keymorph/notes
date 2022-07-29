@@ -116,7 +116,6 @@ export default function Dashboard() {
           setNoteCollection={setNoteCollection}
           setCategoriesCollection={setCategoriesCollection}
           setNotesOrder={setNotesOrder}
-          mutateOrder={mutateOrder}
         />
       </Box>
     )
