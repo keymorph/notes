@@ -1,12 +1,15 @@
 import { Box } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
-import { getNoteItem } from "../helpers/requests/note-requests";
+import {
+  getNoteItem,
+  updateNotesOrder,
+} from "../helpers/requests/note-requests";
 import { NOTES_ORDER_BY } from "../models/note-order";
 
 export default function Dashboard() {
@@ -24,7 +27,7 @@ export default function Dashboard() {
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   const [notesOrder, setNotesOrder] = useState({
     orderedNotesID: [],
-    orderBy: NOTES_ORDER_BY.DEFAULT,
+    orderBy: "",
   });
   // These categories will be used to filter the notes. If empty, no category filter will be applied
   const [filterCategories, setFilterCategories] = useState([]);
@@ -32,6 +35,12 @@ export default function Dashboard() {
   const [searchValue, setSearchValue] = useState("");
 
   const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    if (notesOrder.orderBy) {
+      mutateOrder(notesOrder);
+    }
+  }, [notesOrder]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
@@ -54,6 +63,16 @@ export default function Dashboard() {
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     enabled: sessionStatus === "authenticated",
   });
+
+  // Changes and gets the order of notes in the database
+  const { mutate: mutateOrder, status: orderStatus } = useMutation(
+    updateNotesOrder,
+    {
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
   //#endregion
 
   //#endregion
@@ -97,6 +116,7 @@ export default function Dashboard() {
           setNoteCollection={setNoteCollection}
           setCategoriesCollection={setCategoriesCollection}
           setNotesOrder={setNotesOrder}
+          mutateOrder={mutateOrder}
         />
       </Box>
     )

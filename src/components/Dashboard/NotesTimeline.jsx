@@ -15,7 +15,6 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -27,7 +26,6 @@ import {
   getOrderedNotesCollection,
   getUpdatedOrderedNotesID,
 } from "../../helpers/notes/order";
-import { updateNotesOrder } from "../../helpers/requests/note-requests";
 import { NOTES_ORDER_BY } from "../../models/note-order";
 import { spring } from "../../styles/animations/definitions";
 import SortableNote from "./NotesTimeline/SortableNote";
@@ -42,6 +40,7 @@ export default function NotesTimeline({
   setNoteCollection,
   setCategoriesCollection,
   setNotesOrder,
+  mutateOrder,
 }) {
   //#region Hooks
 
@@ -81,18 +80,6 @@ export default function NotesTimeline({
     }
   }, [noteCollection]);
 
-  //#region Query Handling Hooks
-  // Changes and gets the order of notes in the database
-  const { mutate: mutateOrder, status: orderStatus } = useMutation(
-    updateNotesOrder,
-    {
-      onError: (error) => {
-        console.error(error.message);
-      },
-    }
-  );
-  //#endregion
-
   //#endregion
 
   //#region Handlers
@@ -112,7 +99,6 @@ export default function NotesTimeline({
       setNotesOrder((prev) => {
         // Swap the ordered notes ID. If the ordered IDs array is empty, noteCollection will be used.
         const newNotesOrder = {
-          ...prev,
           orderedNotesID: arrayMove(
             prev.orderedNotesID.length > 0
               ? prev.orderedNotesID
@@ -120,8 +106,8 @@ export default function NotesTimeline({
             oldIndex,
             newIndex
           ),
+          orderBy: NOTES_ORDER_BY.CUSTOM,
         };
-        mutateOrder(newNotesOrder);
         return newNotesOrder;
       });
     }
