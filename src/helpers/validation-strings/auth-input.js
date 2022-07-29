@@ -24,3 +24,5 @@ export function getConfirmPasswordErrorText(confirmPassword, password) {
     return "";
   }
 }
+
+// TODO: Transfer this to a model.

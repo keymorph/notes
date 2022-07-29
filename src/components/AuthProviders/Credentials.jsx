@@ -22,7 +22,7 @@ import {
   isPasswordValid,
 } from "../../utils/input-validation/validate-credentials";
 
-export default function Credentials({ action }) {
+export default function Credentials({ action, isUnauthenticated }) {
   const router = useRouter();
 
   // Input data state
@@ -46,7 +46,8 @@ export default function Credentials({ action }) {
     !password ||
     !passwordValid ||
     (action === "register" && !confirmPassword) ||
-    !confirmPasswordValid;
+    !confirmPasswordValid ||
+    !isUnauthenticated;
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
@@ -65,7 +66,6 @@ export default function Credentials({ action }) {
     const data = {
       email: email,
       password: password,
-      redirect: false,
     };
 
     // No need to redirect as next-auth handles that

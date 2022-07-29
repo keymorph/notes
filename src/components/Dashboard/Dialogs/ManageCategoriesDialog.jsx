@@ -3,13 +3,13 @@ import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   doCategoryNamesCollide,
   doesCategoryExist,
   getOrCreateCategoryID,
 } from "../../../helpers/notes/category";
 import { updateCategories } from "../../../helpers/requests/category-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
 import {
   springShort,
   variantFadeSlideDownStagger,

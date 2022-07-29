@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   getOrCreateCategoryID,
   getPaletteCategoryColorName,
@@ -25,6 +24,7 @@ import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
 import NoteActionDialog from "../Dialogs/NoteActionDialog";
 import CustomTooltip from "../SharedComponents/CustomTooltip";
 

@@ -1,4 +1,4 @@
-import { NOTES_ORDER_BY } from "../models/note-order";
+import { NOTES_ORDER_BY } from "../../models/note-order";
 
 function orderNotesCollectionByOrderBy(
   notesCollection,

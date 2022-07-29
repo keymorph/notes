@@ -8,14 +8,12 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { unstable_getServerSession } from "next-auth";
-import { getProviders } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Credentials from "../components/AuthProviders/Credentials";
 import OAuth from "../components/AuthProviders/OAuth";
-import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { getAlertDescription } from "../models/alerts";
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -29,9 +27,10 @@ const AuthCard = styled(Card)({
   transform: "translate(-50%, -50%)",
 });
 
-export default function AuthPage({ user, oauthProviders }) {
+export default function AuthPage() {
   //#region Hooks
   const router = useRouter();
+  const { status: sessionStatus } = useSession();
 
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [alertText, setAlertText] = useState("");
@@ -41,10 +40,10 @@ export default function AuthPage({ user, oauthProviders }) {
   useEffect(() => {
     if (router.query.error) {
       setAlertSeverity("error");
-      setAlertText(getAuthAlertText(router.query.error));
+      setAlertText(getAlertDescription(router.query.error));
     } else if (router.query.success) {
       setAlertSeverity("success");
-      setAlertText(getAuthAlertText(router.query.success));
+      setAlertText(getAlertDescription(router.query.success));
     } else {
       setAlertText("");
     }
@@ -52,7 +51,7 @@ export default function AuthPage({ user, oauthProviders }) {
   //#endregion
 
   // If the user is logged in, redirect to dashboard
-  if (user) {
+  if (sessionStatus === "authenticated") {
     router.replace("/dashboard");
   }
 
@@ -73,7 +72,10 @@ export default function AuthPage({ user, oauthProviders }) {
             {alertText}
           </Alert>
         </Collapse>
-        <Credentials action={action} />
+        <Credentials
+          action={action}
+          isUnauthenticated={sessionStatus === "unauthenticated"}
+        />
         <Typography
           sx={{
             my: 2,
@@ -82,23 +84,8 @@ export default function AuthPage({ user, oauthProviders }) {
         >
           Or
         </Typography>
-        <OAuth providers={oauthProviders} />
+        <OAuth />
       </Box>
     </AuthCard>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
-  return {
-    props: {
-      user: session?.user || null,
-      oauthProviders: await getProviders(),
-    },
-  };
 }

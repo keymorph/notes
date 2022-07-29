@@ -17,7 +17,6 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { NOTES_ORDER_BY } from "../../helpers/models/note-order";
 import {
   getCategoryColorName,
   getCategoryName,
@@ -27,6 +26,7 @@ import {
   getOrderedNotesCollection,
   getUpdatedOrderedNotesID,
 } from "../../helpers/notes/order";
+import { NOTES_ORDER_BY } from "../../models/note-order";
 import { spring } from "../../styles/animations/definitions";
 import SortableNote from "./NotesTimeline/SortableNote";
 

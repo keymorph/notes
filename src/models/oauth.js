@@ -1,4 +1,4 @@
-export const providers = {
+export const PROVIDERS = {
   google: "google",
   github: "github",
 };

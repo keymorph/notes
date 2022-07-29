@@ -16,7 +16,6 @@ import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
   NOTE_TITLE_CHAR_LIMIT,
 } from "../../../constants/input-limits";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -26,6 +25,7 @@ import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { dialogCard } from "../../../styles/components/dialog";
 import RemainingCharCount from "../SharedComponents/RemainingCharCount";

@@ -2,18 +2,19 @@ import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { PROVIDERS } from "../../models/oauth";
 
-export default function OAuth({ providers }) {
+export default function OAuth() {
   const router = useRouter();
 
   const handleSignIn = async (provider) => {
-    await signIn((await providers)[provider].id)
+    await signIn(provider)
       .then(() => {
         router.push("/dashboard");
       })
       .catch(async (error) => {
         console.error(error.message);
-        await router.push("/auth?error=Server Error :(");
+        await router.push("/auth?error=Authentication Error :(");
       });
   };
 
@@ -26,13 +27,13 @@ export default function OAuth({ providers }) {
       alignItems="center"
     >
       <IconButton
-        onClick={() => handleSignIn(providers.google.id)}
+        onClick={() => handleSignIn(PROVIDERS.google)}
         color="primary"
       >
         <Google sx={{ fontSize: 48 }} />
       </IconButton>
       <IconButton
-        onClick={() => handleSignIn(providers.github.id)}
+        onClick={() => handleSignIn(PROVIDERS.github)}
         color="primary"
       >
         <GitHub sx={{ fontSize: 48 }} />
