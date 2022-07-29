@@ -15,6 +15,7 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -26,6 +27,7 @@ import {
   getOrderedNotesCollection,
   getUpdatedOrderedNotesID,
 } from "../../helpers/notes/order";
+import { updateNotesOrder } from "../../helpers/requests/note-requests";
 import { NOTES_ORDER_BY } from "../../models/note-order";
 import { spring } from "../../styles/animations/definitions";
 import SortableNote from "./NotesTimeline/SortableNote";
@@ -42,6 +44,7 @@ export default function NotesTimeline({
   setNotesOrder,
 }) {
   //#region Hooks
+
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
 
   const [activeID, setActiveID] = useState(null); // activeID used to track the active note being dragged
@@ -64,15 +67,31 @@ export default function NotesTimeline({
 
   useEffect(() => {
     if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
-      setNotesOrder((prev) => ({
-        ...prev,
-        orderedNotesID: getUpdatedOrderedNotesID(
-          prev.orderedNotesID,
-          noteCollection
-        ),
-      }));
+      setNotesOrder((prev) => {
+        const newNotesOrder = {
+          ...prev,
+          orderedNotesID: getUpdatedOrderedNotesID(
+            prev.orderedNotesID,
+            noteCollection
+          ),
+        };
+        mutateOrder(newNotesOrder);
+        return newNotesOrder;
+      });
     }
   }, [noteCollection]);
+
+  //#region Query Handling Hooks
+  // Changes and gets the order of notes in the database
+  const { mutate: mutateOrder, status: orderStatus } = useMutation(
+    updateNotesOrder,
+    {
+      onError: (error) => {
+        console.error(error.message);
+      },
+    }
+  );
+  //#endregion
 
   //#endregion
 
@@ -92,17 +111,18 @@ export default function NotesTimeline({
 
       setNotesOrder((prev) => {
         // Swap the ordered notes ID. If the ordered IDs array is empty, noteCollection will be used.
-        const newOrderedNotesID = arrayMove(
-          prev.orderedNotesID.length > 0
-            ? prev.orderedNotesID
-            : noteCollection.map((note) => note.id),
-          oldIndex,
-          newIndex
-        );
-        return {
-          orderedNotesID: newOrderedNotesID,
-          orderBy: NOTES_ORDER_BY.CUSTOM,
+        const newNotesOrder = {
+          ...prev,
+          orderedNotesID: arrayMove(
+            prev.orderedNotesID.length > 0
+              ? prev.orderedNotesID
+              : noteCollection.map((note) => note.id),
+            oldIndex,
+            newIndex
+          ),
         };
+        mutateOrder(newNotesOrder);
+        return newNotesOrder;
       });
     }
     setActiveID(null);

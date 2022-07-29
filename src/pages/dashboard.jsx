@@ -1,19 +1,17 @@
 import { Box } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
-import {
-  getNoteItem,
-  updateNotesOrder,
-} from "../helpers/requests/note-requests";
+import { getNoteItem } from "../helpers/requests/note-requests";
 import { NOTES_ORDER_BY } from "../models/note-order";
 
 export default function Dashboard() {
   //#region Hooks
+
   const router = useRouter();
   const { status: sessionStatus } = useSession({
     required: true,
@@ -22,7 +20,6 @@ export default function Dashboard() {
     },
   });
 
-  // Array of objects with all notes and categories respectively
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   const [notesOrder, setNotesOrder] = useState({
@@ -35,10 +32,6 @@ export default function Dashboard() {
   const [searchValue, setSearchValue] = useState("");
 
   const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
-
-  useEffect(() => {
-    mutateOrder({ notesOrder });
-  }, [notesOrder]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
@@ -61,21 +54,14 @@ export default function Dashboard() {
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     enabled: sessionStatus === "authenticated",
   });
-
-  // Changes and gets the order of notes in the database
-  const { mutate: mutateOrder, status: orderStatus } = useMutation(
-    updateNotesOrder,
-    {
-      onError: (error) => {
-        console.error(error.message);
-      },
-    }
-  );
-  //#endregion
   //#endregion
 
-  console.info("Notes Collection: ", noteCollection);
-  console.info("Categories Collection: ", categoriesCollection);
+  //#endregion
+
+  if (process.env.NODE_ENV === "development") {
+    console.debug("Notes Collection: ", noteCollection);
+    console.debug("Categories Collection: ", categoriesCollection);
+  }
 
   return (
     sessionStatus === "authenticated" && (

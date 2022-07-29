@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/services/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/ProfileDropdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/ProfileDropdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/services/notes-order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/services/notes-order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +297,7 @@
       <workItem from="1658890337910" duration="9421000" />
       <workItem from="1658959639128" duration="640000" />
       <workItem from="1659041040279" duration="1854000" />
-      <workItem from="1659050532249" duration="6567000" />
+      <workItem from="1659050532249" duration="8978000" />
     </task>
     <servers />
   </component>

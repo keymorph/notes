@@ -7,8 +7,8 @@ const replaceOrder = async (req, res) => {
       op: "add", // Add replaces the entire object if it already exists or creates a new one if it doesn't
       path: `/notes_order`,
       value: {
-        ordered_notes_id: req.body.notesOrder.orderedNotesID,
-        order_by: req.body.notesOrder.orderBy,
+        ordered_notes_id: req.body.orderedNotesID,
+        order_by: req.body.orderBy,
       },
     },
   ];
