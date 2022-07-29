@@ -79,7 +79,12 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
             <NoAccounts sx={{ fontSize: "1.8rem" }} />
           )}
         </motion.div>
-        <Typography variant="body2" alignSelf={"center"} ml={"0.5rem"}>
+        <Typography
+          variant="body2"
+          textTransform={"none"}
+          alignSelf={"center"}
+          ml={"0.5rem"}
+        >
           {profileName}
         </Typography>
         <ArrowDropDownOutlined />

@@ -35,7 +35,6 @@ export const authOptions = {
           .catch((error) => {
             console.error(error.message);
           });
-
         // user will be undefined if the credentials are invalid
         // If we have user data, return it
         return user?.data;
@@ -43,7 +42,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    // Ensure that the user id is passed to the client's cookie
+    // Ensure that the user id and email is passed to the client's cookie
     async jwt({ token, user }) {
       if (user && !user.user_id) {
         // Temporary cosmosdb solution for getting the user id and/or creating an account for oauth users
@@ -53,6 +52,7 @@ export const authOptions = {
           }
         );
       } else if (user) {
+        token.email = user.email;
         token.user_id = user.user_id;
       }
       return token;
@@ -60,6 +60,7 @@ export const authOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.user_id;
+        session.user.email = token.email;
       }
       return session;
     },
