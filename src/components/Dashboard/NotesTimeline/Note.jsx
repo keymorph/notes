@@ -165,6 +165,7 @@ export default function Note({
           >
             <Box
               sx={{
+                cursor: isDragging ? "grabbing" : "grab",
                 userSelect: "none",
                 backgroundColor: `${getPaletteCategoryColorName(
                   categoryColor
@@ -211,7 +212,7 @@ export default function Note({
             <CardContent
               onClick={handleViewModalOpen}
               sx={{
-                cursor: "pointer",
+                cursor: isDragging ? "grabbing" : "pointer",
                 userSelect: "none",
                 height: "100%",
                 pb: "1rem",
