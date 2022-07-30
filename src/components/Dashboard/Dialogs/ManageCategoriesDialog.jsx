@@ -14,7 +14,7 @@ import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialog";
+import { dialogCard } from "../../../styles/components/dialogs";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";

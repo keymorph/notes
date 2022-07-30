@@ -46,10 +46,11 @@ export default function NotesTimeline({
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
 
   const [activeID, setActiveID] = useState(null); // activeID used to track the active note being dragged
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 2, // Distance, in pixels, that the note must be dragged before it is considered active
+        distance: 1, // Distance, in pixels, that the note must be dragged before it is considered active
       },
     }),
     useSensor(KeyboardSensor, {
@@ -162,26 +163,12 @@ export default function NotesTimeline({
       onDragStart={handleDragStart}
       autoScroll
       modifiers={[restrictToParentElement]}
+      cancelDrop
     >
       <SortableContext
         items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
-        {/*<DragOverlay>*/}
-        {/*  {activeID ? (*/}
-        {/*    <NoteDragOverlay*/}
-        {/*      title={draggedNote.title}*/}
-        {/*      description={draggedNote.description}*/}
-        {/*      tags={draggedNote.tags}*/}
-        {/*      categoryName={draggedNote.category}*/}
-        {/*      color={*/}
-        {/*        categoriesCollection.find(*/}
-        {/*          (category) => category.name === draggedNote.category*/}
-        {/*        )?.color*/}
-        {/*      }*/}
-        {/*    />*/}
-        {/*  ) : null}*/}
-        {/*</DragOverlay>*/}
         <Box
           p={["1.5rem", "2rem"]}
           display="grid"
@@ -222,7 +209,7 @@ export default function NotesTimeline({
         {noNotesDisplayed && (
           <motion.div layout transition={spring}>
             <Grow in>
-              <Typography textAlign={"center"} variant="h5" mt={"2rem"}>
+              <Typography variant={"h5"} textAlign={"center"} mt={"2rem"}>
                 No notes found...
               </Typography>
             </Grow>

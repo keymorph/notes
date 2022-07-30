@@ -27,7 +27,7 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialog";
+import { dialogCard } from "../../../styles/components/dialogs";
 import RemainingCharCount from "../SharedComponents/RemainingCharCount";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";

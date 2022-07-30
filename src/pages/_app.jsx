@@ -64,6 +64,7 @@ export default function App({
                 sx={{
                   minHeight: "100vh",
                   height: "100%",
+                  userSelect: "none",
                 }}
               >
                 <Navbar

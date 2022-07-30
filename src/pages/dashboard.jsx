@@ -84,7 +84,7 @@ export default function Dashboard() {
 
   return (
     sessionStatus === "authenticated" && (
-      <Box>
+      <Box height={"calc(100vh - 3rem)"}>
         <AppToolbar
           noteCollection={noteCollection}
           categoriesCollection={categoriesCollection}
