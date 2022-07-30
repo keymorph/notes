@@ -41,7 +41,7 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    document.body.style.backgroundColor = theme.palette.background.base;
+    // Set root background color based on the dark mode preference
   }, [theme]);
 
   // Change the mode when this function is called
