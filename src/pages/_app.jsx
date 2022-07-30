@@ -8,6 +8,7 @@ import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import React, { useEffect, useMemo, useState } from "react";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
+import InvalidUrl from "../components/InvalidUrl";
 import Navbar from "../components/Navbar";
 
 import { darkTheme, lightTheme } from "../styles/themes/theme";
@@ -19,11 +20,17 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const [darkMode, setDarkMode] = useState(null);
+  const [isSiteUrlValid, setIsSiteUrlValid] = useState(false);
   // Set the theme palette based on the dark mode preference
   const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
 
-  // Invoke setDarkMode whenever the page loads
+  // Operations to perform when the page loads
   useEffect(() => {
+    console.log(window.location.origin);
+    setIsSiteUrlValid(
+      process.env.NEXT_PUBLIC_API_URL.includes(window.location.origin)
+    );
+
     // If preference was set in localStorage, dont check the browser preference
     // else check the browser preference so that it is set as the default mode
     if (localStorage.getItem("mode")) {
@@ -58,23 +65,27 @@ export default function App({
             {/* While the page loads, don't display any content */}
             {/* This prevents the theme from changing after the page has loaded */}
             {darkMode !== null ? (
-              <Container
-                maxWidth={false} // Remove default max width
-                disableGutters
-                sx={{
-                  minHeight: "100vh",
-                  height: "100%",
-                  userSelect: "none",
-                }}
-              >
-                <Navbar
-                  darkMode={darkMode}
-                  handleDarkModeToggle={handleDarkModeToggle}
-                />
-                {/* Each page is rendered in Component */}
-                <Component {...pageProps} />
-                <ScrollTop />
-              </Container>
+              isSiteUrlValid ? (
+                <Container
+                  maxWidth={false} // Remove default max width
+                  disableGutters
+                  sx={{
+                    minHeight: "100vh",
+                    height: "100%",
+                    userSelect: "none",
+                  }}
+                >
+                  <Navbar
+                    darkMode={darkMode}
+                    handleDarkModeToggle={handleDarkModeToggle}
+                  />
+                  {/* Each page is rendered in Component */}
+                  <Component {...pageProps} />
+                  <ScrollTop />
+                </Container>
+              ) : (
+                <InvalidUrl correctUrl={process.env.NEXT_PUBLIC_API_URL} />
+              )
             ) : null}
           </ThemeProvider>
         </SessionProvider>
