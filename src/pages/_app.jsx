@@ -26,7 +26,6 @@ export default function App({
 
   // Operations to perform when the page loads
   useEffect(() => {
-    console.log(window.location.origin);
     setIsSiteUrlValid(
       process.env.NEXT_PUBLIC_API_URL.includes(window.location.origin)
     );
@@ -41,7 +40,9 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    // Set root background color based on the dark mode preference
+    document.documentElement.style.backgroundColor =
+      theme.palette.background.base;
+    document.body.style.backgroundColor = theme.palette.background.base;
   }, [theme]);
 
   // Change the mode when this function is called
