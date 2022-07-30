@@ -28,7 +28,7 @@ export default function App({
   // Operations to perform when the page loads
   useEffect(() => {
     // If the current site url is invalid, route to the valid url
-    if (process.env.NEXT_PUBLIC_API_URL.includes(window.location.origin)) {
+    if (!process.env.NEXT_PUBLIC_API_URL.includes(window.location.origin)) {
       router.replace(process.env.NEXT_PUBLIC_API_URL);
     }
 
