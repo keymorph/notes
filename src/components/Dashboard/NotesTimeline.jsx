@@ -44,8 +44,21 @@ export default function NotesTimeline({
   //#region Hooks
 
   const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
-
   const [activeID, setActiveID] = useState(null); // activeID used to track the active note being dragged
+
+  useEffect(() => {
+    if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
+      setNotesOrder((prev) => {
+        return {
+          ...prev,
+          orderedNotesID: getUpdatedOrderedNotesID(
+            prev.orderedNotesID,
+            noteCollection
+          ),
+        };
+      });
+    }
+  }, [noteCollection]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -63,20 +76,6 @@ export default function NotesTimeline({
       },
     })
   );
-
-  useEffect(() => {
-    if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
-      setNotesOrder((prev) => {
-        return {
-          ...prev,
-          orderedNotesID: getUpdatedOrderedNotesID(
-            prev.orderedNotesID,
-            noteCollection
-          ),
-        };
-      });
-    }
-  }, [noteCollection]);
 
   //#endregion
 
@@ -163,14 +162,14 @@ export default function NotesTimeline({
       onDragStart={handleDragStart}
       autoScroll
       modifiers={[restrictToParentElement]}
-      cancelDrop
     >
       <SortableContext
         items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
         <Box
-          p={["1.5rem", "2rem"]}
+          m={"1rem"}
+          p={["0.5rem", "1rem"]}
           display="grid"
           gap="2rem"
           gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"

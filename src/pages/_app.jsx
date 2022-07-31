@@ -75,6 +75,7 @@ export default function App({
                   minHeight: "100vh",
                   height: "100%",
                   userSelect: "none",
+                  overflowX: "hidden",
                 }}
               >
                 <Navbar

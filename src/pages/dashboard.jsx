@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -84,7 +83,7 @@ export default function Dashboard() {
 
   return (
     sessionStatus === "authenticated" && (
-      <Box height={"calc(100vh - 3rem)"}>
+      <>
         <AppToolbar
           noteCollection={noteCollection}
           categoriesCollection={categoriesCollection}
@@ -117,7 +116,7 @@ export default function Dashboard() {
           setCategoriesCollection={setCategoriesCollection}
           setNotesOrder={setNotesOrder}
         />
-      </Box>
+      </>
     )
   );
 }
