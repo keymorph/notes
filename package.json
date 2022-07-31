@@ -1,6 +1,6 @@
 {
   "name": "jotfox",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,8 +14,8 @@
     "@dnd-kit/modifiers": "^6.0.0",
     "@dnd-kit/sortable": "^7.0.1",
     "@dnd-kit/utilities": "^3.2.0",
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.92",
