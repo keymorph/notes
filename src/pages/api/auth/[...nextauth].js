@@ -3,13 +3,13 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import {createOAuthUserIfNotExists} from "../../../api/services/oauth-user";
+import { createOAuthUserIfNotExists } from "../../../api/services/oauth-user";
 
 /*
  *  NextAuth configuration
  *  All requests to /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled by NextAuth.js.
  */
-export default NextAuth({
+export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -35,7 +35,6 @@ export default NextAuth({
           .catch((error) => {
             console.error(error.message);
           });
-
         // user will be undefined if the credentials are invalid
         // If we have user data, return it
         return user?.data;
@@ -43,7 +42,7 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    // Ensure that the user id is passed to the client's cookie
+    // Ensure that the user id and email is passed to the client's cookie
     async jwt({ token, user }) {
       if (user && !user.user_id) {
         // Temporary cosmosdb solution for getting the user id and/or creating an account for oauth users
@@ -53,6 +52,7 @@ export default NextAuth({
           }
         );
       } else if (user) {
+        token.email = user.email;
         token.user_id = user.user_id;
       }
       return token;
@@ -60,15 +60,19 @@ export default NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user.id = token.user_id;
+        session.user.email = token.email;
       }
       return session;
     },
   },
-  secret: process.env.NEXT_AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/dashboard",
+    signIn: "/auth?action=login",
     newUser: "/dashboard",
     signOut: "/auth",
     error: "/auth",
   },
-});
+  debug: process.env.NODE_ENV === "development",
+};
+
+export default NextAuth(authOptions);

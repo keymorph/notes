@@ -9,29 +9,25 @@ export function getFilteredNotesCollection(
   return notesCollection.filter((note) => {
     if (searchValue.trim() === "" && filterCategories.length === 0) {
       return true;
-    } else if (searchValue.trim() !== "" && filterCategories.length === 0) {
-      return (
-        note.title.toLowerCase().includes(searchValue) ||
-        note.description.toLowerCase().includes(searchValue) ||
-        note.tags.includes(searchValue) ||
-        getCategoryName(note.category_id, categoriesCollection).includes(
-          searchValue
-        )
+    }
+
+    const searchValueMatch =
+      note.title.toLowerCase().includes(searchValue) ||
+      note.description.toLowerCase().includes(searchValue) ||
+      note.tags.includes(searchValue) ||
+      getCategoryName(note.category_id, categoriesCollection).includes(
+        searchValue
       );
+    const filterCategoriesMatch = filterCategories.find(
+      (category) => category.id === note.category_id
+    );
+
+    if (searchValue.trim() !== "" && filterCategories.length === 0) {
+      return searchValueMatch;
     } else if (searchValue.trim() === "" && filterCategories.length > 0) {
-      return filterCategories.find(
-        (category) => category.id === note.category_id
-      );
+      return filterCategoriesMatch;
     } else {
-      return (
-        note.title.toLowerCase().includes(searchValue) ||
-        note.description.toLowerCase().includes(searchValue) ||
-        note.tags.includes(searchValue) ||
-        (getCategoryName(note.category_id, categoriesCollection).includes(
-          searchValue
-        ) &&
-          filterCategories.includes(note.category_id))
-      );
+      return searchValueMatch && filterCategoriesMatch;
     }
   });
 }

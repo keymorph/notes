@@ -9,14 +9,13 @@ import {
   useTheme,
   Zoom,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "react-query";
 import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
   NOTE_TITLE_CHAR_LIMIT,
 } from "../../../constants/input-limits";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -26,8 +25,9 @@ import {
   createNote,
   updateNote,
 } from "../../../helpers/requests/note-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialog";
+import { dialogCard } from "../../../styles/components/dialogs";
 import RemainingCharCount from "../SharedComponents/RemainingCharCount";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
@@ -173,7 +173,6 @@ export default function NoteActionDialog({
   };
 
   const handleCategoryChipDelete = () => {
-    console.log("handleCategoryChipDelete");
     setNewCategoryName("");
     setNewCategoryColor("none");
     setDisplayCategoryChip(false);

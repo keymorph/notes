@@ -17,7 +17,6 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { NOTES_ORDER_BY } from "../../helpers/models/note-order";
 import {
   getCategoryColorName,
   getCategoryName,
@@ -27,6 +26,7 @@ import {
   getOrderedNotesCollection,
   getUpdatedOrderedNotesID,
 } from "../../helpers/notes/order";
+import { NOTES_ORDER_BY } from "../../models/note-order";
 import { spring } from "../../styles/animations/definitions";
 import SortableNote from "./NotesTimeline/SortableNote";
 
@@ -42,13 +42,28 @@ export default function NotesTimeline({
   setNotesOrder,
 }) {
   //#region Hooks
-  const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
 
+  const [noNotesDisplayed, setNoNotesDisplayed] = useState(false);
   const [activeID, setActiveID] = useState(null); // activeID used to track the active note being dragged
+
+  useEffect(() => {
+    if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
+      setNotesOrder((prev) => {
+        return {
+          ...prev,
+          orderedNotesID: getUpdatedOrderedNotesID(
+            prev.orderedNotesID,
+            noteCollection
+          ),
+        };
+      });
+    }
+  }, [noteCollection]);
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 2, // Distance, in pixels, that the note must be dragged before it is considered active
+        distance: 1, // Distance, in pixels, that the note must be dragged before it is considered active
       },
     }),
     useSensor(KeyboardSensor, {
@@ -61,18 +76,6 @@ export default function NotesTimeline({
       },
     })
   );
-
-  useEffect(() => {
-    if (notesOrder.orderBy === NOTES_ORDER_BY.CUSTOM) {
-      setNotesOrder((prev) => ({
-        ...prev,
-        orderedNotesID: getUpdatedOrderedNotesID(
-          prev.orderedNotesID,
-          noteCollection
-        ),
-      }));
-    }
-  }, [noteCollection]);
 
   //#endregion
 
@@ -92,24 +95,24 @@ export default function NotesTimeline({
 
       setNotesOrder((prev) => {
         // Swap the ordered notes ID. If the ordered IDs array is empty, noteCollection will be used.
-        const newOrderedNotesID = arrayMove(
-          prev.orderedNotesID.length > 0
-            ? prev.orderedNotesID
-            : noteCollection.map((note) => note.id),
-          oldIndex,
-          newIndex
-        );
-        return {
-          orderedNotesID: newOrderedNotesID,
+        const newNotesOrder = {
+          orderedNotesID: arrayMove(
+            prev.orderedNotesID.length > 0
+              ? prev.orderedNotesID
+              : noteCollection.map((note) => note.id),
+            oldIndex,
+            newIndex
+          ),
           orderBy: NOTES_ORDER_BY.CUSTOM,
         };
+        return newNotesOrder;
       });
     }
     setActiveID(null);
   };
   //#endregion
 
-  // Order and filter notes and store the results in a memoized variable
+  // Store the ordered and filtered notes in a memoized variable
   // This avoids re-calculating the contents of the factory function on every re-render
   const memoizedNotesCollection = useMemo(() => {
     const orderedNotesCollection = getOrderedNotesCollection(
@@ -164,23 +167,9 @@ export default function NotesTimeline({
         items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
-        {/*<DragOverlay>*/}
-        {/*  {activeID ? (*/}
-        {/*    <NoteDragOverlay*/}
-        {/*      title={draggedNote.title}*/}
-        {/*      description={draggedNote.description}*/}
-        {/*      tags={draggedNote.tags}*/}
-        {/*      categoryName={draggedNote.category}*/}
-        {/*      color={*/}
-        {/*        categoriesCollection.find(*/}
-        {/*          (category) => category.name === draggedNote.category*/}
-        {/*        )?.color*/}
-        {/*      }*/}
-        {/*    />*/}
-        {/*  ) : null}*/}
-        {/*</DragOverlay>*/}
         <Box
-          p={["1.5rem", "2rem"]}
+          m={"1rem"}
+          p={["0.5rem", "1rem"]}
           display="grid"
           gap="2rem"
           gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
@@ -219,7 +208,7 @@ export default function NotesTimeline({
         {noNotesDisplayed && (
           <motion.div layout transition={spring}>
             <Grow in>
-              <Typography textAlign={"center"} variant="h5" mt={"2rem"}>
+              <Typography variant={"h5"} textAlign={"center"} mt={"2rem"}>
                 No notes found...
               </Typography>
             </Grow>

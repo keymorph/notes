@@ -9,14 +9,15 @@ import {
 } from "@mui/icons-material";
 import {
   Avatar,
-  Box,
   Button,
+  CircularProgress,
   Divider,
   Menu,
   MenuItem,
   Typography,
   Zoom,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -44,10 +45,11 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   //#endregion
 
   const isUserLoggedIn = sessionStatus === "authenticated";
+  const isAuthenticating = sessionStatus === "loading";
   const dropdownOpen = Boolean(anchorEl);
   const profileName = isUserLoggedIn
     ? session.user.name || session.user.email?.split("@")[0]
-    : "Guest";
+    : "";
 
   return (
     <>
@@ -55,17 +57,12 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
         color={dropdownOpen ? "primary" : "neutral"}
         aria-label="Profile options"
         size="small"
-        disabled={!isUserLoggedIn}
         onClick={handleDropdownShow}
       >
-        {/*<ThemeToggleButton*/}
-        {/*  darkMode={darkMode}*/}
-        {/*  handleDarkModeToggle={handleDarkModeToggle}*/}
-        {/*/>*/}
-        <Box mr={"0.5rem"} display={"flex"}>
+        <motion.div layout style={{ display: "flex" }}>
           {isUserLoggedIn ? (
             session.user.image ? (
-              <Avatar sx={{ height: "1.5em", width: "1.5em" }}>
+              <Avatar sx={{ height: "1.8rem", width: "1.8rem" }}>
                 <Image
                   priority
                   src={session.user.image}
@@ -74,13 +71,20 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
                 />
               </Avatar>
             ) : (
-              <AccountCircle />
+              <AccountCircle sx={{ fontSize: "1.8rem" }} />
             )
+          ) : isAuthenticating ? (
+            <CircularProgress size={"1.5rem"} />
           ) : (
-            <NoAccounts />
+            <NoAccounts sx={{ fontSize: "1.8rem" }} />
           )}
-        </Box>
-        <Typography variant="body2" alignSelf={"center"}>
+        </motion.div>
+        <Typography
+          variant="body2"
+          textTransform={"none"}
+          alignSelf={"center"}
+          ml={"0.5rem"}
+        >
           {profileName}
         </Typography>
         <ArrowDropDownOutlined />

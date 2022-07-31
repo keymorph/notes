@@ -1,28 +1,32 @@
-import { Box, LinearProgress, Zoom } from "@mui/material";
-import { getSession, useSession } from "next-auth/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
-
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
-import { NOTES_ORDER_BY } from "../helpers/models/note-order";
 import {
   getNoteItem,
   updateNotesOrder,
 } from "../helpers/requests/note-requests";
+import { NOTES_ORDER_BY } from "../models/note-order";
 
 export default function Dashboard() {
   //#region Hooks
+
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
-  // Array of objects with all notes and categories respectively
+  const { status: sessionStatus } = useSession({
+    required: true,
+    onUnauthenticated: async () => {
+      await router.push("/auth");
+    },
+  });
+
   const [noteCollection, setNoteCollection] = useState([]);
   const [categoriesCollection, setCategoriesCollection] = useState([]);
   const [notesOrder, setNotesOrder] = useState({
     orderedNotesID: [],
-    orderBy: NOTES_ORDER_BY.DEFAULT,
+    orderBy: "",
   });
   // These categories will be used to filter the notes. If empty, no category filter will be applied
   const [filterCategories, setFilterCategories] = useState([]);
@@ -32,7 +36,9 @@ export default function Dashboard() {
   const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
 
   useEffect(() => {
-    mutateOrder({ notesOrder });
+    if (notesOrder.orderBy) {
+      mutateOrder(notesOrder);
+    }
   }, [notesOrder]);
 
   //#region Query Handling Hooks
@@ -54,7 +60,7 @@ export default function Dashboard() {
       console.error(error.message);
     },
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
-    enabled: sessionStatus === "authenticated", // Disable unless the user is logged in
+    enabled: sessionStatus === "authenticated",
   });
 
   // Changes and gets the order of notes in the database
@@ -67,63 +73,50 @@ export default function Dashboard() {
     }
   );
   //#endregion
+
   //#endregion
 
-  // If the user is not logged in, redirect to the login page
-  if (sessionStatus === "unauthenticated") {
-    router.replace("/auth");
+  if (process.env.NODE_ENV === "development") {
+    console.debug("Notes Collection: ", noteCollection);
+    console.debug("Categories Collection: ", categoriesCollection);
   }
 
-  console.info("Notes Collection: ", noteCollection);
-  console.info("Categories Collection: ", categoriesCollection);
-
-  return sessionStatus === "authenticated" ? (
-    <Box>
-      <AppToolbar
-        noteCollection={noteCollection}
-        categoriesCollection={categoriesCollection}
-        filterCategories={filterCategories}
-        searchValue={searchValue}
-        noteStatus={noteStatus}
-        orderFilterDropdownOpen={orderFilterDropdownOpen}
-        setNoteCollection={setNoteCollection}
-        setCategoriesCollection={setCategoriesCollection}
-        setSearchValue={setSearchValue}
-        setOrderFilterViewOpen={setOrderFilterDropdownOpen}
-      />
-      {orderFilterDropdownOpen && (
-        <OrderFilterDropdown
-          notesOrder={notesOrder}
+  return (
+    sessionStatus === "authenticated" && (
+      <>
+        <AppToolbar
+          noteCollection={noteCollection}
           categoriesCollection={categoriesCollection}
           filterCategories={filterCategories}
-          setNotesOrder={setNotesOrder}
-          setFilterCategories={setFilterCategories}
+          searchValue={searchValue}
+          noteStatus={noteStatus}
+          orderFilterDropdownOpen={orderFilterDropdownOpen}
+          setNoteCollection={setNoteCollection}
+          setCategoriesCollection={setCategoriesCollection}
+          setSearchValue={setSearchValue}
+          setOrderFilterViewOpen={setOrderFilterDropdownOpen}
         />
-      )}
-      <NotesTimeline
-        noteCollection={noteCollection}
-        categoriesCollection={categoriesCollection}
-        notesOrder={notesOrder}
-        filterCategories={filterCategories}
-        searchValue={searchValue}
-        noteStatus={noteStatus}
-        setNoteCollection={setNoteCollection}
-        setCategoriesCollection={setCategoriesCollection}
-        setNotesOrder={setNotesOrder}
-      />
-    </Box>
-  ) : (
-    // While the user is being authenticated, show a loading indicator
-    <Zoom in>
-      <Box width={"100%"}>
-        <LinearProgress />
-      </Box>
-    </Zoom>
+        {orderFilterDropdownOpen && (
+          <OrderFilterDropdown
+            notesOrder={notesOrder}
+            categoriesCollection={categoriesCollection}
+            filterCategories={filterCategories}
+            setNotesOrder={setNotesOrder}
+            setFilterCategories={setFilterCategories}
+          />
+        )}
+        <NotesTimeline
+          noteCollection={noteCollection}
+          categoriesCollection={categoriesCollection}
+          notesOrder={notesOrder}
+          filterCategories={filterCategories}
+          searchValue={searchValue}
+          noteStatus={noteStatus}
+          setNoteCollection={setNoteCollection}
+          setCategoriesCollection={setCategoriesCollection}
+          setNotesOrder={setNotesOrder}
+        />
+      </>
+    )
   );
-}
-
-// Get user session from the server-side
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  return { props: { session } };
 }

@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { NOTES_ORDER_BY } from "../../../helpers/models/note-order";
+import { NOTES_ORDER_BY } from "../../../models/note-order";
 
 export default function OrderView({ notesOrder, setNotesOrder, isMobile }) {
   const radioComponent = <Radio size={isMobile ? "small" : "medium"} />;

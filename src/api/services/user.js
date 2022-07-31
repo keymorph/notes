@@ -70,7 +70,9 @@ const loginAccount = async (email, password, res) => {
           error: "The email address or password entered is invalid.",
         });
       }
-      return res.status(200).json({ user_id: resources[0].id });
+      return res
+        .status(200)
+        .json({ user_id: resources[0].id, email: resources[0].email });
     })
     .catch((error) => {
       console.error(error.message);

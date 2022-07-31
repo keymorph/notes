@@ -1,16 +1,17 @@
 /*
   This component contains the shared Components and providers that are used on all pages.
 */
-import {Container, CssBaseline} from "@mui/material";
-import {ThemeProvider} from "@mui/material/styles";
-import {SessionProvider} from "next-auth/react";
+import { Container, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import React, {useEffect, useMemo, useState} from "react";
-import {QueryClient, QueryClientProvider} from "react-query";
+import { useRouter } from "next/router";
+import React, { useEffect, useMemo, useState } from "react";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar";
 
-import {darkTheme, lightTheme} from "../styles/themes/theme";
+import { darkTheme, lightTheme } from "../styles/themes/theme";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +19,19 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const router = useRouter();
+
   const [darkMode, setDarkMode] = useState(null);
-  // Invoke setDarkMode whenever the page loads
+  // Set the theme palette based on the dark mode preference
+  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
+
+  // Operations to perform when the page loads
   useEffect(() => {
+    // If the current site url is invalid, route to the valid url
+    if (!process.env.NEXT_PUBLIC_API_URL.includes(window.location.origin)) {
+      router.replace(process.env.NEXT_PUBLIC_API_URL);
+    }
+
     // If preference was set in localStorage, dont check the browser preference
     // else check the browser preference so that it is set as the default mode
     if (localStorage.getItem("mode")) {
@@ -30,8 +41,11 @@ export default function App({
     }
   }, []);
 
-  // Set the theme palette based on the dark mode preference
-  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
+  useEffect(() => {
+    document.documentElement.style.backgroundColor =
+      theme.palette.background.base;
+    document.body.style.backgroundColor = theme.palette.background.base;
+  }, [theme]);
 
   // Change the mode when this function is called
   // Store the preference in localStorage
@@ -58,9 +72,10 @@ export default function App({
                 maxWidth={false} // Remove default max width
                 disableGutters
                 sx={{
-                  background: darkMode ? "#0d0e16" : "#B3B2B8",
                   minHeight: "100vh",
                   height: "100%",
+                  userSelect: "none",
+                  overflowX: "hidden",
                 }}
               >
                 <Navbar

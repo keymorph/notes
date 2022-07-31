@@ -1,20 +1,20 @@
 import { LoadingButton } from "@mui/lab";
 import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "react-query";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   doCategoryNamesCollide,
   doesCategoryExist,
   getOrCreateCategoryID,
 } from "../../../helpers/notes/category";
 import { updateCategories } from "../../../helpers/requests/category-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
 import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialog";
+import { dialogCard } from "../../../styles/components/dialogs";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";

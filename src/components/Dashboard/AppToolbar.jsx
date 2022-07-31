@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { MODAL_ACTIONS } from "../../helpers/models/dialogs";
+import { MODAL_ACTIONS } from "../../models/dialogs";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesDialog from "./Dialogs/ManageCategoriesDialog";

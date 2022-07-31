@@ -1,11 +1,8 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Collapse,
-  FormControlLabel,
-  Grid,
   Link as MUILink,
   TextField,
 } from "@mui/material";
@@ -25,14 +22,13 @@ import {
   isPasswordValid,
 } from "../../utils/input-validation/validate-credentials";
 
-export default function Credentials({ action }) {
+export default function Credentials({ action, isUnauthenticated }) {
   const router = useRouter();
 
   // Input data state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [remember, setRemember] = useState(false);
   // Validation flags state
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
@@ -44,11 +40,14 @@ export default function Credentials({ action }) {
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
-  const submitButtonDisabled = !(
-    emailValid &&
-    passwordValid &&
-    confirmPasswordValid
-  );
+  const submitButtonDisabled =
+    !email ||
+    !emailValid ||
+    !password ||
+    !passwordValid ||
+    (action === "register" && !confirmPassword) ||
+    !confirmPasswordValid ||
+    !isUnauthenticated;
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
@@ -67,7 +66,6 @@ export default function Credentials({ action }) {
     const data = {
       email: email,
       password: password,
-      redirect: false,
     };
 
     // No need to redirect as next-auth handles that
@@ -214,23 +212,6 @@ export default function Credentials({ action }) {
           fullWidth
         />
       </Collapse>
-      {/* Display "Remember Me" and "Forgot Password?" for login only */}
-      <Collapse sx={{ width: "100%" }} in={action === "login"}>
-        <Grid container justifyContent="space-between">
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-            checked={remember}
-            onChange={(event) => setRemember(event.target.checked)}
-          />
-          <Link href="/auth?action=forgot" passHref>
-            <MUILink sx={{ alignSelf: "center" }} variant="body2">
-              Forgot password?
-            </MUILink>
-          </Link>
-        </Grid>
-      </Collapse>
-      {/* Loading button that displays the circular throbber whenever an action is being performed */}
       <LoadingButton
         type="submit"
         disabled={submitButtonDisabled}

@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar/ToolbarSearch.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.yarn/install-state.gz" beforeDir="false" afterPath="$PROJECT_DIR$/.yarn/install-state.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/Note.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline/SortableNote.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/SharedComponents/RemainingCharCount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/SharedComponents/RemainingCharCount.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +24,6 @@
         <option value="JavaScript File" />
       </list>
     </option>
-  </component>
-  <component name="FormatOnSaveOptions">
-    <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,12 +45,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="notes-orderBy" />
-                    <option name="lastUsedInstant" value="1655512533" />
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1658094244" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="dev" />
-                    <option name="lastUsedInstant" value="1653707900" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1657409589" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="replace-drag-to-reorder" />
@@ -66,6 +63,13 @@
           </list>
         </option>
       </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -98,35 +102,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/dev/CF+/careerfairplus-app&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files (x86)\\JetBrains\\WebStorm 2022.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "full.screen.before.presentation.mode": "false",
+    "last_opened_file_path": "C:/dev/CF+/careerfairplus-app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "yarn",
+    "prettierjs.PrettierConfiguration.Package": "C:\\dev\\Projects\\notetakingapp\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\Projects\notetakingapp\src" />
+      <recent name="C:\dev\Projects\notetakingapp" />
       <recent name="C:\dev\Projects\notetakingapp\src\helpers\models" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\Modals\ModalComponents" />
       <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard\NotesTimeline" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components\Dashboard" />
-      <recent name="C:\dev\Projects\notetakingapp\src\components" />
     </key>
   </component>
   <component name="RunManager">
@@ -276,7 +280,36 @@
       <workItem from="1657252451014" duration="1656000" />
       <workItem from="1657311148982" duration="13270000" />
       <workItem from="1657333456355" duration="694000" />
-      <workItem from="1657334670090" duration="2222000" />
+      <workItem from="1657334670090" duration="2455000" />
+      <workItem from="1657352150333" duration="57000" />
+      <workItem from="1657394282128" duration="4359000" />
+      <workItem from="1657682193072" duration="607000" />
+      <workItem from="1657891770632" duration="11000" />
+      <workItem from="1658000090123" duration="141000" />
+      <workItem from="1658000241010" duration="34000" />
+      <workItem from="1658013203174" duration="15000" />
+      <workItem from="1658014426300" duration="646000" />
+      <workItem from="1658036490977" duration="6000" />
+      <workItem from="1658036739732" duration="13000" />
+      <workItem from="1658037380293" duration="7000" />
+      <workItem from="1658094113393" duration="3633000" />
+      <workItem from="1658461368976" duration="3030000" />
+      <workItem from="1658527252907" duration="2104000" />
+      <workItem from="1658724090519" duration="758000" />
+      <workItem from="1658794398680" duration="8751000" />
+      <workItem from="1658890337910" duration="9421000" />
+      <workItem from="1658959639128" duration="640000" />
+      <workItem from="1659041040279" duration="1854000" />
+      <workItem from="1659050532249" duration="9030000" />
+      <workItem from="1659060067521" duration="1129000" />
+      <workItem from="1659061462907" duration="138000" />
+      <workItem from="1659136742369" duration="59000" />
+      <workItem from="1659136826821" duration="1404000" />
+      <workItem from="1659172642661" duration="4000" />
+      <workItem from="1659205832326" duration="16722000" />
+      <workItem from="1659223668255" duration="1540000" />
+      <workItem from="1659225441387" duration="928000" />
+      <workItem from="1659279843085" duration="2696000" />
     </task>
     <servers />
   </component>

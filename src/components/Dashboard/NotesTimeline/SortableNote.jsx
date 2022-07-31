@@ -1,7 +1,11 @@
-import {useSortable} from "@dnd-kit/sortable";
-import {CSS} from "@dnd-kit/utilities";
-import {motion} from "framer-motion";
-import {spring, variantFadeStagger,} from "../../../styles/animations/definitions";
+import { useSortable } from "@dnd-kit/sortable";
+import { useTheme } from "@mui/material";
+import { motion } from "framer-motion";
+import {
+  noteSpring,
+  spring,
+  variantFadeStagger,
+} from "../../../styles/animations/definitions";
 import Note from "./Note";
 
 /**
@@ -19,35 +23,39 @@ export default function SortableNote({
   disableDrag,
   ...rest
 }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    transition: {
-      duration: 250,
-      easing: "ease-out",
-    },
-    id: rest.noteID,
-    disabled: disableDrag,
-  });
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
+
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useSortable({
+      id: rest.noteID,
+      disabled: disableDrag,
+    });
+
+  const dragShadow = isDragging
+    ? isDarkMode
+      ? "0rem 2rem 2rem rgba(0, 0, 0, 0.6)"
+      : "0rem 2rem 2rem rgba(0, 0, 0, 0.3)"
+    : "0rem 0rem 0rem rgba(0, 0, 0, 0)";
 
   return (
-    <div
+    <motion.div
       ref={setNodeRef}
+      layout
       style={{
         transformOrigin: "0 0",
-        transform: CSS.Transform.toString(transform),
-        transition,
         zIndex: isDragging ? 1 : 0,
-        userSelect: isDragging ? "none" : "auto", // Prevent user from selecting text while dragging
       }}
+      animate={{
+        scale: isDragging ? 1.04 : 1,
+        x: transform?.x || 0,
+        y: transform?.y || 0,
+        boxShadow: dragShadow,
+      }}
+      transition={noteSpring}
     >
       <motion.div
-        layout={!isDraggingMode} // Only animate position changes when not dragging
+        // layout={!isDraggingMode} // Only animate position changes when not dragging
         transition={spring}
         variants={variantFadeStagger}
         initial={"hidden"}
@@ -63,6 +71,6 @@ export default function SortableNote({
           {...rest}
         />
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

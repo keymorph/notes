@@ -1,7 +1,6 @@
 import { MoreHoriz } from "@mui/icons-material";
 import {
   Box,
-  Card,
   CardContent,
   Chip,
   Divider,
@@ -9,13 +8,11 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  styled,
   Typography,
   useTheme,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { useMutation } from "react-query";
-import { MODAL_ACTIONS } from "../../../helpers/models/dialogs";
 import {
   getOrCreateCategoryID,
   getPaletteCategoryColorName,
@@ -25,15 +22,10 @@ import {
   createNote,
   deleteNote,
 } from "../../../helpers/requests/note-requests";
+import { MODAL_ACTIONS } from "../../../models/dialogs";
+import { NoteCard } from "../../../styles/components/cards";
 import NoteActionDialog from "../Dialogs/NoteActionDialog";
 import CustomTooltip from "../SharedComponents/CustomTooltip";
-
-const NoteCard = styled(Card)({
-  width: "20rem",
-  height: "22rem",
-  overflowWrap: "break-word",
-  transition: "all 0.25s ease-in-out",
-});
 
 export default function Note({
   noteID,
@@ -49,14 +41,10 @@ export default function Note({
   dragHandleListeners,
   dragHandleAttributes,
   isDragging,
-  disableDrag,
 }) {
   //#region Hooks
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const noteShadow = isDarkMode
-    ? "0rem 2rem 2rem rgba(0, 0, 0, 0.6)"
-    : "0rem 2rem 2rem rgba(0, 0, 0, 0.3)";
 
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -153,11 +141,7 @@ export default function Note({
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-      }}
-    >
+    <Box display={"flex"}>
       <NoteActionDialog
         noteID={noteID}
         title={title}
@@ -175,18 +159,13 @@ export default function Note({
       <Grow in={!hideNote}>
         <div>
           <NoteCard
-            sx={{
-              transform: isDragging ? "scale(1.04)" : "scale(1)",
-              boxShadow: !disableDrag && isDragging ? noteShadow : "none",
-              transition: "all 0.25s ease-in-out",
-            }}
             ref={ref}
             {...dragHandleListeners}
             {...dragHandleAttributes}
           >
             <Box
               sx={{
-                cursor: isDragging ? "grabbing" : "inherit",
+                cursor: isDragging ? "grabbing" : "grab",
                 userSelect: "none",
                 backgroundColor: `${getPaletteCategoryColorName(
                   categoryColor
@@ -194,7 +173,6 @@ export default function Note({
               }}
             >
               <Box display="flex" alignItems="center" mx={"0.5rem"}>
-                {/* If category exists, show the name */}
                 {categoryName ? (
                   <Chip
                     label={categoryName}

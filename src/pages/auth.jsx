@@ -13,20 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Credentials from "../components/AuthProviders/Credentials";
 import OAuth from "../components/AuthProviders/OAuth";
-import getAuthAlertText from "../helpers/validation-strings/auth-alerts";
-
-const sanitizeAction = (action) => {
-  switch (action) {
-    case "login":
-      return action;
-    case "register":
-      return action;
-    case "forgot":
-      return action;
-    default:
-      return "login";
-  }
-};
+import { getAlertDescription } from "../models/alerts";
 
 const AuthCard = styled(Card)({
   padding: 25,
@@ -53,10 +40,10 @@ export default function AuthPage() {
   useEffect(() => {
     if (router.query.error) {
       setAlertSeverity("error");
-      setAlertText(getAuthAlertText(router.query.error));
+      setAlertText(getAlertDescription(router.query.error));
     } else if (router.query.success) {
       setAlertSeverity("success");
-      setAlertText(getAuthAlertText(router.query.success));
+      setAlertText(getAlertDescription(router.query.success));
     } else {
       setAlertText("");
     }
@@ -85,7 +72,10 @@ export default function AuthPage() {
             {alertText}
           </Alert>
         </Collapse>
-        <Credentials action={action} />
+        <Credentials
+          action={action}
+          isUnauthenticated={sessionStatus === "unauthenticated"}
+        />
         <Typography
           sx={{
             my: 2,

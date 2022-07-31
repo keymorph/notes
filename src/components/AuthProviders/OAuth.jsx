@@ -1,23 +1,21 @@
 import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { PROVIDERS } from "../../models/oauth";
 
 export default function OAuth() {
   const router = useRouter();
-  const providers = getProviders();
 
-  const handleGithubSignIn = async () => {
-    await signIn((await providers)["github"].id).catch(async (error) => {
-      console.error(error.message);
-      await router.push("/auth?error=Server Error :(");
-    });
-  };
-  const handleGoogleSignIn = async () => {
-    await signIn((await providers)["google"].id).catch(async (error) => {
-      console.error(error.message);
-      await router.push("/auth?error=Server Error :(");
-    });
+  const handleSignIn = async (provider) => {
+    await signIn(provider)
+      .then(() => {
+        router.push("/dashboard");
+      })
+      .catch(async (error) => {
+        console.error(error.message);
+        await router.push("/auth?error=Authentication Error :(");
+      });
   };
 
   return (
@@ -28,10 +26,16 @@ export default function OAuth() {
       justifyContent="center"
       alignItems="center"
     >
-      <IconButton onClick={handleGoogleSignIn} color="primary">
+      <IconButton
+        onClick={() => handleSignIn(PROVIDERS.google)}
+        color="primary"
+      >
         <Google sx={{ fontSize: 48 }} />
       </IconButton>
-      <IconButton onClick={handleGithubSignIn} color="primary">
+      <IconButton
+        onClick={() => handleSignIn(PROVIDERS.github)}
+        color="primary"
+      >
         <GitHub sx={{ fontSize: 48 }} />
       </IconButton>
     </Stack>

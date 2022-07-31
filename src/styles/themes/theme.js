@@ -181,6 +181,7 @@ export const darkTheme = createTheme(
         contrastText: "#1F1F1F",
       },
       background: {
+        base: "#0D0E16",
         appBar: "#171824" + transparency.default,
       },
     },
@@ -254,6 +255,7 @@ export const lightTheme = createTheme(
         contrastText: "#FFFFFF",
       },
       background: {
+        base: "#B3B2B8",
         appBar: "#D6D6DA" + transparency.default,
       },
     },
