@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,7 +304,10 @@
       <workItem from="1659223668255" duration="1540000" />
       <workItem from="1659225441387" duration="928000" />
       <workItem from="1659279843085" duration="2696000" />
-      <workItem from="1659290414239" duration="921000" />
+      <workItem from="1659290414239" duration="1732000" />
+      <workItem from="1659295108115" duration="72000" />
+      <workItem from="1659308297569" duration="652000" />
+      <workItem from="1659400266236" duration="1239000" />
     </task>
     <servers />
   </component>
