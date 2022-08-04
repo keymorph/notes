@@ -183,6 +183,7 @@ export const darkTheme = createTheme(
       background: {
         base: "#0D0E16",
         appBar: "#171824" + transparency.default,
+        highlight: "#2A2F49" + transparency.default,
       },
     },
 
@@ -191,21 +192,21 @@ export const darkTheme = createTheme(
       MuiAppBar: {
         styleOverrides: {
           root: {
-            background: "#1d2133" + transparency.default,
+            background: "#1D2133" + transparency.default,
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            background: "#1d2133" + transparency.default,
+            background: "#1D2133" + transparency.default,
           },
         },
       },
       MuiPopover: {
         styleOverrides: {
           paper: {
-            background: "#2a2f49" + transparency.default,
+            background: "#2A2F49" + transparency.default,
             boxShadow: "0px 0.4em 0.8em rgba(0, 0, 0, 0.4)",
           },
         },
@@ -213,7 +214,7 @@ export const darkTheme = createTheme(
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
-            backgroundColor: "#2a2f49" + transparency.default,
+            backgroundColor: "#2A2F49" + transparency.default,
             color: "#FFFFFF",
             boxShadow: "0px 0.4em 0.8em rgba(0, 0, 0, 0.4)",
           },
@@ -257,6 +258,7 @@ export const lightTheme = createTheme(
       background: {
         base: "#B3B2B8",
         appBar: "#D6D6DA" + transparency.default,
+        highlight: "#FFFFFF" + transparency.default,
       },
     },
 
