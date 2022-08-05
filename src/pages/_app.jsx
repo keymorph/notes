@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { SnackbarProvider } from "notistack";
 import React, { useEffect, useMemo, useState } from "react";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar";
@@ -60,35 +61,37 @@ export default function App({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>JotFox - Note Taking App</title>
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider session={session}>
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
-            {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
-            <CssBaseline enableColorScheme />
-            {/* While the page loads, don't display any content */}
-            {/* This prevents the theme from changing after the page has loaded */}
-            {darkMode !== null ? (
-              <Container
-                maxWidth={false} // Remove default max width
-                disableGutters
-                sx={{
-                  minHeight: "100vh",
-                  height: "100%",
-                  userSelect: "none",
-                }}
-              >
-                <Navbar
-                  darkMode={darkMode}
-                  handleDarkModeToggle={handleDarkModeToggle}
-                />
-                {/* Each page is rendered in Component */}
-                <Component {...pageProps} />
-                <ScrollTop />
-              </Container>
-            ) : null}
+            <SnackbarProvider maxSnack={3}>
+              {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
+              <CssBaseline enableColorScheme />
+              {/* While the page loads, don't display any content */}
+              {/* This prevents the theme from changing after the page has loaded */}
+              {darkMode !== null ? (
+                <Container
+                  maxWidth={false} // Remove default max width
+                  disableGutters
+                  sx={{
+                    minHeight: "100vh",
+                    height: "100%",
+                    userSelect: "none",
+                  }}
+                >
+                  <Navbar
+                    darkMode={darkMode}
+                    handleDarkModeToggle={handleDarkModeToggle}
+                  />
+                  {/* Each page is rendered in Component */}
+                  <Component {...pageProps} />
+                  <ScrollTop />
+                </Container>
+              ) : null}
+            </SnackbarProvider>
           </ThemeProvider>
-        </SessionProvider>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </SessionProvider>
     </>
   );
 }
