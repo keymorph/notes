@@ -1,5 +1,6 @@
 import { Card, Divider, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
+import { springSlow } from "../../styles/animations/definitions";
 import FilterView from "./OrderFilterDropdown/FilterView";
 import OrderView from "./OrderFilterDropdown/OrderView";
 
@@ -17,11 +18,10 @@ export default function OrderFilterDropdown({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: "-2rem" }}
+      initial={{ clipPath: "circle(0% at 1% 0%)" }}
       animate={{
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.3, ease: "easeInOut" },
+        clipPath: "circle(72% at 50% 50%)",
+        transition: springSlow,
       }}
     >
       <Card

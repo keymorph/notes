@@ -15,9 +15,14 @@ export const springDefault = {
   stiffness: 700,
   damping: 30,
 };
+export const springSlow = {
+  type: "spring",
+  bounce: 0.25,
+  duration: 1.2,
+};
 export const spring = {
   type: "spring",
-  bounce: 0.2,
+  bounce: 0.25,
   duration: 0.6,
 };
 export const springShort = {

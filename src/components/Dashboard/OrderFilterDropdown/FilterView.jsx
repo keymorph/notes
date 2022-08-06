@@ -68,7 +68,7 @@ export default function FilterView({
   //#endregion
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <Typography variant="h6">Filter By Category:</Typography>
       <CategorySearchInput
         categoryName={searchValue}

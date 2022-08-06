@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -106,26 +107,28 @@ export default function Dashboard() {
           setSearchValue={setSearchValue}
           setOrderFilterViewOpen={setOrderFilterDropdownOpen}
         />
-        {orderFilterDropdownOpen && (
-          <OrderFilterDropdown
-            notesOrder={notesOrder}
+        <motion.div style={{ overflowX: "hidden", minHeight: "90vh" }}>
+          {orderFilterDropdownOpen && (
+            <OrderFilterDropdown
+              notesOrder={notesOrder}
+              categoriesCollection={categoriesCollection}
+              filterCategories={filterCategories}
+              setNotesOrder={setNotesOrder}
+              setFilterCategories={setFilterCategories}
+            />
+          )}
+          <NotesTimeline
+            noteCollection={noteCollection}
             categoriesCollection={categoriesCollection}
+            notesOrder={notesOrder}
             filterCategories={filterCategories}
+            searchValue={searchValue}
+            noteStatus={noteStatus}
+            setNoteCollection={setNoteCollection}
+            setCategoriesCollection={setCategoriesCollection}
             setNotesOrder={setNotesOrder}
-            setFilterCategories={setFilterCategories}
           />
-        )}
-        <NotesTimeline
-          noteCollection={noteCollection}
-          categoriesCollection={categoriesCollection}
-          notesOrder={notesOrder}
-          filterCategories={filterCategories}
-          searchValue={searchValue}
-          noteStatus={noteStatus}
-          setNoteCollection={setNoteCollection}
-          setCategoriesCollection={setCategoriesCollection}
-          setNotesOrder={setNotesOrder}
-        />
+        </motion.div>
       </Box>
     )
   );

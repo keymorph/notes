@@ -206,6 +206,7 @@ export default function AppToolbar({
             exit={false}
           >
             <Button
+              disabled={noteStatus === "loading"}
               color={createNoteDialogOpen ? "primary" : "neutral"}
               variant={"outlined"}
               size={"small"}
@@ -226,6 +227,7 @@ export default function AppToolbar({
             appear={false}
           >
             <IconButton
+              disabled={noteStatus === "loading"}
               color={createNoteDialogOpen ? "primary" : "neutral"}
               onClick={handleCreateNoteModalOpen}
               size={"small"}
@@ -235,6 +237,7 @@ export default function AppToolbar({
           </Fade>
           <CustomTooltip title={"More options"} placement={"left"}>
             <IconButton
+              disabled={noteStatus === "loading"}
               size={"small"}
               onClick={handleMoreMenuClick}
               color={moreMenuAnchorEl ? "primary" : "neutral"}
