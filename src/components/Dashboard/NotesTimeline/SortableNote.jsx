@@ -2,8 +2,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import {
-  noteSpring,
   spring,
+  springNote,
+  springNoteDrag,
   variantFadeStagger,
 } from "../../../styles/animations/definitions";
 import Note from "./Note";
@@ -52,7 +53,7 @@ export default function SortableNote({
         y: transform?.y || 0,
         boxShadow: dragShadow,
       }}
-      transition={noteSpring}
+      transition={isDragging ? springNoteDrag : springNote}
     >
       <motion.div
         // layout={!isDraggingMode} // Only animate position changes when not dragging
