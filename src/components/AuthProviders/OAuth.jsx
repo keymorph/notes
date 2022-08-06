@@ -1,18 +1,19 @@
 import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { PROVIDERS } from "../../models/oauth";
 
 export default function OAuth() {
-  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSignIn = async (provider) => {
-    await signIn(provider, { callbackUrl: "/dashboard" }).catch(
-      async (error) => {
-        console.error(error.message);
-      }
-    );
+    await signIn(provider, { callbackUrl: "/dashboard" }).catch((error) => {
+      console.error(error.message);
+      enqueueSnackbar(`An error occurred while signing in with ${provider}`, {
+        variant: "error",
+      });
+    });
   };
 
   return (

@@ -75,14 +75,11 @@ export default function Credentials({ action, isUnauthenticated }) {
               variant: "error",
             });
           } else {
-            enqueueSnackbar("An error occurred while signing in", {
-              variant: "error",
-            });
+            throw error;
           }
-          console.error(error);
         }
       })
-      .catch(async (error) => {
+      .catch((error) => {
         console.error(error.message);
         enqueueSnackbar("An error occurred while signing in", {
           variant: "error",
@@ -108,7 +105,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           variant: "success",
         });
       })
-      .catch(async (error) => {
+      .catch((error) => {
         const status = error.response?.status;
         // If an error is thrown, append it as a query param to the url
         if (status === 409) {
