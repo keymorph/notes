@@ -212,6 +212,7 @@ export default function AppToolbar({
               size={"small"}
               sx={{
                 minWidth: "7rem",
+                mr: "0.5rem",
               }}
               startIcon={<Add />}
               onClick={handleCreateNoteModalOpen}

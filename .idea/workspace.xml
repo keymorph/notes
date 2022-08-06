@@ -7,11 +7,7 @@
     <list default="true" id="63af2279-23e5-43c6-a4c4-f4b1390a9a60" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AppToolbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/NotesTimeline.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterDropdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterDropdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterDropdown/FilterView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OrderFilterDropdown/FilterView.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/animations/definitions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/animations/definitions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +317,7 @@
       <workItem from="1659732140112" duration="8000" />
       <workItem from="1659732158138" duration="19839000" />
       <workItem from="1659766314169" duration="31000" />
-      <workItem from="1659807047117" duration="7141000" />
+      <workItem from="1659807047117" duration="7983000" />
     </task>
     <servers />
   </component>

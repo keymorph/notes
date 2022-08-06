@@ -107,7 +107,7 @@ export default function Dashboard() {
           setSearchValue={setSearchValue}
           setOrderFilterViewOpen={setOrderFilterDropdownOpen}
         />
-        <motion.div style={{ overflowX: "hidden", minHeight: "90vh" }}>
+        <motion.div style={{ overflow: "hidden", minHeight: "90vh" }}>
           {orderFilterDropdownOpen && (
             <OrderFilterDropdown
               notesOrder={notesOrder}
