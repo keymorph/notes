@@ -5,7 +5,7 @@ import React from "react";
 export default function ScrollTop() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 2000,
+    threshold: 1500,
   });
 
   const handleClick = (event) => {
@@ -26,13 +26,16 @@ export default function ScrollTop() {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: "fixed", bottom: 16, left: 8 }}
+        position={"fixed"}
+        bottom={"1rem"}
+        left={"1rem"}
       >
         <Fab
           size="small"
           aria-label="scroll back to top"
           variant={"circular"}
           sx={{
+            backgroundColor: "primary.background",
             transition: "all 0.3s ease-in-out",
             "&:hover": {
               transform: "scale(1.1)",

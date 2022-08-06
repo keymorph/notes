@@ -9,6 +9,7 @@ import {
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 import { registerUser } from "../../helpers/requests/user-requests";
@@ -23,7 +24,11 @@ import {
 } from "../../utils/input-validation/validate-credentials";
 
 export default function Credentials({ action, isUnauthenticated }) {
+  //#region Hooks
+
   const router = useRouter();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   // Input data state
   const [email, setEmail] = useState("");
@@ -40,14 +45,9 @@ export default function Credentials({ action, isUnauthenticated }) {
   // Submit Button state
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
-  const submitButtonDisabled =
-    !email ||
-    !emailValid ||
-    !password ||
-    !passwordValid ||
-    (action === "register" && !confirmPassword) ||
-    !confirmPasswordValid ||
-    !isUnauthenticated;
+  //#endregion
+
+  //#region Handlers
 
   // Ensure that password and other states are handled between action changes
   const handleActionChange = () => {
@@ -57,23 +57,37 @@ export default function Credentials({ action, isUnauthenticated }) {
     setSubmitButtonLoading(false);
   };
 
-  /*
-   * On Submit handlers
-   */
   const handleLogin = async (event) => {
     event.preventDefault();
 
     const data = {
       email: email,
       password: password,
+      redirect: false,
     };
 
-    // No need to redirect as next-auth handles that
     setSubmitButtonLoading(true);
-    await signIn("credentials", data).catch(async (error) => {
-      console.error("Error signing in: ", error.message);
-      await router.push("/auth?action=login&error=Server Error :(");
-    });
+    await signIn("credentials", data)
+      .then(({ error }) => {
+        if (error) {
+          if (error === "CredentialsSignin") {
+            enqueueSnackbar("Email or password is incorrect", {
+              variant: "error",
+            });
+          } else {
+            enqueueSnackbar("An error occurred while signing in", {
+              variant: "error",
+            });
+          }
+          console.error(error);
+        }
+      })
+      .catch(async (error) => {
+        console.error(error.message);
+        enqueueSnackbar("An error occurred while signing in", {
+          variant: "error",
+        });
+      });
     setSubmitButtonLoading(false);
   };
 
@@ -89,29 +103,28 @@ export default function Credentials({ action, isUnauthenticated }) {
     await registerUser(data)
       .then(async () => {
         // Send the user to the login page
-        await router.push("/auth?action=login&success=RegisterSuccess");
+        await router.push("/auth?action=login");
+        enqueueSnackbar("You were successfully registered 🎉", {
+          variant: "success",
+        });
       })
       .catch(async (error) => {
         const status = error.response?.status;
         // If an error is thrown, append it as a query param to the url
-        await router.push(
-          `/auth?action=register&error=${
-            status === 409 ? "EmailTaken" : error.message
-          }`
-        );
+        if (status === 409) {
+          enqueueSnackbar("An account with this email already exists", {
+            variant: "error",
+          });
+        } else {
+          enqueueSnackbar("An error occurred while registering", {
+            variant: "error",
+          });
+        }
       });
     handleActionChange();
     setSubmitButtonLoading(false);
   };
 
-  // TODO: Handle the forgot password functionality
-  const handleForgotPassword = async (event) => {
-    event.preventDefault();
-  };
-
-  /*
-   * On Change handlers
-   */
   const handleEmailChange = (event) => {
     const email = event.target.value;
     setEmail(email);
@@ -146,6 +159,17 @@ export default function Credentials({ action, isUnauthenticated }) {
       getConfirmPasswordErrorText(confirmPassword, password)
     );
   };
+
+  //#endregion
+
+  const submitButtonDisabled =
+    !email ||
+    !emailValid ||
+    !password ||
+    !passwordValid ||
+    (action === "register" && !confirmPassword) ||
+    !confirmPasswordValid ||
+    !isUnauthenticated;
 
   return (
     <Box

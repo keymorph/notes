@@ -1,6 +1,8 @@
+import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
@@ -35,6 +37,8 @@ export default function Dashboard() {
 
   const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     if (notesOrder.orderBy) {
       mutateOrder(notesOrder);
@@ -58,6 +62,9 @@ export default function Dashboard() {
     },
     onError: (error) => {
       console.error(error.message);
+      enqueueSnackbar("An error occurred while fetching the notes", {
+        variant: "error",
+      });
     },
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     enabled: sessionStatus === "authenticated",
@@ -69,6 +76,9 @@ export default function Dashboard() {
     {
       onError: (error) => {
         console.error(error.message);
+        enqueueSnackbar("An error occurred while saving the notes' order", {
+          variant: "error",
+        });
       },
     }
   );
@@ -83,7 +93,7 @@ export default function Dashboard() {
 
   return (
     sessionStatus === "authenticated" && (
-      <>
+      <Box>
         <AppToolbar
           noteCollection={noteCollection}
           categoriesCollection={categoriesCollection}
@@ -116,7 +126,7 @@ export default function Dashboard() {
           setCategoriesCollection={setCategoriesCollection}
           setNotesOrder={setNotesOrder}
         />
-      </>
+      </Box>
     )
   );
 }

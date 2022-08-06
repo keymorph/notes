@@ -167,43 +167,46 @@ export default function NotesTimeline({
         items={memoizedNotesCollection}
         strategy={rectSortingStrategy}
       >
-        <Box
-          m={"1rem"}
-          p={["0.5rem", "1rem"]}
-          display="grid"
-          gap="2rem"
-          gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
-          justifyItems="center"
-        >
-          {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
-          <AnimatePresence>
-            {memoizedNotesCollection.map((note, index) => (
-              <SortableNote
-                key={note.id}
-                noteID={note.id}
-                isDraggingMode={!!activeID} // If activeID is set, a note is being dragged
-                disableDrag={isFiltering}
-                index={index}
-                title={note.title}
-                description={note.description}
-                tags={note.tags}
-                categoryName={getCategoryName(
-                  note.category_id,
-                  categoriesCollection
-                )}
-                categoryColor={getCategoryColorName(
-                  note.category_id,
-                  categoriesCollection
-                )}
-                searchValue={searchValue}
-                noteCollection={noteCollection}
-                categoriesCollection={categoriesCollection}
-                setNoteCollection={setNoteCollection}
-                setCategoriesCollection={setCategoriesCollection}
-              />
-            ))}
-          </AnimatePresence>
-        </Box>
+        <motion.div style={{ overflowX: "hidden" }}>
+          <Box
+            m={"1rem"}
+            mb={"4rem"}
+            p={["0.5rem", "1rem"]}
+            display="grid"
+            gap="2rem"
+            gridTemplateColumns="repeat(auto-fill, minmax(20rem, 1fr))"
+            justifyItems="center"
+          >
+            {/* AnimatePresence allows Components to animate out when they're removed from the React tree */}
+            <AnimatePresence>
+              {memoizedNotesCollection.map((note, index) => (
+                <SortableNote
+                  key={note.id}
+                  noteID={note.id}
+                  isDraggingMode={!!activeID} // If activeID is set, a note is being dragged
+                  disableDrag={isFiltering}
+                  index={index}
+                  title={note.title}
+                  description={note.description}
+                  tags={note.tags}
+                  categoryName={getCategoryName(
+                    note.category_id,
+                    categoriesCollection
+                  )}
+                  categoryColor={getCategoryColorName(
+                    note.category_id,
+                    categoriesCollection
+                  )}
+                  searchValue={searchValue}
+                  noteCollection={noteCollection}
+                  categoriesCollection={categoriesCollection}
+                  setNoteCollection={setNoteCollection}
+                  setCategoriesCollection={setCategoriesCollection}
+                />
+              ))}
+            </AnimatePresence>
+          </Box>
+        </motion.div>
         {/*  If filtered notes is 0, display no notes found message */}
         {noNotesDisplayed && (
           <motion.div layout transition={spring}>

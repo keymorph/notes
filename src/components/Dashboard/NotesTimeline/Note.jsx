@@ -9,9 +9,9 @@ import {
   Menu,
   MenuItem,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import {
   getOrCreateCategoryID,
@@ -43,8 +43,7 @@ export default function Note({
   isDragging,
 }) {
   //#region Hooks
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === "dark";
+  const { enqueueSnackbar } = useSnackbar();
 
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -63,6 +62,9 @@ export default function Note({
       },
       onError: (error) => {
         console.error(error.message);
+        enqueueSnackbar("An error occurred while deleting the note", {
+          variant: "error",
+        });
       },
     }
   );
@@ -77,6 +79,9 @@ export default function Note({
       },
       onError: (error) => {
         console.error(error.message);
+        enqueueSnackbar("An error occurred while duplicating the note", {
+          variant: "error",
+        });
       },
     }
   );
