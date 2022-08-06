@@ -24,7 +24,7 @@ import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
 
-export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
+export default function ProfileButton({ darkMode, handleDarkModeToggle }) {
   //#region Hooks
   const { data: session, status: sessionStatus } = useSession();
 
@@ -99,6 +99,7 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
         anchorEl={anchorEl}
         open={dropdownOpen}
         onClose={() => setAnchorEl(null)}
+        style={{ top: "0.4rem" }}
       >
         <CustomTooltip title={"Coming soon™"} disableableButton>
           <MenuItem disabled dense sx={{ gap: "0.5em" }}>

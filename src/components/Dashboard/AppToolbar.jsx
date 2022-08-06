@@ -133,6 +133,7 @@ export default function AppToolbar({
       anchorEl={moreMenuAnchorEl}
       open={!!moreMenuAnchorEl}
       onClose={() => setMoreMenuAnchorEl(null)}
+      style={{ top: "0.4rem" }}
     >
       <MenuItem dense onClick={handleManageCategoriesModalOpen}>
         Manage Categories

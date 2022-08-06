@@ -202,6 +202,7 @@ export default function Note({
               anchorEl={moreMenuAnchorEl}
               open={!!moreMenuAnchorEl}
               onClose={() => setMoreMenuAnchorEl(null)}
+              style={{ top: "0.4rem" }}
             >
               <MenuItem dense onClick={handleEditModalOpen}>
                 Edit
