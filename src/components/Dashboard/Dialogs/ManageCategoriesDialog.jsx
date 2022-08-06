@@ -2,6 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import {
   doCategoryNamesCollide,
@@ -33,6 +34,8 @@ export default function ManageCategoriesDialog({
 
   const [noCategoriesDisplayed, setNoCategoriesDisplayed] = useState(false);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     // Reflect any changes to categoriesCollection in modifiedCategories
     setModifiedCategories(categoriesCollection);
@@ -55,6 +58,9 @@ export default function ManageCategoriesDialog({
       },
       onError: (error) => {
         console.error(error);
+        enqueueSnackbar("An error occurred while saving the categories", {
+          variant: "error",
+        });
       },
     }
   );

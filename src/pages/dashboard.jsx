@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
@@ -36,6 +37,8 @@ export default function Dashboard() {
 
   const [orderFilterDropdownOpen, setOrderFilterDropdownOpen] = useState(false);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     if (notesOrder.orderBy) {
       mutateOrder(notesOrder);
@@ -45,6 +48,9 @@ export default function Dashboard() {
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
     onSuccess: ({ data }) => {
+      enqueueSnackbar("An error occurred while fetching the notes", {
+        variant: "error",
+      });
       const noteItem = data.noteItem;
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
@@ -59,6 +65,9 @@ export default function Dashboard() {
     },
     onError: (error) => {
       console.error(error.message);
+      enqueueSnackbar("An error occurred while fetching the notes", {
+        variant: "error",
+      });
     },
     staleTime: 5 * 60 * 1000, // Stale after 5 minutes, keeps the data fresh by fetching from the server
     enabled: sessionStatus === "authenticated",
@@ -70,6 +79,9 @@ export default function Dashboard() {
     {
       onError: (error) => {
         console.error(error.message);
+        enqueueSnackbar("An error occurred while saving the notes' order", {
+          variant: "error",
+        });
       },
     }
   );

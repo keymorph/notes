@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import {
   NOTE_DESCRIPTION_CHAR_LIMIT,
@@ -60,6 +61,8 @@ export default function NoteActionDialog({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("380"));
 
+  const { enqueueSnackbar } = useSnackbar();
+
   // Tracks any changes to the current action being performed (edit, create, view, etc)
   const [currentAction, setCurrentAction] = useState(action);
 
@@ -93,6 +96,9 @@ export default function NoteActionDialog({
     },
     onError: (error) => {
       console.error(error.message);
+      enqueueSnackbar("An error occurred while saving the edited note", {
+        variant: "error",
+      });
     },
   });
 
@@ -108,6 +114,9 @@ export default function NoteActionDialog({
       },
       onError: (error) => {
         console.error(error.message);
+        enqueueSnackbar("An error occurred while creating the note", {
+          variant: "error",
+        });
       },
     }
   );

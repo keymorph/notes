@@ -146,6 +146,13 @@ const commonThemeConfig = {
         },
       },
     },
+    MuiFab: {
+      styleOverrides: {
+        root: {
+          backdropFilter: "blur(6px)",
+        },
+      },
+    },
   },
 };
 
@@ -156,28 +163,39 @@ export const darkTheme = createTheme(
       // All other color variants like light, dark and contrastText are automatically calculated based on the main color
       primary: {
         main: "#C7BCF6",
+        contrastText: "#000000",
+        background: "#C7BCF6" + transparency.default,
       },
       error: {
-        main: "#ff5b52",
+        main: "#FF7070",
+        contrastText: "#000000",
+        background: "#FF7070" + transparency.default,
       },
       warning: {
         main: "#F1C64D",
+        contrastText: "#000000",
+        background: "#F1C64D" + transparency.default,
       },
       info: {
         main: "#95EEF1",
+        contrastText: "#000000",
+        background: "#95EEF1" + transparency.default,
       },
       success: {
         main: "#8CEA94",
+        contrastText: "#000000",
+        background: "#8CEA94" + transparency.default,
       },
       neutral: {
         main: "#F5F3FE",
         contrastText: "#000000",
+        background: "#F5F3FE" + transparency.default,
       },
 
       ...categoryColors.dark,
 
       chipNeutral: {
-        main: "#9997a1",
+        main: "#9997A1",
         contrastText: "#1F1F1F",
       },
       background: {
@@ -231,22 +249,33 @@ export const lightTheme = createTheme(
       mode: "light",
       primary: {
         main: "#413A7E",
+        contrastText: "#FFFFFF",
+        background: "#413A7E" + transparency.default,
       },
       error: {
         main: "#942727",
+        contrastText: "#FFFFFF",
+        background: "#942727" + transparency.default,
       },
       warning: {
         main: "#917111",
+        contrastText: "#FFFFFF",
+        background: "#917111" + transparency.default,
       },
       info: {
         main: "#326264",
+        contrastText: "#FFFFFF",
+        background: "#326264" + transparency.default,
       },
       success: {
         main: "#245C2D",
+        contrastText: "#FFFFFF",
+        background: "#245C2D" + transparency.default,
       },
       neutral: {
         main: "#120E1A",
         contrastText: "#FFFFFF",
+        background: "#120E1A" + transparency.default,
       },
 
       ...categoryColors.light,

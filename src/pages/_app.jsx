@@ -7,10 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { SnackbarProvider } from "notistack";
 import React, { useEffect, useMemo, useState } from "react";
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar";
+import CustomSnackbarProvider from "../components/Providers/CustomSnackbarProvider";
 
 import { darkTheme, lightTheme } from "../styles/themes/theme";
 
@@ -64,7 +64,7 @@ export default function App({
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
-            <SnackbarProvider maxSnack={3}>
+            <CustomSnackbarProvider>
               {/* Allows Switching between dark and light modes for native Components such as scrollbars*/}
               <CssBaseline enableColorScheme />
               {/* While the page loads, don't display any content */}
@@ -88,7 +88,7 @@ export default function App({
                   <ScrollTop />
                 </Container>
               ) : null}
-            </SnackbarProvider>
+            </CustomSnackbarProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </SessionProvider>
