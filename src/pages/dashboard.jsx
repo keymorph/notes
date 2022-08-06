@@ -48,9 +48,6 @@ export default function Dashboard() {
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
     onSuccess: ({ data }) => {
-      enqueueSnackbar("An error occurred while fetching the notes", {
-        variant: "error",
-      });
       const noteItem = data.noteItem;
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes

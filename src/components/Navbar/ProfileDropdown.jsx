@@ -20,12 +20,15 @@ import {
 import { motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
 
 export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
   //#region Hooks
   const { data: session, status: sessionStatus } = useSession();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [anchorEl, setAnchorEl] = useState(null);
   //#endregion
@@ -39,6 +42,9 @@ export default function ProfileDropdown({ darkMode, handleDarkModeToggle }) {
     // Remove session cookie and redirect user to login page
     await signOut({ callbackUrl: `/auth`, redirect: true }).catch((error) => {
       console.error("Error during sign out: ", error.message);
+      enqueueSnackbar("An error occurred while signing out", {
+        variant: "error",
+      });
     });
     setAnchorEl(null);
   };

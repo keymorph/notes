@@ -167,9 +167,9 @@ export const darkTheme = createTheme(
         background: "#C7BCF6" + transparency.default,
       },
       error: {
-        main: "#FF7070",
+        main: "#FF9090",
         contrastText: "#000000",
-        background: "#FF7070" + transparency.default,
+        background: "#FF9090" + transparency.default,
       },
       warning: {
         main: "#F1C64D",

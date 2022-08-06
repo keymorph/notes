@@ -17,10 +17,11 @@ export default function CustomSnackbarProvider({ children }) {
       }}
       sx={{
         "& .SnackbarContent-root": {
-          mb: "3rem",
           backdropFilter: "blur(6px)",
-          textAlign: "center",
           backgroundColor: theme.palette.primary.background,
+          mb: "3rem",
+          textAlign: "center",
+          userSelect: "none",
         },
         "& .SnackbarItem-variantError": {
           color: theme.palette.error.contrastText,
@@ -40,7 +41,7 @@ export default function CustomSnackbarProvider({ children }) {
         },
       }}
       TransitionComponent={Grow}
-      autoHideDuration={6000}
+      autoHideDuration={5000}
     >
       {children}
     </SnackbarProvider>

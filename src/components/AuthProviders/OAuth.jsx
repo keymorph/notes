@@ -8,14 +8,11 @@ export default function OAuth() {
   const router = useRouter();
 
   const handleSignIn = async (provider) => {
-    await signIn(provider)
-      .then(() => {
-        router.push("/dashboard");
-      })
-      .catch(async (error) => {
+    await signIn(provider, { callbackUrl: "/dashboard" }).catch(
+      async (error) => {
         console.error(error.message);
-        await router.push("/auth?error=Authentication Error :(");
-      });
+      }
+    );
   };
 
   return (

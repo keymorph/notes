@@ -170,6 +170,7 @@ export default function NotesTimeline({
         <motion.div style={{ overflowX: "hidden" }}>
           <Box
             m={"1rem"}
+            mb={"4rem"}
             p={["0.5rem", "1rem"]}
             display="grid"
             gap="2rem"
