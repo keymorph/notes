@@ -237,20 +237,16 @@ export default function Note({
               </Typography>
               <Divider sx={{ mt: "0.5rem" }} />
               <RichTextArea content={description} preview />
-              {/*<Typography*/}
-              {/*  variant="body2"*/}
-              {/*  title={"Description"}*/}
-              {/*  sx={{*/}
-              {/*    display: "-webkit-box",*/}
-              {/*    overflow: "hidden",*/}
-              {/*    textOverflow: "ellipsis",*/}
-              {/*    WebkitLineClamp: "12",*/}
-              {/*    WebkitBoxOrient: "vertical",*/}
-              {/*  }}*/}
-              {/*>*/}
-              {/*  {description}*/}
-              {/*</Typography>*/}
             </CardContent>
+            {/* Gradient background color */}
+            <Box
+              height={"2rem"}
+              mt={"-3rem"}
+              sx={{
+                WebkitMaskImage:
+                  "linear-gradient(180deg, #000 60%, transparent)",
+              }}
+            />
           </NoteCard>
         </div>
       </Grow>

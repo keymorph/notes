@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Card, Dialog, Fade, Grow, TextField, Zoom } from "@mui/material";
+import { Dialog, Fade, Grow, TextField, useTheme, Zoom } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { isEqual } from "lodash";
@@ -17,7 +17,7 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialogs";
+import { DialogCard } from "../../../styles/components/cards";
 import RemainingCharCount from "../SharedComponents/RemainingCharCount";
 import RichTextArea from "../SharedComponents/RichTextArea";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
@@ -38,6 +38,8 @@ export default function NoteActionDialog({
   handleDialogClose,
 }) {
   //#region Hooks
+  const theme = useTheme();
+
   const { enqueueSnackbar } = useSnackbar();
 
   // Tracks any changes to the current action being performed (edit, create, view, etc)
@@ -210,7 +212,7 @@ export default function NoteActionDialog({
       TransitionProps={{ onExited: () => handleAfterModalClose() }}
       closeAfterTransition
     >
-      <Card sx={dialogCard}>
+      <DialogCard>
         <Titlebar
           action={currentAction}
           title={
@@ -246,35 +248,30 @@ export default function NoteActionDialog({
           }}
           inputProps={{
             maxLength: NOTE_TITLE_CHAR_LIMIT,
+            style: {
+              color: theme.palette.text.primary,
+              WebkitTextFillColor: "unset",
+              transition: "all 0.2s ease-in-out",
+            },
           }}
           onChange={(event) => setNewTitle(event.target.value)}
-          sx={{ my: "1em", transition: "all 0.2s ease-in-out" }}
+          style={{
+            marginTop: "1rem",
+            marginBottom: "1rem",
+          }}
         />
 
-        <div style={{ marginBottom: "1rem" }}>
-          {/*<TextField*/}
-          {/*  disabled={currentAction === MODAL_ACTIONS.VIEW}*/}
-          {/*  id="outlined-multiline-static"*/}
-          {/*  label={"Description"}*/}
-          {/*  value={newDescription}*/}
-          {/*  multiline*/}
-          {/*  minRows={minDescriptionRows}*/}
-          {/*  maxRows={maxDescriptionRows}*/}
-          {/*  sx={{ mb: "1em" }}*/}
-          {/*  inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}*/}
-          {/*  onChange={(event) => setNewDescription(event.target.value)}*/}
-          {/*/>*/}
-          <RichTextArea
-            content={newDescription}
-            setContent={setNewDescription}
-            placeholder={"Type the content of your note here..."}
-            editable={currentAction !== MODAL_ACTIONS.VIEW}
-            styles={{
-              minHeight: "12rem",
-              maxHeight: "50vh",
-            }}
-          />
-        </div>
+        <RichTextArea
+          content={newDescription}
+          setContent={setNewDescription}
+          placeholder={"Type the content of your note here..."}
+          editable={currentAction !== MODAL_ACTIONS.VIEW}
+          style={{
+            marginBottom: "1rem",
+            minHeight: "12rem",
+            maxHeight: "50vh",
+          }}
+        />
 
         {/* Display either the category chip or the search category component based on the user intended action */}
         {displayCategoryChip && (
@@ -326,7 +323,7 @@ export default function NoteActionDialog({
             {isCreating && "Create"}
           </LoadingButton>
         </Zoom>
-      </Card>
+      </DialogCard>
     </Dialog>
   );
 }

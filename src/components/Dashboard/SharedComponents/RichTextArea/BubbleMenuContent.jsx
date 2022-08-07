@@ -2,6 +2,7 @@ import {
   CodeRounded,
   FormatBoldRounded,
   FormatItalicRounded,
+  TitleRounded,
 } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import CustomTooltip from "../CustomTooltip";
@@ -49,7 +50,7 @@ export default function BubbleMenuContent({ editor }) {
           <FormatItalicRounded />
         </IconButton>
       </CustomTooltip>
-      <CustomTooltip title="Heading 2">
+      <CustomTooltip title="Title">
         <IconButton
           color={
             editor.isActive("heading", { level: 2 }) ? "primary" : "default"
@@ -59,20 +60,7 @@ export default function BubbleMenuContent({ editor }) {
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
         >
-          H2
-        </IconButton>
-      </CustomTooltip>
-      <CustomTooltip title="Heading 3">
-        <IconButton
-          color={
-            editor.isActive("heading", { level: 3 }) ? "primary" : "default"
-          }
-          size={"small"}
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-        >
-          H3
+          <TitleRounded />
         </IconButton>
       </CustomTooltip>
       <CustomTooltip title="Code">

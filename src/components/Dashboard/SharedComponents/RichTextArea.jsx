@@ -17,7 +17,7 @@ export default function RichTextArea({
   placeholder = "",
   editable = false,
   preview = false,
-  styles = {},
+  style = {},
 }) {
   //#region Hooks
 
@@ -63,7 +63,8 @@ export default function RichTextArea({
       sx={{
         position: "relative",
         ".ProseMirror": {
-          ...styles,
+          ...style,
+          color: theme.palette.text.primary,
           overflow: preview ? "hidden" : "scroll",
           px: "0.8rem",
           py: "0.8rem",
@@ -105,8 +106,8 @@ export default function RichTextArea({
             <div
               style={{
                 position: "absolute",
-                left: "94%",
-                bottom: "-0.2rem",
+                left: "96%",
+                bottom: "1rem",
               }}
             >
               <RemainingCharCount

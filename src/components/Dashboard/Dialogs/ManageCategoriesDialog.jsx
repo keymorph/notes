@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Card, Dialog, Grow, Stack, Typography } from "@mui/material";
+import { Dialog, Grow, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnackbar } from "notistack";
@@ -15,7 +15,7 @@ import {
   springShort,
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialogs";
+import { DialogCard } from "../../../styles/components/cards";
 import CategorySearchInput from "../SharedComponents/CategorySearchInput";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";
@@ -173,7 +173,7 @@ export default function ManageCategoriesDialog({
       TransitionComponent={Grow}
       closeAfterTransition
     >
-      <Card sx={dialogCard}>
+      <DialogCard>
         <Titlebar
           action={MODAL_ACTIONS.EDIT}
           title={"Manage Categories"}
@@ -260,7 +260,7 @@ export default function ManageCategoriesDialog({
         >
           Save
         </LoadingButton>
-      </Card>
+      </DialogCard>
     </Dialog>
   );
 }
