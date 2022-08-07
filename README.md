@@ -1,22 +1,18 @@
-# 💜 Keymorph
+# 🔐 Keymorph  —  **`Notes`**
 
-#### Reach out to us at: contact@keymorph.com
+## **About**
+> *A free web application for creating and editing notes.*  
+🔗 → [Notes (Not yet officially released, it will be live soon™️)](https://test.keymorph.com "Keymorph Notes App")  
 
-<hr>
+## **Instructions**
+```bash
+git clone https://github.com/keymorph/notes.git
+cd website
 
-# :speech_balloon: Project Information
+yarn
+yarn dev
+```
 
-> **Name:** "Jotfox"  
-> **Description:** Simple note-taking web application.  
-> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, Framer Motion, dnd kit and CosmosDB.  
-> **Start Date:** 08/13/2021  
-> **End Date:** --  
-> **Links:** https://jotfox.keymorph.com/
-
-:busts_in_silhouette: **CONTRIBUTING KEYMORPHERS:**
-
-- [Dante Edmonson](https://www.linkedin.com/in/dante-edmonson-38823518a/)
-- [Evan C. Navarro](https://www.linkedin.com/in/evancnavarro/)
-- [Raciel Antela Pardo](https://www.linkedin.com/in/racielap/)
-- [Richard Morand](https://www.linkedin.com/in/richard-m-7a5235208/)
-- [Tevin Rose](https://www.linkedin.com/in/tevinrose/)
+<a href="https://vercel.com/?utm_source=keymorph&utm_campaign=oss">
+    <img src="public/images/logos/vercel.svg"></img>
+</a>
