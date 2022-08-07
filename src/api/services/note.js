@@ -1,5 +1,5 @@
-import {notes} from "../models/database.js";
-import {createNoteItemIfNotExists} from "./note-helper";
+import { notes } from "../models/database.js";
+import { createNoteItemIfNotExists } from "./note-helper";
 
 // SharedComponents object
 // {

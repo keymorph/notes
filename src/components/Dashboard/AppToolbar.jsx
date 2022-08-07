@@ -237,7 +237,11 @@ export default function AppToolbar({
               <Add />
             </IconButton>
           </Fade>
-          <CustomTooltip title={"More options"} placement={"left"}>
+          <CustomTooltip
+            title={"More options"}
+            placement={"left"}
+            disableableButton
+          >
             <IconButton
               disabled={noteStatus === "loading"}
               size={"small"}

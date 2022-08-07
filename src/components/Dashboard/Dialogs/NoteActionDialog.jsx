@@ -1,22 +1,11 @@
 import { LoadingButton } from "@mui/lab";
-import {
-  Card,
-  Dialog,
-  Fade,
-  Grow,
-  TextField,
-  useMediaQuery,
-  useTheme,
-  Zoom,
-} from "@mui/material";
+import { Card, Dialog, Fade, Grow, TextField, Zoom } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { isEqual } from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
-import {
-  NOTE_DESCRIPTION_CHAR_LIMIT,
-  NOTE_TITLE_CHAR_LIMIT,
-} from "../../../constants/input-limits";
+import { NOTE_TITLE_CHAR_LIMIT } from "../../../constants/input-limits";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -30,18 +19,10 @@ import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { dialogCard } from "../../../styles/components/dialogs";
 import RemainingCharCount from "../SharedComponents/RemainingCharCount";
+import RichTextArea from "../SharedComponents/RichTextArea";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 import Titlebar from "./Components/Titlebar";
-
-const DESCRIPTION_ROWS = {
-  TINY: 4,
-  SMALL: 8,
-  MEDIUM: 12,
-  LARGE: 16,
-  HUGE: 20,
-  GIGANTIC: 24,
-};
 
 export default function NoteActionDialog({
   action,
@@ -57,10 +38,6 @@ export default function NoteActionDialog({
   handleDialogClose,
 }) {
   //#region Hooks
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down("380"));
-
   const { enqueueSnackbar } = useSnackbar();
 
   // Tracks any changes to the current action being performed (edit, create, view, etc)
@@ -146,12 +123,12 @@ export default function NoteActionDialog({
 
   const handleCreateNote = () => {
     const newNote = {
-      title: `${newTitle.trim()}`,
-      description: `${newDescription.trim()}`,
+      title: newTitle.trim(),
+      description: newDescription,
       category: {
         id: getOrCreateCategoryID(categoriesCollection, newCategoryName.trim()),
-        name: `${newCategoryName.trim()}`,
-        color: `${newCategoryColor || "none"}`,
+        name: newCategoryName.trim(),
+        color: newCategoryColor || "none",
       },
       tags: [],
     };
@@ -163,15 +140,15 @@ export default function NoteActionDialog({
     if (valuesChanged) {
       const editedNote = {
         noteID: Number(noteID),
-        title: `${newTitle.trim()}`,
-        description: `${newDescription.trim()}`,
+        title: newTitle.trim(),
+        description: newDescription,
         category: {
           id: getOrCreateCategoryID(
             categoriesCollection,
             newCategoryName.trim()
           ),
-          name: displayCategoryChip ? `${newCategoryName.trim()}` : "", // Ensure we don't send the temporary category name
-          color: `${newCategoryColor}`,
+          name: displayCategoryChip ? newCategoryName.trim() : "", // Ensure we don't send the temporary category name
+          color: newCategoryColor,
         },
         tags: [],
       };
@@ -200,23 +177,6 @@ export default function NoteActionDialog({
   const isViewing = currentAction === MODAL_ACTIONS.VIEW;
   const isEditing = currentAction === MODAL_ACTIONS.EDIT;
   const isCreating = currentAction === MODAL_ACTIONS.CREATE_NOTE;
-  // Description textarea row count
-  let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
-  let minDescriptionRows = DESCRIPTION_ROWS.TINY;
-  if (isSmallMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.MEDIUM
-      : DESCRIPTION_ROWS.SMALL;
-  } else if (isMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.LARGE
-      : DESCRIPTION_ROWS.MEDIUM;
-  } else {
-    minDescriptionRows = DESCRIPTION_ROWS.SMALL;
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.HUGE
-      : DESCRIPTION_ROWS.LARGE;
-  }
   // modified categories collection with the new category
   let modifiedCategoriesCollection = [...categoriesCollection];
   if (isCategoryNew) {
@@ -233,7 +193,7 @@ export default function NoteActionDialog({
   const titleError = newTitle.trim() === "";
   const valuesChanged =
     newTitle.trim() !== title ||
-    newDescription.trim() !== description ||
+    !isEqual(newDescription, description) ||
     newCategoryName.trim() !== categoryName ||
     newCategoryColor !== categoryColor;
   const saveDisabled =
@@ -270,17 +230,17 @@ export default function NoteActionDialog({
         />
 
         <TextField
-          disabled={currentAction === MODAL_ACTIONS.VIEW}
           required
-          id="outlined-required"
-          label={"Title"}
+          hiddenLabel
+          disabled={currentAction === MODAL_ACTIONS.VIEW}
           value={newTitle}
-          sx={{ my: "1em" }}
+          placeholder={"Type the note title here..."}
           InputProps={{
             endAdornment: !isViewing && (
               <RemainingCharCount
                 stringLength={newTitle.length}
                 characterLimit={NOTE_TITLE_CHAR_LIMIT}
+                onlyDisplayAfterError
               />
             ),
           }}
@@ -288,20 +248,33 @@ export default function NoteActionDialog({
             maxLength: NOTE_TITLE_CHAR_LIMIT,
           }}
           onChange={(event) => setNewTitle(event.target.value)}
+          sx={{ my: "1em", transition: "all 0.2s ease-in-out" }}
         />
 
-        <TextField
-          disabled={currentAction === MODAL_ACTIONS.VIEW}
-          id="outlined-multiline-static"
-          label={"Description"}
-          value={newDescription}
-          multiline
-          minRows={minDescriptionRows}
-          maxRows={maxDescriptionRows}
-          sx={{ mb: "1em" }}
-          inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
-          onChange={(event) => setNewDescription(event.target.value)}
-        />
+        <div style={{ marginBottom: "1rem" }}>
+          {/*<TextField*/}
+          {/*  disabled={currentAction === MODAL_ACTIONS.VIEW}*/}
+          {/*  id="outlined-multiline-static"*/}
+          {/*  label={"Description"}*/}
+          {/*  value={newDescription}*/}
+          {/*  multiline*/}
+          {/*  minRows={minDescriptionRows}*/}
+          {/*  maxRows={maxDescriptionRows}*/}
+          {/*  sx={{ mb: "1em" }}*/}
+          {/*  inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}*/}
+          {/*  onChange={(event) => setNewDescription(event.target.value)}*/}
+          {/*/>*/}
+          <RichTextArea
+            content={newDescription}
+            setContent={setNewDescription}
+            placeholder={"Type the content of your note here..."}
+            editable={currentAction !== MODAL_ACTIONS.VIEW}
+            styles={{
+              minHeight: "12rem",
+              maxHeight: "50vh",
+            }}
+          />
+        </div>
 
         {/* Display either the category chip or the search category component based on the user intended action */}
         {displayCategoryChip && (
