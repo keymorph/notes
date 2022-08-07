@@ -8,7 +8,7 @@
 
 > **Name:** "Jotfox"  
 > **Description:** Simple note-taking web application.  
-> **Technologies used:** Node.js, React, Next.js, NextAuth, React Query, MUI, Framer Motion, dnd kit and CosmosDB.  
+> **Technologies used:** [NodeJS](https://github.com/nodejs/node), [NextJS](https://github.com/vercel/next.js), [NextAuth](https://github.com/nextauthjs/next-auth), [TanStack Query](https://github.com/TanStack/query), [Material UI](https://github.com/mui/material-ui), [Framer Motion](https://github.com/framer/motion), [dnd kit](https://github.com/clauderic/dnd-kit), [Notistack](https://github.com/iamhosseindhv/notistack), [Slate](https://github.com/ianstormtaylor/slate), [CosmosDB](https://github.com/Azure/azure-cosmos-js).  
 > **Start Date:** 08/13/2021  
 > **End Date:** --  
 > **Links:** https://jotfox.keymorph.com/
