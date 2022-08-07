@@ -209,7 +209,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           name="password"
           type="password"
           value={password}
-          autoComplete="current-password"
+          autoComplete={action === "login" ? "current-password" : "new-password"}
           onChange={handlePasswordChange}
           margin="normal"
           fullWidth
@@ -224,6 +224,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           }
           helperText={confirmPasswordError}
           required
+          autoComplete={"new-password"}
           label="Confirm Password"
           name="password"
           type="password"
