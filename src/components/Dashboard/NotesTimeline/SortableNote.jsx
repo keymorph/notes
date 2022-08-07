@@ -12,9 +12,9 @@ import Note from "./Note";
 /**
  * Wraps an item and makes it draggable in a sortable context
  *
- * @param {number} id - The id of the item
  * @param {number} index - The index of the item in the array
- * @param {boolean} isDraggingMode - Whether the context is in dragging mode (i.e. the user is dragging any item)
+ * @param {boolean} isDraggingMode - Whether any note in the notes is being dragged
+ * @param {boolean} disableDrag - Whether the note should be draggable
  * @param rest - rest of the props for the item being wrapped
  * @returns {JSX.Element}
  */

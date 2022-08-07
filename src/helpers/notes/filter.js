@@ -11,9 +11,28 @@ export function getFilteredNotesCollection(
       return true;
     }
 
+    let descriptionMatch = false;
+    if (typeof note.description !== "string") {
+      descriptionMatch = note.description.content.some((content) => {
+        if (content.text) {
+          return content.text.toLowerCase().includes(searchValue.toLowerCase());
+        } else if (content.content) {
+          return content.content.some((content) => {
+            return content.text
+              .toLowerCase()
+              .includes(searchValue.toLowerCase());
+          });
+        }
+      });
+    } else {
+      descriptionMatch = note.description
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+    }
+
     const searchValueMatch =
       note.title.toLowerCase().includes(searchValue) ||
-      note.description.toLowerCase().includes(searchValue) ||
+      descriptionMatch ||
       note.tags.includes(searchValue) ||
       getCategoryName(note.category_id, categoriesCollection).includes(
         searchValue

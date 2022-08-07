@@ -27,3 +27,8 @@ yarn-error.log*
 # NextJS
 .next
 .vercel
+
+# Webstorm
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf
