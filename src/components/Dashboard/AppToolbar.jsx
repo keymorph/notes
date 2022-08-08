@@ -19,11 +19,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MODAL_ACTIONS } from "../../models/dialogs";
+import CustomTooltip from "../Shared/CustomTooltip";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesDialog from "./Dialogs/ManageCategoriesDialog";
 import NoteActionDialog from "./Dialogs/NoteActionDialog";
-import CustomTooltip from "./SharedComponents/CustomTooltip";
 
 export default function AppToolbar({
   noteCollection,

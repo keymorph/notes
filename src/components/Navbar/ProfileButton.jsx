@@ -22,7 +22,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import CustomTooltip from "../Dashboard/SharedComponents/CustomTooltip";
+import CustomTooltip from "../Shared/CustomTooltip";
 
 export default function ProfileButton({ darkMode, handleDarkModeToggle }) {
   //#region Hooks

@@ -16,7 +16,7 @@ import {
   variantFadeSlideDownStagger,
 } from "../../../styles/animations/definitions";
 import { DialogCard } from "../../../styles/components/cards";
-import CategorySearchInput from "../SharedComponents/CategorySearchInput";
+import CategorySearchInput from "../../Shared/CategorySearchInput";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import Titlebar from "./Components/Titlebar";
 

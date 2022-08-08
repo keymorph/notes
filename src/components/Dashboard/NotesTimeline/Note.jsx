@@ -24,9 +24,9 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { NoteCard } from "../../../styles/components/cards";
+import CustomTooltip from "../../Shared/CustomTooltip";
+import RichTextEditor from "../../Shared/RichTextEditor";
 import NoteActionDialog from "../Dialogs/NoteActionDialog";
-import CustomTooltip from "../SharedComponents/CustomTooltip";
-import RichTextArea from "../SharedComponents/RichTextArea";
 
 export default function Note({
   noteID,
@@ -236,7 +236,7 @@ export default function Note({
                 {title}
               </Typography>
               <Divider sx={{ mt: "0.5rem" }} />
-              <RichTextArea content={description} preview />
+              <RichTextEditor content={description} preview />
             </CardContent>
             {/* Gradient background color */}
             <Box

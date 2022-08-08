@@ -18,8 +18,8 @@ import {
 } from "../../../../helpers/notes/category";
 import { variantFadeSlideDownSlow } from "../../../../styles/animations/definitions";
 import { categoryColors as categoryColorsDef } from "../../../../styles/themes/theme";
+import CustomTooltip from "../../../Shared/CustomTooltip";
 import PopIn from "../../../Transitions/PopIn";
-import CustomTooltip from "../../SharedComponents/CustomTooltip";
 
 export default function EditableCategoryChip({
   categoryName,

@@ -2,9 +2,9 @@ import { Stack } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { doesCategoryExist } from "../../../../helpers/notes/category";
+import CategoryChip from "../../../Shared/CategoryChip";
+import CategorySearchInput from "../../../Shared/CategorySearchInput";
 import PopIn from "../../../Transitions/PopIn";
-import CategoryChip from "../../SharedComponents/CategoryChip";
-import CategorySearchInput from "../../SharedComponents/CategorySearchInput";
 
 export default function SelectOrAddCategory({
   categoriesCollection,

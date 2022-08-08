@@ -18,8 +18,8 @@ import {
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
 import { DialogCard } from "../../../styles/components/cards";
-import RemainingCharCount from "../SharedComponents/RemainingCharCount";
-import RichTextArea from "../SharedComponents/RichTextArea";
+import RemainingCharCount from "../../Shared/RemainingCharCount";
+import RichTextEditor from "../../Shared/RichTextEditor";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 import Titlebar from "./Components/Titlebar";
@@ -261,7 +261,7 @@ export default function NoteActionDialog({
           }}
         />
 
-        <RichTextArea
+        <RichTextEditor
           content={newDescription}
           setContent={setNewDescription}
           placeholder={"Type the content of your note here..."}

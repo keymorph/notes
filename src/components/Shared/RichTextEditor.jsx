@@ -5,13 +5,13 @@ import { Typography } from "@tiptap/extension-typography";
 import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import isEqual from "lodash/isEqual";
-import { NOTE_DESCRIPTION_CHAR_LIMIT } from "../../../constants/input-limits";
+import { NOTE_DESCRIPTION_CHAR_LIMIT } from "../../constants/input-limits";
 import RemainingCharCount from "./RemainingCharCount";
-import BubbleMenuContent from "./RichTextArea/BubbleMenuContent";
+import BubbleMenuContent from "./RichTextEditor/BubbleMenuContent";
 
 const charLimit = NOTE_DESCRIPTION_CHAR_LIMIT;
 
-export default function RichTextArea({
+export default function RichTextEditor({
   content,
   setContent = null,
   placeholder = "",
