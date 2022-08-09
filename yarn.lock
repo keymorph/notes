@@ -798,10 +798,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/roboto@npm:^4.5.7":
-  version: 4.5.7
-  resolution: "@fontsource/roboto@npm:4.5.7"
-  checksum: 3f9afc7f4c77e517e804e65823db5aea2513e8352fbc26cf7ea8b8b11e7dc6eff48d7a2855ed71e3a6b727446b2bf137629e2389fe3d676be45d95dd9992b558
+"@fontsource/roboto@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "@fontsource/roboto@npm:4.5.8"
+  checksum: 460b6de2c9f7a172192c3f5bdd3aa11f78f0b6660dca9dc2b9d8207272b50c55b5a8f2da68e11e7fbaf44c7d3cf4191030eecce9def79fab75d4cc1de39754e2
   languageName: node
   linkType: hard
 
@@ -3260,6 +3260,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dompurify@npm:^2.3.10":
+  version: 2.3.10
+  resolution: "dompurify@npm:2.3.10"
+  checksum: ee343876b4c065e82d194818c66af76a6d2290264c7db583ad71761c11781fd626f0245f9f4670175d5707c4b8fcfb89adae80bed0418a9426a47ee7f36b0ffc
+  languageName: node
+  linkType: hard
+
 "ecdsa-sig-formatter@npm:1.0.11":
   version: 1.0.11
   resolution: "ecdsa-sig-formatter@npm:1.0.11"
@@ -5134,7 +5141,7 @@ __metadata:
     "@dnd-kit/utilities": ^3.2.0
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
-    "@fontsource/roboto": ^4.5.7
+    "@fontsource/roboto": ^4.5.8
     "@mui/icons-material": ^5.8.4
     "@mui/lab": ^5.0.0-alpha.93
     "@mui/material": ^5.9.3
@@ -5152,6 +5159,7 @@ __metadata:
     "@tiptap/starter-kit": ^2.0.0-beta.191
     axios: ^0.27.2
     bcrypt: ^5.0.1
+    dompurify: ^2.3.10
     eslint: ^8.21.0
     eslint-config-next: ^12.2.4
     eslint-config-prettier: ^8.5.0

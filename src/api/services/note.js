@@ -20,8 +20,8 @@ const createNote = async (req, res) => {
 
   // Note object to be created
   const newNoteDef = {
-    title: req.body.title,
-    description: req.body.description,
+    title: req.body.title || "",
+    description: req.body.description || {},
     tags: req.body.tags, // The tags the note has
     category_id: req.body.category.id, // The category the note is in
     id: noteItem?.last_note_id + 1 || 1, // Set note_id to the last note's id number + 1
@@ -154,8 +154,8 @@ const editNote = async (req, res) => {
 
   // Update the note with the new data
   const editedNote = noteToEdit;
-  editedNote.title = req.body.title;
-  editedNote.description = req.body.description;
+  editedNote.title = req.body.title || "";
+  editedNote.description = req.body.description || {};
   editedNote.category_id = req.body.category.id;
   editedNote.tags = req.body.tags;
 

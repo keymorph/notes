@@ -25,7 +25,7 @@ import {
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { NoteCard } from "../../../styles/components/cards";
 import CustomTooltip from "../../Shared/CustomTooltip";
-import RichTextEditor from "../../Shared/RichTextEditor";
+import RichTextArea from "../../Shared/RichTextArea";
 import NoteActionDialog from "../Dialogs/NoteActionDialog";
 
 export default function Note({
@@ -148,7 +148,6 @@ export default function Note({
 
   return (
     <Box display={"flex"}>
-      {/* TODO: Refactor the dialogs and place them at the dashboard level to prevent frequent re-renderings */}
       <NoteActionDialog
         noteID={noteID}
         title={title}
@@ -227,26 +226,21 @@ export default function Note({
                 px: "1rem",
               }}
             >
-              <Typography
-                variant="h5"
-                title="Title Name"
-                fontWeight={"bold"}
-                noWrap
-              >
-                {title}
-              </Typography>
-              <Divider sx={{ mt: "0.5rem" }} />
-              <RichTextEditor content={description} preview />
+              {title && (
+                <>
+                  <Typography
+                    variant="h5"
+                    title="Title Name"
+                    fontWeight={"bold"}
+                    noWrap
+                  >
+                    {title}
+                  </Typography>
+                  <Divider />
+                </>
+              )}
+              <RichTextArea content={description} />
             </CardContent>
-            {/* Gradient background color */}
-            <Box
-              height={"2rem"}
-              mt={"-3rem"}
-              sx={{
-                WebkitMaskImage:
-                  "linear-gradient(180deg, #000 60%, transparent)",
-              }}
-            />
           </NoteCard>
         </div>
       </Grow>

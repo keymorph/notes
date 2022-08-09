@@ -192,16 +192,13 @@ export default function NoteActionDialog({
     ];
   }
   // Input validation
-  const titleError = newTitle.trim() === "";
   const valuesChanged =
     newTitle.trim() !== title ||
     !isEqual(newDescription, description) ||
     newCategoryName.trim() !== categoryName ||
     newCategoryColor !== categoryColor;
   const saveDisabled =
-    titleError ||
-    !valuesChanged ||
-    doCategoryNamesCollide(modifiedCategoriesCollection);
+    !valuesChanged || doCategoryNamesCollide(modifiedCategoriesCollection);
   //#endregion
 
   return (
@@ -232,7 +229,6 @@ export default function NoteActionDialog({
         />
 
         <TextField
-          required
           hiddenLabel
           disabled={currentAction === MODAL_ACTIONS.VIEW}
           value={newTitle}
@@ -251,7 +247,6 @@ export default function NoteActionDialog({
             style: {
               color: theme.palette.text.primary,
               WebkitTextFillColor: "unset",
-              transition: "all 0.2s ease-in-out",
             },
           }}
           onChange={(event) => setNewTitle(event.target.value)}
@@ -311,7 +306,7 @@ export default function NoteActionDialog({
             loading={editStatus === "loading" || createStatus === "loading"}
             variant="contained"
             size="small"
-            disabled={saveDisabled} // Disable button if required title field is empty
+            disabled={saveDisabled}
             onClick={isEditing ? handleEditNote : handleCreateNote}
             sx={{
               border: "1px",
