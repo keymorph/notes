@@ -4,74 +4,85 @@ import {
   FormatItalicRounded,
   TitleRounded,
 } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
+import {
+  EDITOR_MARKS,
+  EDITOR_NODES,
+  getActiveEditorMarks,
+} from "../../../models/text-editor";
+import {
+  BubbleMenuToggleButton,
+  BubbleMenuToggleButtonGroup,
+} from "../../../styles/components/rich-text";
 import CustomTooltip from "../CustomTooltip";
 
-// <motion.div
-//   style={{
-//     position: "absolute",
-//     width: "100%",
-//     padding: "0.2rem",
-//     display: "flex",
-//     flexDirection: "row",
-//     zIndex: "1",
-//     outlineColor: "grey",
-//     outlineStyle: "solid",
-//     outlineWidth: "1px",
-//     borderRadius: "4px 4px 0 0",
-//   }}
-//   className="formatting-toolbar"
-// >
-
 export default function BubbleMenuContent({ editor }) {
+  // In this context, active refers to the currently selected text in the editor
+  // Marks are classified as formatting data applied to a node (e.g. bold, italic, etc)
+  const activeMarks = getActiveEditorMarks(editor);
+  // Nodes are the actual content structures (e.g. paragraph <p>, heading <h1>, etc)
+  const activeNodes = [];
+
   return (
-    <Box
-      sx={{
-        backgroundColor: "background.highlight",
-        backdropFilter: "blur(6px)",
-        borderRadius: 5,
-      }}
+    <BubbleMenuToggleButtonGroup
+      value={activeMarks}
+      onMouseDown={(e) => e.preventDefault()}
     >
       <CustomTooltip title="Bold">
-        <IconButton
-          color={editor.isActive("bold") ? "primary" : "default"}
+        <BubbleMenuToggleButton
+          value={EDITOR_MARKS.BOLD}
           size={"small"}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
-          <FormatBoldRounded />
-        </IconButton>
+          <FormatBoldRounded
+            color={
+              activeMarks.includes(EDITOR_MARKS.BOLD) ? "primary" : "disabled"
+            }
+          />
+        </BubbleMenuToggleButton>
       </CustomTooltip>
       <CustomTooltip title="Italic">
-        <IconButton
-          color={editor.isActive("italic") ? "primary" : "default"}
+        <BubbleMenuToggleButton
+          value={EDITOR_MARKS.ITALIC}
           size={"small"}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
-          <FormatItalicRounded />
-        </IconButton>
+          <FormatItalicRounded
+            color={
+              activeMarks.includes(EDITOR_MARKS.ITALIC) ? "primary" : "disabled"
+            }
+          />
+        </BubbleMenuToggleButton>
       </CustomTooltip>
       <CustomTooltip title="Title">
-        <IconButton
-          color={
-            editor.isActive("heading", { level: 2 }) ? "primary" : "default"
-          }
+        <BubbleMenuToggleButton
+          value={EDITOR_NODES.HEADING}
           size={"small"}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
         >
-          <TitleRounded />
-        </IconButton>
+          <TitleRounded
+            color={
+              editor.isActive(EDITOR_NODES.HEADING, { level: 2 })
+                ? "primary"
+                : "disabled"
+            }
+          />
+        </BubbleMenuToggleButton>
       </CustomTooltip>
       <CustomTooltip title="Code">
-        <IconButton
-          color={editor.isActive("codeBlock") ? "primary" : "default"}
+        <BubbleMenuToggleButton
+          value={EDITOR_MARKS.CODE}
           size={"small"}
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         >
-          <CodeRounded />
-        </IconButton>
+          <CodeRounded
+            color={
+              activeMarks.includes(EDITOR_MARKS.CODE) ? "primary" : "disabled"
+            }
+          />
+        </BubbleMenuToggleButton>
       </CustomTooltip>
-    </Box>
+    </BubbleMenuToggleButtonGroup>
   );
 }

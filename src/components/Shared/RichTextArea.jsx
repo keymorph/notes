@@ -5,11 +5,16 @@ import DOMPurify from "dompurify";
 import { useMemo } from "react";
 import { RichTextAreaBox } from "../../styles/components/rich-text";
 
-export default function RichTextArea({ content }) {
+export default function RichTextArea({ content, style }) {
   const htmlContent = useMemo(
     () => DOMPurify.sanitize(generateHTML(content, [StarterKit, Typography])),
     [content]
   );
 
-  return <RichTextAreaBox dangerouslySetInnerHTML={{ __html: htmlContent }} />;
+  return (
+    <RichTextAreaBox
+      style={style}
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  );
 }

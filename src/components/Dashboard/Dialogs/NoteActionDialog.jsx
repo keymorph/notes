@@ -38,6 +38,7 @@ export default function NoteActionDialog({
   handleDialogClose,
 }) {
   //#region Hooks
+
   const theme = useTheme();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -56,15 +57,23 @@ export default function NoteActionDialog({
 
   useEffect(() => {
     setCurrentAction(action);
+  }, [action]);
+
+  useEffect(() => {
     setNewTitle(title);
     setNewDescription(description);
+  }, [title, description]);
+
+  useEffect(() => {
     setNewCategoryName(categoryName);
     setNewCategoryColor(categoryColor);
     setDisplayCategoryChip(!!categoryName);
-  }, [action, title, description, categoryName, categoryColor]);
+  }, [categoryName, categoryColor]);
+
   //#endregion
 
   //#region Query Handling Hooks
+
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
       handleDialogClose();
@@ -99,10 +108,13 @@ export default function NoteActionDialog({
       },
     }
   );
+
   //#endregion
+
   //#endregion
 
   //#region Helper Functions
+
   // Reset modal values is used when creating or editing a note
   // If keepCurrentAction is true, it means that we don't want to reset the current action (e.g. when resetting the values)
   const handleResetModalValues = (keepCurrentAction = false) => {
@@ -116,9 +128,11 @@ export default function NoteActionDialog({
     setDisplayCategoryChip(!!categoryName);
     setIsCategoryNew(false);
   };
+
   //#endregion
 
   //#region Handlers
+
   const handleActionChange = (newAction) => {
     setCurrentAction(newAction);
   };
@@ -172,9 +186,11 @@ export default function NoteActionDialog({
       handleResetModalValues();
     }
   };
+
   //#endregion
 
   //#region Derived State Variables
+
   // Short variable names for the current action being performed
   const isViewing = currentAction === MODAL_ACTIONS.VIEW;
   const isEditing = currentAction === MODAL_ACTIONS.EDIT;
@@ -199,6 +215,7 @@ export default function NoteActionDialog({
     newCategoryColor !== categoryColor;
   const saveDisabled =
     !valuesChanged || doCategoryNamesCollide(modifiedCategoriesCollection);
+
   //#endregion
 
   return (
@@ -230,7 +247,7 @@ export default function NoteActionDialog({
 
         <TextField
           hiddenLabel
-          disabled={currentAction === MODAL_ACTIONS.VIEW}
+          disabled={isViewing}
           value={newTitle}
           placeholder={"Type the note title here..."}
           InputProps={{
@@ -260,7 +277,7 @@ export default function NoteActionDialog({
           content={newDescription}
           setContent={setNewDescription}
           placeholder={"Type the content of your note here..."}
-          editable={currentAction !== MODAL_ACTIONS.VIEW}
+          editable={!isViewing}
           style={{
             marginBottom: "1rem",
             minHeight: "12rem",

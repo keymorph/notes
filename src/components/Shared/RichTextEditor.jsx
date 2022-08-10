@@ -4,7 +4,8 @@ import { Placeholder } from "@tiptap/extension-placeholder";
 import { Typography } from "@tiptap/extension-typography";
 import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import isEqual from "lodash/isEqual";
+import { isEqual } from "lodash";
+import { useEffect } from "react";
 import { NOTE_DESCRIPTION_CHAR_LIMIT } from "../../constants/input-limits";
 import { RichTextEditorBox } from "../../styles/components/rich-text";
 import RemainingCharCount from "./RemainingCharCount";
@@ -43,6 +44,18 @@ export default function RichTextEditor({
     editable,
   });
 
+  useEffect(() => {
+    if (editor && editor.isEditable !== editable) {
+      editor.setEditable(editable);
+    }
+  }, [editable, editor]);
+
+  useEffect(() => {
+    if (editor && !isEqual(editor.getJSON(), content)) {
+      editor.commands.setContent(content);
+    }
+  }, [content]);
+
   //#endregion
 
   // TODO: Return loading indicator here
@@ -52,10 +65,6 @@ export default function RichTextEditor({
 
   if (editor.isEditable !== editable) {
     editor.setEditable(editable);
-  }
-
-  if (!isEqual(editor.getJSON(), content)) {
-    editor.commands.setContent(content);
   }
 
   return (
@@ -68,6 +77,10 @@ export default function RichTextEditor({
           outlineColor: editable
             ? theme.palette.action.active
             : theme.palette.action.disabled,
+        },
+        ".ProseMirror:focus-visible": {
+          outlineColor: theme.palette.primary.main,
+          outlineWidth: "2px",
         },
       }}
     >

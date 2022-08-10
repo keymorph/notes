@@ -233,13 +233,17 @@ export default function Note({
                     title="Title Name"
                     fontWeight={"bold"}
                     noWrap
+                    mb={"0.5rem"}
                   >
                     {title}
                   </Typography>
                   <Divider />
                 </>
               )}
-              <RichTextArea content={description} />
+              <RichTextArea
+                content={description}
+                style={{ marginTop: "0.5rem" }}
+              />
             </CardContent>
           </NoteCard>
         </div>

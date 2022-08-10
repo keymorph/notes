@@ -29,6 +29,7 @@ export default function ManageCategoriesDialog({
   isMobile,
 }) {
   //#region Hooks
+
   const [inputCategoryName, setInputCategoryName] = useState("");
   const [modifiedCategories, setModifiedCategories] = useState([]);
 
@@ -41,12 +42,8 @@ export default function ManageCategoriesDialog({
     setModifiedCategories(categoriesCollection);
   }, [categoriesCollection]);
 
-  const isCategoryNew = !doesCategoryExist(
-    inputCategoryName,
-    modifiedCategories
-  );
-
   //#region Query Handling Hooks
+
   // Updates the categories collection in the database
   const { mutate: mutateUpdate, status: updateStatus } = useMutation(
     updateCategories,
@@ -64,11 +61,17 @@ export default function ManageCategoriesDialog({
       },
     }
   );
+
   //#endregion
+
   //#endregion
 
   const categoriesChanged =
     JSON.stringify(modifiedCategories) !== JSON.stringify(categoriesCollection);
+  const isCategoryNew = !doesCategoryExist(
+    inputCategoryName,
+    modifiedCategories
+  );
   // Filter out the empty "" category names
   // From the filtered categories, filter out the ones that don't match the inputCategoryName if it's not empty
   const filteredCategories = modifiedCategories.filter(
@@ -90,14 +93,17 @@ export default function ManageCategoriesDialog({
   }
 
   //#region Helper Functions
+
   // Reset modal values is used when creating a note
   const resetModalValues = () => {
     setInputCategoryName("");
     setModifiedCategories(categoriesCollection);
   };
+
   //#endregion
 
   //#region Handlers
+
   const handleSaveCategories = () => {
     mutateUpdate({ categories: modifiedCategories });
   };
@@ -164,6 +170,7 @@ export default function ManageCategoriesDialog({
       handleDialogClose();
     }
   };
+
   //#endregion
 
   return (
