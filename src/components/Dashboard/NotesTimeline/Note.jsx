@@ -242,6 +242,7 @@ export default function Note({
               )}
               <RichTextArea
                 content={description}
+                maxNodes={16}
                 style={{ marginTop: "0.5rem" }}
               />
             </CardContent>
