@@ -12,8 +12,12 @@ export default async function handler(req, res) {
   // https://next-auth.js.org/getting-started/client#getsession
   const session = await unstable_getServerSession(req, res, authOptions);
 
+  console.log(session);
+
   // If the user is authenticated, proceed with request
   if (session) {
+    req.headers.user_id = session.user.id;
+    
     if (req.method === "GET") {
       return await show(req, res);
     } else if (req.method === "POST") {

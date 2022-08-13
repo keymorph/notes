@@ -13,6 +13,8 @@ export default async function handler(req, res) {
 
   // If the user is authenticated, proceed with request
   if (session) {
+    req.headers.user_id = session.user.id;
+
     if (req.method === "PUT") {
       return await replace(req, res);
     } else {
