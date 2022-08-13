@@ -1,8 +1,8 @@
 import { Box, Grow, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
-import CategoryChip from "../SharedComponents/CategoryChip";
-import CategorySearchInput from "../SharedComponents/CategorySearchInput";
+import CategoryChip from "../../Shared/CategoryChip";
+import CategorySearchInput from "../../Shared/CategorySearchInput";
 
 export default function FilterView({
   categoriesCollection,
@@ -68,7 +68,7 @@ export default function FilterView({
   //#endregion
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <Typography variant="h6">Filter By Category:</Typography>
       <CategorySearchInput
         categoryName={searchValue}

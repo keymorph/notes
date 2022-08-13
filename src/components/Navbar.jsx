@@ -1,7 +1,7 @@
 import { Key as KeyIcon } from "@mui/icons-material";
 import { AppBar, Box, Divider, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import ProfileDropdown from "./Navbar/ProfileDropdown";
+import ProfileButton from "./Navbar/ProfileButton";
 
 export default function Navbar({ darkMode, handleDarkModeToggle }) {
   return (
@@ -22,7 +22,7 @@ export default function Navbar({ darkMode, handleDarkModeToggle }) {
             Notes
           </Typography>
         </Box>
-        <ProfileDropdown
+        <ProfileButton
           darkMode={darkMode}
           handleDarkModeToggle={handleDarkModeToggle}
         />

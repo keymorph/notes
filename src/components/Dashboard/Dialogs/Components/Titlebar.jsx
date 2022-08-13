@@ -6,7 +6,7 @@ import {
 import { Box, IconButton, Typography, Zoom } from "@mui/material";
 import React from "react";
 import { MODAL_ACTIONS } from "../../../../models/dialogs";
-import CustomTooltip from "../../SharedComponents/CustomTooltip";
+import CustomTooltip from "../../../Shared/CustomTooltip";
 
 export default function Titlebar({
   title,

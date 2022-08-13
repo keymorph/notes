@@ -2,8 +2,8 @@ import { Check } from "@mui/icons-material";
 import { Box, Chip, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
-import { getPaletteCategoryColorName } from "../../../helpers/notes/category";
-import { variantFadeStagger } from "../../../styles/animations/definitions";
+import { getPaletteCategoryColorName } from "../../helpers/notes/category";
+import { variantFadeStagger } from "../../styles/animations/definitions";
 
 export default function CategoryChip({
   index,
