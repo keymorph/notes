@@ -59,7 +59,7 @@ export default function App({
         <meta property="og:type" content="website" />
         <meta
           property={"og:image"}
-          content={"https://i.imgur.com/nJr6w3K.png"}
+          content={"https://i.imgur.com/0JksycM.png"}
         />
         <title>Notes — Keymorph</title>
       </Head>
