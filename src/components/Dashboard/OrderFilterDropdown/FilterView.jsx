@@ -1,6 +1,7 @@
 import { Box, Grow, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+
 import CategoryChip from "../../Shared/CategoryChip";
 import CategorySearchInput from "../../Shared/CategorySearchInput";
 

@@ -1,7 +1,8 @@
 import LockIcon from "@mui/icons-material/Lock";
 import { Avatar, Box, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+
 import Credentials from "../components/AuthProviders/Credentials";
 import OAuth from "../components/AuthProviders/OAuth";
 import { AuthCard } from "../styles/components/cards";

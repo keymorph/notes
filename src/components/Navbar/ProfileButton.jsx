@@ -18,10 +18,11 @@ import {
   Zoom,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
+
 import CustomTooltip from "../Shared/CustomTooltip";
 
 export default function ProfileButton({ darkMode, handleDarkModeToggle }) {

@@ -1,10 +1,11 @@
 import {Box} from "@mui/material";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {motion} from "framer-motion";
-import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/react";
 import {useSnackbar} from "notistack";
 import {useEffect, useState} from "react";
+
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
@@ -49,6 +50,7 @@ export default function Dashboard() {
       const noteItem = data.noteItem;
       // Update the state only if the user has a noteItem in the container
       // Note: new users will not have a noteItem, but it will be created when the user creates their first notes
+
       if (noteItem) {
         setNotesOrder({
           orderedNotesID: noteItem.notes_order?.ordered_notes_id || [],

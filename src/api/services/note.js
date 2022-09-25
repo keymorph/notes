@@ -65,10 +65,10 @@ const createNote = async (req, res) => {
 
   return notes.items
     .upsert(noteItemDef)
-    .then(({ resource: noteItem }) => {
+    .then(({ resource: updatedNoteItem }) => {
       return res.status(201).json({
         message: "Note created successfully",
-        noteItem,
+        updatedNoteItem,
       });
     })
     .catch((error) => {
@@ -186,10 +186,10 @@ const editNote = async (req, res) => {
   return notes
     .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
-    .then(({ resource: noteItem }) => {
+    .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Note updated successfully",
-        noteItem,
+        updatedNoteItem,
       });
     })
     .catch((error) => {
@@ -252,10 +252,10 @@ const removeNote = async (req, res) => {
   return notes
     .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
-    .then(({ resource: noteItem }) => {
+    .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Note deleted successfully",
-        noteItem,
+        updatedNoteItem,
       });
     })
     .catch((error) => {

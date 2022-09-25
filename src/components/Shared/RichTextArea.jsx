@@ -3,6 +3,7 @@ import { Typography } from "@tiptap/extension-typography";
 import StarterKit from "@tiptap/starter-kit";
 import DOMPurify from "dompurify";
 import { useMemo } from "react";
+
 import { RichTextAreaBox } from "../../styles/components/rich-text";
 
 /**
@@ -16,6 +17,7 @@ import { RichTextAreaBox } from "../../styles/components/rich-text";
 export default function RichTextArea({ content, maxNodes, style }) {
   const htmlContent = useMemo(() => {
     const smallerContent = content.content.slice(0, maxNodes); // Only display the first 20 nodes
+
     return DOMPurify.sanitize(
       generateHTML({ type: content.type, content: smallerContent }, [
         StarterKit,

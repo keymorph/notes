@@ -3,6 +3,7 @@
 */
 
 import { unstable_getServerSession } from "next-auth";
+
 import noteService from "../../../api/services/note";
 import { authOptions } from "../auth/[...nextauth]";
 
@@ -17,7 +18,7 @@ export default async function handler(req, res) {
   // If the user is authenticated, proceed with request
   if (session) {
     req.headers.user_id = session.user.id;
-    
+
     if (req.method === "GET") {
       return await show(req, res);
     } else if (req.method === "POST") {

@@ -13,11 +13,11 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
+
 import {
   getOrCreateCategoryID,
   getPaletteCategoryColorName,
 } from "../../../helpers/notes/category";
-
 import {
   createNote,
   deleteNote,
@@ -137,6 +137,7 @@ export default function Note({
       },
       tags: tags,
     };
+
     mutateDuplicate(duplicateNote);
   };
   //#endregion

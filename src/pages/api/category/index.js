@@ -3,6 +3,7 @@
 */
 
 import { unstable_getServerSession } from "next-auth";
+
 import categoryService from "../../../api/services/category";
 import { authOptions } from "../auth/[...nextauth]";
 

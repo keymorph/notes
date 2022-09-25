@@ -47,10 +47,10 @@ const replaceCategory = async (req, res) => {
   return notes
     .item(req.headers.user_id, req.headers.user_id)
     .patch(noteItemPatchOperation)
-    .then(({ resource: noteItem }) => {
+    .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Categories updated successfully",
-        noteItem,
+        updatedNoteItem,
       });
     })
     .catch((error) => {

@@ -1,4 +1,4 @@
-import {notes} from "../models/database";
+import { notes } from "../models/database";
 
 /**
  * Creates a note item if one doesn't already exist. If no or an invalid user_id is provided, an error will be thrown.
@@ -44,8 +44,8 @@ export const createNoteItemIfNotExists = async (userID) => {
 
     return notes.items
       .upsert(noteItemDef)
-      .then(({ resource: noteItem }) => {
-        return noteItem;
+      .then(({ resource: updatedNoteItem }) => {
+        return updatedNoteItem;
       })
       .catch((error) => {
         console.error(error.message);

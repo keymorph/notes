@@ -4,5 +4,6 @@ import {useRouter} from "next/router";
 export default function Index() {
   // Redirect user to /dashboard
   const router = useRouter();
+
   router.replace("/dashboard");
 }

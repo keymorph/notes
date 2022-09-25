@@ -1,5 +1,6 @@
 import { Card, Divider, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
+
 import { springSlow } from "../../styles/animations/definitions";
 import FilterView from "./OrderFilterDropdown/FilterView";
 import OrderView from "./OrderFilterDropdown/OrderView";

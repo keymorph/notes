@@ -39,9 +39,9 @@ const registerAccount = async (email, password, res) => {
           .status(201)
           .json({ message: "User account created successfully 🥳." });
       })
-      .catch((error) => {
+      .catch((err) => {
         return res.status(550).json({
-          message: `Database error while registering user: ${error.message}`,
+          message: `Database error while registering user: ${err.message}`,
         });
       });
   });

@@ -12,15 +12,14 @@ export function getFilteredNotesCollection(
     }
 
     let descriptionMatch = false;
+
     if (typeof note.description !== "string") {
       descriptionMatch = note.description.content.some((content) => {
         if (content.text) {
           return content.text.toLowerCase().includes(searchValue.toLowerCase());
         } else if (content.content) {
-          return content.content.some((content) => {
-            return content.text
-              .toLowerCase()
-              .includes(searchValue.toLowerCase());
+          return content.content.some((node) => {
+            return node.text.toLowerCase().includes(searchValue.toLowerCase());
           });
         }
       });

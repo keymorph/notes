@@ -5,8 +5,9 @@ export function getCategoryColorName(categoryId, categoriesCollection) {
 
 export function getPaletteCategoryColorName(categoryColor) {
   // Makes the first letter upper case
-  let colorName =
+  const colorName =
     categoryColor.charAt(0).toUpperCase() + categoryColor.slice(1);
+
   return `category${colorName}`;
 }
 
@@ -52,7 +53,8 @@ export function doesCategoryExist(categoryName, categoriesCollection) {
  * @returns {boolean}
  */
 export function doCategoryNamesCollide(categoriesCollection) {
-  let categoryNames = categoriesCollection.map((category) => category.name);
+  const categoryNames = categoriesCollection.map((category) => category.name);
+
   return categoryNames.some((categoryName, index) => {
     return categoryNames.indexOf(categoryName) !== index;
   });
@@ -85,6 +87,7 @@ export function getOrCreateCategoryID(categoriesCollection, categoryName) {
     return 0;
   } else {
     let categoryID = getCategoryID(categoriesCollection, categoryName);
+
     if (categoryID === -1) {
       // If the category is not found, create a new category ID
       categoryID = createCategoryID(categoriesCollection);
