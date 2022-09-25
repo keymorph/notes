@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+
 import { doesCategoryExist } from "../../../../helpers/notes/category";
 import CategoryChip from "../../../Shared/CategoryChip";
 import CategorySearchInput from "../../../Shared/CategorySearchInput";
@@ -33,10 +34,13 @@ export default function SelectOrAddCategory({
   //#endregion
 
   //#region Handlers
-  const handleSelectCategory = (categoryName, categoryColor) => {
+  const handleSelectCategory = (
+    selectedCategoryName,
+    selectedCategoryColor
+  ) => {
     setDisplayCategoryChip(true);
-    setCategoryName(categoryName);
-    setCategoryColor(categoryColor);
+    setCategoryName(selectedCategoryName);
+    setCategoryColor(selectedCategoryColor);
   };
 
   const handleCreateCategory = () => {

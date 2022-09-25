@@ -2,9 +2,10 @@ import { LoadingButton } from "@mui/lab";
 import { Dialog, Fade, Grow, TextField, useTheme, Zoom } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { isEqual } from "lodash";
+import { isEmpty, isEqual } from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
+
 import { NOTE_TITLE_CHAR_LIMIT } from "../../../constants/input-limits";
 import {
   createCategoryID,
@@ -148,6 +149,7 @@ export default function NoteActionDialog({
       },
       tags: [],
     };
+
     mutateCreate(newNote);
   };
 
@@ -168,6 +170,7 @@ export default function NoteActionDialog({
         },
         tags: [],
       };
+
       mutateEdit(editedNote);
     } else {
       handleDialogClose();
@@ -197,6 +200,7 @@ export default function NoteActionDialog({
   const isCreating = currentAction === MODAL_ACTIONS.CREATE_NOTE;
   // modified categories collection with the new category
   let modifiedCategoriesCollection = [...categoriesCollection];
+
   if (isCategoryNew) {
     modifiedCategoriesCollection = [
       ...modifiedCategoriesCollection,
@@ -214,7 +218,9 @@ export default function NoteActionDialog({
     newCategoryName.trim() !== categoryName ||
     newCategoryColor !== categoryColor;
   const saveDisabled =
-    !valuesChanged || doCategoryNamesCollide(modifiedCategoriesCollection);
+    !valuesChanged ||
+    isEmpty(newDescription) ||
+    doCategoryNamesCollide(modifiedCategoriesCollection);
 
   //#endregion
 
