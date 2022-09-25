@@ -23,6 +23,7 @@ export default function RichTextArea({ content, maxNodes, style }) {
       ])
     );
   }, [content.content, content.type, maxNodes]);
+
   return (
     <RichTextAreaBox
       style={style}

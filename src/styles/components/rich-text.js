@@ -25,7 +25,7 @@ export const RichTextEditorBox = styled(Box)(({ theme }) => ({
     borderRadius: "2px",
   },
   ".ProseMirror p.is-editor-empty:first-of-type::before": {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.disabled,
     content: "attr(data-placeholder)",
     float: "left",
     height: 0,
