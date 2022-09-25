@@ -1,22 +1,11 @@
 import { LoadingButton } from "@mui/lab";
-import {
-  Card,
-  Dialog,
-  Fade,
-  Grow,
-  TextField,
-  useMediaQuery,
-  useTheme,
-  Zoom,
-} from "@mui/material";
+import { Dialog, Fade, Grow, TextField, useTheme, Zoom } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { isEqual } from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
-import {
-  NOTE_DESCRIPTION_CHAR_LIMIT,
-  NOTE_TITLE_CHAR_LIMIT,
-} from "../../../constants/input-limits";
+import { NOTE_TITLE_CHAR_LIMIT } from "../../../constants/input-limits";
 import {
   createCategoryID,
   doCategoryNamesCollide,
@@ -28,20 +17,12 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { variantFadeSlideUpSlow } from "../../../styles/animations/definitions";
-import { dialogCard } from "../../../styles/components/dialogs";
-import RemainingCharCount from "../SharedComponents/RemainingCharCount";
+import { DialogCard } from "../../../styles/components/cards";
+import RemainingCharCount from "../../Shared/RemainingCharCount";
+import RichTextEditor from "../../Shared/RichTextEditor";
 import EditableCategoryChip from "./Components/EditableCategoryChip";
 import SelectOrAddCategory from "./Components/SelectOrAddCategory";
 import Titlebar from "./Components/Titlebar";
-
-const DESCRIPTION_ROWS = {
-  TINY: 4,
-  SMALL: 8,
-  MEDIUM: 12,
-  LARGE: 16,
-  HUGE: 20,
-  GIGANTIC: 24,
-};
 
 export default function NoteActionDialog({
   action,
@@ -57,9 +38,8 @@ export default function NoteActionDialog({
   handleDialogClose,
 }) {
   //#region Hooks
+
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down("380"));
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -77,15 +57,23 @@ export default function NoteActionDialog({
 
   useEffect(() => {
     setCurrentAction(action);
+  }, [action]);
+
+  useEffect(() => {
     setNewTitle(title);
     setNewDescription(description);
+  }, [title, description]);
+
+  useEffect(() => {
     setNewCategoryName(categoryName);
     setNewCategoryColor(categoryColor);
     setDisplayCategoryChip(!!categoryName);
-  }, [action, title, description, categoryName, categoryColor]);
+  }, [categoryName, categoryColor]);
+
   //#endregion
 
   //#region Query Handling Hooks
+
   const { mutate: mutateEdit, status: editStatus } = useMutation(updateNote, {
     onSuccess: ({ data }) => {
       handleDialogClose();
@@ -120,10 +108,13 @@ export default function NoteActionDialog({
       },
     }
   );
+
   //#endregion
+
   //#endregion
 
   //#region Helper Functions
+
   // Reset modal values is used when creating or editing a note
   // If keepCurrentAction is true, it means that we don't want to reset the current action (e.g. when resetting the values)
   const handleResetModalValues = (keepCurrentAction = false) => {
@@ -137,21 +128,23 @@ export default function NoteActionDialog({
     setDisplayCategoryChip(!!categoryName);
     setIsCategoryNew(false);
   };
+
   //#endregion
 
   //#region Handlers
+
   const handleActionChange = (newAction) => {
     setCurrentAction(newAction);
   };
 
   const handleCreateNote = () => {
     const newNote = {
-      title: `${newTitle.trim()}`,
-      description: `${newDescription.trim()}`,
+      title: newTitle.trim(),
+      description: newDescription,
       category: {
         id: getOrCreateCategoryID(categoriesCollection, newCategoryName.trim()),
-        name: `${newCategoryName.trim()}`,
-        color: `${newCategoryColor || "none"}`,
+        name: newCategoryName.trim(),
+        color: newCategoryColor || "none",
       },
       tags: [],
     };
@@ -163,15 +156,15 @@ export default function NoteActionDialog({
     if (valuesChanged) {
       const editedNote = {
         noteID: Number(noteID),
-        title: `${newTitle.trim()}`,
-        description: `${newDescription.trim()}`,
+        title: newTitle.trim(),
+        description: newDescription,
         category: {
           id: getOrCreateCategoryID(
             categoriesCollection,
             newCategoryName.trim()
           ),
-          name: displayCategoryChip ? `${newCategoryName.trim()}` : "", // Ensure we don't send the temporary category name
-          color: `${newCategoryColor}`,
+          name: displayCategoryChip ? newCategoryName.trim() : "", // Ensure we don't send the temporary category name
+          color: newCategoryColor,
         },
         tags: [],
       };
@@ -193,30 +186,15 @@ export default function NoteActionDialog({
       handleResetModalValues();
     }
   };
+
   //#endregion
 
   //#region Derived State Variables
+
   // Short variable names for the current action being performed
   const isViewing = currentAction === MODAL_ACTIONS.VIEW;
   const isEditing = currentAction === MODAL_ACTIONS.EDIT;
   const isCreating = currentAction === MODAL_ACTIONS.CREATE_NOTE;
-  // Description textarea row count
-  let maxDescriptionRows = DESCRIPTION_ROWS.HUGE;
-  let minDescriptionRows = DESCRIPTION_ROWS.TINY;
-  if (isSmallMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.MEDIUM
-      : DESCRIPTION_ROWS.SMALL;
-  } else if (isMobile) {
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.LARGE
-      : DESCRIPTION_ROWS.MEDIUM;
-  } else {
-    minDescriptionRows = DESCRIPTION_ROWS.SMALL;
-    maxDescriptionRows = isViewing
-      ? DESCRIPTION_ROWS.HUGE
-      : DESCRIPTION_ROWS.LARGE;
-  }
   // modified categories collection with the new category
   let modifiedCategoriesCollection = [...categoriesCollection];
   if (isCategoryNew) {
@@ -230,16 +208,14 @@ export default function NoteActionDialog({
     ];
   }
   // Input validation
-  const titleError = newTitle.trim() === "";
   const valuesChanged =
     newTitle.trim() !== title ||
-    newDescription.trim() !== description ||
+    !isEqual(newDescription, description) ||
     newCategoryName.trim() !== categoryName ||
     newCategoryColor !== categoryColor;
   const saveDisabled =
-    titleError ||
-    !valuesChanged ||
-    doCategoryNamesCollide(modifiedCategoriesCollection);
+    !valuesChanged || doCategoryNamesCollide(modifiedCategoriesCollection);
+
   //#endregion
 
   return (
@@ -250,7 +226,7 @@ export default function NoteActionDialog({
       TransitionProps={{ onExited: () => handleAfterModalClose() }}
       closeAfterTransition
     >
-      <Card sx={dialogCard}>
+      <DialogCard>
         <Titlebar
           action={currentAction}
           title={
@@ -270,37 +246,43 @@ export default function NoteActionDialog({
         />
 
         <TextField
-          disabled={currentAction === MODAL_ACTIONS.VIEW}
-          required
-          id="outlined-required"
-          label={"Title"}
+          hiddenLabel
+          disabled={isViewing}
           value={newTitle}
-          sx={{ my: "1em" }}
+          placeholder={"Type the note title here..."}
           InputProps={{
             endAdornment: !isViewing && (
               <RemainingCharCount
                 stringLength={newTitle.length}
                 characterLimit={NOTE_TITLE_CHAR_LIMIT}
+                onlyDisplayAfterError
               />
             ),
           }}
           inputProps={{
             maxLength: NOTE_TITLE_CHAR_LIMIT,
+            style: {
+              color: theme.palette.text.primary,
+              WebkitTextFillColor: "unset",
+            },
           }}
           onChange={(event) => setNewTitle(event.target.value)}
+          style={{
+            marginTop: "1rem",
+            marginBottom: "1rem",
+          }}
         />
 
-        <TextField
-          disabled={currentAction === MODAL_ACTIONS.VIEW}
-          id="outlined-multiline-static"
-          label={"Description"}
-          value={newDescription}
-          multiline
-          minRows={minDescriptionRows}
-          maxRows={maxDescriptionRows}
-          sx={{ mb: "1em" }}
-          inputProps={{ maxLength: NOTE_DESCRIPTION_CHAR_LIMIT }}
-          onChange={(event) => setNewDescription(event.target.value)}
+        <RichTextEditor
+          content={newDescription}
+          setContent={setNewDescription}
+          placeholder={"Type the content of your note here..."}
+          editable={!isViewing}
+          style={{
+            marginBottom: "1rem",
+            minHeight: "12rem",
+            maxHeight: "50vh",
+          }}
         />
 
         {/* Display either the category chip or the search category component based on the user intended action */}
@@ -341,7 +323,7 @@ export default function NoteActionDialog({
             loading={editStatus === "loading" || createStatus === "loading"}
             variant="contained"
             size="small"
-            disabled={saveDisabled} // Disable button if required title field is empty
+            disabled={saveDisabled}
             onClick={isEditing ? handleEditNote : handleCreateNote}
             sx={{
               border: "1px",
@@ -353,7 +335,7 @@ export default function NoteActionDialog({
             {isCreating && "Create"}
           </LoadingButton>
         </Zoom>
-      </Card>
+      </DialogCard>
     </Dialog>
   );
 }

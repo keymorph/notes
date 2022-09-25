@@ -201,7 +201,8 @@ export const darkTheme = createTheme(
       background: {
         base: "#0D0E16",
         appBar: "#171824" + transparency.default,
-        highlight: "#2A2F49" + transparency.default,
+        inactive: "#2A2F49" + transparency.default,
+        active: "#34395b" + transparency.default,
       },
     },
 
@@ -287,7 +288,8 @@ export const lightTheme = createTheme(
       background: {
         base: "#B3B2B8",
         appBar: "#D6D6DA" + transparency.default,
-        highlight: "#FFFFFF" + transparency.default,
+        inactive: "#F2F3F5" + transparency.default,
+        active: "#FCFDFF" + transparency.default,
       },
     },
 

@@ -1,17 +1,15 @@
-import { Box } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import {Box} from "@mui/material";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {motion} from "framer-motion";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
+import {useSnackbar} from "notistack";
+import {useEffect, useState} from "react";
 import AppToolbar from "../components/Dashboard/AppToolbar";
 import NotesTimeline from "../components/Dashboard/NotesTimeline";
 import OrderFilterDropdown from "../components/Dashboard/OrderFilterDropdown";
-import {
-  getNoteItem,
-  updateNotesOrder,
-} from "../helpers/requests/note-requests";
-import { NOTES_ORDER_BY } from "../models/note-order";
+import {getNoteItem, updateNotesOrder,} from "../helpers/requests/note-requests";
+import {NOTES_ORDER_BY} from "../models/note-order";
 
 export default function Dashboard() {
   //#region Hooks
@@ -43,7 +41,7 @@ export default function Dashboard() {
     if (notesOrder.orderBy) {
       mutateOrder(notesOrder);
     }
-  }, [notesOrder]);
+  }, [mutateOrder, notesOrder]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {
@@ -106,26 +104,28 @@ export default function Dashboard() {
           setSearchValue={setSearchValue}
           setOrderFilterViewOpen={setOrderFilterDropdownOpen}
         />
-        {orderFilterDropdownOpen && (
-          <OrderFilterDropdown
-            notesOrder={notesOrder}
+        <motion.div style={{ overflow: "hidden", minHeight: "90vh" }}>
+          {orderFilterDropdownOpen && (
+            <OrderFilterDropdown
+              notesOrder={notesOrder}
+              categoriesCollection={categoriesCollection}
+              filterCategories={filterCategories}
+              setNotesOrder={setNotesOrder}
+              setFilterCategories={setFilterCategories}
+            />
+          )}
+          <NotesTimeline
+            noteCollection={noteCollection}
             categoriesCollection={categoriesCollection}
+            notesOrder={notesOrder}
             filterCategories={filterCategories}
+            searchValue={searchValue}
+            noteStatus={noteStatus}
+            setNoteCollection={setNoteCollection}
+            setCategoriesCollection={setCategoriesCollection}
             setNotesOrder={setNotesOrder}
-            setFilterCategories={setFilterCategories}
           />
-        )}
-        <NotesTimeline
-          noteCollection={noteCollection}
-          categoriesCollection={categoriesCollection}
-          notesOrder={notesOrder}
-          filterCategories={filterCategories}
-          searchValue={searchValue}
-          noteStatus={noteStatus}
-          setNoteCollection={setNoteCollection}
-          setCategoriesCollection={setCategoriesCollection}
-          setNotesOrder={setNotesOrder}
-        />
+        </motion.div>
       </Box>
     )
   );

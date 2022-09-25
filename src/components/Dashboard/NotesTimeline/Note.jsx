@@ -24,8 +24,9 @@ import {
 } from "../../../helpers/requests/note-requests";
 import { MODAL_ACTIONS } from "../../../models/dialogs";
 import { NoteCard } from "../../../styles/components/cards";
+import CustomTooltip from "../../Shared/CustomTooltip";
+import RichTextArea from "../../Shared/RichTextArea";
 import NoteActionDialog from "../Dialogs/NoteActionDialog";
-import CustomTooltip from "../SharedComponents/CustomTooltip";
 
 export default function Note({
   noteID,
@@ -202,6 +203,7 @@ export default function Note({
               anchorEl={moreMenuAnchorEl}
               open={!!moreMenuAnchorEl}
               onClose={() => setMoreMenuAnchorEl(null)}
+              style={{ top: "0.4rem" }}
             >
               <MenuItem dense onClick={handleEditModalOpen}>
                 Edit
@@ -224,28 +226,25 @@ export default function Note({
                 px: "1rem",
               }}
             >
-              <Typography
-                variant="h5"
-                title="Title Name"
-                fontWeight={"bold"}
-                noWrap
-              >
-                {title}
-              </Typography>
-              <Divider sx={{ my: "0.5em" }} />
-              <Typography
-                variant="body2"
-                title={"Description"}
-                sx={{
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  WebkitLineClamp: "12",
-                  WebkitBoxOrient: "vertical",
-                }}
-              >
-                {description}
-              </Typography>
+              {title && (
+                <>
+                  <Typography
+                    variant="h5"
+                    title="Title Name"
+                    fontWeight={"bold"}
+                    noWrap
+                    mb={"0.5rem"}
+                  >
+                    {title}
+                  </Typography>
+                  <Divider />
+                </>
+              )}
+              <RichTextArea
+                content={description}
+                maxNodes={16}
+                style={{ marginTop: "0.5rem" }}
+              />
             </CardContent>
           </NoteCard>
         </div>

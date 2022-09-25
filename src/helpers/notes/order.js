@@ -37,7 +37,7 @@ function orderNotesCollectionByOrderBy(
     case NOTES_ORDER_BY.NOTE_TITLE:
       // Order notes by note title using the note property "title"
       return notesCollection.sort((a, b) => {
-        return a.title.localeCompare(b.title);
+        return a.title.localeCompare(b.title) || 0;
       });
     default:
       return notesCollection;

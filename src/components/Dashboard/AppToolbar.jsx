@@ -19,11 +19,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MODAL_ACTIONS } from "../../models/dialogs";
+import CustomTooltip from "../Shared/CustomTooltip";
 
 import ToolbarSearch from "./AppToolbar/ToolbarSearch";
 import ManageCategoriesDialog from "./Dialogs/ManageCategoriesDialog";
 import NoteActionDialog from "./Dialogs/NoteActionDialog";
-import CustomTooltip from "./SharedComponents/CustomTooltip";
 
 export default function AppToolbar({
   noteCollection,
@@ -133,6 +133,7 @@ export default function AppToolbar({
       anchorEl={moreMenuAnchorEl}
       open={!!moreMenuAnchorEl}
       onClose={() => setMoreMenuAnchorEl(null)}
+      style={{ top: "0.4rem" }}
     >
       <MenuItem dense onClick={handleManageCategoriesModalOpen}>
         Manage Categories
@@ -206,11 +207,13 @@ export default function AppToolbar({
             exit={false}
           >
             <Button
+              disabled={noteStatus === "loading"}
               color={createNoteDialogOpen ? "primary" : "neutral"}
               variant={"outlined"}
               size={"small"}
               sx={{
                 minWidth: "7rem",
+                mr: "0.5rem",
               }}
               startIcon={<Add />}
               onClick={handleCreateNoteModalOpen}
@@ -226,6 +229,7 @@ export default function AppToolbar({
             appear={false}
           >
             <IconButton
+              disabled={noteStatus === "loading"}
               color={createNoteDialogOpen ? "primary" : "neutral"}
               onClick={handleCreateNoteModalOpen}
               size={"small"}
@@ -233,8 +237,13 @@ export default function AppToolbar({
               <Add />
             </IconButton>
           </Fade>
-          <CustomTooltip title={"More options"} placement={"left"}>
+          <CustomTooltip
+            title={"More options"}
+            placement={"left"}
+            disableableButton
+          >
             <IconButton
+              disabled={noteStatus === "loading"}
               size={"small"}
               onClick={handleMoreMenuClick}
               color={moreMenuAnchorEl ? "primary" : "neutral"}

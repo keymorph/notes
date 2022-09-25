@@ -75,14 +75,11 @@ export default function Credentials({ action, isUnauthenticated }) {
               variant: "error",
             });
           } else {
-            enqueueSnackbar("An error occurred while signing in", {
-              variant: "error",
-            });
+            throw error;
           }
-          console.error(error);
         }
       })
-      .catch(async (error) => {
+      .catch((error) => {
         console.error(error.message);
         enqueueSnackbar("An error occurred while signing in", {
           variant: "error",
@@ -108,7 +105,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           variant: "success",
         });
       })
-      .catch(async (error) => {
+      .catch((error) => {
         const status = error.response?.status;
         // If an error is thrown, append it as a query param to the url
         if (status === 409) {
@@ -212,7 +209,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           name="password"
           type="password"
           value={password}
-          autoComplete="current-password"
+          autoComplete={action === "login" ? "current-password" : "new-password"}
           onChange={handlePasswordChange}
           margin="normal"
           fullWidth
@@ -227,6 +224,7 @@ export default function Credentials({ action, isUnauthenticated }) {
           }
           helperText={confirmPasswordError}
           required
+          autoComplete={"new-password"}
           label="Confirm Password"
           name="password"
           type="password"
