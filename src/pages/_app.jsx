@@ -51,12 +51,24 @@ export default function App({
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta
+          name="twitter:image:src"
+          content="https://i.imgur.com/0JksycM.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Notes — Keymorph" />
+        <meta
+          name="twitter:description"
+          content="A free web application for creating and editing notes with rich text formatting and markdown support."
+        />
+        <meta name="twitter:site" content="@keymorph1" />
         <meta property="og:title" content="Notes — Keymorph" />
         <meta
           property="og:description"
           content="A free web application for creating and editing notes with rich text formatting and markdown support."
         />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://notes.keymorph.com" />
         <meta
           property={"og:image"}
           content={"https://i.imgur.com/0JksycM.png"}
