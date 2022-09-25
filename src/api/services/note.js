@@ -68,7 +68,7 @@ const createNote = async (req, res) => {
     .then(({ resource: updatedNoteItem }) => {
       return res.status(201).json({
         message: "Note created successfully",
-        updatedNoteItem,
+        noteItem: updatedNoteItem,
       });
     })
     .catch((error) => {
@@ -189,7 +189,7 @@ const editNote = async (req, res) => {
     .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Note updated successfully",
-        updatedNoteItem,
+        noteItem: updatedNoteItem,
       });
     })
     .catch((error) => {
@@ -255,7 +255,7 @@ const removeNote = async (req, res) => {
     .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Note deleted successfully",
-        updatedNoteItem,
+        noteItem: updatedNoteItem,
       });
     })
     .catch((error) => {

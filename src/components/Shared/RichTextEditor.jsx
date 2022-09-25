@@ -38,8 +38,9 @@ export default function RichTextEditor({
       }),
       Typography,
     ],
-    onUpdate: ({ localEditor }) => {
-      setContent(localEditor.getJSON());
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    onUpdate: ({ editor }) => {
+      setContent(editor.getJSON());
     },
     content,
     editable,

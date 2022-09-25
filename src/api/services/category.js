@@ -50,7 +50,7 @@ const replaceCategory = async (req, res) => {
     .then(({ resource: updatedNoteItem }) => {
       return res.status(200).json({
         message: "Categories updated successfully",
-        updatedNoteItem,
+        noteItem: updatedNoteItem,
       });
     })
     .catch((error) => {
