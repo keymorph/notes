@@ -1,4 +1,4 @@
-import { notes } from "../models/database.js";
+import { notes } from "../models/database";
 import { createNoteItemIfNotExists } from "./note-helper";
 
 // SharedComponents object
@@ -42,6 +42,7 @@ const createNote = async (req, res) => {
     (category) => category.id === newNoteDef.category_id
   );
   // If the category already exists, update the note count
+
   if (categoryIdx !== -1) {
     categoriesObjArr[categoryIdx].note_count++;
   } else {
@@ -112,6 +113,7 @@ const editNote = async (req, res) => {
   const noteIdx = noteItem.notes.findIndex(
     (note) => note.id === req.body.noteID
   );
+
   if (noteIdx === -1) {
     return res.status(404).json({
       message: "Note to edit not found",
@@ -119,9 +121,10 @@ const editNote = async (req, res) => {
   }
   const noteToEdit = noteItem.notes[noteIdx];
 
-  let categoriesObjArr = noteItem.categories;
+  const categoriesObjArr = noteItem.categories;
   let categoryIsNew = true; // Track if the category is new
   // Check if categories have changed. If so, update the note count
+
   if (req.body.category.id !== noteToEdit.category_id) {
     categoriesObjArr.forEach((category) => {
       if (category.id === noteToEdit.category_id && category.note_count > 0) {
@@ -147,6 +150,7 @@ const editNote = async (req, res) => {
   let tagsArr = noteItem.tags;
   let tagsToAdd = req.body.tags; // Track the tags to be added
   // Check if tags have changed, if so, add the new tags to the global tags array
+
   if (req.body.tags !== noteToEdit.tags) {
     tagsToAdd = req.body.tags.filter((tag) => !tagsArr.includes(tag));
     tagsArr = tagsArr.concat(tagsToAdd);
@@ -154,6 +158,7 @@ const editNote = async (req, res) => {
 
   // Update the note with the new data
   const editedNote = noteToEdit;
+
   editedNote.title = req.body.title || "";
   editedNote.description = req.body.description || {};
   editedNote.category_id = req.body.category.id;
@@ -213,14 +218,16 @@ const removeNote = async (req, res) => {
     (note) => note.id === req.body.noteID
   );
   const noteToDelete = noteItem.notes[noteIdx];
+
   if (!noteToDelete) {
     return res.status(404).json({
       message: "Note not found. It may have already been deleted",
     });
   }
 
-  let categoriesObjArr = noteItem.categories;
+  const categoriesObjArr = noteItem.categories;
   // Decrement the category's note count.
+
   categoriesObjArr.forEach((category) => {
     if (category.id === noteToDelete.category_id && category.note_count > 0) {
       category.note_count--;
@@ -265,4 +272,5 @@ const noteService = {
   edit: editNote,
   remove: removeNote,
 };
+
 export default noteService;

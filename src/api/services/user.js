@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { users } from "../models/database.js";
+import { users } from "../models/database";
 
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
@@ -64,6 +64,7 @@ const loginAccount = async (email, password, res) => {
         password,
         resources[0].password
       );
+
       if (!validPassword) {
         console.error("Incorrect password.");
         return res.status(400).json({
