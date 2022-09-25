@@ -26,6 +26,7 @@ function orderNotesCollectionByOrderBy(
         const categoryB = categoriesCollection.find(
           (category) => category.id === b.category_id
         );
+
         if (categoryA.name === "") {
           return 1;
         } else if (categoryB.name === "") {

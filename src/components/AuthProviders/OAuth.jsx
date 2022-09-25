@@ -2,6 +2,7 @@ import { GitHub, Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useSnackbar } from "notistack";
+
 import { PROVIDERS } from "../../models/oauth";
 
 export default function OAuth() {

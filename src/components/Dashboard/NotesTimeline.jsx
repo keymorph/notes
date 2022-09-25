@@ -17,6 +17,7 @@ import {
 import { Box, Grow, LinearProgress, Typography, Zoom } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+
 import {
   getCategoryColorName,
   getCategoryName,
@@ -105,6 +106,7 @@ export default function NotesTimeline({
           ),
           orderBy: NOTES_ORDER_BY.CUSTOM,
         };
+
         return newNotesOrder;
       });
     }
@@ -121,6 +123,7 @@ export default function NotesTimeline({
       notesOrder.orderedNotesID,
       notesOrder.orderBy
     );
+
     return getFilteredNotesCollection(
       orderedNotesCollection,
       categoriesCollection,

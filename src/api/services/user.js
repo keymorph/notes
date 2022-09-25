@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { users } from "../models/database.js";
+import { users } from "../models/database";
 
 const registerAccount = async (email, password, res) => {
   // Check if the email already exists in the database
@@ -39,9 +39,9 @@ const registerAccount = async (email, password, res) => {
           .status(201)
           .json({ message: "User account created successfully 🥳." });
       })
-      .catch((error) => {
+      .catch((err) => {
         return res.status(550).json({
-          message: `Database error while registering user: ${error.message}`,
+          message: `Database error while registering user: ${err.message}`,
         });
       });
   });
@@ -64,6 +64,7 @@ const loginAccount = async (email, password, res) => {
         password,
         resources[0].password
       );
+
       if (!validPassword) {
         console.error("Incorrect password.");
         return res.status(400).json({

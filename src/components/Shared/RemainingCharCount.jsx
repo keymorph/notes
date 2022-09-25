@@ -1,4 +1,5 @@
 import { Fade, Typography } from "@mui/material";
+
 import CustomTooltip from "./CustomTooltip";
 
 export default function RemainingCharCount({

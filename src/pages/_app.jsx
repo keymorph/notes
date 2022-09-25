@@ -4,13 +4,13 @@
 import { Container, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
+import { SessionProvider } from "next-auth/react";
 import React, { useEffect, useMemo, useState } from "react";
+
 import ScrollTop from "../components/Dashboard/NotesTimeline/ScrollTop";
 import Navbar from "../components/Navbar";
 import CustomSnackbarProvider from "../components/Providers/CustomSnackbarProvider";
-
 import { darkTheme, lightTheme } from "../styles/themes/theme";
 
 const queryClient = new QueryClient();
@@ -51,6 +51,16 @@ export default function App({
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta property="og:title" content="Notes — Keymorph" />
+        <meta
+          property="og:description"
+          content="A free web application for creating and editing notes with rich text formatting and markdown support."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property={"og:image"}
+          content={"https://i.imgur.com/0JksycM.png"}
+        />
         <title>Notes — Keymorph</title>
       </Head>
       <SessionProvider session={session}>

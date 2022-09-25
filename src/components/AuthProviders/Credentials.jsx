@@ -6,9 +6,9 @@ import {
   Link as MUILink,
   TextField,
 } from "@mui/material";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 
@@ -108,6 +108,7 @@ export default function Credentials({ action, isUnauthenticated }) {
       .catch((error) => {
         const status = error.response?.status;
         // If an error is thrown, append it as a query param to the url
+
         if (status === 409) {
           enqueueSnackbar("An account with this email already exists", {
             variant: "error",
@@ -123,37 +124,44 @@ export default function Credentials({ action, isUnauthenticated }) {
   };
 
   const handleEmailChange = (event) => {
-    const email = event.target.value;
-    setEmail(email);
+    const newEmail = event.target.value;
+
+    setEmail(newEmail);
 
     // Update state depending on whether the email is valid
-    setEmailValid(isEmailValid(email));
-    setEmailError(!isEmailValid(email) ? "Invalid email entered." : "");
+    setEmailValid(isEmailValid(newEmail));
+    setEmailError(!isEmailValid(newEmail) ? "Invalid email entered." : "");
   };
 
   const handlePasswordChange = (event) => {
-    const password = event.target.value;
-    setPassword(password);
+    const newPassword = event.target.value;
+
+    setPassword(newPassword);
 
     // Update state depending on whether the password is valid
-    setPasswordValid(isPasswordValid(password));
-    setPasswordError(getPasswordErrorText(password));
+    setPasswordValid(isPasswordValid(newPassword));
+    setPasswordError(getPasswordErrorText(newPassword));
 
     // Also update the state of confirm password upon changing password
-    setConfirmPasswordValid(isConfirmPasswordValid(confirmPassword, password));
+    setConfirmPasswordValid(
+      isConfirmPasswordValid(confirmPassword, newPassword)
+    );
     setConfirmPasswordError(
-      getConfirmPasswordErrorText(confirmPassword, password)
+      getConfirmPasswordErrorText(confirmPassword, newPassword)
     );
   };
 
   const handleConfirmPasswordChange = (event) => {
-    const confirmPassword = event.target.value;
-    setConfirmPassword(confirmPassword);
+    const newConfirmPassword = event.target.value;
+
+    setConfirmPassword(newConfirmPassword);
 
     // Update state depending on whether the password is valid
-    setConfirmPasswordValid(isConfirmPasswordValid(confirmPassword, password));
+    setConfirmPasswordValid(
+      isConfirmPasswordValid(newConfirmPassword, password)
+    );
     setConfirmPasswordError(
-      getConfirmPasswordErrorText(confirmPassword, password)
+      getConfirmPasswordErrorText(newConfirmPassword, password)
     );
   };
 
@@ -174,9 +182,7 @@ export default function Credentials({ action, isUnauthenticated }) {
       onSubmit={
         action === "login"
           ? handleLogin
-          : action === "register"
-          ? handleRegister
-          : handleForgotPassword
+          : action === "register" && handleRegister
       }
       noValidate
       sx={{
@@ -209,7 +215,9 @@ export default function Credentials({ action, isUnauthenticated }) {
           name="password"
           type="password"
           value={password}
-          autoComplete={action === "login" ? "current-password" : "new-password"}
+          autoComplete={
+            action === "login" ? "current-password" : "new-password"
+          }
           onChange={handlePasswordChange}
           margin="normal"
           fullWidth

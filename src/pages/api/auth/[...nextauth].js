@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+
 import { createOAuthUserIfNotExists } from "../../../api/services/oauth-user";
 
 /*
@@ -37,6 +38,7 @@ export const authOptions = {
           });
         // user will be undefined if the credentials are invalid
         // If we have user data, return it
+
         return user?.data;
       },
     }),

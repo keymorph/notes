@@ -6,6 +6,7 @@ import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { isEqual } from "lodash";
 import { useEffect } from "react";
+
 import { NOTE_DESCRIPTION_CHAR_LIMIT } from "../../constants/input-limits";
 import { RichTextEditorBox } from "../../styles/components/rich-text";
 import RemainingCharCount from "./RemainingCharCount";
@@ -37,6 +38,7 @@ export default function RichTextEditor({
       }),
       Typography,
     ],
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     onUpdate: ({ editor }) => {
       setContent(editor.getJSON());
     },

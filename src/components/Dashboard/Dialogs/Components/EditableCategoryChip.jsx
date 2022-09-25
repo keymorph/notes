@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+
 import { CATEGORY_NAME_CHAR_LIMIT } from "../../../../constants/input-limits";
 import {
   getCategoryColorFromPalette,
@@ -39,11 +40,12 @@ export default function EditableCategoryChip({
 
   //#region Handlers
   const handlePaletteOpen = () => {
-    setIsPaletteOpen((isPaletteOpen) => !isPaletteOpen);
+    setIsPaletteOpen((paletteOpen) => !paletteOpen);
   };
 
   const handleCategoryNameChange = (e) => {
     const newCategoryName = getValidCategoryName(e.target.value);
+
     setCategoryName(newCategoryName);
   };
   //#endregion
@@ -57,7 +59,7 @@ export default function EditableCategoryChip({
       ? categoryColorsDef.dark
       : categoryColorsDef.light
   );
-  const color = getPaletteCategoryColorName(categoryColor);
+  const currColor = getPaletteCategoryColorName(categoryColor);
 
   return (
     <div>
@@ -77,7 +79,7 @@ export default function EditableCategoryChip({
               }
             >
               <Circle
-                color={color}
+                color={currColor}
                 sx={{
                   fontSize: "1.75rem",
                   transition: "color 0.2s ease-in-out",

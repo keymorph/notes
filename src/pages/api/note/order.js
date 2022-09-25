@@ -2,6 +2,7 @@
   /api/note/order endpoint for note collection ordering operations
 */
 import { unstable_getServerSession } from "next-auth"; // Handle incoming requests
+
 import notesOrderService from "../../../api/services/notes-order";
 import { authOptions } from "../auth/[...nextauth]"; // Handle incoming requests
 

@@ -26,6 +26,7 @@ export async function createOAuthUserIfNotExists(email) {
         console.error(error.message);
         throw `Database error while updating user account: ${error.message}`;
       });
+
     return user.id;
   }
 
