@@ -255,7 +255,7 @@ export default function NoteActionDialog({
           hiddenLabel
           disabled={isViewing}
           value={newTitle}
-          placeholder={"Type the note title here..."}
+          placeholder={"Title"}
           InputProps={{
             endAdornment: !isViewing && (
               <RemainingCharCount
@@ -282,7 +282,7 @@ export default function NoteActionDialog({
         <RichTextEditor
           content={newDescription}
           setContent={setNewDescription}
-          placeholder={"Type the content of your note here..."}
+          placeholder={"Content"}
           editable={!isViewing}
           style={{
             marginBottom: "1rem",

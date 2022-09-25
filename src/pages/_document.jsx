@@ -14,7 +14,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
         <meta charSet="utf-8" />
-        <meta name="description" content="Notes — Keymorph" />
       </Head>
       <body>
         <Main />
