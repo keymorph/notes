@@ -42,7 +42,7 @@ export default function Dashboard() {
     if (notesOrder.orderBy) {
       mutateOrder(notesOrder);
     }
-  }, [mutateOrder, notesOrder]);
+  }, [notesOrder]);
 
   //#region Query Handling Hooks
   const { status: noteStatus } = useQuery(["get_note_item"], getNoteItem, {

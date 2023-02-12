@@ -74,7 +74,7 @@ export default function ProfileButton({ darkMode, handleDarkModeToggle }) {
                   priority
                   src={session.user.image}
                   alt={"profile picture"}
-                  layout="fill"
+                  fill
                 />
               </Avatar>
             ) : (
