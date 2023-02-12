@@ -6,14 +6,12 @@
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:tailwindcss/recommended",
     "plugin:import/errors",
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
     "prettier",
     "react",
-    "tailwindcss",
     "import",
     "simple-import-sort",
     "@typescript-eslint"

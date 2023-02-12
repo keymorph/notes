@@ -2,7 +2,7 @@
 
 ## **About**
 > *A free web application for creating and editing notes.*  
-🔗 → [Notes (Not yet officially released, it will be live soon™️)](https://test.keymorph.com "Keymorph Notes App")  
+🔗 → [Notes](https://notes.keymorph.com "Keymorph Notes App")  
 
 ## **Instructions**
 ```bash

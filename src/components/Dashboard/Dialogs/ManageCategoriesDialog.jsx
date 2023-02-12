@@ -201,7 +201,7 @@ export default function ManageCategoriesDialog({
           spacing={2}
           py={"1em"}
           px={isMobile ? "0" : "1em"} // Add a small right padding for scrollbar on desktop
-          overflow={"scroll"}
+          overflow={"auto"}
           height={["20rem", "22rem", "24rem", "28rem", "32rem"]}
         >
           <AnimatePresence>

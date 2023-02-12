@@ -1,4 +1,4 @@
-import { GitHub, Google } from "@mui/icons-material";
+import { Google } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useSnackbar } from "notistack";
@@ -30,12 +30,6 @@ export default function OAuth() {
         color="primary"
       >
         <Google sx={{ fontSize: 48 }} />
-      </IconButton>
-      <IconButton
-        onClick={() => handleSignIn(PROVIDERS.github)}
-        color="primary"
-      >
-        <GitHub sx={{ fontSize: 48 }} />
       </IconButton>
     </Stack>
   );

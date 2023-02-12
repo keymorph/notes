@@ -2,16 +2,14 @@
   /api/category endpoint for category operations
 */
 
-import { unstable_getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 
 import categoryService from "../../../api/services/category";
 import { authOptions } from "../auth/[...nextauth]";
 
 // Request handler function
 export default async function handler(req, res) {
-  // As per the Next-Auth docs, unstable_getServerSession must be used for performance reasons
-  // https://next-auth.js.org/getting-started/client#getsession
-  const session = await unstable_getServerSession(req, res, authOptions);
+  const session = await getServerSession(req, res, authOptions);
 
   // If the user is authenticated, proceed with request
   if (session) {

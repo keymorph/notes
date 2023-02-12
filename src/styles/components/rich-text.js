@@ -17,7 +17,7 @@ export const RichTextEditorBox = styled(Box)(({ theme }) => ({
   ".ProseMirror": {
     ...richTextStyles,
     color: theme.palette.text.primary,
-    overflow: "scroll",
+    overflow: "auto",
     padding: "0.8rem",
     outlineColor: theme.palette.action.disabled,
     outlineStyle: "solid",
