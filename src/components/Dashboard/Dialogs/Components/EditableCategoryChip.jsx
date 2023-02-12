@@ -140,7 +140,7 @@ export default function EditableCategoryChip({
       <AnimatePresence>
         {isPaletteOpen && (
           <PopIn>
-            <Stack direction={"row"} py={"1em"} overflow={"scroll"}>
+            <Stack direction={"row"} py={"1em"} overflow={"auto"}>
               <AnimatePresence>
                 {categoryColors.map((color, index) => (
                   <motion.div

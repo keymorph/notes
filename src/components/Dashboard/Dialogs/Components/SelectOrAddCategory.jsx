@@ -71,7 +71,7 @@ export default function SelectOrAddCategory({
               direction={"row"}
               spacing={2}
               py={"1.5em"}
-              overflow={"scroll"}
+              overflow={"auto"}
             >
               <AnimatePresence>
                 {filteredCategories.map((category, index) => (

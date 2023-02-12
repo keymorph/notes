@@ -11,8 +11,6 @@ import { authOptions } from "../auth/[...nextauth]";
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
-  console.log("session", session);
-
   // If the user is authenticated, proceed with request
   if (session) {
     req.headers.user_id = session.user.id;

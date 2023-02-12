@@ -80,7 +80,6 @@ const createNote = async (req, res) => {
 };
 
 const getNoteItem = async (req, res) => {
-  console.log(req.headers.user_id);
   return notes
     .item(req.headers.user_id, req.headers.user_id)
     .read()
