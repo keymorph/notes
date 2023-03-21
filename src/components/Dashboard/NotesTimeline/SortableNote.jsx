@@ -3,8 +3,8 @@ import { useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 
 import {
-  spring,
-  springNote,
+  easeNoteDrag,
+  spring, springNote,
   springNoteDrag,
   variantFadeStagger,
 } from "../../../styles/animations/definitions";
@@ -54,7 +54,7 @@ export default function SortableNote({
         y: transform?.y || 0,
         boxShadow: dragShadow,
       }}
-      transition={isDragging ? springNoteDrag : springNote}
+      transition={isDragging ? easeNoteDrag : springNote}
     >
       <motion.div
         // layout={!isDraggingMode} // Only animate position changes when not dragging

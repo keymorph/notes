@@ -7,13 +7,12 @@ export const adornmentButtonTransition = {
 //#region Spring Transitions
 export const springNote = {
   type: "spring",
-  stiffness: 400,
-  damping: 30,
+  stiffness: 600,
+  damping: 35,
 };
-export const springNoteDrag = {
-  type: "spring",
-  stiffness: 10000,
-  damping: 300,
+export const easeNoteDrag = {
+  type: "ease",
+  duration: 0.01,
 };
 export const springDefault = {
   type: "spring",
