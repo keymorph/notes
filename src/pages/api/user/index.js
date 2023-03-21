@@ -1,8 +1,8 @@
 /*
-  /api/user endpoint for account actions
+  /server/user endpoint for account actions
 */
 
-import userService from "../../../api/services/user";
+import userService from "../../../server/services/user";
 import {
   isEmailValid,
   isPasswordValid,

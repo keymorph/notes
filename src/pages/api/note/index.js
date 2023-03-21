@@ -1,10 +1,10 @@
 /*
-  /api/note endpoint for anything note related
+  /server/note endpoint for anything note related
 */
 
 import { getServerSession } from "next-auth";
 
-import noteService from "../../../api/services/note";
+import noteService from "../../../server/services/note";
 import { authOptions } from "../auth/[...nextauth]";
 
 // Handle incoming requests

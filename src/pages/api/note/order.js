@@ -1,9 +1,9 @@
 /*
-  /api/note/order endpoint for note collection ordering operations
+  /server/note/order endpoint for note collection ordering operations
 */
 import { getServerSession } from "next-auth"; // Handle incoming requests
 
-import notesOrderService from "../../../api/services/notes-order";
+import notesOrderService from "../../../server/services/notes-order";
 import { authOptions } from "../auth/[...nextauth]"; // Handle incoming requests
 
 // Handle incoming requests

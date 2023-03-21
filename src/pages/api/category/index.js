@@ -1,10 +1,10 @@
 /*
-  /api/category endpoint for category operations
+  /server/category endpoint for category operations
 */
 
 import { getServerSession } from "next-auth";
 
-import categoryService from "../../../api/services/category";
+import categoryService from "../../../server/services/category";
 import { authOptions } from "../auth/[...nextauth]";
 
 // Request handler function

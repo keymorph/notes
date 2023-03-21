@@ -1,6 +1,6 @@
 // This is a temporary solution for checking and creating an user with oauth on cosmosdb
 // This should be removed whenever we move to an SQL database
-// With an SQL databse we can make a next-auth adapter and handle this logic on the api side
+// With an SQL databse we can make a next-auth adapter and handle this logic on the server side
 // It can also be done for CosmoSDB but it is not that simple and would be wasted effort if we change the database later on
 // https://next-auth.js.org/tutorials/creating-a-database-adapter
 import {users} from "../models/database";
