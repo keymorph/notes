@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 import {
   easeNoteDrag,
-  spring, springNote,
-  springNoteDrag,
+  spring,
+  springNote,
   variantFadeStagger,
 } from "../../../styles/animations/definitions";
 import Note from "./Note";
