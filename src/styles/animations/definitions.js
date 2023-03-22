@@ -10,10 +10,6 @@ export const springNote = {
   stiffness: 600,
   damping: 35,
 };
-export const easeNoteDrag = {
-  type: "ease",
-  duration: 0.01,
-};
 export const springDefault = {
   type: "spring",
   stiffness: 700,

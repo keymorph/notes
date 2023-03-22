@@ -1,11 +1,9 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { useTheme } from "@mui/material";
-import { motion } from "framer-motion";
+import {motion, useMotionValue, useSpring} from "framer-motion";
 
 import {
-  easeNoteDrag,
   spring,
-  springNote,
   variantFadeStagger,
 } from "../../../styles/animations/definitions";
 import Note from "./Note";
@@ -50,11 +48,14 @@ export default function SortableNote({
       }}
       animate={{
         scale: isDragging ? 1.04 : 1,
-        x: transform?.x || 0,
-        y: transform?.y || 0,
+        x: transform?.x ?? 0,
+        y: transform?.y ?? 0,
         boxShadow: dragShadow,
       }}
-      transition={isDragging ? easeNoteDrag : springNote}
+      transition={{
+        type: "tween",
+        duration: isDragging ? 0 : 0.2,
+      }}
     >
       <motion.div
         // layout={!isDraggingMode} // Only animate position changes when not dragging
